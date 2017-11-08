@@ -30,6 +30,12 @@ module Nazgrel
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # Models are organized in sub-directories
+    # FIXME namespace directories should not autoload
+    # config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
+    #                         Dir[Rails.root.join("app/controllers/entities")]
+    config.autoload_paths += Dir[Rails.root.join("app/models/users")]
+
     ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
   end
 end

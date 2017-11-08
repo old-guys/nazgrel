@@ -7,4 +7,5 @@ module ErrorCodes
 
   INVALID_APP = 100000 # access_token 错误
   INVALID_PARAMS = 100406 # 非法参数
+  INVALID_USER = 100401 # 无效用户
 end

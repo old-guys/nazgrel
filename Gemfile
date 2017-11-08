@@ -11,7 +11,7 @@ gem 'rails', '~> 5.1.4'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -19,7 +19,7 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 # Print stack trace of all queries to the Rails log.
 # Helpful to find where queries are being executed in your application.
@@ -30,6 +30,13 @@ gem 'active_record_query_trace'
 gem 'request_store', '~> 1.3.2'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.9.7', require: false
+
+#### authorization  #####
+# Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.3'
+# gem 'devise-otp', '~> 0.1.1'
+gem 'devise-i18n', '~> 0.4.0'
+gem 'pundit', '~> 1.1.0'
 
 ########  framework  base support ########
 # Redis for Ruby on Rails
