@@ -1,0 +1,63 @@
+upstream nazgrel_qa_unicorn {
+  server unix:/tmp/unicorn.nazgrel_qa_unicorn.sock fail_timeout=0;
+}
+
+# server {
+#   listen 80;
+#   server_name ishanggang.com;
+#   return 301 http://bi.ishanggang.com$request_uri;
+# }
+
+
+# server {
+#   listen 443;
+#   server_name ishanggang.com;
+#   return 301 https://bi.ishanggang.com$request_uri;
+# }
+
+server {
+	listen 80;# default deferred;
+	server_name qa.ishanggang.com qa.www.ishanggang.com;
+
+  root /dyne/apps/nazgrel_qa/current/public;
+
+  # individual nginx logs for vhost
+  access_log  /var/log/nginx/nazgrel_qa_access.log;
+  error_log   /var/log/nginx/nazgrel_qa_error.log;
+
+  gzip on;
+  gzip_min_length 1k;
+  gzip_buffers 4 16k;
+  #gzip_http_version 1.0;
+  gzip_comp_level 2;
+  # gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
+  gzip_types      text/plain application/xml;
+  gzip_vary off;
+  gzip_disable "MSIE [1-6]\.";
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  try_files $uri/index.html $uri @unicorn;
+
+  location @unicorn {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    # set https for load balancer within production env
+    # proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Ssl on;
+    proxy_redirect off;
+    proxy_pass http://nazgrel_qa_unicorn;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+}
+
+# include /etc/nginx/conf.d/*.conf;
+# sudo ln -nfs /dyne/apps/nazgrel_qa/shared/config/nginx.conf /etc/nginx/conf.d/nazgrel_qa.conf
+#sudo /etc/init.d/nginx reload

@@ -1,0 +1,27 @@
+defaults: &defaults
+  log_cache: true
+  perform_caching_in_development: true
+  gc_profiler: true
+  # redis config
+  redis: &redis
+    host: localhost
+    port: 6379
+    data_db: 0
+    job_db: 1
+    cache_db: 2
+    timeout: 5000
+
+  log:
+    level: :info
+    tags:
+      - :subdomain
+      - :uuid
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
