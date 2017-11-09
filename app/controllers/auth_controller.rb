@@ -14,9 +14,12 @@ class AuthController < ApplicationController
     else
       raise AuthError.new("帐号或者密码错误")
     end
+
+    @message = "success"
+    @remark = "成功"
   end
 
   def ping
-    render json: { code: 0, data: { message: "pong" } }
+    render 'ping/index', layout: false
   end
 end

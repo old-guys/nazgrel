@@ -16,11 +16,6 @@ module Rescueable
   end
 
   private
-  def common_exceed_error(e)
-    log_error(e)
-    render json: { code: code, message: msg, error: e.class.name.underscore }
-  end
-
   def invalid_app_error(e)
     log_error(e)
     logger.error "invalid_app, auth_params=#{auth_params}"
