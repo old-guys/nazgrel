@@ -19,6 +19,13 @@ config/initializers/secret_token.rb
 # Only include if you have production secrets in this file, which is no longer a Rails default
 # config/secrets.yml
 
+config/database.yml
+config/initializers/secret_token.rb
+config/nginx.conf
+config/unicorn/*.rb
+config/logrotate.conf
+config/newrelic.yml
+config/app.god
 config/services.yml
 
 # dotenv
