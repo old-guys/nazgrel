@@ -25,6 +25,10 @@ gem 'rack-cors', '~> 1.0', '>= 1.0.2'
 # Useful when plucking multiple columns.
 gem 'pluck_to_hash', '~> 1.0', '>= 1.0.2'
 
+# Add schema comments in your migrations,
+# see them in model annotations and db/schema.rb dump
+gem 'migration_comments', '~> 0.4.1'
+
 # Print stack trace of all queries to the Rails log.
 # Helpful to find where queries are being executed in your application.
 gem 'active_record_query_trace', '~> 1.5', '>= 1.5.4'
