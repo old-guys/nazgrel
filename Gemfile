@@ -21,6 +21,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+# Extend ActiveRecord pluck to return hash instead of an array.
+# Useful when plucking multiple columns.
+gem 'pluck_to_hash', '~> 1.0', '>= 1.0.2'
+
 # Print stack trace of all queries to the Rails log.
 # Helpful to find where queries are being executed in your application.
 gem 'active_record_query_trace'
