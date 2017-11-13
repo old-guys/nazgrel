@@ -19,7 +19,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+gem 'rack-cors', '~> 1.0', '>= 1.0.2'
 
 # Extend ActiveRecord pluck to return hash instead of an array.
 # Useful when plucking multiple columns.
@@ -27,59 +27,69 @@ gem 'pluck_to_hash', '~> 1.0', '>= 1.0.2'
 
 # Print stack trace of all queries to the Rails log.
 # Helpful to find where queries are being executed in your application.
-gem 'active_record_query_trace'
+gem 'active_record_query_trace', '~> 1.5', '>= 1.5.4'
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
-gem 'request_store', '~> 1.3.2'
+gem 'request_store', '~> 1.3', '>= 1.3.2'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.9.7', require: false
 
 #### authorization  #####
 # Flexible authentication solution for Rails with Warden
 gem 'devise', '~> 4.3'
+# Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
-gem 'devise-i18n', '~> 0.4.0'
-gem 'pundit', '~> 1.1.0'
+# Translations for the devise gem
+gem 'devise-i18n', '~> 1.4'
+# Object oriented authorization for Rails applications
+gem 'pundit', '~> 1.1'
 
 ########  framework  base support ########
 # Redis for Ruby on Rails
 gem "redis-rails"
 
 # Simple, efficient background processing for Ruby.
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.0', '>= 5.0.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw]
 
   # help to kill N+1 queries and unused eager loading
-  gem "bullet"
+  gem 'bullet', '~> 5.6', '>= 5.6.1'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'web-console', '~> 3.5', '>= 3.5.1'
+  gem 'listen', '~> 3.1', '>= 3.1.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring', '~> 2.0', '>= 2.0.2'
+  gem 'spring-watcher-listen', '~> 2.0', '>= 2.0.1'
 end
 
 # Use unicorn as the app server
 group :production do
-  gem 'unicorn'
-  gem "unicorn-worker-killer"
-  gem 'newrelic_rpm'
+  # unicorn is an HTTP server for Rack applications designed to only serve fast
+  # clients on low-latency, high-bandwidth connections and take advantage of
+  # features in Unix/Unix-like kernels.
+  gem 'unicorn', '~> 5.3', '>= 5.3.1'
+  # Kill unicorn workers by memory and request counts
+  gem 'unicorn-worker-killer', '~> 0.4.4'
+  # New Relic is a performance management system,
+  # developed by New Relic, Inc (http://www.newrelic.com)
+  gem 'newrelic_rpm', '~> 4.5', '>= 4.5.0.337'
 end
 
 # Use Capistrano for deployment
 group :development do
-  gem 'capistrano-rails'
-  # gem 'capistrano3-unicorn'
-  gem 'capistrano3-unicorn'
-  # gem 'sepastian-capistrano3-unicorn', '~> 0.5.1'
-  gem 'capistrano-rvm'
+  # Rails specific Capistrano tasks
+  gem 'capistrano-rails', '~> 1.3'
+  # Unicorn specific Capistrano tasks
+  gem 'capistrano3-unicorn', '~> 0.2.1'
+  # RVM integration for Capistrano
+  gem 'capistrano-rvm', '~> 0.1.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
