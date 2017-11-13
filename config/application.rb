@@ -34,7 +34,12 @@ module Nazgrel
     # FIXME namespace directories should not autoload
     # config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
     #                         Dir[Rails.root.join("app/controllers/entities")]
-    config.autoload_paths += Dir[Rails.root.join("app/models/users")]
+    config.autoload_paths += Dir[Rails.root.join("app/models/users")] +
+                               Dir[Rails.root.join("app/models/reports")] +
+                               Dir[Rails.root.join("app/models/sesame_mall")] +
+                               Dir[Rails.root.join("app/services")] +
+                               Dir[Rails.root.join("app/seeks")]
+
 
     ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
   end
