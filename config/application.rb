@@ -25,10 +25,18 @@ module Nazgrel
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # Timezone
+    config.time_zone = 'Beijing'
+
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
+    # config.api_only = true
+
+    # Locale
+    config.i18n.load_path += Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.available_locales = [:'zh-CN', :zh, :en]
+    config.i18n.default_locale = :'zh-CN'
 
     ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
 
@@ -43,5 +51,14 @@ module Nazgrel
                                Dir[Rails.root.join("app/services")] +
                                Dir[Rails.root.join("app/seeks")]
 
+
+    redis_conf = SERVICES_CONFIG['redis']
+    config.cache_store = :redis_store, {
+      host: redis_conf['host'],
+      port: redis_conf['port'],
+      db: redis_conf['cache_db'],
+      password: redis_conf['password'],
+      expires_in: 2.days
+    }
   end
 end

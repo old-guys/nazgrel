@@ -1,4 +1,4 @@
-module Authenticateable
+module Api::Channel::Authenticateable
   # controller and view
   extend ActiveSupport::Concern
 
@@ -7,31 +7,30 @@ module Authenticateable
   end
 
   private
-
   def authenticate_app!
     raise Errors::InvalidAppError.new("device参数错误") unless device.in?(%w(ios android h5 pc))
   end
 
   def authenticate!
-    unless current_user
+    unless current_channel_user
       change_reason = "您的登录已经过期，请重新登录！"
 
       logger.error "invalid user_token, auth_params #{auth_params}"
       raise Errors::UserAuthenticationError.new(change_reason)
     end
 
-    if current_user.try(:deleted?)
+    if current_channel_user.try(:deleted?)
       raise Errors::UserAuthenticationError.new("该用户已经被删除")
     end
 
-    RequestStore.store[:current_user] = current_user
+    RequestStore.store[:current_channel_user] = current_channel_user
   end
 
-  def current_user
-    return @current_user if defined?(@current_user)
+  def current_channel_user
+    return @current_channel_user if defined?(@current_channel_user)
     token = ApiKey.find_by(access_token: auth_params[:user_token])
     if token
-      @current_user = User.find_by(id: token.user_id)
+      @current_channel_user = ChannelUser.find_by(id: token.user_id)
     end
   end
 

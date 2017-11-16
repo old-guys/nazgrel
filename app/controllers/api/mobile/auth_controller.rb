@@ -1,4 +1,4 @@
-class AuthController < ApplicationController
+class Api::Mobile::AuthController < Api::Mobile::BaseController
   skip_before_action :authenticate!, only: [:login], raise: false
 
   def login
@@ -8,11 +8,11 @@ class AuthController < ApplicationController
     @user = User.with_database_authentication(login_field => params[:login]).first
 
     if @user && @user.valid_password?(params[:password])
-      raise AuthLockError.new("你的帐号已被冻结") if @user.access_locked?
+      raise Errors::AuthLockError.new("你的帐号已被冻结") if @user.access_locked?
       @user.update(last_sign_in_at: @user.current_sign_in_at, current_sign_in_at: Time.now)
       @api_key = @user.api_key
     else
-      raise AuthError.new("帐号或者密码错误")
+      raise Errors::AuthError.new("帐号或者密码错误")
     end
 
     @message = "success"
@@ -20,6 +20,6 @@ class AuthController < ApplicationController
   end
 
   def ping
-    render 'ping/index', layout: false
+    render 'api/mobile/ping/index', layout: false
   end
 end

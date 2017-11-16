@@ -1,4 +1,4 @@
-module DeviceDetectable
+module Api::DeviceDetectable
   extend ActiveSupport::Concern
 
   included do

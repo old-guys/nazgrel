@@ -1,8 +1,8 @@
-class PingController < ApplicationController
+class Api::Mobile::PingController < Api::Mobile::BaseController
   skip_before_action :authenticate!, raise: false
 
   def index
-    render 'ping/index', layout: false
+    render 'api/mobile/ping/index', layout: false
   end
 
   def ping_db
