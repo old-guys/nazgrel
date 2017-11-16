@@ -85,9 +85,13 @@ BI 由不断增长的组件构成，其中包括：
 <pre>
 app/models
   users/
+    channel_user
+  channels
+    channel
+    channel_shop_keeper
   sesame_mall
     shop
-    channel
+    shopkeeper
     责任人
     店主
     订单
@@ -106,3 +110,32 @@ lib/
       seek.rake
       reporter.rake
 </pre>
+
+### 店铺和渠道关系
+
+shop
+  t.string :name, comment: "店名"
+  t.integer :user_id, comment: "芝蚂城用户id"
+
+  t.string :path, comment: "店铺邀请层级"
+  t.string :channel_path, "代理商层级"
+
+shopkeeper
+  t.integer :user_id, comment: "爱上岗用户ID"
+  t.string :user_name, comment: "用户姓名"
+  t.string :user_phone, comment: "用户手机号"
+  t.string :user_photo, comment: "用户头像"
+  t.integer :user_grade, comment: "店主等级：0-白金店主，1-黄金店主，2-见习店主"
+
+### 渠道下属层级
+
+【渠道数据】
+渠道名称： 天津总代
+渠道类型：种子店主、一级代理、渠道经理（待定）
+来源分类：奥维思、微差事、其他渠道
+
+姓名：王先生
+手机：13021212569
+
+为已经存在的渠道，建立层级
+将新的店主添加到已有的渠道下面

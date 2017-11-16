@@ -1,25 +1,25 @@
 class ChangeCommentOnUser < ActiveRecord::Migration[5.1]
   def change
-    set_table_comment :users, '用户'
-    set_column_comment :users, :email, '邮箱'
-    set_column_comment :users, :encrypted_password, '加密密码'
-    set_column_comment :users, :reset_password_token, '重置密码 Token'
-    set_column_comment :users, :reset_password_sent_at, '重置密码发送时间'
-    set_column_comment :users, :remember_created_at, '记住创建时间'
-    set_column_comment :users, :sign_in_count, '登陆次数'
-    set_column_comment :users, :current_sign_in_at, '当前登陆时间'
-    set_column_comment :users, :last_sign_in_at, '上次登陆时间'
-    set_column_comment :users, :current_sign_in_ip, '当前登陆ip'
-    set_column_comment :users, :last_sign_in_ip, '上次登陆ip'
-    set_column_comment :users, :created_at, '创建时间'
-    set_column_comment :users, :updated_at, '更新时间'
-    set_column_comment :users, :confirmation_token, '验证 Token'
-    set_column_comment :users, :confirmed_at, '验证时间'
-    set_column_comment :users, :confirmation_sent_at, '验证发送时间'
-    set_column_comment :users, :unconfirmed_email, '未验证邮箱'
-    set_column_comment :users, :failed_attempts, '失败尝试次数'
-    set_column_comment :users, :unlock_token, '解除锁定 Token'
-    set_column_comment :users, :locked_at, '锁定时间'
-    set_column_comment :users, :phone, '手机'
+    set_table_comment :users, "用户"
+    set_column_comment :users, :email, "邮箱"
+    set_column_comment :users, :encrypted_password, "加密密码"
+    set_column_comment :users, :reset_password_token, "重置密码 Token"
+    set_column_comment :users, :reset_password_sent_at, "重置密码发送时间"
+    set_column_comment :users, :remember_created_at, "记住创建时间"
+    set_column_comment :users, :sign_in_count, "登陆次数"
+    set_column_comment :users, :current_sign_in_at, "当前登陆时间"
+    set_column_comment :users, :last_sign_in_at, "上次登陆时间"
+    set_column_comment :users, :current_sign_in_ip, "当前登陆ip"
+    set_column_comment :users, :last_sign_in_ip, "上次登陆ip"
+    set_column_comment :users, :created_at, "创建时间"
+    set_column_comment :users, :updated_at, "更新时间"
+    set_column_comment :users, :confirmation_token, "验证 Token"
+    set_column_comment :users, :confirmed_at, "验证时间"
+    set_column_comment :users, :confirmation_sent_at, "验证发送时间"
+    set_column_comment :users, :unconfirmed_email, "未验证邮箱"
+    set_column_comment :users, :failed_attempts, "失败尝试次数"
+    set_column_comment :users, :unlock_token, "解除锁定 Token"
+    set_column_comment :users, :locked_at, "锁定时间"
+    set_column_comment :users, :phone, "手机"
   end
 end

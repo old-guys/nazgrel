@@ -11,6 +11,16 @@ defaults: &defaults
     cache_db: 2
     timeout: 5000
 
+  sesame_mall_db:
+    adapter: mysql2
+    encoding: utf8
+    pool: 20
+    host: xxxxxxxxx
+    port: 3306
+    database: xxxxxx
+    username: root
+    password: xxxxxx
+
   log:
     level: :info
     tags:
