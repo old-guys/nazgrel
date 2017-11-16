@@ -56,6 +56,9 @@ gem "redis-rails"
 # Simple, efficient background processing for Ruby.
 gem 'sidekiq', '~> 5.0', '>= 5.0.5'
 
+# Enables to set jobs to be run in specified time (using CRON notation)
+gem 'sidekiq-cron', '~> 0.4.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw]

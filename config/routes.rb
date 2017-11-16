@@ -10,4 +10,11 @@ Rails.application.routes.draw do
 
   draw :api_mobile
   draw :api_channel
+
+  require 'sidekiq/web'
+  require 'sidekiq/cron/web'
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    username == "sidekiqadmin" && password == "5529d99a"
+  end if Rails.env.production?
+  mount Sidekiq::Web => '/sidekiq'
 end

@@ -4,7 +4,7 @@
     - [low, 1]
     - [default, 5]
     - [high, 10]
-    - [import, 5]
+    - [seek, 5]
 
 development:
   :concurrency: 10

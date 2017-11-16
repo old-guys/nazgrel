@@ -1,5 +1,5 @@
 module SesameMall::Source
-  class ShopKeeper < Base
+  class Shopkeeper < Base
     self.table_name = :u_shopkeeper
   end
 end

@@ -1,0 +1,11 @@
+shop_seek_job:
+  cron: "*/5 * * * *"
+  name: "同步店铺"
+  class: "ShopSeekWorker"
+  queue: :seek
+
+shopkeeper_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步店主"
+  class: "ShopkeeperSeekWorker"
+  queue: :seek

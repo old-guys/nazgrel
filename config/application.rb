@@ -49,7 +49,8 @@ module Nazgrel
                                Dir[Rails.root.join("app/models/channels")] +
                                Dir[Rails.root.join("app/models/sesame_mall")] +
                                Dir[Rails.root.join("app/services")] +
-                               Dir[Rails.root.join("app/seeks")]
+                               Dir[Rails.root.join("app/seeks")] +
+                               Dir[Rails.root.join("app/seeks/concerns")]
 
 
     redis_conf = SERVICES_CONFIG['redis']

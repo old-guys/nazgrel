@@ -14,67 +14,27 @@ class Utility
       end
     end
 
-    # method such as 'Hash#deep_transform_keys'
-    # Utility.deep_transform_values({a: 1, b: {c: nil, d: 1}, e: nil}) {|v| "#{v}"}
-    def deep_transform_values(origin_hash = {}, &proc)
-      if origin_hash and block_given?
-        origin_hash.inject({}) do |new_hash, (k,v)|
-          if v.class.eql?(Hash)
-            new_hash[k] = self.send(:deep_transform_values, v, &proc)
-          else
-            #new_hash[k] = yield v
-            new_hash[k] = proc.call(v)
-          end
-          new_hash
+    def simple_batch_operate(relation, batch_size: 50000, sleep_time: 0.2)
+      records = relation.unscope(:order)
+
+      _edge_ids = [records.klass.minimum(:id).to_i, records.klass.maximum(:id).to_i]
+      _id = _edge_ids.first
+
+      while
+        _id_offset = _id + batch_size
+        puts "_id_offset: #{_id_offset}"
+
+        _records = records.where(id: _id.._id_offset)
+
+        if block_given?
+          yield _records
+
+          sleep sleep_time
         end
-      else
-        origin_hash
-      end
-    end
 
-    def as_json_nil_to_string(origin_hash = {})
-      deep_transform_values(origin_hash) {|v| v.nil? ? "" : v }
-    end
+        break if _id_offset > _edge_ids.last
 
-    def add_params_to_url(url, path, params)
-      if url.present? and params.present?
-        uri = URI(url)
-        query_hash = Rack::Utils.parse_query(uri.query)
-        query_hash.merge!(params)
-        #uri.query = Rack::Utils.build_query(query_hash) #cannot use to nest_hash
-        uri.query = query_hash.to_param
-        uri.path = path
-        uri.to_s
-      end
-    end
-
-    # return an hash include version regex string to match older version
-    def version_hash(version)
-      if version.present?
-        version_list = version.split('.')
-        version_hash = {}
-
-        #major_regex
-        version_hash.merge!(major: version_list[0].to_i)
-        #minor_regex
-        version_hash.merge!(minor: version_list[1].to_i)
-        # build_regex
-        version_hash.merge!(build: version_list[2].to_i)
-        version_hash
-      end
-    end
-
-    # is version old than match_version? return true or false
-    def is_old_version?(version, match_version)
-      if version.present? and match_version.present?
-        _current_version_hash = version_hash(version)
-        _match_version_hash = version_hash(match_version)
-
-        [:major, :minor, :build].each{|k|
-          return false if  _current_version_hash[k] >= _match_version_hash[k]
-        }
-
-        true
+        _id = _id_offset
       end
     end
 
