@@ -9,3 +9,9 @@ shopkeeper_seek_job:
   name: "同步店主"
   class: "ShopkeeperSeekWorker"
   queue: :seek
+
+order_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步订单"
+  class: "OrderSeekWorker"
+  queue: :seek

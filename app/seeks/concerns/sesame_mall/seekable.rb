@@ -2,13 +2,16 @@ module SesameMall::Seekable
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :source_data, :batch_size
+    attr_accessor :source_data, :batch_size, :primary_key
 
     attr_accessor :source_data
   end
 
-  def do_whole_sync(relation: )
-    Utility.simple_batch_operate(relation, batch_size: 1000) {|records|
+  def do_whole_sync(relation: , key: nil)
+    key ||= primary_key
+    batch_size ||= 1000
+
+    Utility.simple_batch_operate(relation, batch_size: batch_size, primary_key: key) {|records|
       self.source_data = records
 
       process
@@ -16,7 +19,7 @@ module SesameMall::Seekable
   end
 
   def do_partial_sync(relation: )
-    relation.find_in_batches(batch_size: 1000){|records|
+    relation.find_in_batches(batch_size: batch_size){|records|
       self.source_data = records
 
       process
@@ -27,11 +30,11 @@ module SesameMall::Seekable
     self.batch_size ||= 50
 
     source_data.limit(1000).pluck_h.each_slice(batch_size) {|hashes|
-      record_ids = hashes.pluck(:id)
+      record_ids = hashes.pluck(primary_key)
       _exists_records = fetch_records(ids: record_ids)
 
       _records = hashes.map{|data|
-        _record = _exists_records.find{|c| c.id == data[:id]}
+        _record = _exists_records.find{|c| c.send(primary_key) == data[primary_key]}
 
         to_model(data, record: _record)
       }

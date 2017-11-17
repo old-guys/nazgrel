@@ -1,4 +1,5 @@
 class Shop < ApplicationRecord
+  include TreeDescendantable
   has_one :shopkeeper
 
   def ancestor_shopkeepers

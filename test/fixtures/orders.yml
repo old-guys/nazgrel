@@ -1,0 +1,67 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_no: MyString
+  user_id: 1
+  user_phone_no: MyString
+  user_name: MyString
+  recv_user_name: MyString
+  recv_phone_no: MyString
+  shop_id: 1
+  shop_name: MyString
+  shop_username: MyString
+  shop_user_id: 1
+  shop_phone: MyString
+  pay_time: 2017-11-17 11:12:30
+  deliver_time: 2017-11-17 11:12:30
+  finish_time: 2017-11-17 11:12:30
+  cancel_time: 2017-11-17 11:12:30
+  order_status: MyString
+  express_price: 9.99
+  sale_price: 9.99
+  comm: 9.99
+  pay_price: 9.99
+  total_price: 9.99
+  comm_setted: 1
+  payed_push: 1
+  remarks: MyText
+  activity_id: 1
+  global_freight: 9.99
+  global_freight_flag: 9.99
+  user_ticket_id: 1
+  reduce_price: 9.99
+  discount_rate: 9.99
+  reduce_type: 1
+
+two:
+  order_no: MyString
+  user_id: 1
+  user_phone_no: MyString
+  user_name: MyString
+  recv_user_name: MyString
+  recv_phone_no: MyString
+  shop_id: 1
+  shop_name: MyString
+  shop_username: MyString
+  shop_user_id: 1
+  shop_phone: MyString
+  pay_time: 2017-11-17 11:12:30
+  deliver_time: 2017-11-17 11:12:30
+  finish_time: 2017-11-17 11:12:30
+  cancel_time: 2017-11-17 11:12:30
+  order_status: MyString
+  express_price: 9.99
+  sale_price: 9.99
+  comm: 9.99
+  pay_price: 9.99
+  total_price: 9.99
+  comm_setted: 1
+  payed_push: 1
+  remarks: MyText
+  activity_id: 1
+  global_freight: 9.99
+  global_freight_flag: 9.99
+  user_ticket_id: 1
+  reduce_price: 9.99
+  discount_rate: 9.99
+  reduce_type: 1

@@ -1,0 +1,44 @@
+zh-CN:
+  activerecord:
+    models:
+      order: "订单"
+    attributes:
+      order:
+        id: "ID"
+        order_no: "订单编号"
+        order_type: "订单类型"
+        ref_type: "订单渠道"
+        remak: "备注"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    order:
+      order_status:
+        awaiting_payment: "待付款"
+        awaiting_delivery: "待发货"
+        deliveried: "已发货"
+        finished: "已完成"
+        canceled: "已取消"
+        finished_trouble: "已完成(异常)"
+      order_type:
+        create_shop: "开店订单"
+        shopkeeper_order: "店主订单"
+        third_order: "三方订单"
+      ref_type:
+        wechat_friend: "微信好友"
+        app: "app"
+        wechat_moment: "微信朋友圈"
+        qq: "qq"
+        qq_zone: "qq空间"
+        sms: "短信"
+        qrcord: "二维码"
+      comm_setted:
+        :yes: "是"
+        :no: "否"
+      payed_push:
+        :yes: "是"
+        :no: "否"
+      global_freight_flag:
+        :yes: "是"
+        :no: "否"

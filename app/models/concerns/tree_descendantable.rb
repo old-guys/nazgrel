@@ -5,52 +5,65 @@ module TreeDescendantable
 
   included do
     class_attribute :tree_depth, instance_accessor: false
-    class_attribute :tree_primary_key
+    class_attribute :tree_primary_key, :path_column
     self.tree_primary_key ||= :id
+    self.path_column = :path
 
-    scope :self_and_descendant_entities, -> (entity) do
-      where("(#{self.table_name}.path like ? or #{self.table_name}.path = '#{entity.path}')", "#{entity.path}/%")
+    scope :self_and_descendant_entities, -> (entity, column: nil) do
+      column ||= path_column
+      _value = entity.send(column)
+
+      where("(#{self.table_name}.#{path_column} like ? or #{self.table_name}.#{path_column} = '#{_value}')", "#{_value}/%")
     end
 
-    scope :exclude_self_and_descendant_entities, -> (entity) do
-      #where.not("(#{self.table_name}.path like ? and #{self.table_name}.path IS NOT NULL)", "#{entity.path}%")
-      where("(#{self.table_name}.path not like ? or #{self.table_name}.path IS NULL)", "#{entity.path}%")
+    scope :exclude_self_and_descendant_entities, -> (entity, column: nil) do
+      column ||= path_column
+
+      where("(#{self.table_name}.#{path_column} not like ? or #{self.table_name}.#{path_column} IS NULL)", "#{entity.path}%")
     end
 
-    scope :descendant_entities, -> (entity) do
-      where("(#{self.table_name}.path like ?)", "#{entity.path}\/%")
+    scope :descendant_entities, -> (entity, column: nil) do
+      column ||= path_column
+
+      where("(#{self.table_name}.#{path_column} like ?)", "#{entity.path}\/%")
     end
 
-    scope :with_tree_depth, -> (tree_depth = 1) do
+    scope :with_tree_depth, -> (tree_depth = 1, column: nil) do
       return none if tree_depth > self.tree_depth
+      column ||= path_column
 
-      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(path) - LENGTH(REPLACE(path, '/', ''))) / LENGTH('/') )}
+      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(#{path_column}) - LENGTH(REPLACE(#{path_column}, '/', ''))) / LENGTH('/') )}
       where("(#{tree_depth_calcul_sql}) = ?", tree_depth)
     end
 
-    scope :self_and_descendant_entities_by_tree_depth, -> (tree_depth) do
+    scope :self_and_descendant_entities_by_tree_depth, -> (tree_depth, column: nil) do
       return none if tree_depth > self.tree_depth
+      column ||= path_column
 
-      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(path) - LENGTH(REPLACE(path, '/', ''))) / LENGTH('/') )}
+      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(#{path_column}) - LENGTH(REPLACE(#{path_column}, '/', ''))) / LENGTH('/') )}
       where("(#{tree_depth_calcul_sql}) >= ?", tree_depth)
     end
 
-    scope :exclude_self_and_descendant_entities_by_tree_depth, -> (tree_depth) do
+    scope :exclude_self_and_descendant_entities_by_tree_depth, -> (tree_depth, column: nil) do
       return none if tree_depth.to_i > self.tree_depth.to_i
+      column ||= path_column
 
-      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(path) - LENGTH(REPLACE(path, '/', ''))) / LENGTH('/') )}
+      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(#{path_column}) - LENGTH(REPLACE(#{path_column}, '/', ''))) / LENGTH('/') )}
       where.not("(#{tree_depth_calcul_sql}) >= ?", tree_depth)
     end
 
-    scope :self_and_ancestor_entities_by_tree_depth, ->(tree_depth) do
+    scope :self_and_ancestor_entities_by_tree_depth, ->(tree_depth, column: nil) do
       return none if tree_depth > self.tree_depth
+      column ||= path_column
 
-      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(path) - LENGTH(REPLACE(path, '/', ''))) / LENGTH('/') )}
+      tree_depth_calcul_sql = %Q{ROUND ( (LENGTH(#{path_column}) - LENGTH(REPLACE(#{path_column}, '/', ''))) / LENGTH('/') )}
       where("(#{tree_depth_calcul_sql}) <= ?", tree_depth)
     end
 
-    scope :order_by_tree_depth, -> (sort = "asc") do
-      order(%Q{ROUND((LENGTH(path) - LENGTH(REPLACE(path, '/', ''))) / LENGTH('/')) #{sort}})
+    scope :order_by_tree_depth, -> (sort = "asc", column: nil) do
+      column ||= path_column
+
+      order(%Q{ROUND((LENGTH(#{path_column}) - LENGTH(REPLACE(#{path_column}, '/', ''))) / LENGTH('/')) #{sort}})
     end
 
     before_update :clean_descendant_cache, if: :path_changed?
@@ -66,6 +79,10 @@ module TreeDescendantable
 
   def descendant_entities
     self.class.descendant_entities(self)
+  end
+
+  def children
+    entities_by_tree_depth(tree_depth + 1, self)
   end
 
   def descendant_entity_ids

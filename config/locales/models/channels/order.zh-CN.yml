@@ -1,0 +1,21 @@
+zh-CN:
+  activerecord:
+    models:
+      channel: "渠道"
+    attributes:
+      channel:
+        id: "ID"
+        name: "名称"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    order:
+      category:
+        seed_shopkeeper: "种子店主"
+        first_agent: "一级代理"
+        channel_manager: "渠道经理"
+      source:
+        always: "奥维思"
+        weichaishi: "微差事"
+        other: "其他渠道"
