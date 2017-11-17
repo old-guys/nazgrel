@@ -5,7 +5,13 @@ module SesameMall::Seekable
     attr_accessor :source_data, :batch_size, :primary_key
 
     attr_accessor :source_data
+
+    def primary_key
+      @primary_key ||= :id
+    end
   end
+
+
 
   def do_whole_sync(relation: , key: nil)
     key ||= primary_key

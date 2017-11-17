@@ -15,3 +15,9 @@ order_seek_job:
   name: "同步订单"
   class: "OrderSeekWorker"
   queue: :seek
+
+income_record_seek_job:
+  cron: "*/5 * * * *"
+  name: "同步收入记录"
+  class: "IncomeRecordSeekWorker"
+  queue: :seek

@@ -5,7 +5,7 @@ class SesameMall::ShopkeeperSeek
   end
 
   def fetch_records(ids: )
-    ::Shopkeeper.where(id: ids)
+    ::Shopkeeper.where(primary_key => ids)
   end
 
   def to_model(data, record: nil)

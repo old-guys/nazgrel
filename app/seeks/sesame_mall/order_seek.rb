@@ -6,7 +6,7 @@ class SesameMall::OrderSeek
   end
 
   def fetch_records(ids: )
-    ::Order.where(order_no: ids)
+    ::Order.where(primary_key => ids)
   end
 
   def to_model(data, record: nil)
