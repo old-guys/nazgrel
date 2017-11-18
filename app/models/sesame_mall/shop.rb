@@ -2,6 +2,13 @@ class Shop < ApplicationRecord
   include TreeDescendantable
   has_one :shopkeeper
 
+  has_many :orders
+  has_many :income_records, through: :shopkeeper
+
+  def to_s
+    name || id.to_s
+  end
+
   def ancestor_shopkeepers
     @_shopes ||= Shopkeeper.where(user_id: shopkeeper.path.to_s.split("/"))
   end

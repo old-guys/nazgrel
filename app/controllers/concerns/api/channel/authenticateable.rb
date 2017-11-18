@@ -24,6 +24,10 @@ module Api::Channel::Authenticateable
     end
 
     RequestStore.store[:current_channel_user] = current_channel_user
+    RequestStore.store[:current_channel] = current_channel_user.try(:channel)
+
+    @current_channel_user = RequestStore.store[:current_channel_user]
+    @current_channel = RequestStore.store[:current_channel]
   end
 
   def current_channel_user
@@ -32,6 +36,13 @@ module Api::Channel::Authenticateable
     if token
       @current_channel_user = ChannelUser.find_by(id: token.user_id)
     end
+  end
+
+  def current_channel
+    @current_channel ||= -> {
+      current_channel_user.try(:channel)
+      RequestStore.store[:current_channel] = current_channel_user.try(:channel)
+    }.call
   end
 
   def current_app

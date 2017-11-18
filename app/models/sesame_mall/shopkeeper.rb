@@ -8,4 +8,9 @@ class Shopkeeper < ApplicationRecord
     foreign_key: :invite_user_id,
     class_name: :Shopkeeper, required: false
 
+  has_many :income_records, foreign_key: :user_id
+
+  def to_s
+    name || id.to_s
+  end
 end

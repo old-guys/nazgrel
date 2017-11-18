@@ -5,7 +5,7 @@ class SesameMall::ShopSeek
   end
 
   def fetch_records(ids: )
-    ::Shop.preload(:shopkeeper).where(id: ids)
+    ::Shop.preload(:shopkeeper).where(primary_key => ids)
   end
 
   def to_model(data, record: nil)

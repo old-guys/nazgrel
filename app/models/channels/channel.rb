@@ -11,4 +11,9 @@ class Channel < ApplicationRecord
     weichaishi: 1,
     other: 2
   }
+
+  include ChannelShopable
+  include ChannelShopStatusable
+  include ChannelOrderable
+  include ChannelShopkeeperable
 end

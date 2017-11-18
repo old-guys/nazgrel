@@ -12,5 +12,11 @@ namespace :api, defaults: { format: :json } do
         get :ping
       end
     end
+
+    resources :dashboard, only: [:index] do
+      collection do
+        get :sales
+      end
+    end
   end
 end
