@@ -13,19 +13,19 @@ module TreeDescendantable
       column ||= path_column
       _value = entity.send(column)
 
-      where("(#{self.table_name}.#{path_column} like ? or #{self.table_name}.#{path_column} = '#{_value}')", "#{_value}/%")
+      where("(#{self.table_name}.#{column} like ? or #{self.table_name}.#{column} = '#{_value}')", "#{_value}/%")
     end
 
     scope :exclude_self_and_descendant_entities, -> (entity, column: nil) do
       column ||= path_column
 
-      where("(#{self.table_name}.#{path_column} not like ? or #{self.table_name}.#{path_column} IS NULL)", "#{entity.path}%")
+      where("(#{self.table_name}.#{column} not like ? or #{self.table_name}.#{column} IS NULL)", "#{entity.send(column)}%")
     end
 
     scope :descendant_entities, -> (entity, column: nil) do
       column ||= path_column
 
-      where("(#{self.table_name}.#{path_column} like ?)", "#{entity.path}\/%")
+      where("(#{self.table_name}.#{column} like ?)", "#{entity.send(column)}\/%")
     end
 
     scope :with_tree_depth, -> (tree_depth = 1, operator: , column: nil) do

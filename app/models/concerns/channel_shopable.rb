@@ -10,12 +10,23 @@ module ChannelShopable
   end
 
   def self_and_descendant_shops
-    own_shop.try(:self_and_descendant_entities)
+    Shop.self_and_descendant_entities(own_shop, column: :channel_path)
   end
   alias :shops :self_and_descendant_shops
 
   def descendant_shops
-    own_shop.try(:descendant_entities)
+    Shop.descendant_entities(own_shop, column: :channel_path)
+  end
+
+  def set_shops_channel_path
+    _records = own_shop.self_and_descendant_entities.find_each.map {|record|
+      record.set_channel_path
+      record
+    }
+
+    Shop.transaction do
+      _records.each &:save
+    end
   end
 
   module ClassMethods
