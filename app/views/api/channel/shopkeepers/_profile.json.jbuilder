@@ -5,3 +5,5 @@ json.user_grade_text record.user_grade_i18n
 
 json.user_phone record.user_phone
 json.user_photo record.user_photo
+
+json.created_at record.created_at
