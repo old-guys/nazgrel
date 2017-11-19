@@ -21,6 +21,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 1.0', '>= 1.0.2'
 
+# Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable
+# and sophisticated paginator for Rails 4+
+gem 'kaminari', '~> 1.1', '>= 1.1.1'
+
 # Extend ActiveRecord pluck to return hash instead of an array.
 # Useful when plucking multiple columns.
 gem 'pluck_to_hash', '~> 1.0', '>= 1.0.2'
@@ -37,6 +41,9 @@ gem 'migration_comments', '~> 0.4.1'
 # Print stack trace of all queries to the Rails log.
 # Helpful to find where queries are being executed in your application.
 gem 'active_record_query_trace', '~> 1.5', '>= 1.5.4'
+
+# Makes http fun! Also, makes consuming restful web services dead easy.
+gem 'httparty', '~> 0.15.6'
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.

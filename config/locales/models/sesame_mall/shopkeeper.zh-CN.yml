@@ -1,0 +1,16 @@
+zh-CN:
+  activerecord:
+    models:
+      shopkeeper: "店主"
+    attributes:
+      order:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    shopkeeper:
+      user_grade:
+        grade_platinum: "白金店主"
+        grade_gold: "黄金店主"
+        grade_trainee: "见习店主"

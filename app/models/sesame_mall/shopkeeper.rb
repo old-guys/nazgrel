@@ -10,7 +10,25 @@ class Shopkeeper < ApplicationRecord
 
   has_many :income_records, foreign_key: :user_id
 
+  enum user_grade: {
+    grade_platinum: 0,
+    grade_gold: 1,
+    grade_trainee: 2
+  }
+
+  include ShopkeeperStatusable
+
   def to_s
-    name || id.to_s
+    user_name || id.to_s
+  end
+
+  def parents
+    _user_ids = path.to_s.split("/")
+    _records = self_and_ancestor_entities
+    _user_ids.shift
+
+    _user_ids.map{|user_id|
+      _records.find{|record| record.user_id.to_s == user_id}
+    }
   end
 end

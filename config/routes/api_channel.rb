@@ -18,5 +18,6 @@ namespace :api, defaults: { format: :json } do
         get :sales
       end
     end
+    resources :shops, only: [:index, :show]
   end
 end
