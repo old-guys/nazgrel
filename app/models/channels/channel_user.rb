@@ -8,6 +8,10 @@ class ChannelUser < ApplicationRecord
   belongs_to :channel
   has_one :api_key, class_name: "ChannelApiKey"
 
+  def to_s
+    name
+  end
+
   def api_token
     return @api_token if @api_token.present?
 

@@ -3,6 +3,7 @@ module Api::Channel::Rescueable
 
   included do
     rescue_from StandardError, with: :rescue_all
+    rescue_from Errors::InvalidParameterError, with: :validation_errors
     rescue_from Errors::InvalidAppError, with: :invalid_app_error
     rescue_from Errors::UserAuthenticationError, with: :user_authentication_error
     rescue_from Errors::RecordNotFoundError, with: :record_not_found_error

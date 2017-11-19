@@ -8,7 +8,8 @@ module Api::Mobile::Authenticateable
 
   private
   def authenticate_app!
-    raise Errors::InvalidAppError.new("device参数错误") unless device.in?(%w(ios android h5 pc))
+    _devices = %w(ios android h5)
+    raise Errors::InvalidAppError.new("device参数错误") unless device.in?(_devices)
   end
 
   def authenticate!

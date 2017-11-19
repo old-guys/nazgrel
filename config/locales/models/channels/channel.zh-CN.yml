@@ -10,7 +10,7 @@ zh-CN:
         updated_at: "更新于"
         deleted_at: "删除于"
   enums:
-    order:
+    channel:
       category:
         seed_shopkeeper: "种子店主"
         first_agent: "一级代理"
@@ -19,3 +19,6 @@ zh-CN:
         always: "奥维思"
         weichaishi: "微差事"
         other: "其他渠道"
+      status:
+        normal: "正常"
+        locked: "冻结"

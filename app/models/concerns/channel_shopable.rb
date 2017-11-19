@@ -7,6 +7,10 @@ module ChannelShopable
 
     belongs_to :own_shopkeeper, class_name: "Shopkeeper",
       foreign_key: :shopkeeper_user_id, required: false
+
+    after_create do
+      set_shops_channel_path
+    end
   end
 
   def self_and_descendant_shops

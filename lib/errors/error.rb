@@ -1,4 +1,5 @@
 module Errors
+  class InvalidParameterError < StandardError; end
   class InvalidAppError < StandardError; end
   class InvalidUserError < StandardError; end
   class AuthError < StandardError; end

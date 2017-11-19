@@ -1,4 +1,5 @@
 class Api::Channel::ShopsController < Api::Channel::BaseController
+  include ActionSearchable
 
   # filters: [{
   #   name: "created_at", field_type: "datetime",

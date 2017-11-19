@@ -1,4 +1,4 @@
-module Api::Mobile::Rescueable
+module Api::Web::Rescueable
   extend ActiveSupport::Concern
 
   included do
