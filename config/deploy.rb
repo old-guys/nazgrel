@@ -10,7 +10,7 @@ set :repo_url, "git@gitlab.ishanggang.com:bi/nazgrel.git"
 set :rvm_ruby_version, '2.4.1'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/dyne/apps/#{fetch(:application)}_#{fetch(:stage)}"
+set :deploy_to, "/ishanggang/apps/#{fetch(:application)}_#{fetch(:stage)}"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh

@@ -24,7 +24,7 @@ Nazgrel is based on Rails + MySQL + Redis,
                 sudo apt-get install nodejs libmysqlclient-dev redis-server
 
         Cent OS
-                sudo yum install nodejs mysql-devel redis-server
+                sudo yum install nodejs mysql-devel redis-server git
 
 设置数据库
 

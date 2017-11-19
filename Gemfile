@@ -109,6 +109,7 @@ group :development do
   gem 'capistrano3-unicorn', '~> 0.2.1'
   # RVM integration for Capistrano
   gem 'capistrano-rvm', '~> 0.1.2'
+  gem 'capistrano-sidekiq', '~> 0.20.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

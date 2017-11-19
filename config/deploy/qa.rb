@@ -2,12 +2,17 @@ set :stage, :dev
 set :rails_env, :production
 set :branch, :master
 
+set :sidekiq_concurrency, 10
+set :sidekiq_processes, 1
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
+server "106.14.159.184:40022", user: "ishanggang_dev", roles: %w{app db web}, my_property: :my_value
+
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
