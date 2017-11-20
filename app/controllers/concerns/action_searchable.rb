@@ -36,10 +36,12 @@ module ActionSearchable
   end
 
   def search_filters
-    if params[:json_key].to_s.include?("filters")
+    _filters = if params[:json_key].to_s.include?("filters")
       JSON.parse(search_params[:filters]) rescue []
     else
       search_params[:filters] || []
     end
+
+    _filters = [] if not _filters.is_a?(Array)
   end
 end
