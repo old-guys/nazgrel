@@ -6,8 +6,8 @@ json.models @shops do |record|
   json.user_grade record.shopkeeper.user_grade
   json.user_grade_text record.shopkeeper.user_grade_i18n
 
-  json.order_amount record.shopkeeper.order_amount
-  json.order_number record.shopkeeper.order_total_price
+  json.order_amount record.shopkeeper.order_total_price
+  json.order_number record.shopkeeper.order_number
 
   json.commission_amount record.income_records.commission_income.sum(:income_amount)
   json.created_at record.created_at
