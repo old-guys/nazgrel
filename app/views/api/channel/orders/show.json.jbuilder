@@ -55,28 +55,41 @@ json.cancel_time @order.cancel_time
 json.order_status @order.order_status
 json.order_status_text @order.order_status_i18n
 
-json.order_status @order.order_status
-json.order_status_text @order.order_status_i18n
-
+# 运费
 json.express_price @order.express_price
+# 优惠价格
 json.sale_price @order.sale_price
+# 佣金相关值
 json.comm @order.comm
+# 支付价格
 json.pay_price @order.pay_price
+# 总价
 json.total_price @order.total_price
 
 json.openid @order.openid
 
+# 是否已经结算佣金
 json.comm_setted @order.comm_setted
 json.comm_setted_text @order.comm_setted_i18n
+# 是否推送
 json.payed_push @order.payed_push
 json.payed_push_text @order.payed_push_i18n
+# 是否满足全局包邮
 json.global_freight_flag @order.global_freight_flag
 json.global_freight_flag_text @order.global_freight_flag_i18n
+# 全局包邮金额
+json.global_freight @order.global_freight
 
+
+
+# 备注
 json.remarks @order.remarks
+# 用户优惠券ID
 json.user_ticket_id @order.user_ticket_id
 
+# 减免价格
 json.reduce_price @order.reduce_price
+# 折扣比例
 json.discount_rate @order.discount_rate
 
 # json.reduce_type @order.reduce_type
