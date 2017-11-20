@@ -6,7 +6,15 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   #   operator: "within", query: "today"
   # }]
   def index
-    @shops = current_channel.descendant_shops
+    @shops = current_channel.descendant_shops.preload(:shopkeeper)
+
+    @shops = filter_records_by(relation: @shops)
+    @shops = filter_by_pagination(relation: @shops)
+  end
+
+  def sales
+    @shops = current_channel.descendant_shops.preload(:shopkeeper)
+    @channel = current_channel
 
     @shops = filter_records_by(relation: @shops)
     @shops = filter_by_pagination(relation: @shops)

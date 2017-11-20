@@ -17,6 +17,8 @@ module ActionSearchable
   #   ]]
   # }]
   def filter_records_by(relation: )
+    return relation if search_filters.blank?
+
     _parse_service = FilterParserService.new(
       relation: relation, filters: search_filters
     )

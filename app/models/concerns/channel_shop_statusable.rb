@@ -16,6 +16,12 @@ module ChannelShopStatusable
     }.to_i
   end
 
+  def total_order_amount
+    Rails.cache.fetch("channel:#{id}:order_total_price:raw", raw: true, expires_in: 3.minutes) {
+      shopkeepers.sum(:order_amount)
+    }
+  end
+
   def today_shop_count
     Rails.cache.fetch("channel:#{id}:today_shop_count:raw", raw: true, expires_in: 3.minutes) {
       shops.where(created_at: Time.now.all_day).size
