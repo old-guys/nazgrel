@@ -19,6 +19,6 @@ json.reward do
   json.children_comission_amount @channel.children_comission_amount
   # 奖励提成
   json.invite_children_amount @channel.invite_children_amount
-
+  # 佣金提成
   json.indirectly_descendant_amount @channel.indirectly_descendant_amount
 end

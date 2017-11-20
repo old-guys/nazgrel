@@ -19,7 +19,11 @@ namespace :api, defaults: { format: :json } do
       end
     end
     resources :shops, only: [:index, :show]
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index, :show] do
+      collection do
+        get :awaiting_delivery, :refund
+      end
+    end
     resources :channels, only: [:show] do
       collection do
         get :my
