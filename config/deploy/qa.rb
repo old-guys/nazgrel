@@ -1,6 +1,6 @@
 set :stage, :dev
 set :rails_env, :production
-set :branch, :master
+set :branch, :deployment
 
 set :sidekiq_concurrency, 10
 set :sidekiq_processes, 1
