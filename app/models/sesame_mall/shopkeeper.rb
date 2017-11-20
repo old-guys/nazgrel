@@ -37,7 +37,7 @@ class Shopkeeper < ApplicationRecord
 
   def commission_income_amount
     Rails.cache.fetch("shopkeeper:#{id}:commission_income_amount:raw", raw: true, expires_in: 30.minutes) {
-      shop.orders.sum(:comm)
+      shop.orders.sales_order.valided_order.sum(:comm)
     }
   end
 

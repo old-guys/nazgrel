@@ -12,13 +12,13 @@ module ChannelShopStatusable
 
   def order_count
     Rails.cache.fetch("channel:#{id}:order_count:raw", raw: true, expires_in: 3.minutes) {
-      orders.size
+      orders.sales_order.valided_order.size
     }.to_i
   end
 
   def total_order_amount
     Rails.cache.fetch("channel:#{id}:order_total_price:raw", raw: true, expires_in: 3.minutes) {
-      Order.where(shop_id: shopkeepers.select(:shop_id)).sales_order.sum(:total_price)
+      Order.where(shop_id: shopkeepers.select(:shop_id)).sales_order.valided_order.sum(:total_price)
     }
   end
 
@@ -30,13 +30,13 @@ module ChannelShopStatusable
 
   def today_order_count
     Rails.cache.fetch("channel:#{id}:today_order_count:raw", raw: true, expires_in: 3.minutes) {
-      orders.where(created_at: Time.now.all_day).size
+      orders.where(created_at: Time.now.all_day).sales_order.valided_order.size
     }.to_i
   end
 
   def commission_amount
     Rails.cache.fetch("channel:#{id}:commissiont:raw", raw: true, expires_in: 3.minutes) {
-      Order.where(user_id: shopkeepers.select(:user_id)).sum(:comm)
+      Order.where(user_id: shopkeepers.select(:user_id)).sales_order.valided_order.sum(:comm)
     }.to_i
   end
 
@@ -48,7 +48,7 @@ module ChannelShopStatusable
 
   def children_comission_amount
     Rails.cache.fetch("channel:#{id}:children_comission:raw", raw: true, expires_in: 3.minutes) {
-      Order.where(user_id: own_shopkeeper.children.select(:user_id)).sum(:comm) * 0.15
+      Order.where(user_id: own_shopkeeper.children.select(:user_id)).sales_order.valided_order.sum(:comm) * 0.15
     }
   end
 
@@ -61,7 +61,7 @@ module ChannelShopStatusable
   def indirectly_descendant_amount
     Rails.cache.fetch("channel:#{id}:indirectly_descendant_comission:raw", raw: true, expires_in: 3.minutes) {
       _rate = own_shopkeeper.indirectly_descendants.size > 1000 ? 0.08 : 0.05
-      _amount = Order.where(user_id: own_shopkeeper.indirectly_descendants.select(:user_id)).sum(:comm)
+      _amount = Order.where(user_id: own_shopkeeper.indirectly_descendants.select(:user_id)).sales_order.valided_order.sum(:comm)
       _amount * _rate
     }
   end

@@ -46,6 +46,11 @@ class Order < ApplicationRecord
       order_type: order_types.slice(:shopkeeper_order, :third_order).values
     )
   }
+  scope :valided_order, ->{
+    where.not(
+      order_status: order_statuses.slice(:canceled, :finished_trouble).values
+    )
+  }
 
   def to_s
     order_no
