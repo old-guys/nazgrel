@@ -18,6 +18,17 @@ class Shopkeeper < ApplicationRecord
 
   include ShopkeeperStatusable
 
+
+  def order_number
+    Rails.cache.fetch("shopkeeper:#{id}:order_number:raw", raw: true, expires_in: 30.minutes) {
+      _value = Order.where(shop_id: shop_id).sales_order.size
+      update_columns(order_number: Order.where(shop_id: shop_id).sales_order.size)
+
+      _value
+    }.to_i
+
+  end
+
   def to_s
     user_name || id.to_s
   end
