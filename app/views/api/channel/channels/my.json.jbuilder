@@ -1,4 +1,5 @@
 json.name @channel.name
+json.shop_name @channel.own_shop.to_s
 json.category @channel.category
 json.category_text @channel.category_i18n
 json.source @channel.source

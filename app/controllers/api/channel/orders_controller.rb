@@ -6,21 +6,21 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
   #   operator: "within", query: "today"
   # }]
   def index
-    @orders = current_channel.orders.sales_order
+    @orders = current_channel.orders.sales_order.order(created_at: :desc)
 
     @orders = filter_records_by(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
   end
 
   def awaiting_delivery
-    @orders = current_channel.orders.sales_order.awaiting_delivery
+    @orders = current_channel.orders.sales_order.awaiting_delivery.order(created_at: :desc)
 
     @orders = filter_records_by(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
   end
 
   def refund
-    @orders = current_channel.orders.sales_order.none
+    @orders = current_channel.orders.sales_order.none.order(created_at: :desc)
 
     @orders = filter_records_by(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
