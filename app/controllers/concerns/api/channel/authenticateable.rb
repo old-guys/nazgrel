@@ -33,9 +33,9 @@ module Api::Channel::Authenticateable
 
   def current_channel_user
     return @current_channel_user if defined?(@current_channel_user)
-    token = ApiKey.find_by(access_token: auth_params[:user_token])
+    token = ChannelApiKey.find_by(access_token: auth_params[:user_token])
     if token
-      @current_channel_user = ChannelUser.find_by(id: token.user_id)
+      @current_channel_user = ChannelUser.find_by(id: token.keyable_id)
     end
   end
 

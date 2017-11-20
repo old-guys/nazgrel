@@ -7,6 +7,9 @@ module ApiKeyable
     before_create :generate_access_token
   end
 
+  def keyable_id
+    send(user_id_column)
+  end
 
   def delete_api_token_cache(value: nil)
     value ||= send(user_id_column)

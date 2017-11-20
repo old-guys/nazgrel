@@ -31,7 +31,7 @@ module Api::Mobile::Authenticateable
     return @current_user if defined?(@current_user)
     token = ApiKey.find_by(access_token: auth_params[:user_token])
     if token
-      @current_user = User.find_by(id: token.user_id)
+      @current_user = User.find_by(id: token.keyable_id)
     end
   end
 
