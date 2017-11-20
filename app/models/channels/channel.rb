@@ -4,7 +4,8 @@ class Channel < ApplicationRecord
   enum category: {
     seed_shopkeeper: 0,
     first_agent: 1,
-    channel_manager: 2
+    channel_manager: 2,
+    operator_manager: 3
   }
   enum source: {
     always: 0,
