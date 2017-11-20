@@ -41,7 +41,7 @@ class SesameMall::OrderSeek
       finish_time: data[:finish_time],
       cancel_time: data[:cancel_time],
 
-      order_status: data[:order_status],
+      order_status: data[:order_status].to_i,
 
       express_price: data[:express_price],
       sale_price: data[:sale_price],
