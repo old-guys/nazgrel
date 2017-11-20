@@ -18,7 +18,7 @@ module ChannelShopStatusable
 
   def total_order_amount
     Rails.cache.fetch("channel:#{id}:order_total_price:raw", raw: true, expires_in: 3.minutes) {
-      shopkeepers.sum(:order_amount)
+      Order.where(shop_id: shopkeepers.select(:shop_id)).sales_order.sum(:total_price)
     }
   end
 

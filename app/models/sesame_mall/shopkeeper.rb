@@ -26,7 +26,13 @@ class Shopkeeper < ApplicationRecord
 
       _value
     }.to_i
+  end
 
+  def order_total_price
+    Rails.cache.fetch("shopkeeper:#{id}:order_total_price:raw", raw: true, expires_in: 30.minutes) {
+      _value = Order.where(shop_id: shop_id).sales_order.sum(:total_price)
+      _value
+    }.to_i
   end
 
   def to_s
