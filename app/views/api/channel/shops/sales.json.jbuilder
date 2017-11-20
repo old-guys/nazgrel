@@ -9,7 +9,6 @@ json.models @shops do |record|
   json.order_amount record.shopkeeper.order_total_price
   json.order_number record.shopkeeper.order_number
 
-  json.commission_amount record.income_records.commission_income.sum(:income_amount)
   json.created_at record.created_at
 end
 

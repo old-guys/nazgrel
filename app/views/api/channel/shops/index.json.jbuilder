@@ -10,6 +10,6 @@ json.models @shops do |record|
   json.child_count record.children.size
   json.indirectly_descendant record.indirectly_descendant_entities.size
 
-  json.commission_amount record.income_records.commission_income.sum(:income_amount)
+  json.commission_amount record.shopkeeper.commission_income_amount
   json.created_at record.created_at
 end

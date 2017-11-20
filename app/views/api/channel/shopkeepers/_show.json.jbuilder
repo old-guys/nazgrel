@@ -28,10 +28,9 @@ end
 # income
 # 账户总收入
 json.total_income_amount record.total_income_amount
-# 佣金收入（店铺佣金） 团队收益
-json.commission_income_amount record.income_records.commission_income.sum(:income_amount)
-# 账户余额
-# json.balance_amount	record.balance_amount
+# 店铺佣金
+json.commission_income_amount record.commission_income_amount
+
 # 已提现金额
 json.withdraw_amount record.withdraw_amount
 # 冻结金额
@@ -40,8 +39,10 @@ json.withdraw_amount record.withdraw_amount
 json.invite_amount record.invite_amount
 # 邀请总人数
 json.invite_number record.invite_number
-# 订单收入 店铺收益
-json.order_amount	record.order_amount
+# 店铺收益
+json.order_amount	record.income_records.commission_income.sum(:income_amount)
+# 账户余额
+# json.balance_amount	record.order_amount
 
 # 数据统计
 # 订单总数
