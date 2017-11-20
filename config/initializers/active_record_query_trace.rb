@@ -1,4 +1,4 @@
-if SERVICES_CONFIG[:active_record_query_trace]
+if SERVICES_CONFIG["active_record_query_trace"]
   ActiveRecordQueryTrace.enabled = true
   ActiveRecordQueryTrace.level = :app # default
   ActiveRecordQueryTrace.ignore_cached_queries = true # Default is false.
