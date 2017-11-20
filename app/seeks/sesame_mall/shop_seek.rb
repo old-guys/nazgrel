@@ -18,9 +18,10 @@ class SesameMall::ShopSeek
       user_id: data[:USER_ID],
       desc: data[:SHOP_DESC],
 
-      created_at: data[:CREATE_DATE],
-      updated_at: data[:UPDATE_TIME]
+      created_at: parse_no_timezone(datetime: data[:CREATE_DATE]),
+      updated_at: parse_no_timezone(datetime: data[:UPDATE_TIME])
     )
+
     if record.shopkeeper.present?
       record.set_path
       record.set_channel_path

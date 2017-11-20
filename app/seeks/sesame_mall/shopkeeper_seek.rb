@@ -37,12 +37,12 @@ class SesameMall::ShopkeeperSeek
       province: data[:province],
       ticket_no: data[:ticket_no],
 
-      expire_time: data[:expire_time],
+      expire_time: parse_no_timezone(datetime: data[:expire_time]),
       use_invite_number: data[:use_invite_number],
       org_grade: data[:org_grade],
 
-      created_at: data[:create_time],
-      updated_at: data[:update_time]
+      created_at: parse_no_timezone(datetime: data[:create_time]),
+      updated_at: parse_no_timezone(datetime: data[:update_time])
     )
 
     record.assign_attributes(

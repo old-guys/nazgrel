@@ -53,6 +53,10 @@ module SesameMall::Seekable
     }
   end
 
+  private
+  def parse_no_timezone(datetime: )
+    datetime.is_a?(ActiveSupport::TimeWithZone) ? (datetime - datetime.utc_offset).utc : datetime
+  end
   module ClassMethods
   end
 end

@@ -31,8 +31,8 @@ class SesameMall::IncomeRecordSeek
       ticket_no: data[:ticket_no],
       remark: data[:remark],
 
-      created_at: data[:create_time],
-      updated_at: data[:update_time]
+      created_at: parse_no_timezone(datetime: data[:create_time]),
+      updated_at: parse_no_timezone(datetime: data[:update_time])
     )
 
     record

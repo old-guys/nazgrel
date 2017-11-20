@@ -36,10 +36,10 @@ class SesameMall::OrderSeek
       order_type: Order.order_types.invert[data[:order_type]],
       ref_type: Order.ref_types.invert[data[:ref_type]],
 
-      pay_time: data[:pay_time],
-      deliver_time: data[:deliver_time],
-      finish_time: data[:finish_time],
-      cancel_time: data[:cancel_time],
+      pay_time: parse_no_timezone(datetime: data[:pay_time]),
+      deliver_time: parse_no_timezone(datetime: data[:deliver_time]),
+      finish_time: parse_no_timezone(datetime: data[:finish_time]),
+      cancel_time: parse_no_timezone(datetime: data[:cancel_time]),
 
       order_status: data[:order_status].to_i,
 
@@ -64,7 +64,8 @@ class SesameMall::OrderSeek
       discount_rate: data[:discount_rate],
       reduce_type: ::Order.reduce_types.invert[data[:reduce_type]],
 
-      created_at: data[:create_time],
+      created_at: parse_no_timezone(datetime: data[:create_time]),
+      updated_at: parse_no_timezone(datetime: data[:update_time])
     )
 
     record
