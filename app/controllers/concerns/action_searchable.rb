@@ -41,7 +41,8 @@ module ActionSearchable
     else
       search_params[:filters] || []
     end
-
     _filters = [] if not _filters.is_a?(Array)
+
+    _filters
   end
 end
