@@ -2,8 +2,17 @@ module ApiKeyable
   extend ActiveSupport::Concern
 
   included do
+    class_attribute :user_id_column
+
     before_create :generate_access_token
-    after_commit :delete_api_token_cache, on: :update
+  end
+
+
+  def delete_api_token_cache(value: nil)
+    value ||= send(user_id_column)
+    _cache_key = self.class.api_token_cache_key(value)
+
+    Rails.cache.delete(_cache_key)
   end
 
   private
@@ -14,14 +23,15 @@ module ApiKeyable
     end while self.class.exists?(access_token: access_token)
   end
 
-  def delete_api_token_cache
-    cache_key = self.class.api_token_cache_key(user_id)
-    Rails.cache.delete(cache_key)
-  end
-
   module ClassMethods
-    def api_token_cache_key(user_id)
-      "#{to_s}:user_id_#{user_id}"
+    def api_key_on(column: )
+      self.user_id_column = column
+
+      after_commit :delete_api_token_cache, on: :update
+    end
+
+    def api_token_cache_key(value)
+      "#{to_s.underscore}:user_id_#{value}"
     end
   end
 end
