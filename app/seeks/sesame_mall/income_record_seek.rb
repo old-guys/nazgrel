@@ -19,11 +19,11 @@ class SesameMall::IncomeRecordSeek
       income_amount: data[:income_amount],
 
       source_user_id: data[:source_user_id],
-      source_user_level: data[:source_user_level],
+      source_user_level: ::IncomeRecord.source_user_levels.invert[data[:source_user_level]],
 
-      source_user_level: data[:source_user_level],
-      record_type: data[:type],
-      status: data[:status],
+
+      income_type: ::IncomeRecord.income_types.invert[data[:type]],
+      status: ::IncomeRecord.statuses.invert[data[:status]],
 
       order_id: data[:order_id],
 

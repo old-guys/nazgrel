@@ -15,7 +15,7 @@ module SesameMall::Seekable
 
   def do_whole_sync(relation: , key: nil)
     key ||= primary_key
-    batch_size ||= 1000
+    self.batch_size ||= 1000
 
     Utility.simple_batch_operate(relation, batch_size: batch_size, primary_key: key) {|records|
       self.source_data = records
@@ -40,13 +40,15 @@ module SesameMall::Seekable
       _exists_records = fetch_records(ids: record_ids)
 
       _records = hashes.map{|data|
-        _record = _exists_records.find{|c| c.send(primary_key) == data[primary_key]}
+        _record = _exists_records.find{|c| c.send(primary_key).to_s == data[primary_key].to_s}
 
         to_model(data, record: _record)
       }
 
       ActiveRecord::Base.transaction do
-        _records.each &:save
+        _records.each {|record|
+          record.save rescue nil
+        }
       end
     }
   end

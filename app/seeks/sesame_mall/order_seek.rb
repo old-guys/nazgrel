@@ -33,8 +33,8 @@ class SesameMall::OrderSeek
       district: data[:district],
       detail_address: data[:detail_address],
 
-      order_type: data[:order_type],
-      ref_type: data[:ref_type],
+      order_type: Order.order_types.invert[data[:order_type]],
+      ref_type: Order.ref_types.invert[data[:ref_type]],
 
       pay_time: data[:pay_time],
       deliver_time: data[:deliver_time],
@@ -48,23 +48,23 @@ class SesameMall::OrderSeek
       comm: data[:comm],
       pay_price: data[:pay_price],
       total_price: data[:total_price],
-      comm_setted: data[:comm_setted],
+      comm_setted: ::Order.comm_setteds.invert[data[:comm_setted]],
 
       openid: data[:openid],
-      payed_push: data[:payed_push],
+      payed_push: ::Order.payed_pushes.invert[data[:payed_push]],
       remarks: data[:remarks],
 
       activity_id: data[:activity_id],
 
       global_freight: data[:global_freight],
-      global_freight_flag: data[:global_freight_flag],
+      global_freight_flag: ::Order.global_freight_flags.invert[data[:global_freight_flag]],
 
       user_ticket_id: data[:user_ticket_id],
       reduce_price: data[:reduce_price],
       discount_rate: data[:discount_rate],
-      reduce_type: data[:reduce_type],
+      reduce_type: ::Order.reduce_types.invert[data[:reduce_type]],
 
-      created_at: data[:creat_time],
+      created_at: data[:create_time],
     )
 
     record
@@ -73,6 +73,7 @@ class SesameMall::OrderSeek
   class << self
     def whole_sync
       seek = self.new
+      seek.batch_size = 2
 
       seek.do_whole_sync(relation: SesameMall::Source::Order, key: :shop_id)
     end

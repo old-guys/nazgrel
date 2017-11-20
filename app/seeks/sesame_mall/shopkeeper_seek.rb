@@ -18,7 +18,8 @@ class SesameMall::ShopkeeperSeek
       user_name: data[:user_name],
       user_phone: data[:user_phone],
       user_photo: data[:user_photo],
-      user_grade: data[:user_grade],
+      user_grade: ::Shopkeeper.user_grades.invert[data[:user_grade]],
+
       shop_id: data[:shop_id],
 
       total_income_amount: data[:total_income_amount],
@@ -40,7 +41,7 @@ class SesameMall::ShopkeeperSeek
       use_invite_number: data[:use_invite_number],
       org_grade: data[:org_grade],
 
-      created_at: data[:creat_time],
+      created_at: data[:create_time],
       updated_at: data[:update_time]
     )
 

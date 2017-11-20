@@ -37,4 +37,17 @@ class Order < ApplicationRecord
     yes: 1,
     no: 0
   }, _prefix: true
+  enum reduce_type: {
+    activity: 0
+  }
+
+  scope :sales_order, ->{
+    where(
+      order_type: order_types.slice(:shopkeeper_order, :third_order).values
+    )
+  }
+
+  def to_s
+    order_no
+  end
 end
