@@ -22,7 +22,7 @@ module ApiKeyable
   def generate_access_token
     begin
       secure_key = SecureRandom.hex
-      self.access_token = Digest::SHA256.base64digest("api_key_#{secure_key}")
+      self.access_token = Digest::MD5.hexdigest("api_key_#{secure_key}")
     end while self.class.exists?(access_token: access_token)
   end
 

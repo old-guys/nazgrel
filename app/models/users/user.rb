@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :lockable
 
-  has_one :api_key
+  has_one :api_key, dependent: :destroy
 
   def api_token
     return @api_token if @api_token.present?

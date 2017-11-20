@@ -6,7 +6,7 @@ class ChannelUser < ApplicationRecord
          :lockable
 
   belongs_to :channel
-  has_one :api_key, class_name: "ChannelApiKey"
+  has_one :api_key, class_name: "ChannelApiKey", dependent: :destroy
 
   def to_s
     name
