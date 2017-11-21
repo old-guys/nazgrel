@@ -25,7 +25,9 @@ module SesameMall::Seekable
   end
 
   def do_partial_sync(relation: )
-    relation.find_in_batches(batch_size: batch_size){|records|
+    self.batch_size ||= 1000
+
+    relation.in_batches(of: batch_size){|records|
       self.source_data = records
 
       process
@@ -35,7 +37,7 @@ module SesameMall::Seekable
   def process
     self.batch_size ||= 50
 
-    source_data.limit(1000).pluck_h.each_slice(batch_size) {|hashes|
+    source_data.pluck_h.each_slice(batch_size) {|hashes|
       record_ids = hashes.pluck(primary_key)
       _exists_records = fetch_records(ids: record_ids)
 
