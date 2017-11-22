@@ -1,0 +1,16 @@
+zh-CN:
+  activerecord:
+    models:
+      channel_user: "渠道用户"
+    attributes:
+      channel:
+        id: "ID"
+        name: "名称"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    channel_user:
+      role_type:
+        manager: "管理员"
+        first_agent: "普通用户"
