@@ -13,6 +13,9 @@ class Api::Web::ConstantSettingController < Api::Web::BaseController
         category: ::Channel.categories_i18n,
         source: ::Channel.sources_i18n
       },
+      channel_user: {
+        category: ::ChannelUser.role_types_i18n,
+      },
       order: {
         order_status: ::Order.order_statuses_i18n,
         order_type: ::Order.order_types_i18n,

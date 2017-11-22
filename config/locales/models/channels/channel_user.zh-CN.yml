@@ -13,4 +13,4 @@ zh-CN:
     channel_user:
       role_type:
         manager: "管理员"
-        first_agent: "普通用户"
+        normal_user: "普通用户"
