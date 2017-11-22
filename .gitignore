@@ -60,3 +60,5 @@ bower.json
 !/tmp/.keep
 
 .byebug_history
+
+.idea/

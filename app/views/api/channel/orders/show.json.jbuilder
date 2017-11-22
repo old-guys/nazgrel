@@ -20,7 +20,7 @@ json.shop_id @order.shop_id
 json.shop_name @order.shop_name
 # 店主名
 json.shop_username @order.shop_username
-# 店主手机号
+# 店主id
 json.shop_user_id @order.shop_user_id
 # 店主手机号
 json.shop_phone @order.shop_phone
