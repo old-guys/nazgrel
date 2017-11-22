@@ -2,34 +2,20 @@ module ChannelShopable
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :own_shop, class_name: "Shop",
-      foreign_key: :shop_id, required: false
-
-    belongs_to :own_shopkeeper, class_name: "Shopkeeper",
-      foreign_key: :shopkeeper_user_id, primary_key: :user_id, required: false
-
-    after_create do
-      set_shops_channel_path
-    end
+    has_many :root_shops, through: :channel_users, source: "own_shop"
   end
 
-  def self_and_descendant_shops
-    Shop.self_and_descendant_entities(own_shop, column: :channel_path)
-  end
-  alias :shops :self_and_descendant_shops
+  def shops
+    _root_shops = root_shops.to_a
 
-  def descendant_shops
-    Shop.descendant_entities(own_shop, column: :channel_path)
-  end
-
-  def set_shops_channel_path
-    _records = own_shop.self_and_descendant_entities.find_each.map {|record|
-      record.set_channel_path
-      record
-    }
-
-    Shop.transaction do
-      _records.each &:save
+    if _root_shops.length == 1
+      Shop.self_and_descendant_entities(_root_shops[0], column: :channel_path)
+    else
+      _shops = Shop.self_and_descendant_entities(_root_shops.shift, column: :channel_path)
+      _root_shops.each {|shop|
+        _shops = _shops.or(Shop.self_and_descendant_entities(shop, column: :channel_path))
+      }
+      _shops
     end
   end
 
