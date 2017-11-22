@@ -1,4 +1,4 @@
-json.partial! 'api/shared/paginator', records: @shops
+json.partial! 'api/shared/paginator', records: @orders
 json.models @orders do |record|
   json.(record, :id, :order_no, :user_id,
     :shop_name, :shop_username, :shop_user_id,
