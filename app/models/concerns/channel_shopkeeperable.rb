@@ -2,16 +2,11 @@ module ChannelShopkeeperable
   extend ActiveSupport::Concern
 
   included do
-
+    has_many :root_shopkeepers, through: :root_shops, source: :shopkeeper
   end
 
-  def self_and_descendant_shopkeepers
-    Shopkeeper.where(shop_id: self_and_descendant_shops.select(:id))
-  end
-  alias :shopkeepers :self_and_descendant_shopkeepers
-
-  def descendant_shopkeepers
-    Shopkeeper.where(shop_id: descendant_shops.select(:id))
+  def shopkeepers
+    Shopkeeper.where(shop_id: shops.select(:id))
   end
 
   module ClassMethods

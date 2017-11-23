@@ -20,6 +20,7 @@ namespace :api, defaults: { format: :json } do
     end
 
     resources :channels
+    resources :channel_users
 
     resources :shopkeepers, only: [] do
       collection do

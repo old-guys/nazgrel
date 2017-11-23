@@ -75,6 +75,17 @@ namespace :deploy do
   end
   before "deploy:updated", "deploy:run_code_check"
 
+  desc "run rake task on remote server 'cap qa deploy:runrake task=stats'"
+  task :runrake do
+    on roles(:db), in: :groups, limit: 1, wait: 10 do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          rake ENV['task']
+        end
+      end
+    end
+  end
+
   desc 'upload setup_config for application'
   task :upload_config do
     on roles(:web), in: :sequence, wait: 5 do

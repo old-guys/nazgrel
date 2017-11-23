@@ -8,6 +8,19 @@ class ChannelUser < ApplicationRecord
   belongs_to :channel
   has_one :api_key, class_name: "ChannelApiKey", dependent: :destroy
 
+  enum role_type: {
+    normal_user: 0,
+    manager: 1
+  }
+
+  include ChannelUserShopable
+  include ChannelUserStatusable
+  include ChannelUserOrderable
+  include ChannelUserShopkeeperable
+
+  include ChannelUserRoleable
+  include ChannelUserOwnable
+
   def to_s
     name
   end

@@ -20,15 +20,26 @@ module Api::Channel::Authenticateable
       raise Errors::UserAuthenticationError.new(change_reason)
     end
 
-    if current_channel_user.try(:deleted?)
-      raise Errors::UserAuthenticationError.new("该用户已经被删除")
-    end
-
     RequestStore.store[:current_channel_user] = current_channel_user
     RequestStore.store[:current_channel] = current_channel_user.try(:channel)
 
     @current_channel_user = RequestStore.store[:current_channel_user]
     @current_channel = RequestStore.store[:current_channel]
+
+    if current_channel_user.try(:deleted?)
+      raise Errors::UserAuthenticationError.new("该用户已经被删除")
+    end
+
+    if current_channel_user.try(:access_locked?)
+      raise Errors::UserAuthenticationError.new("该用户已经被冻结")
+    end
+
+    unless @current_channel
+      raise Errors::UserAuthenticationError.new("该用户的渠道是无效的")
+    end
+    unless @current_channel.normal?
+      raise UserAuthenticationError.new("该用户的渠道已经被冻结")
+    end
   end
 
   def current_channel_user

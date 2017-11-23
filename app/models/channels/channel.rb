@@ -1,5 +1,5 @@
 class Channel < ApplicationRecord
-  has_one :channel_user, autosave: true
+  has_many :channel_users, autosave: true, dependent: :destroy
 
   enum category: {
     seed_shopkeeper: 0,
@@ -18,7 +18,6 @@ class Channel < ApplicationRecord
   }
 
   include ChannelShopable
-  include ChannelShopStatusable
   include ChannelOrderable
   include ChannelShopkeeperable
 

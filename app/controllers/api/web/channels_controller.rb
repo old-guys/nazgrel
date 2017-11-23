@@ -2,7 +2,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
   include ActionSearchable
 
   def index
-    @channels = ::Channel.order(id: :desc)
+    @channels = ::Channel.preload(:channel_users).order(id: :desc)
 
     @channels = filter_by_pagination(relation: @channels)
   end
@@ -55,7 +55,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
     params.require(:channel).permit(
       :name, :category, :source, :status,
       :shopkeeper_user_id, channel_user: [
-        :name, :phone, :password
+        :name, :role_type, :phone, :password
       ]
     )
   end

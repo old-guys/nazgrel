@@ -12,4 +12,4 @@ json.models @shops do |record|
   json.created_at record.created_at
 end
 
-json.total_order_amount @channel.total_order_amount
+json.total_order_amount @channel_user.total_order_amount
