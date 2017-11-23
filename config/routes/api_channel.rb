@@ -28,6 +28,7 @@ namespace :api, defaults: { format: :json } do
         get :awaiting_delivery, :refund
       end
     end
+    get "channel_users/my", to: "channels#my"
     resources :channels, only: [:show] do
       collection do
         get :my
