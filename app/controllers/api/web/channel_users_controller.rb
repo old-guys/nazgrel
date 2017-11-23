@@ -3,6 +3,9 @@ class Api::Web::ChannelUsersController < Api::Web::BaseController
 
   def index
     @channel_users = ::ChannelUser.order(id: :desc)
+    if params[:channel_id]
+      @channel_users = @channel_users.where(channel_id: params[:channel_id])
+    end
 
     @channel_users = filter_by_pagination(relation: @channel_users)
   end

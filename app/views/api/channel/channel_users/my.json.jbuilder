@@ -2,6 +2,7 @@ json.name @channel_user.name
 json.shop_name @channel_user.own_shop.to_s
 
 json.channel do
+  json.id @channel_user.channel_id
   json.name @channel_user.channel.name
   json.category @channel_user.channel.category
   json.category_text @channel_user.channel.category_i18n
