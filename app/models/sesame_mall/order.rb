@@ -51,6 +51,9 @@ class Order < ApplicationRecord
       order_status: order_statuses.slice(:canceled, :finished_trouble).values
     )
   }
+  scope :undelivered_than_hour, ->(hour: 48) {
+    awaiting_delivery.where(deliver_time: nil).where("TIMESTAMPDIFF(hour, `orders`.`pay_time`, :datetime) >= :interval", datetime: Time.now.beginning_of_minute, interval: hour)
+  }
 
   def to_s
     order_no

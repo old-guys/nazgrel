@@ -13,7 +13,7 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
   end
 
   def awaiting_delivery
-    @orders = current_channel_user.own_orders.sales_order.awaiting_delivery.order(created_at: :desc)
+    @orders = current_channel_user.own_orders.sales_order.undelivered_than_hour.order(created_at: :desc)
 
     @orders = filter_records_by(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
