@@ -1,5 +1,6 @@
 class Channel < ApplicationRecord
-  has_many :channel_users, autosave: true, dependent: :destroy
+  has_many :channel_users, autosave: true, dependent: :nullify
+  has_many :channel_channel_region_maps, dependent: :destroy
 
   enum category: {
     seed_shopkeeper: 0,
