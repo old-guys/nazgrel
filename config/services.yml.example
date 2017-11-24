@@ -30,6 +30,9 @@ defaults: &defaults
       - :subdomain
       - :uuid
 
+  rack_cors:
+    origins: '*'
+
 development:
   <<: *defaults
 
