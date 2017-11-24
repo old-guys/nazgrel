@@ -14,8 +14,8 @@ zh-CN:
       category:
         seed_shopkeeper: "种子店主"
         first_agent: "一级代理"
-        channel_manager: "渠道经理"
-        operator_manager: "营运经理"
+        channel_manager: "固定督导"
+        operator_manager: "地区主管及以上"
       source:
         always: "奥维思"
         weichaishi: "微差事"
