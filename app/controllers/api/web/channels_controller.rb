@@ -18,7 +18,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
     if _shopkeeper.present?
       raise Errors::InvalidParameterError.new("无效的店主用户ID")
     else
-      _attrs = params[:channel_user].slice(
+      _attrs = channel_params[:channel_user].slice(
         :name, :phone, :password
       ) || {}
       _attrs.reverse_merge!(
@@ -39,7 +39,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
 
   def update
     @channel = ::Channel.find(params[:id])
-    if params[:channel_user].present?
+    if channel_params[:channel_user].present?
       @channel.channel_user.password = params[:channel_user][:password]
     end
 
