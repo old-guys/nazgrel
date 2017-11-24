@@ -53,7 +53,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
   private
   def channel_params
     params.require(:channel).permit(
-      :name, :category, :source, :status,
+      :name, :category, :city, :source, :status,
       :shopkeeper_user_id, channel_user: [
         :name, :role_type, :phone, :password
       ]

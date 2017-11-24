@@ -1,5 +1,6 @@
 json.id record.id
 json.name record.to_s
+json.city record.city
 json.category record.category
 json.category_text record.category_i18n
 json.source record.source
