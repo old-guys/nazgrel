@@ -1,7 +1,7 @@
 zh-CN:
   activerecord:
     models:
-      channel_user: "渠道用户"
+      channel_region: "渠道管理"
     attributes:
       channel:
         id: "ID"
@@ -10,8 +10,7 @@ zh-CN:
         updated_at: "更新于"
         deleted_at: "删除于"
   enums:
-    channel_user:
-      role_type:
-        manager: "管理员"
-        normal_user: "普通用户"
-        region_manager: "渠道管理员"
+    channel_region:
+      status:
+        normal: "正常"
+        locked: "冻结"

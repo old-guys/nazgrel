@@ -3,6 +3,7 @@ json.name record.name
 json.phone record.phone
 
 json.channel_id record.channel_id
+json.channel_region_id record.channel_region_id
 
 json.role_type record.role_type
 json.role_type_text record.role_type_i18n

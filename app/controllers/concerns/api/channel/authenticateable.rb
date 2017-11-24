@@ -22,9 +22,11 @@ module Api::Channel::Authenticateable
 
     RequestStore.store[:current_channel_user] = current_channel_user
     RequestStore.store[:current_channel] = current_channel_user.try(:channel)
+    RequestStore.store[:current_channel_region] = current_channel_user.try(:channel_region)
 
     @current_channel_user = RequestStore.store[:current_channel_user]
     @current_channel = RequestStore.store[:current_channel]
+    @current_channel_region = RequestStore.store[:current_channel_region]
 
     if current_channel_user.try(:deleted?)
       raise Errors::UserAuthenticationError.new("该用户已经被删除")
@@ -34,11 +36,17 @@ module Api::Channel::Authenticateable
       raise Errors::UserAuthenticationError.new("该用户已经被冻结")
     end
 
-    unless @current_channel
-      raise Errors::UserAuthenticationError.new("该用户的渠道是无效的")
-    end
-    unless @current_channel.normal?
-      raise UserAuthenticationError.new("该用户的渠道已经被冻结")
+    if current_channel_user.region_manager?
+      if not @current_channel_region.try(:normal?)
+        raise Errors::UserAuthenticationError.new("该用户的渠道管理是无效的")
+      end
+    else
+      unless @current_channel
+        raise Errors::UserAuthenticationError.new("该用户的渠道是无效的")
+      end
+      unless @current_channel.normal?
+        raise UserAuthenticationError.new("该用户的渠道已经被冻结")
+      end
     end
   end
 
@@ -52,8 +60,13 @@ module Api::Channel::Authenticateable
 
   def current_channel
     @current_channel ||= -> {
-      current_channel_user.try(:channel)
       RequestStore.store[:current_channel] = current_channel_user.try(:channel)
+    }.call
+  end
+
+  def current_channel_region
+    @current_channel_region ||= -> {
+      RequestStore.store[:current_channel_region] = current_channel_user.try(:channel_region)
     }.call
   end
 

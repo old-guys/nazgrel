@@ -7,10 +7,6 @@ module ChannelUserShopable
 
     belongs_to :own_shopkeeper, class_name: "Shopkeeper",
       foreign_key: :shopkeeper_user_id, primary_key: :user_id, required: false
-
-    after_create do
-      set_shops_channel_path
-    end
   end
 
   def self_and_descendant_shops
@@ -20,17 +16,6 @@ module ChannelUserShopable
 
   def descendant_shops
     Shop.descendant_entities(own_shop, column: :channel_path)
-  end
-
-  def set_shops_channel_path
-    _records = own_shop.self_and_descendant_entities.find_each.map {|record|
-      record.set_channel_path
-      record
-    }
-
-    Shop.transaction do
-      _records.each(&:save)
-    end
   end
 
   module ClassMethods

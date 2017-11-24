@@ -129,9 +129,22 @@ shopkeeper
 
 ### 渠道下属层级
 
+* 渠道上面有渠道大区
+* 渠道大区可以设置大区管理
+* 渠道大区可以查看所有下属渠道的数据
 * 渠道下面有渠道人员
 * 渠道人员分为管理员和普通用户
 * 渠道人员必须是芝麻城店主
+* 渠道人员的店不应该超出渠道所在根结点的所属下级店铺范围
 * 渠道人员和芝麻店铺和店主是一对一关联
 * 管理员可以查看渠道下属所有店铺数据
 * 普通用户只能查看自己所属店铺以及邀请的数据
+
+
+```shell
+             channel_region(region_manager)
+    channel                   channel
+    manager                   manager
+normal_user  normal_user      normal_user
+shop         shop             shop
+```

@@ -21,6 +21,8 @@ class Channel < ApplicationRecord
   include ChannelOrderable
   include ChannelShopkeeperable
 
+  include ChannelStatusable
+
   def to_s
     name
   end

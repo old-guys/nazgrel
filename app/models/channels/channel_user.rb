@@ -5,12 +5,14 @@ class ChannelUser < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :lockable
 
-  belongs_to :channel
+  belongs_to :channel, required: false
+  belongs_to :channel_region, required: false
   has_one :api_key, class_name: "ChannelApiKey", dependent: :destroy
 
   enum role_type: {
     normal_user: 0,
-    manager: 1
+    manager: 1,
+    region_manager: 2
   }
 
   include ChannelUserShopable

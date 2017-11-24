@@ -2,19 +2,23 @@ json.name @channel_user.name
 json.shop_name @channel_user.own_shop.to_s
 
 json.channel do
-  json.id @channel_user.channel_id
-  json.name @channel_user.channel.name
-  json.category @channel_user.channel.category
-  json.category_text @channel_user.channel.category_i18n
-  json.source @channel_user.channel.source
-  json.source_text @channel_user.channel.source_i18n
+  if @channel_user.channel
+    json.id @channel_user.channel_id
+    json.name @channel_user.channel.name
+    json.category @channel_user.channel.category
+    json.category_text @channel_user.channel.category_i18n
+    json.source @channel_user.channel.source
+    json.source_text @channel_user.channel.source_i18n
+  end
 end
 
 json.shopkeeper_user_id @channel_user.shopkeeper_user_id
 json.shop_id @channel_user.shop_id
 
 json.shopkeeper do
-  json.partial! 'api/channel/shopkeepers/profile', record: @channel_user.own_shopkeeper
+  if @channel_user.own_shopkeeper
+    json.partial! 'api/channel/shopkeepers/profile', record: @channel_user.own_shopkeeper
+  end
 end
 
 # 奖励
