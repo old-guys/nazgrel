@@ -15,24 +15,17 @@ class Api::Web::ChannelUsersController < Api::Web::BaseController
   end
 
   def create
-    @channel = ::Channel.find_by(id: params[:channel_id])
-    if @channel.blank?
-      raise Errors::InvalidParameterError.new("无效的渠道")
+    if not channel_user_params[:role_type].to_s.in?(ChannelUser.role_types.keys)
+      raise Errors::InvalidParameterError.new("无效的角色类型")
     end
-
-    @channel_user = @channel.channel_users.new(channel_user_params)
-    _shopkeeper = Shopkeeper.find_by(user_id: channel_user_params[:shopkeeper_user_id])
-
-    if _shopkeeper.present?
-      raise Errors::InvalidParameterError.new("无效的店主用户ID")
-    else
-      _attrs = {
-        phone: _shopkeeper.user_phone,
-        shop_id: _shopkeeper.shop_id
-      }
-      @channel_user.name = _shopkeeper.user_name if @channel_user.name.blank?
-
-      @channel_user.assign_attributes(_attrs)
+    if channel_user_params[:role_type] == "manager"
+      build_manager_channel_user
+    end
+    if channel_user_params[:role_type] == "normal_user"
+      build_normal_channel_user
+    end
+    if channel_user_params[:role_type] == "region_manager"
+      build_region_manager_channel_user
     end
 
     if @channel_user.save
@@ -60,11 +53,53 @@ class Api::Web::ChannelUsersController < Api::Web::BaseController
   end
 
   private
+  def build_normal_channel_user
+    @channel = ::Channel.find_by(id: params[:channel_id])
+    if @channel.blank?
+      raise Errors::InvalidParameterError.new("无效的渠道")
+    end
+
+    @channel_user = @channel.channel_users.new(channel_user_params)
+    # REVIEW 渠道新增普通用户应该限定为其下级店主
+    _shopkeeper = @channel.shopkeepers.find_by(user_id: channel_user_params[:shopkeeper_user_id])
+
+    if _shopkeeper.present?
+      raise Errors::InvalidParameterError.new("无效的店主用户ID")
+    else
+      _attrs = {
+        phone: _shopkeeper.user_phone,
+        shop_id: _shopkeeper.shop_id
+      }
+      @channel_user.name = _shopkeeper.user_name if @channel_user.name.blank?
+
+      @channel_user.assign_attributes(_attrs)
+    end
+  end
+  def build_manager_channel_user
+    @channel = ::Channel.find_by(id: params[:channel_id])
+    @channel_user = @channel.channel_users.new(channel_user_params)
+
+    if @channel.blank?
+      raise Errors::InvalidParameterError.new("无效的渠道")
+    end
+  end
+
+  def build_region_manager_channel_user
+    @channel_region = ::ChannelRegion.find_by(id: params[:channel_region_id])
+    @channel_user = @channel_region.channel_users.new(
+      channel_user_params
+    )
+
+    if @channel_region.blank?
+      raise Errors::InvalidParameterError.new("无效的渠道大区")
+    end
+  end
+
   def channel_user_params
     params.require(:channel_user).permit(
       :name, :phone, :password,
       :role_type,
-      :shopkeeper_user_id
+      :shopkeeper_user_id, :shop_id
     )
   end
 end
