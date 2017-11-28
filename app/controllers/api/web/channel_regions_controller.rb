@@ -37,7 +37,7 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
     params.require(:channel_region).permit(
       :name, :status, :area, channel_user: [
         :name, :role_type, :phone, :password
-      ]
+      ], channel_ids: []
     )
   end
 end

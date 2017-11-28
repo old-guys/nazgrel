@@ -1,10 +1,10 @@
-## 芝麻城 BI 架构
+# 芝麻城 BI 架构
 
 本文档目的是描述有关组织和架构芝麻城 BI 的一些约定和规范。
 
 首先我们给出 BI 的一些基本概念，以便于后续内容的展开。
 
-### BI 组件
+## BI 组件
 
 BI 由不断增长的组件构成，其中包括：
 
@@ -18,7 +18,7 @@ BI 由不断增长的组件构成，其中包括：
 * 版本控制和过程管理
 * 开放项目管理
 
-### BI 的商业目的
+## BI 的商业目的
 
 商业智能可以应用于以下商业目的，以推动商业价值。
 
@@ -36,7 +36,7 @@ BI 由不断增长的组件构成，其中包括：
 如果一些商业指标超过了预定义该标准将在标准报告和业务中突出显示分析师可能会通过电子邮件或其他监控
 服务收到提醒。 这端到端过程需要数据治理，应该由专家来处理。
 
-### BI 可用数据的数量和质量
+## BI 可用数据的数量和质量
 
 商业智能的质量方面应涵盖从源数据到最终报告的所有过程。在每一步，偏重是不同的：
 
@@ -54,7 +54,7 @@ BI 由不断增长的组件构成，其中包括：
      * 指标的唯一性：只有一个共享字典的指标
      * 配方准确性：应避免或检查本地的报告公式
 
-### 程序职责定义
+## 程序职责定义
 
 - 业务数据和 BI 数据分开
 - 通过程序自动挖掘数据到 BI 源数据库
@@ -62,7 +62,7 @@ BI 由不断增长的组件构成，其中包括：
 - 呈现报表数据给终端用户
 - 根据 BI 源数据实现预警机制
 
-### 数据分布
+## 数据分布
 
 <pre>
   业务系统     |     BI 系统
@@ -72,7 +72,7 @@ BI 由不断增长的组件构成，其中包括：
               |    预警
 </pre>
 
-### 程序实现相关约定
+## 程序实现相关约定
 
 - 业务库 `model` 不要在 `models`
 - 从业务库实时更新到 BI 数据库
@@ -80,7 +80,7 @@ BI 由不断增长的组件构成，其中包括：
 - 对于采集过来的任何一张表需要保证可以重建（以应对业务数据结构变动或者系统本身数据结构的变化要求）
 - 采集的数据记录应该最大原则上和业务库一致
 
-### 程序结构
+## 程序结构
 
 <pre>
 app/models
@@ -111,7 +111,7 @@ lib/
       reporter.rake
 </pre>
 
-### 店铺和渠道关系
+## 店铺和渠道关系
 
 shop
   t.string :name, comment: "店名"
@@ -127,7 +127,7 @@ shopkeeper
   t.string :user_photo, comment: "用户头像"
   t.integer :user_grade, comment: "店主等级：0-白金店主，1-黄金店主，2-见习店主"
 
-### 渠道下属层级
+## 渠道下属层级
 
 * 渠道上面有渠道大区
 * 渠道大区可以设置大区管理
@@ -139,12 +139,54 @@ shopkeeper
 * 渠道人员和芝麻店铺和店主是一对一关联
 * 管理员可以查看渠道下属所有店铺数据
 * 普通用户只能查看自己所属店铺以及邀请的数据
+* 渠道和渠道之间数据是不可见
+* 渠道下面的店主也可以成为渠道
 
 
 ```shell
              channel_region(region_manager)
-    channel                   channel
-    manager                   manager
+    channel(manager)                   channel(manager)
 normal_user  normal_user      normal_user
 shop         shop             shop
+```
+
+## 数据权限
+
+### 对象
+
+渠道管理员（大区 ChannelRegion）-> channel_channel_region_maps, channel_user
+
+渠道 Channel (固定督导 Shopkeeper, 种子店主的邀请根结点) -> channel_user#channel_id
+
+---------------
+
+channel 直接邀请店主
+
+channel 间接邀请店主
+
+### channel_user 对象
+
+```yaml
+manager: "管理员" # 固定督导, 种子店主
+normal_user: "普通用户" # 固定督导下面邀请的店主
+region_manager: "渠道管理员"
+```
+
+### 渠道数据示例
+
+```shell
+manager#shop
+path 0 / 23 / 43(渠道，固定督导)
+channel_path 0 / 43
+channel_path like "0/43/%" or channel_path = "0/43/"
+
+normal_user#shop
+path 0 / 23 / 43(渠道，固定督导) / 56 / 79
+channel_path 0 / 43 / 56 / 79
+channel_path like "0/43/56/79/%" or channel_path = "0/43/56/79"
+
+region_manager
+  channel channel
+
+邀请下级店主成为了渠道管理员如何处理
 ```
