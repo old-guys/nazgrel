@@ -13,7 +13,7 @@ module Api::Web::Rescueable
     rescue_from Errors::UnauthorizedError, with: :unauthorized_error
     rescue_from Pundit::NotAuthorizedError, with: :unauthorized_error
 
-    rescue_from ActiveRecord::RecordInvalid, with: :show_errors
+    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   end
 
   private
@@ -56,6 +56,10 @@ module Api::Web::Rescueable
   def unauthorized_error(e)
     log_error(e)
     render json: { code: ErrorCodes::UNAUTHORIZED, message: e.message, error: e.class.name.underscore }
+  end
+
+  def record_invalid(e)
+    render json: { code: ErrorCodes::UNAUTHORIZED, message: e.record.errors.full_messages.join(", ") }
   end
 
   def show_errors(exception)
