@@ -23,6 +23,10 @@ class ChannelUser < ApplicationRecord
   include ChannelUserRoleable
   include ChannelUserOwnable
 
+  def email_required?
+    false
+  end
+
   def to_s
     name
   end
