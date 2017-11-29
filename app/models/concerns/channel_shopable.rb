@@ -13,13 +13,48 @@ module ChannelShopable
     end
   end
 
+  def channel_shops
+    @_channel_shops ||= Shop.joins(:channel).where({
+      channels: {
+        status: Channel.statuses[:normal]
+      },
+      shops: {
+        id: Shop.descendant_entities(own_shop, column: :channel_path)
+      }
+    })
+  end
+
+  def descendant_channel_shops
+    _root_shops = channel_shops.to_a
+    return Shop.none if channel_shops.blank?
+
+    if _root_shops.length == 1
+      Shop.self_and_descendant_entities(_root_shops[0], column: :channel_path)
+    else
+      _shops = Shop.self_and_descendant_entities(_root_shops.shift, column: :channel_path)
+      _root_shops.each {|shop|
+        _shops = _shops.or(Shop.self_and_descendant_entities(shop, column: :channel_path))
+      }
+      _shops
+    end
+  end
+
   def self_and_descendant_shops
-    Shop.self_and_descendant_entities(own_shop, column: :channel_path)
+    _shops = Shop.self_and_descendant_entities(own_shop, column: :channel_path)
+    if channel_shops.present?
+      _shops = _shops.where.not(
+        id: descendant_channel_shops.select(:id)
+      )
+    end
+
+    _shops
   end
   alias :shops :self_and_descendant_shops
 
   def descendant_shops
-    Shop.descendant_entities(own_shop, column: :channel_path)
+    self_and_descendant_shops.where.not(id:
+      shop_id
+    )
   end
 
   def set_shops_channel_path

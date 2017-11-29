@@ -6,14 +6,14 @@ module ChannelRegionShopable
   end
 
   def shops
-    _root_shops = root_shops.to_a
+    _channels = channels.to_a
 
-    if _root_shops.length == 1
-      Shop.self_and_descendant_entities(_root_shops[0], column: :channel_path)
+    if _channels.length == 1
+      _channels[0].shops
     else
-      _shops = Shop.self_and_descendant_entities(_root_shops.shift, column: :channel_path)
-      _root_shops.each {|shop|
-        _shops = _shops.or(Shop.self_and_descendant_entities(shop, column: :channel_path))
+      _shops = _channels.shift.shops
+      _channels.each {|channel|
+        _shops = _shops.or(channel.shops)
       }
       _shops
     end

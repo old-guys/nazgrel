@@ -2,6 +2,8 @@ class Shop < ApplicationRecord
   include TreeDescendantable
   has_one :shopkeeper
 
+  has_one :channel
+
   has_many :orders
   has_many :income_records, through: :shopkeeper
 
