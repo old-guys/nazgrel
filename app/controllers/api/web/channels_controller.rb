@@ -2,7 +2,9 @@ class Api::Web::ChannelsController < Api::Web::BaseController
   include ActionSearchable
 
   def index
-    @channels = ::Channel.preload(:channel_users).order(id: :desc)
+    @channels = ::Channel.preload(
+      :channel_users, :own_shop, :own_shopkeeper
+    ).order(id: :desc)
 
     @channels = filter_by_pagination(relation: @channels)
   end
@@ -24,6 +26,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
       _attrs.reverse_merge!(
         name: _shopkeeper.user_name,
         phone: _shopkeeper.user_phone,
+        role_type: :manager
       )
 
       @channel.build_channel_user(_attrs)

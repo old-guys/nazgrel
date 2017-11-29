@@ -1,5 +1,11 @@
 json.id record.id
 json.name record.to_s
+json.shop_id record.shop_id
+json.shop_name record.own_shop.to_s
+json.shopkeeper_user_id record.shopkeeper_user_id
+json.shopkeeper_name record.own_shopkeeper.to_s
+json.shopkeeper_phone record.own_shopkeeper.try(:user_phone)
+
 json.city record.city
 json.category record.category
 json.category_text record.category_i18n
