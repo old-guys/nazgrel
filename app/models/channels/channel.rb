@@ -1,5 +1,5 @@
 class Channel < ApplicationRecord
-  has_many :channel_users, autosave: true, dependent: :nullify
+  has_many :channel_users, -> { where.not(role_type: ChannelUser.role_types[:region_manager]) }, autosave: true, dependent: :destroy
   has_many :channel_channel_region_maps, dependent: :destroy
 
   enum category: {
@@ -23,6 +23,8 @@ class Channel < ApplicationRecord
   include ChannelShopkeeperable
 
   include ChannelStatusable
+
+  include ChannelChannelUserable
 
   def to_s
     name

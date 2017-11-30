@@ -17,21 +17,28 @@ class Api::Web::ChannelsController < Api::Web::BaseController
     @channel = ::Channel.new(channel_params.except(:channel_user))
     _shopkeeper = Shopkeeper.find_by(user_id: channel_params[:shopkeeper_user_id])
 
-    if _shopkeeper.present?
+    if _shopkeeper.blank?
       raise Errors::InvalidParameterError.new("无效的店主用户ID")
-    else
-      _attrs = channel_params[:channel_user].slice(
-        :name, :phone, :password
-      ) || {}
-      _attrs.reverse_merge!(
-        name: _shopkeeper.user_name,
-        phone: _shopkeeper.user_phone,
-        role_type: :manager
-      )
-
-      @channel.build_channel_user(_attrs)
-      @channel.shop_id = _shopkeeper.shop_id
     end
+
+    if ChannelUser.where(shopkeeper_user_id: _shopkeeper.user_id).exists?
+      raise Errors::InvalidParameterError.new("该店主已经绑定了渠道")
+    end
+
+    _attrs = channel_params[:channel_user].slice(
+      :name, :phone, :password
+    ) || {}
+    _attrs.reverse_merge!(
+      name: _shopkeeper.user_name,
+      phone: _shopkeeper.user_phone,
+      role_type: :manager,
+      shop_id: _shopkeeper.shop_id,
+      shopkeeper_user_id: _shopkeeper.user_id
+    )
+
+    @channel.channel_users.new(_attrs)
+    @channel.shop_id = _shopkeeper.shop_id
+    @channel.shopkeeper_user_id = _shopkeeper.user_id
 
     if @channel.save
       render :show
@@ -43,7 +50,7 @@ class Api::Web::ChannelsController < Api::Web::BaseController
   def update
     @channel = ::Channel.find(params[:id])
     if channel_params[:channel_user].present?
-      @channel.channel_user.password = params[:channel_user][:password]
+      @channel.channel_users.manager.first.password = params[:channel_user][:password]
     end
 
     if @channel.update(channel_params.except(:channel_user))
