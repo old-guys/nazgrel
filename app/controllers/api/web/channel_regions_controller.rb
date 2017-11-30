@@ -26,6 +26,17 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
     end
   end
 
+  def destroy_channel
+    @channel_region = ::ChannelRegion.find(params[:id])
+
+    channel_region_maps = @channel_region.channel_channel_region_maps.where(channel_id: params[:channel_id])
+    if channel_region_maps.destroy_all
+      render :show
+    else
+      raise ActiveRecord::RecordInvalid.new(@channel_region)
+    end
+  end
+
   def update
     @channel_region = ::ChannelRegion.find(params[:id])
 

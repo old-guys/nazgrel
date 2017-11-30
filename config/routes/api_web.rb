@@ -19,7 +19,12 @@ namespace :api, defaults: { format: :json } do
       end
     end
 
-    resources :channel_regions
+    resources :channel_regions do
+      collection do
+        delete :destroy_channel
+      end
+    end
+
     resources :channels
     resources :channel_users
 
