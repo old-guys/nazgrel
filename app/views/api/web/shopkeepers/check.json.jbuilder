@@ -6,4 +6,7 @@ json.user_phone @shopkeeper.user_phone
 json.user_photo @shopkeeper.user_photo
 json.shop_id @shopkeeper.shop_id
 
+json.city @shopkeeper.city
+json.province @shopkeeper.province
+
 json.created_at @shopkeeper.created_at
