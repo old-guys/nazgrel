@@ -49,8 +49,11 @@ class Api::Web::ChannelsController < Api::Web::BaseController
 
   def update
     @channel = ::Channel.find(params[:id])
-    if channel_params[:channel_user].present?
-      @channel.channel_users.manager.first.password = params[:channel_user][:password]
+    _channel_user = @channel.channel_users.manager.first
+    _password = channel_params[:channel_user][:password] rescue nil
+
+    if _channel_user
+      _channel_user.update(password: _password) if _password.present?
     end
 
     if @channel.update(channel_params.except(:channel_user))
