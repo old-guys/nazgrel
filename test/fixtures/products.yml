@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category_id: 1
+  opt_user: MyString
+  'no': MyString
+  name: MyString
+  desc: MyText
+  status: 1
+  price: 9.99
+  max_price: 9.99
+  min_price: 9.99
+  sale_number: 
+  total_number: 
+  distribution_number: 
+  express_price: 9.99
+  is_pinkage: 1
+  default_img: MyString
+  commission_rate: 1.5
+  sort_id: 1
+  label_type: 1
+  top_sort: 1
+  sper_product_no: MyString
+
+two:
+  category_id: 1
+  opt_user: MyString
+  'no': MyString
+  name: MyString
+  desc: MyText
+  status: 1
+  price: 9.99
+  max_price: 9.99
+  min_price: 9.99
+  sale_number: 
+  total_number: 
+  distribution_number: 
+  express_price: 9.99
+  is_pinkage: 1
+  default_img: MyString
+  commission_rate: 1.5
+  sort_id: 1
+  label_type: 1
+  top_sort: 1
+  sper_product_no: MyString

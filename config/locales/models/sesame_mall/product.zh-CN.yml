@@ -1,0 +1,49 @@
+zh-CN:
+  activerecord:
+    models:
+      product: "商品"
+    attributes:
+      product:
+        id: "ID"
+        category_id: "分类ID"
+        opt_user: "操作用户ID"
+
+        no: "产品编号"
+        name: "产品名称"
+        desc: "产品介绍"
+        status: "状态"
+
+        price: "市场参考价格"
+        max_price: "sku里面最高价格"
+        min_price: "sku里面最低价格"
+
+        sale_number: "已售数量"
+        total_number: "上架数量"
+        distribution_number: "分销数量"
+        express_price: "快递价格"
+
+        is_pinkage: "是否包邮"
+        default_img: "产品默认显示图片"
+        commission_rate: "佣金比例"
+
+        sort_id: "排序"
+        label_type: "标签类型"
+        top_sort: "置顶显示顺序"
+        sper_product_no: "wms物流编号"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    product:
+      status:
+        init: "初始化"
+        online: "上架"
+        offline: "下架"
+        was_invalid: "失效"
+      is_pinkage:
+        :yes: "是"
+        :no: "否"
+      label_type:
+        general: "普通商品"
+        daily_hot: "每日爆品"
+        shopkeeper_exclusive: "店主专享"
