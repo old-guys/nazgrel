@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  has_many :product_shops
+
   enum status: {
     init: 10,
     online: 20,

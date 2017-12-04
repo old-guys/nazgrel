@@ -11,7 +11,9 @@ class ChannelRegion < ApplicationRecord
 
   include ChannelRegionShopable
   include ChannelRegionShopkeeperable
+
   include ChannelRegionOrderable
+  include ChannelRegionProductable
 
   def to_s
     name

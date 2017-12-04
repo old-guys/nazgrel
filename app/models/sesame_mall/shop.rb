@@ -1,11 +1,16 @@
 class Shop < ApplicationRecord
-  include TreeDescendantable
   has_one :shopkeeper
 
   has_one :channel
 
   has_many :orders
   has_many :income_records, through: :shopkeeper
+
+  has_many :product_shops
+  has_many :products, through: :product_shops
+
+  include TreeDescendantable
+  include ShopProductable
 
   def to_s
     name || id.to_s

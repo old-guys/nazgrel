@@ -16,9 +16,12 @@ class ChannelUser < ApplicationRecord
   }
 
   include ChannelUserShopable
-  include ChannelUserStatusable
-  include ChannelUserOrderable
   include ChannelUserShopkeeperable
+
+  include ChannelUserOrderable
+  include ChannelUserProductable
+
+  include ChannelUserStatusable
 
   include ChannelUserRoleable
   include ChannelUserOwnable

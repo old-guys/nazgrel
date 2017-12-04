@@ -19,8 +19,9 @@ class Channel < ApplicationRecord
   }
 
   include ChannelShopable
-  include ChannelOrderable
   include ChannelShopkeeperable
+  include ChannelOrderable
+  include ChannelProductable
 
   include ChannelStatusable
 
