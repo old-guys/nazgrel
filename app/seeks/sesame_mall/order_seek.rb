@@ -3,6 +3,7 @@ class SesameMall::OrderSeek
 
   def initialize(opts = {})
     self.primary_key = :order_no
+    self.source_primary_key = :order_no
   end
 
   def fetch_records(ids: )

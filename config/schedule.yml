@@ -18,8 +18,14 @@ order_seek_job:
 
 order_seek_job:
   cron: "*/30 * * * *"
-  name: "同步订单"
+  name: "同步商品"
   class: "ProductSeekWorker"
+  queue: :seek
+
+order_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步店铺代理销售商品"
+  class: "ProductShopSeekWorker"
   queue: :seek
 
 income_record_seek_job:

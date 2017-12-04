@@ -2,6 +2,8 @@ class SesameMall::ShopkeeperSeek
   include SesameMall::Seekable
 
   def initialize(opts = {})
+    self.primary_key = :id
+    self.source_primary_key = :id
   end
 
   def fetch_records(ids: )

@@ -1,0 +1,23 @@
+zh-CN:
+  activerecord:
+    models:
+      product_shop: "店铺代理销售商品"
+    attributes:
+      product:
+        id: "ID"
+        product_id: "商品ID"
+        shop_id: "店铺ID"
+
+        status: "状态"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    product_shop:
+      status:
+        online: "上架"
+        offline: "下架"
+        sold_out: "售罄"
+        has_deleted: "已经删除"
+        has_offlined: "已下架"

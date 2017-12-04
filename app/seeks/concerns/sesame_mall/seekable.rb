@@ -2,12 +2,16 @@ module SesameMall::Seekable
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :source_data, :batch_size, :primary_key
+    attr_accessor :source_data, :batch_size, :primary_key, :source_primary_key
 
     attr_accessor :source_data
 
     def primary_key
       @primary_key ||= :id
+    end
+
+    def source_primary_key
+      @source_primary_key ||= :id
     end
   end
 
@@ -38,11 +42,11 @@ module SesameMall::Seekable
     self.batch_size ||= 50
 
     source_data.pluck_h.each_slice(batch_size) {|hashes|
-      record_ids = hashes.pluck(primary_key)
+      record_ids = hashes.pluck(source_primary_key)
       _exists_records = fetch_records(ids: record_ids)
 
       _records = hashes.map{|data|
-        _record = _exists_records.find{|c| c.send(primary_key).to_s == data[primary_key].to_s}
+        _record = _exists_records.find{|c| c.send(primary_key).to_s == data[source_primary_key].to_s}
 
         to_model(data, record: _record)
       }
