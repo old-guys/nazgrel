@@ -10,6 +10,9 @@ namespace :data_migrations do
 
     desc 'init seek trigger for sesame_mall'
     task :v1_0_5_init_seek_trigger => :environment do
+      SesameMall::ProductSeek.whole_sync
+      SesameMall::ProductShopSeek.whole_sync
+
       TriggerService.setup source: :sesame_mall
 
       _klasses = [
