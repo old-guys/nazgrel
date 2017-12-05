@@ -37,5 +37,7 @@ require 'capistrano/sidekiq'
 require 'capistrano/sidekiq'
 # require 'capistrano/sidekiq/monit' # Only for capistrano3
 
+require "whenever/capistrano"
+
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }

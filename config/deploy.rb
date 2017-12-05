@@ -52,6 +52,9 @@ set :unicorn_rack_env, -> { fetch(:rails_env) || "deployment" }
 
 set :unicorn_restart_sleep_time, 8
 
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, %w(web app db whenever)
+
 namespace :deploy do
 
   after 'deploy:publishing', 'deploy:restart'

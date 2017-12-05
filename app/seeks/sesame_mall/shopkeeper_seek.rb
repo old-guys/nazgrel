@@ -63,11 +63,8 @@ class SesameMall::ShopkeeperSeek
 
     def partial_sync(duration: 30.minutes)
       seek = self.new
+      _relation = source_records_from_seek_record(klass: SesameMall::Source::Shopkeeper, duration: duration)
 
-      _time = Time.now
-      _relation = SesameMall::Source::Shopkeeper.where(
-        UPDATE_TIME: duration.ago(_time).._time
-      )
       seek.do_partial_sync(relation: _relation)
     end
   end

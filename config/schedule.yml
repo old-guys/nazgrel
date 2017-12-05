@@ -5,25 +5,25 @@ shop_seek_job:
   queue: :seek
 
 shopkeeper_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/15 * * * *"
   name: "同步店主"
   class: "ShopkeeperSeekWorker"
   queue: :seek
 
 order_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/15 * * * *"
   name: "同步订单"
   class: "OrderSeekWorker"
   queue: :seek
 
 order_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/15 * * * *"
   name: "同步商品"
   class: "ProductSeekWorker"
   queue: :seek
 
 order_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/15 * * * *"
   name: "同步店铺代理销售商品"
   class: "ProductShopSeekWorker"
   queue: :seek

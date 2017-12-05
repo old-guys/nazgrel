@@ -1,3 +1,11 @@
+## 渠道管理员 (2017-12-05)
+
+- 重构增量拉取芝麻城数据逻辑
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_0_5_init_seek_trigger
+```
+
 ## 渠道管理员 (2017-11-24)
 
 - 渠道管理员

@@ -64,5 +64,20 @@ module SesameMall::Seekable
     datetime.is_a?(ActiveSupport::TimeWithZone) ? (datetime - datetime.utc_offset).utc : datetime
   end
   module ClassMethods
+    def source_records_from_seek_record(klass: , duration: )
+      _records = seek_records(duration: duration, table_name: klass.table_name)
+
+      klass.where(
+        klass.primary_key => _records.select(:primary_key_value)
+      )
+    end
+    def seek_records(duration: , table_name: )
+      _time = Time.now
+
+      SesameMall::Source::SeekRecord.where(
+        table_name: table_name,
+        created_at: duration.ago(_time).._time
+      )
+    end
   end
 end
