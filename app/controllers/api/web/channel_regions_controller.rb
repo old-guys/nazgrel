@@ -2,7 +2,12 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
   include ActionSearchable
 
   def index
-    @channel_regions = ::ChannelRegion.preload(:channel_users).order(id: :desc)
+    @channel_regions = ::ChannelRegion.preload(
+      :channel_users,
+      channel_channel_region_maps: [
+        channel: :channel_users
+      ]
+    ).order(id: :desc)
 
     @channel_regions = filter_by_pagination(relation: @channel_regions)
   end
