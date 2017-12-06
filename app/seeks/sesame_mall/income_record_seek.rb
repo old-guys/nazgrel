@@ -47,11 +47,8 @@ class SesameMall::IncomeRecordSeek
 
     def partial_sync(duration: 30.minutes)
       seek = self.new
+      _relation = source_records_from_seek_record(klass: SesameMall::Source::IncomeRecord, duration: duration)
 
-      _time = Time.now
-      _relation = SesameMall::Source::IncomeRecord.where(
-        create_time: duration.ago(_time).._time
-      )
       seek.do_partial_sync(relation: _relation)
     end
   end

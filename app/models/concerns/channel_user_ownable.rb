@@ -11,7 +11,7 @@ module ChannelUserOwnable
       when :manager
         channel.shops
       when :region_manager
-        region_manager? ? channel_region.shops : Shop.none
+        channel_region.try(:shops) || Shop.none
     end
   end
 
@@ -22,7 +22,7 @@ module ChannelUserOwnable
       when :manager
         channel.shopkeepers
       when :region_manager
-        region_manager? ? channel_region.shopkeepers : Shopkeeper.none
+        channel_region.try(:shopkeepers) || Shopkeeper.none
     end
   end
 
@@ -33,8 +33,27 @@ module ChannelUserOwnable
       when :manager
         channel.orders
       when :region_manager
-        region_manager? ? channel_region.orders : Order.none
+        channel_region.try(:orders) || Order.none
     end
+  end
+
+  def own_products
+    case role_type.to_sym
+      when :normal_user
+        products
+      when :manager
+        channel.products
+      when :region_manager
+        channel_region.try(:products) || Product.none
+    end
+  end
+
+  def own_order_details
+    OrderDetail.joins(:order).where(
+      orders: {
+        order_no: own_orders.select(:order_no)
+      }
+    )
   end
 
   module ClassMethods

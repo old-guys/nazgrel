@@ -2,6 +2,8 @@ class SesameMall::ShopSeek
   include SesameMall::Seekable
 
   def initialize(opts = {})
+    self.primary_key = :id
+    self.source_primary_key = :ID
   end
 
   def fetch_records(ids: )
@@ -41,10 +43,8 @@ class SesameMall::ShopSeek
       seek = self.new
       shopkeeper_seek = SesameMall::ShopkeeperSeek.new
 
-      _time = Time.now
-      _relation = SesameMall::Source::Shop.where(
-        UPDATE_TIME: duration.ago(_time).._time
-      )
+      _relation = source_records_from_seek_record(klass: SesameMall::Source::Shop, duration: duration)
+
       _shopkeepers = SesameMall::Source::Shopkeeper.where(shop_id: _relation.select(:id))
 
       shopkeeper_seek.do_partial_sync(relation: _shopkeepers)

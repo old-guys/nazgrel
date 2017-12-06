@@ -15,7 +15,7 @@ namespace :api, defaults: { format: :json } do
 
     resources :dashboard, only: [:index] do
       collection do
-        get :sales
+        get :sales, :hot_sales_product
       end
     end
     resources :shops, only: [:index, :show] do

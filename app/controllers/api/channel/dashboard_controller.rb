@@ -11,4 +11,10 @@ class Api::Channel::DashboardController < Api::Channel::BaseController
       commission_amount: current_channel_user.commission_amount
     }
   end
+
+  def hot_sales_product
+    @result = {
+      today: current_channel_user.today_hot_sales_product
+    }
+  end
 end

@@ -3,6 +3,7 @@ class SesameMall::OrderSeek
 
   def initialize(opts = {})
     self.primary_key = :order_no
+    self.source_primary_key = :order_no
   end
 
   def fetch_records(ids: )
@@ -74,18 +75,14 @@ class SesameMall::OrderSeek
   class << self
     def whole_sync
       seek = self.new
-      seek.batch_size = 2
 
       seek.do_whole_sync(relation: SesameMall::Source::Order, key: :shop_id)
     end
 
-    def partial_sync(duration: 3.days)
+    def partial_sync(duration: 30.minutes)
       seek = self.new
+      _relation = source_records_from_seek_record(klass: SesameMall::Source::Order, duration: duration)
 
-      _time = Time.now
-      _relation = SesameMall::Source::Order.where(
-        create_time: duration.ago(_time).._time
-      )
       seek.do_partial_sync(relation: _relation)
     end
   end

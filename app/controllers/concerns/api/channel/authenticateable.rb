@@ -45,7 +45,7 @@ module Api::Channel::Authenticateable
         raise Errors::UserAuthenticationError.new("该用户的渠道是无效的")
       end
       unless @current_channel.normal?
-        raise UserAuthenticationError.new("该用户的渠道已经被冻结")
+        raise Errors::UserAuthenticationError.new("该用户的渠道已经被冻结")
       end
     end
   end

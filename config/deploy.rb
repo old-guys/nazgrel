@@ -50,18 +50,17 @@ set :linked_dirs, %w{
 # set :ssh_options, verify_host_key: :secure
 set :unicorn_rack_env, -> { fetch(:rails_env) || "deployment" }
 
-set :unicorn_restart_sleep_time, 5
+set :unicorn_restart_sleep_time, 8
+
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, %w(web app db whenever)
 
 namespace :deploy do
 
-  desc 'Restart application'
+  after 'deploy:publishing', 'deploy:restart'
   task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke! 'unicorn:legacy_restart'
-    end
+    invoke 'unicorn:legacy_restart'
   end
-
-  after :publishing, :restart
 
   task :run_code_check do
     on roles(:all) do
