@@ -12,11 +12,13 @@ namespace :data_migrations do
     task :v1_0_5_init_seek_trigger => :environment do
       SesameMall::ProductSeek.whole_sync
       SesameMall::ProductShopSeek.whole_sync
+      SesameMall::OrderDetailSeek.whole_sync
 
       TriggerService.setup source: :sesame_mall
 
       _klasses = [
         SesameMall::Source::IncomeRecord, SesameMall::Source::Order,
+        SesameMall::Source::OrderDetail,
         SesameMall::Source::ProductShop, SesameMall::Source::Product,
         SesameMall::Source::Shop, SesameMall::Source::Shopkeeper
       ]

@@ -3,6 +3,8 @@ class Order < ApplicationRecord
     foreign_key: :shop_id,
     class_name: :Shop, required: false
 
+  has_one :order_detail, foreign_key: :order_no
+
   enum order_status: {
     awaiting_payment: 0,
     awaiting_delivery: 1,
