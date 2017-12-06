@@ -48,6 +48,14 @@ module ChannelUserOwnable
     end
   end
 
+  def own_order_details
+    OrderDetail.joins(:order).where(
+      orders: {
+        order_no: own_orders.select(:order_no)
+      }
+    )
+  end
+
   module ClassMethods
   end
 end

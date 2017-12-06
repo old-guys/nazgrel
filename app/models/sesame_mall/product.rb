@@ -16,4 +16,8 @@ class Product < ApplicationRecord
     daily_hot: 0,
     shopkeeper_exclusive: 2,
   }
+
+  def to_s
+    name
+  end
 end

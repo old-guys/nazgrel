@@ -34,6 +34,32 @@ module ChannelUserStatusable
     }.to_i
   end
 
+  def today_hot_sales_product
+    _data = Rails.cache.fetch("channel_user:#{id}:#{role_type}:today_hot_sales_product:raw", raw: true, expires_in: 3.minutes) {
+      result = own_order_details.hot_sales_product(times: Time.now.all_day)
+      _products = Product.where(id: result.pluck(:product_id))
+
+      result = result.map {|h|
+        _product = _products.find {|product| product.id == h[:product_id]}
+        next if _product.blank?
+
+        {
+          product_num: h[:total_product_num],
+          product_name: _product.to_s,
+          product_id: h[:product_id]
+        }
+      }.compact
+
+      result = result.map.with_index(1){|h, index|
+        h.merge(index: index)
+      }
+
+      result.to_yaml
+    }
+
+    YAML.load(_data)
+  end
+
   def commission_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:commissiont:raw", raw: true, expires_in: 3.minutes) {
       Order.where(user_id: own_shopkeepers.select(:user_id)).sales_order.valided_order.sum(:comm)

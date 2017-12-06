@@ -1,5 +1,6 @@
 class OrderDetail < ApplicationRecord
   belongs_to :order, primary_key: :order_no,
+    foreign_key: :order_no,
     class_name: :Order, required: false
 
   enum is_free_delivery: {
@@ -11,4 +12,20 @@ class OrderDetail < ApplicationRecord
     daily_hot: 0,
     shopkeeper_exclusive: 2,
   }
+
+  scope :hot_sales_product, ->(limit: 5, times: Time.now.all_day, fields: []) {
+    fields = fields | [
+      "sum(`order_details`.`product_num`) as total_product_num",
+      :product_id
+    ]
+
+    joins(:order)
+      .merge(Order.valided_order)
+      .where(orders: {created_at: times})
+      .order("sum(`order_details`.`product_num`) desc")
+      .group("`order_details`.`product_id`")
+      .limit(limit)
+      .pluck_h(*fields)
+  }
+
 end
