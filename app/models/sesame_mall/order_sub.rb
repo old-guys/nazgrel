@@ -1,9 +1,12 @@
 class OrderSub < ApplicationRecord
-  belongs_to :order, primary_key: :sub_order_no,
+  belongs_to :order, primary_key: :order_no,
     foreign_key: :order_no,
     class_name: :Order, required: false
 
-  has_one :order_express, foreign_key: :sub_order_no
+  has_one :order_express, foreign_key: :sub_order_no, primary_key: :sub_order_no
+  has_many :order_details, foreign_key: :sub_order_no, primary_key: :sub_order_no
+
+  has_many :products, through: :order_details
 
   enum order_status: {
     awaiting_payment: 0,

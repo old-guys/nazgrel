@@ -3,6 +3,10 @@ class OrderDetail < ApplicationRecord
     foreign_key: :order_no,
     class_name: :Order, required: false
 
+  has_one :order_sub, foreign_key: :sub_order_no, primary_key: :sub_order_no
+
+  belongs_to :product
+
   enum is_free_delivery: {
     yes: 1,
     no: 0
