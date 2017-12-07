@@ -22,6 +22,18 @@ order_detail_seek_job:
   class: "OrderDetailSeekWorker"
   queue: :seek
 
+order_sub_seek_job:
+  cron: "*/15 * * * *"
+  name: "同步子订单"
+  class: "OrderSubSeekWorker"
+  queue: :seek
+
+order_sub_seek_job:
+  cron: "*/15 * * * *"
+  name: "同步物流订单"
+  class: "OrderExpressSeekWorker"
+  queue: :seek
+
 product_seek_job:
   cron: "*/15 * * * *"
   name: "同步商品"

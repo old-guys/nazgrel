@@ -21,7 +21,7 @@ module SesameMall::Seekable
     key ||= primary_key
     self.batch_size ||= 1000
 
-    Utility.simple_batch_operate(relation, batch_size: batch_size, primary_key: key) {|records|
+    relation.in_batches(of: batch_size) {|records|
       self.source_data = records
 
       process
