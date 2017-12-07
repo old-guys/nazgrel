@@ -1,0 +1,49 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sub_order_no: 
+  order_no: 
+  order_express_id: 
+  pay_time: 2017-12-07 15:17:51
+  deliver_time: 2017-12-07 15:17:51
+  finish_time: 2017-12-07 15:17:51
+  cancel_time: 2017-12-07 15:17:51
+  order_status: 1
+  express_price: 9.99
+  sale_price: 9.99
+  comm: 9.99
+  pay_price: 9.99
+  total_price: 9.99
+  shop_user_deliveried_push: 1
+  user_deliveried_push: 1
+  supplier_deliveried_push: 1
+  remarks: MyString
+  supplier_id: 
+  express_free_price: 9.99
+  version: 1
+  activity_id: 1
+  is_zone_freight: 1
+
+two:
+  sub_order_no: 
+  order_no: 
+  order_express_id: 
+  pay_time: 2017-12-07 15:17:51
+  deliver_time: 2017-12-07 15:17:51
+  finish_time: 2017-12-07 15:17:51
+  cancel_time: 2017-12-07 15:17:51
+  order_status: 1
+  express_price: 9.99
+  sale_price: 9.99
+  comm: 9.99
+  pay_price: 9.99
+  total_price: 9.99
+  shop_user_deliveried_push: 1
+  user_deliveried_push: 1
+  supplier_deliveried_push: 1
+  remarks: MyString
+  supplier_id: 
+  express_free_price: 9.99
+  version: 1
+  activity_id: 1
+  is_zone_freight: 1

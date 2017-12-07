@@ -42,7 +42,7 @@ class SesameMall::OrderSeek
       finish_time: parse_no_timezone(datetime: data[:finish_time]),
       cancel_time: parse_no_timezone(datetime: data[:cancel_time]),
 
-      order_status: data[:order_status].to_i,
+      order_status: ::Order.order_statuses.invert[data[:order_status].to_i],
 
       express_price: data[:express_price],
       sale_price: data[:sale_price],
@@ -76,7 +76,7 @@ class SesameMall::OrderSeek
     def whole_sync
       seek = self.new
 
-      seek.do_whole_sync(relation: SesameMall::Source::Order, key: :shop_id)
+      seek.do_whole_sync(relation: SesameMall::Source::Order)
     end
 
     def partial_sync(duration: 30.minutes)

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sub_order_no: 
+  express_no: MyString
+  express_name: MyString
+  express_price: 9.99
+
+two:
+  sub_order_no: 
+  express_no: MyString
+  express_name: MyString
+  express_price: 9.99

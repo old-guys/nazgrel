@@ -27,5 +27,19 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'init seek trigger for sesame_mall sub order'
+    task :v1_0_6_init_seek_trigger => :environment do
+      SesameMall::OrderSubSeek.whole_sync
+      SesameMall::OrderExpressSubSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::OrderSub, SesameMall::Source::OrderExpress
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

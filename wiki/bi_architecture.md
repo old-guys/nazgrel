@@ -150,6 +150,12 @@ normal_user  normal_user      normal_user
 shop         shop             shop
 ```
 
+## 订单关系
+
+* 一个订单拆分为多个子订单
+* 每个子订单对应多个商品（订单详情）
+* 每个子订单对应一个物流订单
+
 ## 数据权限
 
 ### 对象

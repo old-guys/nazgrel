@@ -1,6 +1,14 @@
 json.id @order.id
 # 订单编号
 json.order_no @order.order_no
+
+# order_details
+json.order_subs do
+  if @order.order_subs.present?
+    json.partial! 'api/channel/order_subs/show', collection: @order.order_subs, as: :record
+  end
+end
+
 # 用户id
 json.user_id @order.user_id
 # 用户手机号
@@ -79,8 +87,6 @@ json.global_freight_flag @order.global_freight_flag
 json.global_freight_flag_text @order.global_freight_flag_i18n
 # 全局包邮金额
 json.global_freight @order.global_freight
-
-
 
 # 备注
 json.remarks @order.remarks
