@@ -4,6 +4,8 @@ class Order < ApplicationRecord
     class_name: :Shop, required: false
 
   has_one :order_detail, foreign_key: :order_no
+  has_many :order_subs, foreign_key: :order_no
+  has_many :order_expresses, through: :order_subs
 
   enum order_status: {
     awaiting_payment: 0,

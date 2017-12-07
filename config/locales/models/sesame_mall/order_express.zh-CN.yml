@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      order_express: "物流订单"
+    attributes:
+      order:
+        id: "ID"
+        sub_order_no: "子订单编号"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

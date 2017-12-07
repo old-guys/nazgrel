@@ -1,0 +1,33 @@
+zh-CN:
+  activerecord:
+    models:
+      order_sub: "子订单"
+    attributes:
+      order:
+        id: "ID"
+        sub_order_no: "订单编号"
+        order_no: "主订单编号"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    order_sub:
+      order_status:
+        awaiting_payment: "待付款"
+        awaiting_delivery: "待发货"
+        deliveried: "已发货"
+        finished: "已完成"
+        canceled: "已取消"
+        finished_trouble: "已完成(异常)"
+      shop_user_deliveried_push:
+        :yes: "是"
+        :no: "否"
+      user_deliveried_push:
+        :yes: "是"
+        :no: "否"
+      supplier_deliveried_push:
+        :yes: "是"
+        :no: "否"
+      is_zone_freight:
+        :yes: "是"
+        :no: "否"
