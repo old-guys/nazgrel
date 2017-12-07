@@ -1,5 +1,6 @@
 json.id record.id
 json.channel_id record.channel_id
+json.channel_name record.channel.try(:name)
 json.channel_region_id record.channel_region_id
 
 json.channel do
