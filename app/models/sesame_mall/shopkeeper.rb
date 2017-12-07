@@ -20,6 +20,7 @@ class Shopkeeper < ApplicationRecord
 
 
   def order_number
+    return super if new_record?
     Rails.cache.fetch("shopkeeper:#{id}:order_number:raw", raw: true, expires_in: 30.minutes) {
       _value = Order.where(shop_id: shop_id).sales_order.size
       update_columns(order_number: Order.where(shop_id: shop_id).sales_order.size)
