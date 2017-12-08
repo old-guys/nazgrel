@@ -3,6 +3,7 @@ class Shopkeeper < ApplicationRecord
   self.tree_depth = 100
   self.tree_primary_key = :user_id
   belongs_to :shop, required: false
+  has_many :orders, through: :shop
 
   belongs_to :parent, primary_key: :user_id,
     foreign_key: :invite_user_id,
@@ -22,8 +23,8 @@ class Shopkeeper < ApplicationRecord
   def order_number
     return super if new_record?
     Rails.cache.fetch("shopkeeper:#{id}:order_number:raw", raw: true, expires_in: 30.minutes) {
-      _value = Order.where(shop_id: shop_id).sales_order.size
-      update_columns(order_number: Order.where(shop_id: shop_id).sales_order.size)
+      _value = orders.sales_order.size
+      update_columns(order_number: orders.sales_order.size)
 
       _value
     }.to_i
@@ -31,14 +32,13 @@ class Shopkeeper < ApplicationRecord
 
   def order_total_price
     Rails.cache.fetch("shopkeeper:#{id}:order_total_price:raw", raw: true, expires_in: 30.minutes) {
-      _value = Order.where(shop_id: shop_id).sales_order.sum(:total_price)
-      _value
+      orders.sales_order.sum(:total_price)
     }
   end
 
   def commission_income_amount
     Rails.cache.fetch("shopkeeper:#{id}:commission_income_amount:raw", raw: true, expires_in: 30.minutes) {
-      shop.orders.sales_order.valided_order.sum(:comm)
+      orders.sales_order.valided_order.sum(:comm)
     }
   end
 
