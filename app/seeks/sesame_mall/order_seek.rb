@@ -66,7 +66,7 @@ class SesameMall::OrderSeek
       reduce_type: ::Order.reduce_types.invert[data[:reduce_type]],
 
       created_at: parse_no_timezone(datetime: data[:create_time]),
-      updated_at: parse_no_timezone(datetime: data[:update_time])
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
     )
 
     record

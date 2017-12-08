@@ -22,7 +22,7 @@ class SesameMall::ProductShopSeek
       status: ProductShop.statuses.invert[data[:STATUS].to_i],
 
       created_at: parse_no_timezone(datetime: data[:CREATE_TIME]),
-      updated_at: parse_no_timezone(datetime: data[:UPDATE_TIME])
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:UPDATE_TIME])
     )
 
     record

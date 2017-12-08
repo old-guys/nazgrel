@@ -43,7 +43,7 @@ class SesameMall::ProductSeek
       sper_product_no: data[:SPER_PRODUCT_NO],
 
       created_at: parse_no_timezone(datetime: data[:CREATE_DATE]),
-      updated_at: parse_no_timezone(datetime: data[:UPDATE_DATE])
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:UPDATE_DATE])
     )
 
     record

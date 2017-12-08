@@ -26,7 +26,7 @@ class SesameMall::ShopSeek
       desc: data[:SHOP_DESC],
 
       created_at: parse_no_timezone(datetime: data[:CREATE_DATE]),
-      updated_at: parse_no_timezone(datetime: data[:UPDATE_TIME])
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:UPDATE_TIME])
     )
 
     if record.shopkeeper.present?

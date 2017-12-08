@@ -32,7 +32,7 @@ class SesameMall::IncomeRecordSeek
       remark: data[:remark],
 
       created_at: parse_no_timezone(datetime: data[:create_time]),
-      updated_at: parse_no_timezone(datetime: data[:update_time])
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
     )
 
     record
