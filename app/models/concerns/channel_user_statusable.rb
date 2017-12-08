@@ -18,7 +18,7 @@ module ChannelUserStatusable
 
   def total_order_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:order_total_price:raw", raw: true, expires_in: 3.minutes) {
-      Order.where(shop_id: own_shopkeepers.select(:shop_id)).sales_order.valided_order.sum(:total_price)
+      own_shops.sales_order.valided_order.sum(:total_price)
     }
   end
 
@@ -62,7 +62,7 @@ module ChannelUserStatusable
 
   def commission_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:commissiont:raw", raw: true, expires_in: 3.minutes) {
-      Order.where(user_id: own_shopkeepers.select(:user_id)).sales_order.valided_order.sum(:comm)
+      own_shops.sales_order.valided_order.sum(:comm)
     }.to_i
   end
 
@@ -81,7 +81,7 @@ module ChannelUserStatusable
       if region_manager?
         channel_region.channels.map(&:children_comission_amount).sum
       else
-        Order.where(user_id: own_shopkeeper.children.select(:user_id)).sales_order.valided_order.sum(:comm) * 0.15
+        Order.where(shop_id: own_shop.children.select(:id)).sales_order.valided_order.sum(:comm) * 0.15
       end
     }
   end
@@ -101,8 +101,8 @@ module ChannelUserStatusable
       if region_manager?
         channel_region.channels.map(&:indirectly_descendant_amount).sum
       else
-        _rate = own_shopkeeper.indirectly_descendants.size > 1000 ? 0.08 : 0.05
-        _amount = Order.where(user_id: own_shopkeeper.indirectly_descendants.select(:user_id)).sales_order.valided_order.sum(:comm)
+        _rate = own_shop.indirectly_descendants.size > 1000 ? 0.08 : 0.05
+        _amount = Order.where(shop_id: own_shop.indirectly_descendants.select(:id)).sales_order.valided_order.sum(:comm)
         _amount * _rate
       end
     }
