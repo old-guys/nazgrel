@@ -31,7 +31,8 @@ class SesameMall::ShopkeeperSeek
       invite_amount: data[:invite_amount],
       invite_number: data[:invite_number],
       order_amount: data[:order_amount],
-      order_number: data[:order_number],
+      # REVIEW 不同步因为, shopkeeper#order_number 计算逻辑不一致
+      # order_number: data[:order_number],
 
       status: data[:status],
       invite_user_id: data[:invite_user_id],
@@ -50,6 +51,11 @@ class SesameMall::ShopkeeperSeek
     record.assign_attributes(
       path: data[:parent_ids].to_s.split(",").reject{|s| s.to_i <= 0}.push(0).reverse.push(record.user_id).join("/")
     )
+
+    # REVIEW shopkeeper#order_number
+    record.assign_attributes(
+      order_number: record.orders.sales_order.size
+    ) if record.persisted?
 
     record
   end
