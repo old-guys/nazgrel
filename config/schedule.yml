@@ -4,11 +4,12 @@ shop_seek_job:
   class: "ShopSeekWorker"
   queue: :seek
 
-shopkeeper_seek_job:
-  cron: "*/15 * * * *"
-  name: "同步店主"
-  class: "ShopkeeperSeekWorker"
-  queue: :seek
+# # NOTICE 已经在同步店铺的时候处理
+# shopkeeper_seek_job:
+#   cron: "*/15 * * * *"
+#   name: "同步店主"
+#   class: "ShopkeeperSeekWorker"
+#   queue: :seek
 
 order_seek_job:
   cron: "*/15 * * * *"

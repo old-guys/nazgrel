@@ -2,9 +2,9 @@ module SesameMall::Seekable
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :source_data, :batch_size, :primary_key, :source_primary_key
+    include SesameMall::SeekHookable
 
-    attr_accessor :source_data
+    attr_accessor :source_data, :batch_size, :primary_key, :source_primary_key
 
     def primary_key
       @primary_key ||= :id
@@ -40,6 +40,10 @@ module SesameMall::Seekable
 
   def process
     self.batch_size ||= 50
+
+    before_process_hooks.map{|name|
+      send(name)
+    } if before_process_hooks.present?
 
     source_data.pluck_h.each_slice(batch_size) {|hashes|
       record_ids = hashes.pluck(source_primary_key)
