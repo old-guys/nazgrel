@@ -18,7 +18,7 @@ module ChannelUserStatusable
 
   def total_order_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:order_total_price:raw", raw: true, expires_in: 3.minutes) {
-      own_shops.sales_order.valided_order.sum(:total_price)
+      own_orders.sales_order.valided_order.sum(:total_price)
     }
   end
 
@@ -62,7 +62,7 @@ module ChannelUserStatusable
 
   def commission_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:commissiont:raw", raw: true, expires_in: 3.minutes) {
-      own_shops.sales_order.valided_order.sum(:comm)
+      own_orders.sales_order.valided_order.sum(:comm)
     }.to_i
   end
 
