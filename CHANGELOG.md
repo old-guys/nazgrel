@@ -1,3 +1,13 @@
+## 芝蚂助手店主订单优化 (2017-12-11)
+
+- 芝麻助手列表页新增搜索
+- 芝麻助手列表页新增排序
+- 芝麻助手列表页新增按照渠道筛选
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_0_7_shopkeeper_income_amount
+```
+
 ## 增量拉取芝蚂城子订单数据 (2017-12-05)
 
 - 增量拉取芝蚂城子订单数据
