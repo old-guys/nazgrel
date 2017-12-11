@@ -5,10 +5,20 @@ module Api::Channel::ActionOwnable
   end
 
   def own_record_by_channel_user(klass: )
+    options = {}
+
     if params[:channel_id].present?
-      @selected_channel = Channel.find_by(id: params[:channel_id])
+      if params[:channel_id].match(/^\d+/).present?
+        options.merge!(
+          channel: Channel.find_by(id: params[:channel_id])
+        )
+      elsif params[:channel_id] == "channel_only"
+        options.merge!(
+          channel_only: true
+        )
+      end
     end
-    relation = current_channel_user.all_own_for(klass, channel: @selected_channel)
+    relation = current_channel_user.all_own_for(klass, options)
 
     relation
   end

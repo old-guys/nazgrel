@@ -4,7 +4,7 @@ module ChannelUserOwnable
   included do
   end
 
-  def all_own_for(klass, channel: nil)
+  def all_own_for(klass, channel: nil, channel_only: false)
     case klass.name
       when "Shop"
         own_shops(channel: channel)
@@ -22,9 +22,12 @@ module ChannelUserOwnable
   end
 
 
-  def own_shops(channel: nil)
+  def own_shops(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
       return channel_region.try(:shops)
+    end
+    if role_type.to_sym == :region_manager and channel_only
+      return channel_region.try(:root_shops)
     end
 
     case role_type.to_sym
@@ -37,9 +40,12 @@ module ChannelUserOwnable
     end
   end
 
-  def own_shopkeepers(channel: nil)
+  def own_shopkeepers(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
       return channel_region.try(:shopkeepers)
+    end
+    if role_type.to_sym == :region_manager and channel_only
+      return channel_region.try(:root_shopkeepers)
     end
 
     case role_type.to_sym
@@ -52,9 +58,12 @@ module ChannelUserOwnable
     end
   end
 
-  def own_orders(channel: nil)
+  def own_orders(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
       return channel_region.try(:orders)
+    end
+    if role_type.to_sym == :region_manager and channel_only
+      return channel_region.try(:root_orders)
     end
 
     case role_type.to_sym
@@ -67,9 +76,12 @@ module ChannelUserOwnable
     end
   end
 
-  def own_products(channel: nil)
+  def own_products(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
       return channel_region.try(:products)
+    end
+    if role_type.to_sym == :region_manager and channel_only
+      return channel_region.try(:root_products)
     end
 
     case role_type.to_sym
@@ -82,10 +94,12 @@ module ChannelUserOwnable
     end
   end
 
-  def own_order_details(channel: nil)
+  def own_order_details(channel: nil, channel_only: false)
     OrderDetail.joins(:order).where(
       orders: {
-        order_no: own_orders(channel: channel).select(:order_no)
+        order_no: own_orders(
+          channel: channel, channel_only: channel_only
+        ).select(:order_no)
       }
     )
   end
