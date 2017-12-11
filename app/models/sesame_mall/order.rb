@@ -3,6 +3,8 @@ class Order < ApplicationRecord
     foreign_key: :shop_id,
     class_name: :Shop, required: false
 
+  has_one :shopkeeper, through: :shop
+
   has_many :order_subs, foreign_key: :order_no, primary_key: :order_no
   has_many :order_expresses, through: :order_subs
 
@@ -60,6 +62,13 @@ class Order < ApplicationRecord
   scope :undelivered_than_hour, ->(hour: 48) {
     awaiting_delivery.where(deliver_time: nil).where("TIMESTAMPDIFF(hour, `orders`.`pay_time`, :datetime) >= :interval", datetime: Time.now.beginning_of_minute, interval: hour)
   }
+
+  include Searchable
+
+  simple_search_on fields: [
+    :order_no,
+    "shopkeepers.user_name"
+  ], joins: :shopkeeper
 
   def to_s
     order_no

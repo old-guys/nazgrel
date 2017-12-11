@@ -6,10 +6,12 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   #   operator: "within", query: "today"
   # }]
   # order: "order_number desc" # "shopkeeper.commission_income_amount ASC"
+  # query: "张三"
   def index
     @shops = current_channel_user.own_shops.preload(:shopkeeper).joins(:shopkeeper)
 
     @shops = filter_records_by(relation: @shops)
+    @shops = simple_search(relation: @shops)
     @shops = sort_records(relation: @shops)
     @shops = filter_by_pagination(relation: @shops)
   end
@@ -19,6 +21,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
     @channel_user = current_channel_user
 
     @shops = filter_records_by(relation: @shops)
+    @shops = simple_search(relation: @shops)
     @shops = sort_records(relation: @shops)
     @shops = filter_by_pagination(relation: @shops)
   end

@@ -18,6 +18,13 @@ class Shopkeeper < ApplicationRecord
   }
 
   include ShopkeeperStatusable
+  include Searchable
+
+  simple_search_on fields: [
+    :name,
+    "shopkeepers.user_name",
+    "shopkeepers.user_phone"
+  ], joins: :shop
 
   def to_s
     user_name || id.to_s

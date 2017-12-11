@@ -52,6 +52,12 @@ module ActionSearchable
     _order_options.present? ? relation.order!(_order_options) : relation
   end
 
+  def simple_search(relation: )
+    return relation if not search_params.has_key? :query
+
+    relation = relation.simple_search(search_params[:query])
+  end
+
   private
   def search_params
     @search_params ||= params.except(:page, :per_page)
