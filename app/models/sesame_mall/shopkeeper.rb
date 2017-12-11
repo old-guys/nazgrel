@@ -19,18 +19,6 @@ class Shopkeeper < ApplicationRecord
 
   include ShopkeeperStatusable
 
-  def order_total_price
-    Rails.cache.fetch("shopkeeper:#{id}:order_total_price:raw", raw: true, expires_in: 30.minutes) {
-      orders.sales_order.sum(:total_price)
-    }
-  end
-
-  def commission_income_amount
-    Rails.cache.fetch("shopkeeper:#{id}:commission_income_amount:raw", raw: true, expires_in: 30.minutes) {
-      orders.sales_order.valided_order.sum(:comm)
-    }
-  end
-
   def to_s
     user_name || id.to_s
   end
