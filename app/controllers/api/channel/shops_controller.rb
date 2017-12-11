@@ -1,5 +1,6 @@
 class Api::Channel::ShopsController < Api::Channel::BaseController
   include ActionSearchable
+  include Api::Channel::ActionOwnable
 
   # filters: [{
   #   name: "created_at", field_type: "datetime",
@@ -8,7 +9,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   # order: "order_number desc" # "shopkeeper.commission_income_amount ASC"
   # query: "张三"
   def index
-    @shops = current_channel_user.own_shops.preload(:shopkeeper).joins(:shopkeeper)
+    @shops = own_record_by_channel_user(klass: Shop).preload(:shopkeeper).joins(:shopkeeper)
 
     @shops = filter_records_by(relation: @shops)
     @shops = simple_search(relation: @shops)
@@ -17,7 +18,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   end
 
   def sales
-    @shops = current_channel_user.own_shops.preload(:shopkeeper).joins(:shopkeeper)
+    @shops = own_record_by_channel_user(klass: Shop).preload(:shopkeeper).joins(:shopkeeper)
     @channel_user = current_channel_user
 
     @shops = filter_records_by(relation: @shops)
