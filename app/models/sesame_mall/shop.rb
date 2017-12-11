@@ -11,6 +11,13 @@ class Shop < ApplicationRecord
 
   include TreeDescendantable
   include ShopProductable
+  include Searchable
+
+  simple_search_on fields: [
+    :name,
+    "shopkeepers.user_name",
+    "shopkeepers.user_phone"
+  ], joins: :shopkeeper
 
   def to_s
     name || id.to_s

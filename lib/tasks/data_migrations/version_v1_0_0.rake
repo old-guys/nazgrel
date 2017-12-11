@@ -41,5 +41,14 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'migrate shopkeeper#commission_income_amount'
+    task :v1_0_7_shopkeeper_income_amount => :environment do
+      Shopkeeper.where(commission_income_amount: nil).find_each {|s|
+        _commission_income_amount = s.orders.sales_order.valided_order.sum(:comm)
+
+        s.update_columns(commission_income_amount: _commission_income_amount)
+      }
+    end
   end
 end

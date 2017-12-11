@@ -30,7 +30,8 @@ class SesameMall::ShopkeeperSeek
       blocked_amount: data[:blocked_amount],
       invite_amount: data[:invite_amount],
       invite_number: data[:invite_number],
-      order_amount: data[:order_amount],
+      # REVIEW 不同步因为, shopkeeper#order_amount 计算逻辑不一致
+      # order_amount: data[:order_amount],
       # REVIEW 不同步因为, shopkeeper#order_number 计算逻辑不一致
       # order_number: data[:order_number],
 
@@ -48,14 +49,28 @@ class SesameMall::ShopkeeperSeek
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
     )
 
+    _path = data[:parent_ids].to_s.split(",").reject{|s|
+      s.to_i <= 0
+    }.push(0).reverse.push(record.user_id).join("/")
+
     record.assign_attributes(
-      path: data[:parent_ids].to_s.split(",").reject{|s| s.to_i <= 0}.push(0).reverse.push(record.user_id).join("/")
+      path: _path,
     )
 
     # REVIEW shopkeeper#order_number
     record.assign_attributes(
-      order_number: record.orders.sales_order.size
+      order_number: record.orders.valided_order.sales_order.size,
+      order_amount: record.orders.sales_order.valided_order.sum(:total_price),
     ) if record.persisted?
+
+    if record.persisted?
+      _commission_income_amount = record.orders.
+        sales_order.valided_order.sum(:comm)
+
+      record.assign_attributes(
+        commission_income_amount: _commission_income_amount
+      )
+    end
 
     record
   end

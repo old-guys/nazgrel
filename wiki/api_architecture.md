@@ -1,6 +1,6 @@
-## 芝麻城 BI Api 架构
+## 芝蚂城 BI Api 架构
 
-本文档目的是描述有关组织和架构芝麻城 BI Api 的一些约定和规范。
+本文档目的是描述有关组织和架构芝蚂城 BI Api 的一些约定和规范。
 
 ```shell
 app/controllers/
