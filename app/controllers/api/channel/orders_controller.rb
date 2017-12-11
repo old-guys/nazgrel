@@ -5,24 +5,28 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
   #   name: "created_at", field_type: "datetime",
   #   operator: "within", query: "today"
   # }]
+  # order: "total_price desc" # "created_at ASC"
   def index
-    @orders = current_channel_user.own_orders.sales_order.order(created_at: :desc)
+    @orders = current_channel_user.own_orders.sales_order
 
     @orders = filter_records_by(relation: @orders)
+    @orders = sort_records(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
   end
 
   def awaiting_delivery
-    @orders = current_channel_user.own_orders.sales_order.undelivered_than_hour.order(created_at: :desc)
+    @orders = current_channel_user.own_orders.sales_order.undelivered_than_hour
 
     @orders = filter_records_by(relation: @orders)
+    @orders = sort_records(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
   end
 
   def refund
-    @orders = current_channel_user.own_orders.sales_order.none.order(created_at: :desc)
+    @orders = current_channel_user.own_orders.sales_order.none
 
     @orders = filter_records_by(relation: @orders)
+    @orders = sort_records(relation: @orders)
     @orders = filter_by_pagination(relation: @orders)
   end
 

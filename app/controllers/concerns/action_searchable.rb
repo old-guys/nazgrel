@@ -32,6 +32,26 @@ module ActionSearchable
     relation = relation.page(params[:page]).per(params[:per_page])
   end
 
+  def sort_records(relation: )
+    if search_params[:order].present?
+      _order_options = search_params[:order].split(",").map(&:presence)
+
+      _order_options.map!{|order|
+        options = order.split(" ").map(&:presence)
+        _column = options[0].include?(".") ? options[0] : "`#{relation.klass.table_name}`.`#{options[0]}`"
+        _sort = options[1].to_s.upcase
+
+        "#{_column} #{_sort}"
+      }
+    end
+
+    if relation.order_values.blank?
+      _order_options ||= {relation.klass.primary_key => :desc}
+    end
+
+    _order_options.present? ? relation.order!(_order_options) : relation
+  end
+
   private
   def search_params
     @search_params ||= params.except(:page, :per_page)
