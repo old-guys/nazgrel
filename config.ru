@@ -12,5 +12,9 @@ if defined?(ENV) and ENV["RAILS_ENV"].eql?("production")
   use Unicorn::WorkerKiller::Oom, (100*(1024**2)), (190*(1024**2))
 end
 
+if defined?(ENV) and ENV["RAILS_ENV"].eql?("production")
+  use Raindrops::Middleware
+end
+
 require ::File.expand_path('../config/environment',  __FILE__)
 run Rails.application

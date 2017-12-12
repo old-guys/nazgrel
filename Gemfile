@@ -97,6 +97,9 @@ group :production do
   # clients on low-latency, high-bandwidth connections and take advantage of
   # features in Unix/Unix-like kernels.
   gem 'unicorn', '~> 5.3', '>= 5.3.1'
+  # raindrops is a real-time stats toolkit to show statistics
+  # for Rack HTTP servers.
+  gem 'raindrops', '~> 0.19.0'
   # Kill unicorn workers by memory and request counts
   gem 'unicorn-worker-killer', '~> 0.4.4'
   # New Relic is a performance management system,
