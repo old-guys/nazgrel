@@ -27,6 +27,12 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
     @shops = filter_by_pagination(relation: @shops)
   end
 
+  def children
+    @shop = current_channel_user.own_shops.find(params[:id])
+
+    @shops = @shop.children
+  end
+
   def show
     @shop = current_channel_user.own_shops.find(params[:id])
   end
