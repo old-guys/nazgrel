@@ -1,5 +1,6 @@
 class Api::Web::BaseController < ActionController::API
   include ::ActionView::Layouts
+  include ActionController::Caching
 
   respond_to :json
   layout "api"

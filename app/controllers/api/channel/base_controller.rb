@@ -1,5 +1,7 @@
 class Api::Channel::BaseController < ActionController::API
   include ::ActionView::Layouts
+  include ActionController::Caching
+
   include ActionSearchable
 
   respond_to :json
