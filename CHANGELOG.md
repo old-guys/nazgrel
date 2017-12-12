@@ -1,8 +1,9 @@
 ## 芝蚂助手店主订单优化 (2017-12-11)
 
-- 芝麻助手列表页新增搜索
-- 芝麻助手列表页新增排序
-- 芝麻助手列表页新增按照渠道筛选
+- 芝蚂助手列表页新增搜索
+- 芝蚂助手列表页新增排序
+- 芝蚂助手列表页新增按照渠道筛选
+- 芝蚂助手店主列表页查看直接店主
 
 ```shell
 cap production deploy:runrake task=data_migrations:version:v1_0_7_shopkeeper_income_amount
