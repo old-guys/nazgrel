@@ -3,52 +3,63 @@ shop_seek_job:
   name: "同步店铺"
   class: "ShopSeekWorker"
   queue: :seek
-
+  args:
+    duration: 5
 # # NOTICE 已经在同步店铺的时候处理
 # shopkeeper_seek_job:
 #   cron: "*/15 * * * *"
 #   name: "同步店主"
 #   class: "ShopkeeperSeekWorker"
 #   queue: :seek
+#   args:
+#     duration: 900
 
 order_seek_job:
   cron: "*/15 * * * *"
   name: "同步订单"
   class: "OrderSeekWorker"
   queue: :seek
-
+  args:
+    duration: 15
 order_detail_seek_job:
   cron: "*/15 * * * *"
   name: "同步订单"
   class: "OrderDetailSeekWorker"
   queue: :seek
-
+  args:
+    duration: 15
 order_sub_seek_job:
   cron: "*/15 * * * *"
   name: "同步子订单"
   class: "OrderSubSeekWorker"
   queue: :seek
-
+  args:
+    duration: 15
 order_sub_seek_job:
   cron: "*/15 * * * *"
   name: "同步物流订单"
   class: "OrderExpressSeekWorker"
   queue: :seek
-
+  args:
+    duration: 15
 product_seek_job:
   cron: "*/15 * * * *"
   name: "同步商品"
   class: "ProductSeekWorker"
   queue: :seek
-
+  args:
+    duration: 15
 product_shop_seek_job:
   cron: "*/15 * * * *"
   name: "同步店铺代理销售商品"
   class: "ProductShopSeekWorker"
   queue: :seek
-
+  args:
+    duration: 15
 income_record_seek_job:
   cron: "*/5 * * * *"
   name: "同步收入记录"
   class: "IncomeRecordSeekWorker"
   queue: :seek
+  args:
+    duration: 5

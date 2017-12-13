@@ -34,7 +34,6 @@ require "capistrano/bundler"
 require "capistrano/rails/migrations"
 require 'capistrano3/unicorn'
 require 'capistrano/sidekiq'
-require 'capistrano/sidekiq'
 # require 'capistrano/sidekiq/monit' # Only for capistrano3
 
 require "whenever/capistrano"

@@ -3,6 +3,7 @@ module SesameMall::Seekable
 
   included do
     include SesameMall::SeekHookable
+    include SesameMall::SeekLoggerable
 
     attr_accessor :source_data, :batch_size, :primary_key, :source_primary_key
 
@@ -20,22 +21,26 @@ module SesameMall::Seekable
   def do_whole_sync(relation: , key: nil)
     key ||= primary_key
     self.batch_size ||= 1000
+    logger.info "start sync: batch_size: #{batch_size}"
 
     relation.in_batches(of: batch_size) {|records|
       self.source_data = records
 
       process
     }
+    logger.info "sync finished: #{relation.count} synced"
   end
 
   def do_partial_sync(relation: )
     self.batch_size ||= 1000
+    logger.info "start sync: batch_size: #{batch_size}"
 
     relation.in_batches(of: batch_size){|records|
       self.source_data = records
 
       process
     }
+    logger.info "sync finished: #{relation.count} synced"
   end
 
   def process
@@ -59,7 +64,11 @@ module SesameMall::Seekable
         _records.each {|record|
           next if record.changes.except(:updated_at, :created_at).blank?
 
-          record.save rescue nil
+          begin
+            record.save!
+          rescue nil
+            logger.warn "save failure: #{record.errors}"
+          end
         }
       end
     }
