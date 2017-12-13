@@ -13,6 +13,7 @@ module ChannelShopable
     end
   end
 
+  # this channel invite shops was channel own shop
   def channel_shops
     @_channel_shops ||= Shop.joins(:channel).where({
       channels: {
@@ -24,30 +25,39 @@ module ChannelShopable
     })
   end
 
-  def descendant_channel_shops
-    _root_shops = channel_shops.to_a
-    return Shop.none if channel_shops.blank?
-
-    if _root_shops.length == 1
-      Shop.self_and_descendant_entities(_root_shops[0], column: :channel_path)
-    else
-      _shops = Shop.self_and_descendant_entities(_root_shops.shift, column: :channel_path)
-      _root_shops.each {|shop|
-        _shops = _shops.or(Shop.self_and_descendant_entities(shop, column: :channel_path))
+  def channel_shop_ids
+    @channel_shop_ids ||= proc {
+      _result = Rails.cache.fetch("#{cache_key}:channel_shop_ids", raw: true, expires_in: 3.minutes) {
+        channel_shops.pluck(:id).to_yaml
       }
-      _shops
-    end
+
+      YAML.load(_result)
+    }.call
+  end
+
+  def descendant_channel_shops
+    return Shop.none if channel_shop_ids.blank?
+    _root_shops = Shop.where(id: channel_shop_ids).to_a
+
+    _shops = Shop.self_and_descendant_entities(_root_shops.shift, column: :channel_path)
+    _root_shops.each {|shop|
+      _shops = _shops.or(Shop.self_and_descendant_entities(shop, column: :channel_path))
+    }
+
+    _shops
   end
 
   def self_and_descendant_shops
-    _shops = Shop.self_and_descendant_entities(own_shop, column: :channel_path)
-    if channel_shops.present?
-      _shops = _shops.where.not(
-        id: descendant_channel_shops.select(:id)
-      )
-    end
+    @self_and_descendant_shops ||= proc {
+      _shops = Shop.self_and_descendant_entities(own_shop, column: :channel_path)
+      if channel_shop_ids.present?
+        _shops = _shops.where.not(
+          id: descendant_channel_shops.select(:id)
+        )
+      end
 
-    _shops
+      _shops
+    }.call
   end
   alias :shops :self_and_descendant_shops
 

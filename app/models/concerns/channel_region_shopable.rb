@@ -6,17 +6,24 @@ module ChannelRegionShopable
   end
 
   def shops
-    _channels = channels.to_a
+    @shops ||= proc {
+      Rails.cache.fetch("#{cache_key}:shops", expires_in: 1.minutes) {
+        real_shops.all
+      }
+    }.call
+  end
 
-    if _channels.length == 1
-      _channels[0].shops
-    else
+  def real_shops
+    @real_shops ||= proc {
+      _channels = channels.preload(:own_shop).to_a
+
       _shops = _channels.shift.shops
       _channels.each {|channel|
         _shops = _shops.or(channel.shops)
       }
+
       _shops
-    end
+    }.call
   end
 
   module ClassMethods
