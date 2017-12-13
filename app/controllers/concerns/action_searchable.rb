@@ -53,7 +53,7 @@ module ActionSearchable
   end
 
   def simple_search(relation: )
-    return relation if not search_params.has_key? :query
+    return relation if search_params[:query].blank?
 
     relation = relation.simple_search(search_params[:query])
   end
