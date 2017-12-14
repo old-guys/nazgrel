@@ -24,7 +24,7 @@ module ChannelUserOwnable
 
   def own_shops(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
-      return channel_region.try(:shops)
+      return channel.try(:shops)
     end
     if role_type.to_sym == :region_manager and channel_only
       return channel_region.try(:root_shops)
@@ -34,7 +34,7 @@ module ChannelUserOwnable
       when :normal_user
         shops
       when :manager
-        channel.shops
+        self.channel.shops
       when :region_manager
         channel_region.try(:shops) || Shop.none
     end
@@ -42,7 +42,7 @@ module ChannelUserOwnable
 
   def own_shopkeepers(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
-      return channel_region.try(:shopkeepers)
+      return channel.try(:shopkeepers)
     end
     if role_type.to_sym == :region_manager and channel_only
       return channel_region.try(:root_shopkeepers)
@@ -52,7 +52,7 @@ module ChannelUserOwnable
       when :normal_user
         shopkeepers
       when :manager
-        channel.shopkeepers
+        self.channel.shopkeepers
       when :region_manager
         channel_region.try(:shopkeepers) || Shopkeeper.none
     end
@@ -60,7 +60,7 @@ module ChannelUserOwnable
 
   def own_orders(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
-      return channel_region.try(:orders)
+      return channel.try(:orders)
     end
     if role_type.to_sym == :region_manager and channel_only
       return channel_region.try(:root_orders)
@@ -70,7 +70,7 @@ module ChannelUserOwnable
       when :normal_user
         orders
       when :manager
-        channel.orders
+        self.channel.orders
       when :region_manager
         channel_region.try(:orders) || Order.none
     end
@@ -78,7 +78,7 @@ module ChannelUserOwnable
 
   def own_products(channel: nil, channel_only: false)
     if role_type.to_sym == :region_manager and channel.is_a?(Channel)
-      return channel_region.try(:products)
+      return channel.try(:products)
     end
     if role_type.to_sym == :region_manager and channel_only
       return channel_region.try(:root_products)
@@ -88,7 +88,7 @@ module ChannelUserOwnable
       when :normal_user
         products
       when :manager
-        channel.products
+        self.channel.products
       when :region_manager
         channel_region.try(:products) || Product.none
     end
