@@ -12,13 +12,13 @@ module ChannelUserStatusable
 
   def order_count
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:order_count:raw", raw: true, expires_in: 3.minutes) {
-      shopkeepers.sum(:order_number)
+      own_shopkeepers.sum(:order_number)
     }.to_i
   end
 
   def total_order_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:order_total_price:raw", raw: true, expires_in: 3.minutes) {
-      shopkeepers.sum(:order_amount)
+      own_shopkeepers.sum(:order_amount)
     }
   end
 
