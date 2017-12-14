@@ -3,6 +3,7 @@ json.id @order.id
 json.order_no @order.order_no
 
 # order_details
+json.order_subs([])
 json.order_subs do
   if @order.order_subs.present?
     json.partial! 'api/channel/order_subs/show', collection: @order.order_subs, as: :record

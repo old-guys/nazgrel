@@ -23,6 +23,9 @@ json.(
   :supplier_id, :express_price, :express_free_price, :version, :activity_id
 )
 
+json.order_status record.order_status
+json.order_status_text record.order_status_i18n
+
 json.shop_user_deliveried_push record.shop_user_deliveried_push
 json.shop_user_deliveried_push_text record.shop_user_deliveried_push_i18n
 
