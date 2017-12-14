@@ -64,9 +64,16 @@ income_record_seek_job:
   args:
     duration: 5
 shop_user_seek_job:
-  cron: "*/5 * * * *"
+  cron: "*/15 * * * *"
   name: "同步用户信息"
   class: "ShopUserSeekWorker"
+  queue: :seek
+  args:
+    duration: 15
+shop_user_seek_job:
+  cron: "*/15 * * * *"
+  name: "同步微信用户信息"
+  class: "ShopWechatUserSeekWorker"
   queue: :seek
   args:
     duration: 15

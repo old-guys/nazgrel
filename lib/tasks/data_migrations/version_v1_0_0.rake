@@ -54,9 +54,10 @@ namespace :data_migrations do
     desc 'init seek trigger for sesame_mall sub order'
     task :v1_0_8_init_seek_trigger => :environment do
       SesameMall::ShopUserSeek.whole_sync
+      SesameMall::ShopWechatUserSeek.whole_sync
 
       _klasses = [
-        SesameMall::Source::ShopUser
+        SesameMall::Source::ShopUser, SesameMall::Source::ShopWechatUser
       ]
 
       _klasses.each {|klass|
