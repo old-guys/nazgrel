@@ -1,0 +1,15 @@
+zh-CN:
+  activerecord:
+    models:
+      supplier: "供应商"
+    attributes:
+      supplier:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    supplier:
+      status:
+        normal: "正常"
+        locked: "冻结"
