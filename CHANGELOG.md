@@ -1,3 +1,12 @@
+## 芝蚂助手店主订单优化 (2017-12-15)
+
+- 拉取C端用户数据
+- [hack] api return data should not allow nil value for `[]`, and `{}`
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_0_8_init_seek_trigger
+```
+
 ## 芝蚂助手店主订单优化 (2017-12-11)
 
 - 芝蚂助手列表页新增搜索
