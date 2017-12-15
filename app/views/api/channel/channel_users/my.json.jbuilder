@@ -1,7 +1,7 @@
 json.name @channel_user.name
 json.shop_name @channel_user.own_shop.to_s
 
-json.channel {}
+json.channel({})
 json.channel do
   if @channel_user.channel
     json.id @channel_user.channel_id
@@ -16,7 +16,7 @@ end
 json.shopkeeper_user_id @channel_user.shopkeeper_user_id
 json.shop_id @channel_user.shop_id
 
-json.shopkeeper {}
+json.shopkeeper({})
 json.shopkeeper do
   if @channel_user.own_shopkeeper
     json.partial! 'api/channel/shopkeepers/profile', record: @channel_user.own_shopkeeper

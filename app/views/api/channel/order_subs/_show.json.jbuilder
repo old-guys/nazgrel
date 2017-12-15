@@ -4,7 +4,7 @@ json.(
 )
 
 # order_express
-json.order_express {}
+json.order_express({})
 json.order_express do
   if record.order_express.present?
     json.partial! 'api/channel/order_expresses/show', locals: {record: record.order_express}
@@ -12,14 +12,14 @@ json.order_express do
 end
 
 # order_subs
-json.order_details []
+json.order_details([])
 json.order_details do
   if record.order_details.present?
     json.partial! 'api/channel/order_details/show', collection: record.order_details, as: :record
   end
 end
 
-json.supplier {}
+json.supplier({})
 json.supplier do
   if record.supplier.present?
     json.partial! 'api/channel/suppliers/show', locals: {record: record.supplier}
