@@ -36,6 +36,8 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
   end
 
   def show
-    @order = current_channel_user.own_orders.find(params[:id])
+    @order = current_channel_user.own_orders.preload(
+      order_subs: [:supplier, :order_details, :order_express]
+    ).find(params[:id])
   end
 end
