@@ -14,5 +14,5 @@ json.source_text record.source_i18n
 json.status record.status
 json.status_text record.status_i18n
 
-json.updated_at record.created_at
+json.updated_at record.updated_at
 json.created_at record.created_at
