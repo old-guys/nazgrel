@@ -3,7 +3,7 @@ zh-CN:
     models:
       shop_user: "用户"
     attributes:
-      order:
+      shop_user:
         id: "ID"
         created_at: "创建时间"
         updated_at: "更新于"

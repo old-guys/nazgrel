@@ -3,7 +3,7 @@ zh-CN:
     models:
       order_express: "物流订单"
     attributes:
-      order:
+      order_express:
         id: "ID"
         sub_order_no: "子订单编号"
         created_at: "创建时间"

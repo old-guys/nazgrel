@@ -3,7 +3,7 @@ zh-CN:
     models:
       product_shop: "店铺代理销售商品"
     attributes:
-      product:
+      product_shop:
         id: "ID"
         product_id: "商品ID"
         shop_id: "店铺ID"
