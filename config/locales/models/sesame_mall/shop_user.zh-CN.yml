@@ -1,0 +1,33 @@
+zh-CN:
+  activerecord:
+    models:
+      shop_user: "用户"
+    attributes:
+      shop_user:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    shop_user:
+      sex:
+        female: "女"
+        male: "男"
+      status:
+        normal: "正常"
+        locked: "冻结"
+        was_invalid: "失效"
+      source:
+        ishanggang: "爱上岗"
+        sesamemall: "芝蚂城"
+      shopkeeper_flag:
+        :yes: "是"
+        :no: "否"
+      wechat_flag:
+        :yes: "是"
+        :no: "否"
+      verify_flag:
+        un_verify: "未实名"
+        approved: "已实名"
+        applying: "待审核"
+        rejected: "未通过"

@@ -3,7 +3,7 @@ zh-CN:
     models:
       shopkeeper: "店主"
     attributes:
-      order:
+      shopkeeper:
         id: "ID"
         created_at: "创建时间"
         updated_at: "更新于"

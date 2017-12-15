@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  openid: MyString
+  headimgurl: MyString
+  nickname: MyString
+  province: MyString
+  city: MyString
+  country: MyString
+  gender: 1
+  status: 1
+  unionid: MyString
+  appid: MyString
+  mobile: MyString
+  status: 1
+
+two:
+  user_id: 
+  openid: MyString
+  headimgurl: MyString
+  nickname: MyString
+  province: MyString
+  city: MyString
+  country: MyString
+  gender: 1
+  status: 1
+  unionid: MyString
+  appid: MyString
+  mobile: MyString
+  status: 1

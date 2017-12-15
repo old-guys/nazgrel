@@ -1,0 +1,18 @@
+zh-CN:
+  activerecord:
+    models:
+      shop_wechat_user: "微信用户"
+    attributes:
+      shop_wechat_user:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    shop_wechat_user:
+      gender:
+        female: "女"
+        male: "男"
+      status:
+        binded: "已绑定"
+        unbind: "已解绑"

@@ -4,7 +4,7 @@ shop_seek_job:
   class: "ShopSeekWorker"
   queue: :seek
   args:
-    duration: 5
+    duration: 8
 # # NOTICE 已经在同步店铺的时候处理
 # shopkeeper_seek_job:
 #   cron: "*/15 * * * *"
@@ -20,46 +20,67 @@ order_seek_job:
   class: "OrderSeekWorker"
   queue: :seek
   args:
-    duration: 15
+    duration: 18
 order_detail_seek_job:
   cron: "*/15 * * * *"
   name: "同步订单"
   class: "OrderDetailSeekWorker"
   queue: :seek
   args:
-    duration: 15
+    duration: 18
 order_sub_seek_job:
   cron: "*/15 * * * *"
   name: "同步子订单"
   class: "OrderSubSeekWorker"
   queue: :seek
   args:
-    duration: 15
+    duration: 18
 order_sub_seek_job:
   cron: "*/15 * * * *"
   name: "同步物流订单"
   class: "OrderExpressSeekWorker"
   queue: :seek
   args:
-    duration: 15
+    duration: 18
 product_seek_job:
   cron: "*/15 * * * *"
   name: "同步商品"
   class: "ProductSeekWorker"
   queue: :seek
   args:
-    duration: 15
+    duration: 18
 product_shop_seek_job:
   cron: "*/15 * * * *"
   name: "同步店铺代理销售商品"
   class: "ProductShopSeekWorker"
   queue: :seek
   args:
-    duration: 15
+    duration: 18
 income_record_seek_job:
   cron: "*/5 * * * *"
   name: "同步收入记录"
   class: "IncomeRecordSeekWorker"
   queue: :seek
   args:
-    duration: 5
+    duration: 8
+shop_user_seek_job:
+  cron: "*/15 * * * *"
+  name: "同步用户信息"
+  class: "ShopUserSeekWorker"
+  queue: :seek
+  args:
+    duration: 18
+shop_user_seek_job:
+  cron: "*/15 * * * *"
+  name: "同步微信用户信息"
+  class: "ShopWechatUserSeekWorker"
+  queue: :seek
+  args:
+    duration: 18
+supplier_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步供应商"
+  class: "SupplierSeekWorker"
+  queue: :seek
+  args:
+    duration: 35

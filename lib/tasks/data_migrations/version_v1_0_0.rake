@@ -50,5 +50,21 @@ namespace :data_migrations do
         s.update_columns(commission_income_amount: _commission_income_amount)
       }
     end
+
+    desc 'init seek trigger for sesame_mall sub order'
+    task :v1_0_8_init_seek_trigger => :environment do
+      SesameMall::ShopUserSeek.whole_sync
+      SesameMall::ShopWechatUserSeek.whole_sync
+      SesameMall::SupplierSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::ShopUser, SesameMall::Source::ShopWechatUser,
+        SesameMall::Source::Supplier
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

@@ -3,7 +3,7 @@ zh-CN:
     models:
       order_detail: "订单详情"
     attributes:
-      order:
+      order_detail:
         id: "ID"
         order_no: "订单编号"
         sub_order_no: "子订单编号"

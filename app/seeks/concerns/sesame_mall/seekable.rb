@@ -66,8 +66,8 @@ module SesameMall::Seekable
 
           begin
             record.save!
-          rescue nil
-            logger.warn "save failure: #{record.errors}"
+          rescue => e
+            logger.warn "save failure: #{e} #{record.errors}"
           end
         }
       end
