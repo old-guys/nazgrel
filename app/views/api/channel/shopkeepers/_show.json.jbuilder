@@ -13,6 +13,7 @@ json.indirectly_descendant_count do
 end
 
 # parent shopkeeper
+json.parent {}
 json.parent do
   if record.parent.present?
     json.partial! 'api/channel/shopkeepers/profile', record: record.parent
