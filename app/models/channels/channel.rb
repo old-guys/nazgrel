@@ -18,6 +18,8 @@ class Channel < ApplicationRecord
     locked: 1
   }
 
+  include Searchable
+
   include ChannelShopable
   include ChannelShopkeeperable
   include ChannelOrderable
@@ -26,6 +28,10 @@ class Channel < ApplicationRecord
   include ChannelStatusable
 
   include ChannelChannelUserable
+
+  simple_search_on fields: [
+    :name
+  ]
 
   def to_s
     name

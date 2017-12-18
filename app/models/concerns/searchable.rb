@@ -25,7 +25,7 @@ module Searchable
 
   private
   module ClassMethods
-    def simple_search_on(fields: , joins: )
+    def simple_search_on(fields: , joins: nil)
       self.search_fields ||= []
       self.search_fields = search_fields.concat(Array.wrap(fields)).uniq
 

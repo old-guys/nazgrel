@@ -1,6 +1,13 @@
 class Api::Web::ChannelRegionsController < Api::Web::BaseController
   include ActionSearchable
 
+  #
+  # filters: [{
+  #   name: "status", field_type: "integer",
+  #   operator: "eq", query: "0"
+  # }],
+  # order: "id desc",
+  # query: "测试"
   def index
     @channel_regions = ::ChannelRegion.preload(
       :channel_users,
@@ -9,6 +16,9 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
       ]
     ).order(id: :desc)
 
+    @channel_regions = filter_records_by(relation: @channel_regions)
+    @channel_regions = simple_search(relation: @channel_regions)
+    @channel_regions = sort_records(relation: @channel_regions)
     @channel_regions = filter_by_pagination(relation: @channel_regions)
   end
 

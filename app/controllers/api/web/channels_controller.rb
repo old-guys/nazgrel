@@ -1,11 +1,21 @@
 class Api::Web::ChannelsController < Api::Web::BaseController
   include ActionSearchable
 
+  #
+  # filters: [{
+  #   name: "status", field_type: "integer",
+  #   operator: "eq", query: "0"
+  # }],
+  # order: "id desc",
+  # query: "徐"
   def index
     @channels = ::Channel.preload(
       :channel_users, :own_shop, :own_shopkeeper
     ).order(id: :desc)
 
+    @channels = filter_records_by(relation: @channels)
+    @channels = simple_search(relation: @channels)
+    @channels = sort_records(relation: @channels)
     @channels = filter_by_pagination(relation: @channels)
   end
 

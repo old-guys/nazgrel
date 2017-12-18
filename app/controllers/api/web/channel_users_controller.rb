@@ -1,12 +1,22 @@
 class Api::Web::ChannelUsersController < Api::Web::BaseController
   include ActionSearchable
 
+  #
+  # filters: [{
+  #   name: "role_type", field_type: "integer",
+  #   operator: "eq", query: "0"
+  # }],
+  # order: "id desc",
+  # query: "徐"
   def index
     @channel_users = ::ChannelUser.order(id: :desc)
     if params[:channel_id]
       @channel_users = @channel_users.where(channel_id: params[:channel_id])
     end
 
+    @channel_users = filter_records_by(relation: @channel_users)
+    @channel_users = simple_search(relation: @channel_users)
+    @channel_users = sort_records(relation: @channel_users)
     @channel_users = filter_by_pagination(relation: @channel_users)
   end
 

@@ -15,6 +15,8 @@ class ChannelUser < ApplicationRecord
     region_manager: 2
   }
 
+  include Searchable
+
   include ChannelUserShopable
   include ChannelUserShopkeeperable
 
@@ -25,6 +27,10 @@ class ChannelUser < ApplicationRecord
 
   include ChannelUserRoleable
   include ChannelUserOwnable
+
+  simple_search_on fields: [
+    :name, :phone
+  ]
 
   def email_required?
     false

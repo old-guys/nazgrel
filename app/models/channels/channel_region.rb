@@ -9,11 +9,17 @@ class ChannelRegion < ApplicationRecord
     locked: 1
   }
 
+  include Searchable
+
   include ChannelRegionShopable
   include ChannelRegionShopkeeperable
 
   include ChannelRegionOrderable
   include ChannelRegionProductable
+
+  simple_search_on fields: [
+    :name
+  ]
 
   def to_s
     name
