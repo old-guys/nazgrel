@@ -1,0 +1,24 @@
+zh-CN:
+  activerecord:
+    models:
+      income_record: "收入记录"
+    attributes:
+      income_record:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    income_record:
+      source_user_level:
+        level_blank: "无等级"
+        level_1th: "一级"
+        level_2th: "二级"
+      income_type:
+        invite_income: "邀请收入"
+        team_income: "团队收入"
+        commission_income: "佣金收入（店铺佣金）"
+        chargeback_income: "消费退单"
+      status:
+        awaiting_confirm: "待确认"
+        confirmed: "已确认"
