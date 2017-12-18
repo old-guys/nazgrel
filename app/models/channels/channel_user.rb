@@ -9,6 +9,8 @@ class ChannelUser < ApplicationRecord
   belongs_to :channel_region, required: false
   has_one :api_key, class_name: "ChannelApiKey", dependent: :destroy
 
+  validates :phone, presence: true, uniqueness: true
+
   enum role_type: {
     normal_user: 0,
     manager: 1,

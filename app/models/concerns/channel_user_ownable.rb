@@ -7,15 +7,15 @@ module ChannelUserOwnable
   def all_own_for(klass, channel: nil, channel_only: false)
     case klass.name
       when "Shop"
-        own_shops(channel: channel)
+        own_shops(channel: channel, channel_only: channel_only)
       when "Shopkeeper"
-        own_shopkeepers(channel: channel)
+        own_shopkeepers(channel: channel, channel_only: channel_only)
       when "Order"
-        own_orders(channel: channel)
+        own_orders(channel: channel, channel_only: channel_only)
       when "Product"
-        own_products(channel: channel)
+        own_products(channel: channel, channel_only: channel_only)
       when "OrderDetail"
-        own_order_details(channel: channel)
+        own_order_details(channel: channel, channel_only: channel_only)
       else
         klass.none
     end

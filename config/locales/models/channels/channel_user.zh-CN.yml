@@ -3,7 +3,7 @@ zh-CN:
     models:
       channel_user: "渠道用户"
     attributes:
-      channel:
+      channel_user:
         id: "ID"
         name: "名称"
         created_at: "创建时间"
