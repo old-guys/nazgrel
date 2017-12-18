@@ -70,7 +70,7 @@ shop_user_seek_job:
   queue: :seek
   args:
     duration: 18
-shop_user_seek_job:
+shop_wechat_user_seek_job:
   cron: "*/15 * * * *"
   name: "同步微信用户信息"
   class: "ShopWechatUserSeekWorker"
