@@ -29,6 +29,13 @@ module ChannelShopNewer::Calculations
         }.count,
         stage_3_grade_gold: _data.select{|item|
           item.user_grade == "grade_gold" && item.created_at.hour.in?(18..23)
+        }.count,
+
+        day_grade_platinum: _data.select{|item|
+          item.user_grade == "grade_platinum"
+        }.count,
+        day_grade_gold: _data.select{|item|
+          item.user_grade == "grade_gold"
         }.count
       }
 

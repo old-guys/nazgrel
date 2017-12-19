@@ -64,36 +64,25 @@ class ChannelShopNewer::UpdateReport
 
   private
   def process
-    _today_grade_platinum = @result[:result].slice(
-      :stage_1_grade_platinum,
-      :stage_2_grade_platinum,
-      :stage_3_grade_platinum
-    ).values.flatten.sum
-    _today_grade_gold = @result[:result].slice(
-      :stage_1_grade_gold,
-      :stage_2_grade_gold,
-      :stage_3_grade_gold
-    ).values.flatten.sum
-
     record.assign_attributes(
       @result[:result]
     )
 
     if recent_record.report_date.month == record.report_date.month
       record.assign_attributes(
-        month_grade_platinum: recent_record.month_grade_platinum + _today_grade_platinum,
-        month_grade_gold: recent_record.month_grade_gold + _today_grade_gold
+        month_grade_platinum: recent_record.month_grade_platinum + record.day_grade_platinum,
+        month_grade_gold: recent_record.month_grade_gold + record.day_grade_gold
       )
     else
       record.assign_attributes(
-        month_grade_platinum: _today_grade_platinum,
-        month_grade_gold: _today_grade_gold
+        month_grade_platinum: record.day_grade_platinum,
+        month_grade_gold: record.day_grade_gold
       )
     end
 
     record.assign_attributes(
-      year_grade_platinum: recent_record.year_grade_platinum + _today_grade_platinum,
-      year_grade_gold: recent_record.year_grade_gold + _today_grade_gold
+      year_grade_platinum: recent_record.year_grade_platinum + record.day_grade_platinum,
+      year_grade_gold: recent_record.year_grade_gold + record.day_grade_gold
     )
   end
   def write
