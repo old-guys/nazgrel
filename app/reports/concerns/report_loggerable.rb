@@ -1,4 +1,4 @@
-module SesameMall::SeekLoggerable
+module ReportLoggerable
   extend ActiveSupport::Concern
 
   included do

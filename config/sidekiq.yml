@@ -5,6 +5,7 @@
     - [default, 5]
     - [high, 10]
     - [seek, 5]
+    - [report, 3]
 
 development:
   :concurrency: 10

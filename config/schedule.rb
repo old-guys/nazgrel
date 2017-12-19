@@ -24,3 +24,7 @@ set :output, {:error => 'log/whenever_error.log', :standard => 'log/whenever_sta
 every 2.weeks do
   runner "SesameMall::Source::SeekRecord.prune_old_records"
 end
+
+every 2.months do
+  runner "ReportChannelShopNewer.prune_old_records"
+end
