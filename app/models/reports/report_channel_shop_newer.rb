@@ -1,0 +1,2 @@
+class ReportChannelShopNewer < ApplicationRecord
+end

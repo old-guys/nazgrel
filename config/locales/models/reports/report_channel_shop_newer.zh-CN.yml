@@ -1,0 +1,22 @@
+zh-CN:
+  activerecord:
+    models:
+      report_channel_shop_newer: "渠道新增店主"
+    attributes:
+      report_channel_shop_newer:
+        id: "ID"
+        channel_id: "渠道ID"
+        stage_1_grade_platinum: "00:00-9:00 白金店主数"
+        stage_1_grade_gold: "00:00-9:00 黄金店主数"
+        stage_2_grade_platinum: "09:00-18:00 白金店主数"
+        stage_2_grade_gold: "09:00-18:00 黄金店主数"
+        stage_3_grade_platinum: "18:00-24:00 白金店主数"
+        stage_3_grade_gold: "18:00-24:00 黄金店主数"
+        month_grade_platinum: "本月累计白金店主数"
+        month_grade_gold: "本月累计黄金店主数"
+        year_grade_platinum: "本年累计白金店主数"
+        year_grade_gold: "本年累计黄金店主数"
+        report_date: "报表日期"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
