@@ -30,7 +30,8 @@ class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
   def index_params
     _params = params.permit(
       :channel_id,
-      :report_date
+      :report_date,
+      report_date: []
     )
 
     _params
