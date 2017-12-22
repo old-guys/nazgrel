@@ -18,7 +18,7 @@ class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
     @time_type = report_params[:time_type]
 
     if @time_type == "day"
-      report_by_time_type_day(report_params.slice(:report_date, :channel_id))
+      report_by_time_type_day(report_date: report_params[:report_date], channel_id: report_params[:channel_id])
     end
     if @time_type == "month"
       report_date = Date.parse(report_params[:report_date]).all_month rescue nil
