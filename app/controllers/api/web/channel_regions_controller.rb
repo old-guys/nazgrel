@@ -12,7 +12,7 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
     @channel_regions = ::ChannelRegion.preload(
       :channel_users,
       channel_channel_region_maps: [
-        channel: :channel_users
+        channel: [:own_shop, :own_shopkeeper, :channel_users]
       ]
     ).order(id: :desc)
 
