@@ -50,7 +50,7 @@ set :linked_dirs, %w{
 # set :ssh_options, verify_host_key: :secure
 set :unicorn_rack_env, -> { fetch(:rails_env) || "deployment" }
 
-set :unicorn_restart_sleep_time, 8
+set :unicorn_restart_sleep_time, 5
 
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_roles, %w(web app db whenever)
