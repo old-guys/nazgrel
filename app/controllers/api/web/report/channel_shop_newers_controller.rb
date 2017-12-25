@@ -63,7 +63,7 @@ class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
     @channels = @channels.where(id: channel_id) if channel_id.present?
 
     @records = ReportChannelShopNewer.where(
-      report_date: Date.today.all_month,
+      report_date: report_date,
       channel: @channels
     ).group(:channel_id)
     @records = filter_by_pagination(relation: @records)
