@@ -13,6 +13,7 @@ app/controllers/
 │   │   ├── auth_controller.rb
 │   │   ├── base_controller.rb
 │   │   └── ping_controller.rb
+│   │── dev # 开发者接口
 │   └── web # web pc api
 ├── application_controller.rb
 └── concerns
