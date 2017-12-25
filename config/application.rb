@@ -51,8 +51,9 @@ module Nazgrel
                                Dir[Rails.root.join("app/models/settings")] +
                                Dir[Rails.root.join("app/services")] +
                                Dir[Rails.root.join("app/seeks")] +
-                               Dir[Rails.root.join("app/seeks/concerns")]
-
+                               Dir[Rails.root.join("app/seeks/concerns")] +
+                               Dir[Rails.root.join("app/reports")] +
+                               Dir[Rails.root.join("app/reports/concerns")]
 
     redis_conf = SERVICES_CONFIG['redis']
     config.cache_store = :redis_store, {

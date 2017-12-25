@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report_date: 
+  channel_id: 
+  channel_region_id: 
+  stage_1_grade_platinum: 1
+  stage_1_grade_gold: 1
+  stage_2_grade_platinum: 1
+  stage_2_grade_gold: 1
+  stage_3_grade_platinum: 1
+  stage_3_grade_gold: 1
+  month_grade_platinum: 1
+  month_grade_gold: 1
+  year_grade_platinum: 1
+  year_grade_gold: 1
+
+two:
+  report_date: 
+  channel_id: 
+  channel_region_id: 
+  stage_1_grade_platinum: 1
+  stage_1_grade_gold: 1
+  stage_2_grade_platinum: 1
+  stage_2_grade_gold: 1
+  stage_3_grade_platinum: 1
+  stage_3_grade_gold: 1
+  month_grade_platinum: 1
+  month_grade_gold: 1
+  year_grade_platinum: 1
+  year_grade_gold: 1

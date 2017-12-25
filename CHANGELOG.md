@@ -1,3 +1,11 @@
+## 渠道的新增店主报表 (2017-12-25)
+
+- 渠道的新增店主报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_0_10_init_report_channel_shop_newer
+```
+
 ## 芝蚂助手店主订单优化 (2017-12-15)
 
 - 拉取C端用户数据

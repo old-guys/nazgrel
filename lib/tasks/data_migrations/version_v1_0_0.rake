@@ -66,5 +66,12 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'init report_channel_shop_newer'
+    task :v1_0_10_init_report_channel_shop_newer => :environment do
+      Channel.normal.in_batches(of: 50) do |records|
+        ChannelShopNewer::Reporting.reset_report(channels: records)
+      end
+    end
   end
 end

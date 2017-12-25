@@ -33,5 +33,13 @@ namespace :api, defaults: { format: :json } do
         get :check
       end
     end
+
+    namespace :report do
+      resources :channel_shop_newers, only: [:index] do
+        collection do
+          get :report
+        end
+      end
+    end
   end
 end
