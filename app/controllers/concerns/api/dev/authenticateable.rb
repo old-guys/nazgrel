@@ -1,0 +1,30 @@
+module Api::Dev::Authenticateable
+  # controller and view
+  extend ActiveSupport::Concern
+
+  included do
+    helper_method :version_code
+  end
+
+  private
+  def authenticate_app!
+  end
+
+  def authenticate!
+  end
+
+  def auth_params
+    @auth_params ||= begin
+      token, options = token_and_options(request)
+      return params unless options
+      options[:user_token] = token
+      options
+    end
+  rescue
+    params
+  end
+
+  def version_code
+    auth_params[:version_code]
+  end
+end
