@@ -2,7 +2,7 @@ class Api::Dev::SeeksController < Api::Dev::BaseController
   skip_before_action :authenticate!, raise: false
 
   def index
-    render json: seek_jobs.as_json
+    @seek_jobs = seek_jobs
   end
 
   def sync
@@ -14,25 +14,35 @@ class Api::Dev::SeeksController < Api::Dev::BaseController
       duration = params[:duration].to_i
     end
 
-    _jobs.each {|job|
-      duration ||= job.args[0]["duration"]
-      job.klass.safe_constantize.perform_async(
-        duration: duration
-      )
-    }
-
+    if _jobs.present?
+      _jobs.each {|job|
+        duration ||= job.args[0]["duration"]
+        job.klass.safe_constantize.perform_async(
+          duration: duration
+        )
+      }
+    else
+      @code = -1
+      @message = "找不到匹配的seek worker"
+    end
   end
 
   def sync_shop
-    _shopkeepers = SesameMall::Source::Shopkeeper.where(
+    _shop_ids = SesameMall::Source::Shopkeeper.where(
       sync_shopkeeper_params
-    )
-    _shops = SesameMall::Source::Shop.where(
-      id: _shopkeepers.select(:shop_id)
-    )
+    ).pluck(:shop_id)
 
-    _shop_seek = SesameMall::ShopSeek.new
-    _shop_seek.do_partial_sync(relation: _shops)
+    if _shop_ids.present?
+      _shops = SesameMall::Source::Shop.where(
+        id: _shop_ids
+      )
+
+      _shop_seek = SesameMall::ShopSeek.new
+      _shop_seek.do_partial_sync(relation: _shops)
+    else
+      @code = -1
+      @message = "找不到匹配的店铺"
+    end
   end
 
   def sync_channel
@@ -41,12 +51,18 @@ class Api::Dev::SeeksController < Api::Dev::BaseController
     )
     _channel = ::Channel.find_by(shopkeeper_user_id: _shopkeeper.try(:user_id))
 
-    _shops = SesameMall::Source::Shop.where(
-      id: _channel.try(:shops).pluck(:id)
-    )
 
-    _shop_seek = SesameMall::ShopSeek.new
-    _shop_seek.do_partial_sync(relation: _shops)
+    if _channel.present?
+      _shops = SesameMall::Source::Shop.where(
+        id: _channel.try(:shops).pluck(:id)
+      )
+
+      _shop_seek = SesameMall::ShopSeek.new
+      _shop_seek.do_partial_sync(relation: _shops)
+    else
+      @code = -1
+      @message = "找不到匹配的渠道"
+    end
   end
 
   private
