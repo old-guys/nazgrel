@@ -28,11 +28,16 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
 
   def create
     @channel_region = ::ChannelRegion.new(channel_region_params.except(:channel_user))
-    @channel_region.channel_users.new(
-      channel_region_params[:channel_user].reverse_merge(
+
+    _channel_user = ChannelUser.manager.where(
+      phone: channel_region_params[:channel_user][:phone]
+    ).first_or_initialize
+    _channel_user.assign_attributes(
+      channel_region_params[:channel_user].except(:phone).reverse_merge(
         role_type: :region_manager
       )
     )
+    @channel_region.channel_users << _channel_user
 
     if @channel_region.save
       render :show

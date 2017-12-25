@@ -13,6 +13,8 @@ end
 json.channel_users([])
 json.channel_users do
   if record.channel.try(:channel_users)
-    json.partial! 'api/web/channel_users/show', collection: record.channel.channel_users.select(&:manager?), as: :record
+    _channel_users = record.channel.channel_users.select{|u| u.manager? or u.region_manager?}.take(1)
+
+    json.partial! 'api/web/channel_users/show', collection: _channel_users, as: :record
   end
 end
