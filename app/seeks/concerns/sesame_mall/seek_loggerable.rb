@@ -7,7 +7,7 @@ module SesameMall::SeekLoggerable
 
   module ClassMethods
     def logger
-      @logger ||= ActiveSupport::TaggedLogging.new(Logger.new("#{Rails.root}/log/report.log", "weekly"))
+      @logger ||= ActiveSupport::TaggedLogging.new(Logger.new("#{Rails.root}/log/seek.log", "weekly"))
       if defined?(Sidekiq)
         @logger.formatter = Sidekiq::Logging::Pretty.new
       end
