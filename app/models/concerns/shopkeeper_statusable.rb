@@ -16,6 +16,18 @@ module ShopkeeperStatusable
     }.to_i
   end
 
+  def children_grade_platinum_size
+    Rails.cache.fetch("shopkeeper:#{cache_key}:children_grade_platinum_size", raw: true, expires_in: 10.minutes) {
+      children.grade_platinum.size
+    }.to_i
+  end
+
+  def children_grade_gold_size
+    Rails.cache.fetch("shopkeeper:#{cache_key}:children_grade_gold_size", raw: true, expires_in: 10.minutes) {
+      children.grade_gold.size
+    }.to_i
+  end
+
   module ClassMethods
   end
 end

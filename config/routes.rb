@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   draw :api_mobile
   draw :api_channel
   draw :api_dev
+  draw :dev
 
   require 'sidekiq/web'
   require 'sidekiq/cron/web'

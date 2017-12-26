@@ -42,7 +42,7 @@ module ChannelStatusable
 
   def invite_children_reward_amount
     Rails.cache.fetch("channel:#{id}:invite_children_reward:raw", raw: true, expires_in: 3.minutes) {
-      own_shopkeeper.children.grade_platinum.size * 200 + own_shopkeeper.children.grade_platinum.size * 100
+      own_shopkeeper.children_grade_gold_size * 200 + own_shopkeeper.children_grade_platinum_size * 100
     }
   end
 

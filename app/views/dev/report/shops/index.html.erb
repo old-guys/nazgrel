@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="card-title"><h1>每日新增店主</h2></div>
+  <div class="card">
+    <div class="card-body">
+      <ul>
+        <li>
+           <%= link_to "今日", url_for(created_at: Date.today)%>
+           <%= link_to "昨日", url_for(created_at: Date.yesterday)%>
+           <%= link_to "上周", url_for(created_at: Date.today.last_week.all_week)%>
+           <%= link_to "本周", url_for(created_at: Date.today.all_week)%>
+           <%= link_to "本月", url_for(created_at: Date.today.all_month)%>
+        </li>
+      </ul>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">店主姓名</th>
+            <th scope="col">店铺名称</th>
+            <th scope="col">省份</th>
+            <th scope="col">城市</th>
+            <th scope="col">创建时间</th>
+            <th scope="col">店铺等级</th>
+            <th scope="col">销售业绩</th>
+            <th scope="col">佣金金额</th>
+            <th scope="col">招募店主总数</th>
+            <th scope="col">邀请人姓名</th>
+            <th scope="col">邀请人号码</th>
+            <th scope="col">上级店主</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @shops.select(&:shopkeeper).map.with_index(1).each  do |record, index|%>
+            <%
+              _shopkeeper = record.shopkeeper
+              _parent = _shopkeeper.try(:parent)
+            %>
+            <tr>
+              <th scope="row"><%= index %></th>
+              <td><%= record.shopkeeper.to_s %></td>
+              <td><%= record.to_s %></td>
+              <td><%= _shopkeeper.try :province %></td>
+              <td><%= _shopkeeper.try :city %></td>
+              <td><%= _shopkeeper.try :created_at %></td>
+              <td><%= _shopkeeper.try :user_grade_i18n %></td>
+              <td><%= number_to_currency _shopkeeper.try(:order_amount).to_f, unit: "¥"%></td>
+              <td><%= number_to_currency _shopkeeper.try(:commission_income_amount).to_f, unit: "¥" %></td>
+              <td>
+                白金(<%= _shopkeeper.children_grade_platinum_size %>)
+                黄金(<%= _shopkeeper.children_grade_gold_size %>)
+              </td>
+              <td><%= _parent.to_s %></td>
+              <td><%= _parent.try :user_phone %></td>
+              <td><%= _shopkeeper.parents.join(" > ") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= paginate @shops %>
+    </div>
+  </div>
+</div>

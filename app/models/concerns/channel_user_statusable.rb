@@ -71,7 +71,7 @@ module ChannelUserStatusable
       if region_manager?
         channel_region.channels.map(&:invite_children_reward_amount).sum
       else
-        own_shopkeeper.children.grade_platinum.size * 200 + own_shopkeeper.children.grade_platinum.size * 100
+        own_shopkeeper.children.children_grade_gold_size * 200 + own_shopkeeper.children_grade_platinum_size * 100
       end
     }
   end

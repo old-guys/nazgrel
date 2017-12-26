@@ -3,8 +3,8 @@ json.partial! 'api/channel/shopkeepers/profile', record: @shop.shopkeeper
 # invite shopkeeper
 json.child_count do
   json.count record.children.size
-  json.grade_platinum_count record.children.grade_platinum.size
-  json.grade_gold_count record.children.grade_gold.size
+  json.grade_platinum_count record.children_grade_platinum_size
+  json.grade_gold_count record.children_grade_gold_size
 end
 json.indirectly_descendant_count do
   json.count record.indirectly_descendants.size
