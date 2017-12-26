@@ -49,6 +49,22 @@ class SesameMall::OrderSeek
   end
 ```
 
+seeker hook
+
+```shell
+class SesameMall::ShopSeek
+  include SesameMall::Seekable
+  before_process :process_shopkeeper
+  after_process :after_process_shopkeeper
+
+  def process_shopkeeper
+  end
+
+  def after_process_shopkeeper(records: )
+  end
+end
+```
+
 添加触发器
 
 ```ruby

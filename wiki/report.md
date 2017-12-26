@@ -1,0 +1,103 @@
+# BI 报表
+
+## 模块说明
+
+- 报表模型(app/models/reports/)
+- 计算报表服务 (app/reports/)
+- 报表服务公共模块 (app/reports/concerns)
+- 计算报表 worker (app/workers/reports/)
+
+## 渠道新增店主报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# app/models/reports/report_channel_shop_newer.rb
+class ReportChannelShopNewer < ApplicationRecord
+  belongs_to :channel, required: false
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/channel_shop_newer
+├── app/reports/channel_shop_newer/calculations.rb
+├── app/reports/channel_shop_newer/reporting.rb
+├── app/reports/channel_shop_newer/reset_report.rb
+└── app/reports/channel_shop_newer/update_report.rb
+```
+
+报表服务
+
+```ruby
+class ChannelShopNewer::Reporting
+  class << self
+    delegate :update_report, to: "ChannelShopNewer::UpdateReport"
+    delegate :reset_report, to: "ChannelShopNewer::ResetReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module ChannelShopNewer::Calculations
+```
+
+重置报表
+
+```ruby
+class ChannelShopNewer::ResetReport
+```
+
+更新报表
+
+```ruby
+class ChannelShopNewer::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/channel_shop_newer_report_worker.rb
+class ChannelShopNewerReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```yaml
+channel_shop_newer_report:
+  cron: "51 11,23 * * *"
+  name: "全量当天更新渠道新增报表"
+  class: "ChannelShopNewerReportWorker"
+  queue: :report
+  args:
+    type: "whole"
+channel_shop_newer_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新渠道新增报表"
+  class: "ChannelShopNewerReportWorker"
+  queue: :report
+  args:
+    type: "partial"
+```
+
+定时清理 seek record
+
+```ruby
+# config/schedule.rb
+every 2.months do
+  runner "ReportChannelShopNewer.prune_old_records"
+end
+```
+
+### 更新机制
+
+新增店铺之后应该触发报表更新机制
+新增渠道之后应该触发报表更新机制
+
+每隔一段时间触发一次当天渠道新增店主报表的更新
