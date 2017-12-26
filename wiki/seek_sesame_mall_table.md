@@ -5,8 +5,8 @@
 - 源数据模型(app/seeks/sesame_mall/source)
 - seek (app/seeks/sesame_mall/)
 - trigger_service(app/seeks/trigger_service.rb)
-- seek worker
-- seek_record
+- seek worker (app/workers/seeks/)
+- seek_record(app/seeks/sesame_mall/source/seek_record.rb)
 
 ### 处理过程
 
