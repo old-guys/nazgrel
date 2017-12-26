@@ -14,7 +14,12 @@ class ChannelShopNewerReportWorker
       when "partial"
         _key = ChannelShopNewer::UpdateReport::CHANNEL_IDS_CACHE_KEY
 
-        Channel.where(id: $redis.SPOP(_key, 50))
+        # FIXME SPOP not accept count argument for redis < 3.2
+        # _ids = $redis.SPOP(_key, 50)
+        _ids = $redis.SRANDMEMBER(_key, 50)
+        $redis.SREM(_key, _ids) if _ids.present?
+
+        Channel.where(id: _ids)
     end
 
     ChannelShopNewer::UpdateReport.update_report(
