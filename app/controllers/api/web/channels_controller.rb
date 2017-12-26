@@ -51,6 +51,10 @@ class Api::Web::ChannelsController < Api::Web::BaseController
     @channel.shopkeeper_user_id = _shopkeeper.user_id
 
     if @channel.save
+      ChannelShopNewer::UpdateReport.insert_to_partial_channels(
+        id: @channel.id
+      )
+
       render :show
     else
       raise ActiveRecord::RecordInvalid.new(@channel)

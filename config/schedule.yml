@@ -86,7 +86,16 @@ supplier_seek_job:
     duration: 35
 
 channel_shop_newer_report:
-  cron: "* 0-23/2 * * *"
-  name: "更新渠道新增报表"
+  cron: "51 11,23 * * *"
+  name: "全量当天更新渠道新增报表"
   class: "ChannelShopNewerReportWorker"
   queue: :report
+  args:
+    type: "whole"
+channel_shop_newer_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新渠道新增报表"
+  class: "ChannelShopNewerReportWorker"
+  queue: :report
+  args:
+    type: "partial"

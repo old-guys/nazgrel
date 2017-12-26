@@ -36,9 +36,19 @@ class ChannelShopNewer::UpdateReport
         _report.perform
       }
     end
+
+    def insert_to_partial_channels(id: )
+      _ids = Array.wrap(id).uniq
+      return if _ids.blank?
+
+      _key = ChannelShopNewer::UpdateReport::CHANNEL_IDS_CACHE_KEY
+      $redis.SADD(_key, _ids)
+    end
   end
   include ChannelShopNewer::Calculations
   include ReportLoggerable
+
+  CHANNEL_IDS_CACHE_KEY = "channel_shop_newer_report_channel_ids"
 
   attr_accessor :channel, :dates, :recent_record, :record, :result
 

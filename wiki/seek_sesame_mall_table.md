@@ -5,8 +5,8 @@
 - 源数据模型(app/seeks/sesame_mall/source)
 - seek (app/seeks/sesame_mall/)
 - trigger_service(app/seeks/trigger_service.rb)
-- seek worker
-- seek_record
+- seek worker (app/workers/seeks/)
+- seek_record(app/seeks/sesame_mall/source/seek_record.rb)
 
 ### 处理过程
 
@@ -47,6 +47,22 @@ class SesameMall::OrderSeek
       seek.do_partial_sync(relation: _relation)
     end
   end
+```
+
+seeker hook
+
+```shell
+class SesameMall::ShopSeek
+  include SesameMall::Seekable
+  before_process :process_shopkeeper
+  after_process :after_process_shopkeeper
+
+  def process_shopkeeper
+  end
+
+  def after_process_shopkeeper(records: )
+  end
+end
 ```
 
 添加触发器

@@ -3,6 +3,7 @@ class SesameMall::ShopSeek
   attr_accessor :shopkeeper_seek
 
   before_process :process_shopkeeper
+  after_process :after_process_shopkeeper
 
   def initialize(opts = {})
     self.primary_key = :id
@@ -44,6 +45,18 @@ class SesameMall::ShopSeek
     )
 
     shopkeeper_seek.do_partial_sync(relation: _shopkeepers)
+  end
+
+  def after_process_shopkeeper(records: )
+    _ids = Channel.where(
+      shop_id: records.map{|s|
+        s.channel_path.to_s.split("/")[1]
+      }.uniq.compact
+    ).pluck(:id)
+
+    ChannelShopNewer::UpdateReport.insert_to_partial_channels(
+      id: _ids
+    )
   end
   class << self
     def whole_sync
