@@ -6,10 +6,10 @@
         <li>
            <%= link_to "今日", url_for(created_at: Date.today)%>
            <%= link_to "昨日", url_for(created_at: Date.yesterday)%>
-           <%= link_to "上周", url_for(created_at: Date.today.last_week.all_week)%>
-           <%= link_to "上月", url_for(created_at: Date.today.last_month.all_month)%>
-           <%= link_to "本周", url_for(created_at: Date.today.all_week)%>
-           <%= link_to "本月", url_for(created_at: Date.today.all_month)%>
+           <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week)%>
+           <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month)%>
+           <%= link_to "本周", url_for(created_at: DateTime.now.all_week)%>
+           <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
         </li>
       </ul>
       <table class="table">

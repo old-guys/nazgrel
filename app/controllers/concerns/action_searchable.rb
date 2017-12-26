@@ -26,8 +26,8 @@ module ActionSearchable
     _parse_service.parse
   end
 
-  def filter_by_pagination(relation: )
-    params[:per_page] ||= Kaminari.config.default_per_page
+  def filter_by_pagination(relation: , default_per_page: Kaminari.config.default_per_page)
+    params[:per_page] ||= default_per_page
 
     relation = relation.page(params[:page]).per(params[:per_page])
   end
