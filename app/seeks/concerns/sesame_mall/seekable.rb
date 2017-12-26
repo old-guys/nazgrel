@@ -71,6 +71,10 @@ module SesameMall::Seekable
           end
         }
       end
+
+      after_process_hooks.map{|name|
+        send(name, records: _records)
+      } if after_process_hooks.present?
     }
   end
 
