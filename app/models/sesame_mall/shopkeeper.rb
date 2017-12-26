@@ -1,5 +1,7 @@
 class Shopkeeper < ApplicationRecord
   include TreeDescendantable
+  include OpenQueryable
+
   self.tree_depth = 100
   self.tree_primary_key = :user_id
   belongs_to :shop, required: false
@@ -38,5 +40,23 @@ class Shopkeeper < ApplicationRecord
     _user_ids.map{|user_id|
       _records.find{|record| record.user_id.to_s == user_id}
     }
+  end
+
+  def province
+    set_phone_belong_to if super.blank? and user_phone.present?
+
+    super
+  end
+
+  private
+  def set_phone_belong_to
+    if user_phone.present?
+      _hash = phone_belong_to_juhe_hash phone: user_phone
+
+      update_columns(
+        city: _hash["city"],
+        province: _hash["province"],
+      )
+    end
   end
 end
