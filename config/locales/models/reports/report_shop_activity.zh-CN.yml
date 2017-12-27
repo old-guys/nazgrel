@@ -1,0 +1,97 @@
+zh-CN:
+  activerecord:
+    models:
+      report_shop_activity: "店主行为报表"
+    attributes:
+      report_shop_activity:
+        id: "ID"
+        shop_id: "店铺ID"
+
+        shared_count: "分享次数"
+        stage_1_shared_count: "00:00-9:00 分享次数"
+        stage_2_shared_count: "09:00-18:00 分享次数"
+        stage_3_shared_count: "18:00-24:00 分享次数"
+        month_shared_count: "本月累计分享次数"
+        year_shared_count: "本年累计分享次数"
+
+        view_count: "浏览次数"
+        stage_1_view_count: "00:00-9:00 浏览次数"
+        stage_2_view_count: "09:00-18:00 浏览次数"
+        stage_3_view_count: "18:00-24:00 浏览次数"
+        month_view_count: "本月累计浏览次数"
+        year_view_count: "本年累计浏览次数"
+
+        order_number: "订单数"
+        stage_1_order_number: "00:00-9:00 订单数"
+        stage_2_order_number: "09:00-18:00 订单数"
+        stage_3_order_number: "18:00-24:00 订单数"
+        month_order_number: "本月累计订单数"
+        year_order_number: "本年累计订单数"
+
+        shopkeeper_order_number: "自购订单数"
+        stage_1_shopkeeper_order_number: "00:00-9:00 自购订单数"
+        stage_2_shopkeeper_order_number: "09:00-18:00 自购订单数"
+        stage_3_shopkeeper_order_number: "18:00-24:00 自购订单数"
+        month_shopkeeper_order_number: "本月累计自购订单数"
+        year_shopkeeper_order_number: "本年累计自购订单数"
+
+        sale_order_number: "销售订单数"
+        stage_1_sale_order_number: "00:00-9:00 销售订单数"
+        stage_2_sale_order_number: "09:00-18:00 销售订单数"
+        stage_3_sale_order_number: "18:00-24:00 销售订单数"
+        month_sale_order_number: "本月累计销售订单数"
+        year_sale_order_number: "本年累计销售订单数"
+
+        order_amount: "订单金额"
+        stage_1_order_amount: "00:00-9:00 订单金额"
+        stage_2_order_amount: "09:00-18:00 订单金额"
+        stage_3_order_amount: "18:00-24:00 订单金额"
+        month_order_amount: "本月累计订单金额"
+        year_order_amount: "本年累计订单金额"
+
+        shopkeeper_order_amount: "自购订单金额"
+        stage_1_shopkeeper_order_amount: "00:00-9:00 自购订单金额"
+        stage_2_shopkeeper_order_amount: "09:00-18:00 自购订单金额"
+        stage_3_shopkeeper_order_amount: "18:00-24:00 自购订单金额"
+        month_shopkeeper_order_amount: "本月累计自购订单金额"
+        year_shopkeeper_order_amount: "本年累计自购订单金额"
+
+        sale_order_amount: "销售订单金额"
+        stage_1_sale_order_amount: "00:00-9:00 销售订单金额"
+        stage_2_sale_order_amount: "09:00-18:00 销售订单金额"
+        stage_3_sale_order_amount: "18:00-24:00 销售订单金额"
+        month_sale_order_amount: "本月累计销售订单金额"
+        year_sale_order_amount: "本年累计销售订单金额"
+
+        children_grade_platinum_count: "邀请白金店主数"
+        stage_1_children_grade_platinum_count: "00:00-9:00 邀请白金店主数"
+        stage_2_children_grade_platinum_count: "09:00-18:00 邀请白金店主数"
+        stage_3_children_grade_platinum_count: "18:00-24:00 邀请白金店主数"
+        month_children_grade_platinum_countt: "本月累计邀请白金店主数"
+        year_children_grade_platinum_count: "本年累计邀请白金店主数"
+
+        children_grade_gold_count: "邀请黄金店主数"
+        stage_1_children_grade_gold_count: "00:00-9:00 邀请黄金店主数"
+        stage_2_children_grade_gold_count: "09:00-18:00 邀请黄金店主数"
+        stage_3_children_grade_gold_count: "18:00-24:00 邀请黄金店主数"
+        month_children_grade_gold_count: "本月累计邀请黄金店主数"
+        year_children_grade_gold_count: "本年累计邀请黄金店主数"
+
+        ecn_grade_platinum_count: "ECN白金店主数"
+        stage_1_ecn_grade_platinum_count: "00:00-9:00 ECN白金店主数"
+        stage_2_ecn_grade_platinum_count: "09:00-18:00 ECN白金店主数"
+        stage_3_ecn_grade_platinum_count: "18:00-24:00 ECN白金店主数"
+        month_ecn_grade_platinum_count: "本月累计ECN白金店主数"
+        year_ecn_grade_platinum_count: "本年累计ECN白金店主数"
+
+        ecn_grade_gold_count: "ECN黄金店主数"
+        stage_1_ecn_grade_gold_count: "00:00-9:00 ECN黄金店主数"
+        stage_2_ecn_grade_gold_count: "09:00-18:00 ECN黄金店主数"
+        stage_3_ecn_grade_gold_count: "18:00-24:00 ECN黄金店主数"
+        month_ecn_grade_gold_count: "本月累计ECN黄金店主数"
+        year_ecn_grade_gold_count: "本年累计ECN黄金店主数"
+
+        report_date: "报表日期"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
