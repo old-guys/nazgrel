@@ -27,4 +27,5 @@ end
 
 every 2.months do
   runner "ReportChannelShopNewer.prune_old_records"
+  runner "ReportShopActivity.prune_old_records"
 end
