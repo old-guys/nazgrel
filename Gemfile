@@ -96,7 +96,7 @@ group :production do
   # unicorn is an HTTP server for Rack applications designed to only serve fast
   # clients on low-latency, high-bandwidth connections and take advantage of
   # features in Unix/Unix-like kernels.
-  gem 'unicorn', '~> 5.3', '>= 5.3.1'
+  gem 'unicorn', '~> 5.4', '>= 5.4.0'
   # raindrops is a real-time stats toolkit to show statistics
   # for Rack HTTP servers.
   gem 'raindrops', '~> 0.19', '>= 0.19.0'
