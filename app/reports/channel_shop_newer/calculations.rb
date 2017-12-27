@@ -3,9 +3,6 @@ module ChannelShopNewer::Calculations
     start_date = dates.first.to_date
     end_date = dates.last.to_date
 
-    start_date = dates.first.to_date
-    end_date = dates.last.to_date
-
     start_date.upto(end_date).map {|date|
       _data = records.select{|item|
         item.created_at.in? date.to_time.all_day
