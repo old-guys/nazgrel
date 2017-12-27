@@ -4,6 +4,20 @@ module ActionSearchable
   included do
   end
 
+  def parse_datetime(str: )
+    Time.parse(str)
+  end
+
+  def range_within_datetime(str: )
+    if str.include?("..")
+      _values = str.split("..")
+
+      parse_datetime(str: _values[0])..parse_datetime(str: _values[1])
+    else
+      parse_datetime(str: str).all_day
+    end
+  end
+
   # records, [{
   #   name: "created_at", field_type: "datetime",
   #   operator: "within", query: "today"
