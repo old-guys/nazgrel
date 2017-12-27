@@ -116,8 +116,8 @@ class ReportShopActivity < ApplicationRecord
 定义计算报表服务
 
 ```shell
-tree app/reports/report_shop_activity
-app/reports/report_shop_activity
+tree app/reports/shop_activity
+app/reports/shop_activity
 ├── calculations.rb
 ├── reporting.rb
 └── update_report.rb
@@ -126,9 +126,9 @@ app/reports/report_shop_activity
 报表服务
 
 ```ruby
-class ReportShopActivity::Reporting
+class ShopActivity::Reporting
   class << self
-    delegate :update_report, to: "ReportShopActivity::UpdateReport"
+    delegate :update_report, to: "ShopActivity::UpdateReport"
   end
 end
 ```
@@ -136,13 +136,13 @@ end
 计算模块
 
 ```ruby
-module ReportShopActivity::Calculations
+module ShopActivity::Calculations
 ```
 
 更新报表
 
 ```ruby
-class ReportShopActivity::UpdateReport
+class ShopActivity::UpdateReport
 ```
 
 定时队列

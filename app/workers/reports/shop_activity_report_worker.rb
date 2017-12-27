@@ -16,7 +16,7 @@ class ShopActivityReportWorker
           ).select(:user_id)
         )
       when "partial"
-        _key = ReportShopActivity::UpdateReport::SHOP_IDS_CACHE_KEY
+        _key = ShopActivity::UpdateReport::SHOP_IDS_CACHE_KEY
 
         # FIXME SPOP not accept count argument for redis < 3.2
         # _ids = $redis.SPOP(_key, 50)
@@ -26,7 +26,7 @@ class ShopActivityReportWorker
         Shop.where(id: _ids)
     end
 
-    ReportShopActivity::UpdateReport.update_report(
+    ShopActivity::UpdateReport.update_report(
       shops: shops.preload(:shopkeeper)
     )
 

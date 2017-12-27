@@ -1,4 +1,4 @@
-class ReportShopActivity::UpdateReport
+class ShopActivity::UpdateReport
   class << self
     def update_report(shops: , report_date: Date.today, force_update: false, interval_time: 30.minutes)
       _records = ReportShopActivity.where(
@@ -38,7 +38,7 @@ class ReportShopActivity::UpdateReport
 
         next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
 
-        _report = ReportShopActivity::UpdateReport.new(
+        _report = ShopActivity::UpdateReport.new(
           recent_record: _recent_record,
           record: _record
         )
@@ -51,11 +51,11 @@ class ReportShopActivity::UpdateReport
       _ids = Array.wrap(id).uniq
       return if _ids.blank?
 
-      _key = ReportShopActivity::UpdateReport::SHOP_IDS_CACHE_KEY
+      _key = ShopActivity::UpdateReport::SHOP_IDS_CACHE_KEY
       $redis.SADD(_key, _ids)
     end
   end
-  include ReportShopActivity::Calculations
+  include ShopActivity::Calculations
   include ReportLoggerable
 
   SHOP_IDS_CACHE_KEY = "shop_activity_report_shop_ids"

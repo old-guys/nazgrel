@@ -1,4 +1,4 @@
-module ReportShopActivity::Calculations
+module ShopActivity::Calculations
   def aggregation_by_day(shop:, date: , partial_update: false)
     _date = date.dup
     result = {}

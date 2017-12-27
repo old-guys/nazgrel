@@ -57,7 +57,7 @@ class SesameMall::ShopSeek
     ChannelShopNewer::UpdateReport.insert_to_partial_channels(
       id: _channel_ids
     )
-    ReportShopActivity::UpdateReport.insert_to_partial_shops(
+    ShopActivity::UpdateReport.insert_to_partial_shops(
       id: records.map(&:id)
     )
   end
