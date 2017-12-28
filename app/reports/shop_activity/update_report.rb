@@ -37,6 +37,7 @@ class ShopActivity::UpdateReport
         next if _record.shop.shopkeeper.blank?
 
         next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
+        logger.info "update report for shop_id: #{_record.shop_id}"
 
         _report = ShopActivity::UpdateReport.new(
           recent_record: _recent_record,
