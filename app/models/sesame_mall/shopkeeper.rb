@@ -13,6 +13,8 @@ class Shopkeeper < ApplicationRecord
 
   has_many :income_records, foreign_key: :user_id
 
+  attr_accessor :parents
+
   enum user_grade: {
     grade_platinum: 0,
     grade_gold: 1,
@@ -32,14 +34,19 @@ class Shopkeeper < ApplicationRecord
     user_name || id.to_s
   end
 
-  def parents
-    _user_ids = path.to_s.split("/")
-    _records = self_and_ancestor_entities
-    _user_ids.shift
+  def parent_ids
+    path.to_s.split("/").slice(1..-1)
+  end
 
-    _user_ids.map{|user_id|
-      _records.find{|record| record.user_id.to_s == user_id}
-    }
+  def parents
+    @parents ||= proc {
+      _user_ids = parent_ids
+      _records = self_and_ancestor_entities
+
+      _user_ids.map{|user_id|
+        _records.find{|record| record.user_id.to_s == user_id}
+      }
+    }.call
   end
 
   def province
@@ -57,6 +64,22 @@ class Shopkeeper < ApplicationRecord
         city: _hash["city"],
         province: _hash["province"],
       )
+    end
+  end
+
+  class << self
+    def with_preload_parents(records: )
+      _shopkeepers = Shopkeeper.where(
+        user_id: records.compact.map(&:parent_ids).flatten.uniq
+      )
+
+      records.each {|record|
+        record.parents = _shopkeepers.select{|shopkeeper|
+          shopkeeper.user_id.to_s.in?(record.parent_ids)
+        }
+      }
+
+      records
     end
   end
 end

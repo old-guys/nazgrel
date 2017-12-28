@@ -31,6 +31,9 @@
           </tr>
         </thead>
         <tbody>
+          <%
+            Shopkeeper.with_preload_parents(records: @shops.map(&:shopkeeper))
+          %>
           <% @shops.select(&:shopkeeper).map.with_index(1).each  do |record, index|%>
             <%
               _shopkeeper = record.shopkeeper
