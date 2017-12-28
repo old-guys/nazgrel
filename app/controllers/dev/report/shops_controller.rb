@@ -1,7 +1,5 @@
-class Dev::Report::ShopsController < ApplicationController
+class Dev::Report::ShopsController < Dev::Report::BaseController
   include ActionSearchable
-
-  layout "dev"
 
   def index
     _dates = range_within_datetime(str: params[:created_at]) rescue DateTime.now.all_day

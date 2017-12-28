@@ -1,7 +1,5 @@
-class Dev::Report::ShopActivitiesController < ApplicationController
+class Dev::Report::ShopActivitiesController < Dev::Report::BaseController
   include ActionSearchable
-
-  layout "dev"
 
   def index
     @report_shop_activities = ReportShopActivity.preload(shop: :shopkeeper).where(report_date: params[:report_date])
