@@ -1,0 +1,99 @@
+<div class="container-fluid">
+  <div class="card-title"><h1>店主行为报表</h2></div>
+  <div class="card">
+    <div class="card-body">
+      <ul>
+        <li>
+           <%= link_to "今日", url_for(report_date: Date.today)%>
+           <%= link_to "昨日", url_for(report_date: Date.yesterday)%>
+           <% 7.days.ago.to_date.upto(2.days.ago.to_date).reverse_each do |date| %>
+             <%= link_to date.strftime("%m-%d"), url_for(report_date: date.to_s)%>
+           <% end %>
+        </li>
+      </ul>
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">店主姓名</th>
+            <th scope="col">店铺名称</th>
+            <th scope="col">省份</th>
+            <th scope="col">城市</th>
+            <th scope="col">创建时间</th>
+            <th scope="col">店铺等级</th>
+            <th scope="col">分享次数</th>
+            <th scope="col">访问次数</th>
+            <th scope="col">订单数</th>
+            <th scope="col">自购订单</th>
+            <th scope="col">销售订单</th>
+            <th scope="col">订单金额</th>
+            <th scope="col">自购订单金额</th>
+            <th scope="col">销售订单金额</th>
+            <th scope="col">邀请白金店主</th>
+            <th scope="col">邀请黄金店主</th>
+            <th scope="col">ECN白金店主</th>
+            <th scope="col">ECN黄金店主</th>
+
+            <th scope="col">本月分享次数</th>
+            <th scope="col">本月访问次数</th>
+            <th scope="col">本月订单数</th>
+            <th scope="col">本月自购订单</th>
+            <th scope="col">本月销售订单</th>
+            <th scope="col">本月订单金额</th>
+            <th scope="col">本月自购订单金额</th>
+            <th scope="col">本月销售订单金额</th>
+            <th scope="col">本月邀请白金店主</th>
+            <th scope="col">本月邀请黄金店主</th>
+            <th scope="col">本月ECN白金店主</th>
+            <th scope="col">本月ECN黄金店主</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @report_shop_activities.map.with_index(1).each  do |record, index|%>
+            <%
+              _shop = record.shop
+              _shopkeeper = _shop.try(:shopkeeper)
+            %>
+            <tr>
+              <th scope="row"><%= index %></th>
+              <td><%= _shopkeeper.to_s %></td>
+              <td><%= _shop.to_s %></td>
+              <td><%= _shopkeeper.try :province %></td>
+              <td><%= _shopkeeper.try :city %></td>
+              <td><%= _shopkeeper.try :created_at %></td>
+              <td><%= _shopkeeper.try :user_grade_i18n %></td>
+              <td><%= record.shared_count %></td>
+              <td><%= record.view_count %></td>
+              <td><%= record.order_number %></td>
+              <td><%= record.shopkeeper_order_number %></td>
+              <td><%= record.sale_order_number %></td>
+              <td><%= number_to_currency record.order_amount, unit: "¥" %></td>
+              <td><%= number_to_currency record.shopkeeper_order_amount, unit: "¥" %></td>
+              <td><%= number_to_currency record.sale_order_amount, unit: "¥" %></td>
+              <td><%= record.children_grade_platinum_count %></td>
+              <td><%= record.children_grade_gold_count %></td>
+              <td><%= record.ecn_grade_platinum_count %></td>
+              <td><%= record.ecn_grade_gold_count %></td>
+
+
+              <td><%= record.month_shared_count %></td>
+              <td><%= record.month_view_count %></td>
+              <td><%= record.month_order_number %></td>
+              <td><%= record.month_shopkeeper_order_number %></td>
+              <td><%= record.month_sale_order_number %></td>
+              <td><%= number_to_currency record.month_order_amount, unit: "¥" %></td>
+              <td><%= number_to_currency record.month_shopkeeper_order_amount, unit: "¥" %></td>
+              <td><%= number_to_currency record.month_sale_order_amount, unit: "¥" %></td>
+              <td><%= record.month_children_grade_platinum_count %></td>
+              <td><%= record.month_children_grade_gold_count %></td>
+              <td><%= record.month_ecn_grade_platinum_count %></td>
+              <td><%= record.month_ecn_grade_gold_count %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= paginate @report_shop_activities %>
+    </div>
+  </div>
+</div>
