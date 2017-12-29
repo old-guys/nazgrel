@@ -7,6 +7,11 @@ namespace :api, defaults: { format: :json } do
         end
       end
 
+      resources :dashboard, only: [:index] do
+        collection do
+        end
+      end
+
       resources :auth, only: [] do
         collection do
           post :login
