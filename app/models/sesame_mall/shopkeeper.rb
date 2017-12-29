@@ -60,7 +60,7 @@ class Shopkeeper < ApplicationRecord
     if user_phone.present?
       _hash = phone_belong_to_juhe_hash phone: user_phone
       return if _hash.blank?
-      _hash["city"] ||= _hash["province"]
+      _hash["city"] = _hash["province"] if _hash["city"].blank?
 
       update_columns(
         city: _hash["city"],

@@ -2,7 +2,7 @@ module OpenQueryable
   extend ActiveSupport::Concern
 
   included do
-    delegate :open_query_logger, to: self.class
+    delegate :open_query_logger, to: "self.class"
   end
 
   def phone_belong_to_juhe(phone: )
