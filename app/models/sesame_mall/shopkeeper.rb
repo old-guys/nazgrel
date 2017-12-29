@@ -59,6 +59,8 @@ class Shopkeeper < ApplicationRecord
   def set_phone_belong_to
     if user_phone.present?
       _hash = phone_belong_to_juhe_hash phone: user_phone
+      return if _hash.blank?
+      _hash["city"] ||= _hash["province"]
 
       update_columns(
         city: _hash["city"],

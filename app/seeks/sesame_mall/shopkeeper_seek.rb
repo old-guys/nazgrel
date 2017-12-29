@@ -37,8 +37,8 @@ class SesameMall::ShopkeeperSeek
 
       status: data[:status],
       invite_user_id: data[:invite_user_id],
-      city: data[:city],
-      province: data[:province],
+      # city: data[:city],
+      # province: data[:province],
       ticket_no: data[:ticket_no],
 
       expire_time: parse_no_timezone(datetime: data[:expire_time]),
