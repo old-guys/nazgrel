@@ -16,8 +16,9 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">店主姓名</th>
+            <th scope="col">店铺ID</th>
             <th scope="col">店铺名称</th>
+            <th scope="col">店主姓名</th>
             <th scope="col">省份</th>
             <th scope="col">城市</th>
             <th scope="col">创建时间</th>
@@ -41,8 +42,9 @@
             %>
             <tr>
               <th scope="row"><%= index %></th>
-              <td><%= record.shopkeeper.to_s %></td>
+              <td><%= record.id %></td>
               <td><%= record.to_s %></td>
+              <td><%= record.shopkeeper.to_s %></td>
               <td><%= _shopkeeper.try :province %></td>
               <td><%= _shopkeeper.try :city %></td>
               <td><%= _shopkeeper.try :created_at %></td>
@@ -55,7 +57,7 @@
               </td>
               <td><%= _parent.to_s %></td>
               <td><%= _parent.try :user_phone %></td>
-              <td><%= _shopkeeper.parents.join(" > ") %></td>
+              <td><%= _shopkeeper.parents.map{|s| "#{s}(#{s.user_id})"}.join(" > ") %></td>
             </tr>
           <% end %>
         </tbody>
