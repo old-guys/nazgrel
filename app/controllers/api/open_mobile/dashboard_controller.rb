@@ -17,9 +17,20 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     @result = YAML.load(_raw_result)
   end
 
-  def hot_sales_product
-    @result = {
-      today: current_channel_user.today_hot_sales_product
+  def user_grade_stat
+    date = Date.today
+    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 5.minutes) {
+      _counts = Shopkeeper.group(:user_grade).count
+
+      Shopkeeper.user_grades_i18n.map{|k,v|
+        {
+          user_grade: k,
+          user_grade_text: v,
+          count: _counts[k]
+        }
+      }.to_yaml
     }
+
+    @result = YAML.load(_raw_result)
   end
 end
