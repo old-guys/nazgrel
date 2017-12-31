@@ -3,7 +3,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
 
   def index
     date = Date.today
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 5.minutes) {
+    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 30.minutes) {
       {
         date: Date.today,
         shop_count: Shop.where(created_at: date.to_time.all_day).size,
@@ -21,7 +21,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
 
   def user_grade_stat
     date = Date.today
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 5.minutes) {
+    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.group(:user_grade).count
 
       Shopkeeper.user_grades_i18n.map{|k,v|
@@ -44,7 +44,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:children_rank:#{_time_range}:limit:#{_limit}", raw: true, expires_in: 15.minutes) {
+    _raw_result = Rails.cache.fetch("open_mobile:dashboard:children_rank:#{_time_range}:limit:#{_limit}", raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.where(
         created_at: dates
       ).group(:invite_user_id).order(
@@ -66,6 +66,37 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
           shop_name: _shopkeeper.shop.to_s,
           Shopkeeper_name: _shopkeeper.to_s,
           city: _shopkeeper.city,
+          count: item.count
+        }
+      }.to_yaml
+    }
+
+    @result = YAML.load(_raw_result)
+  end
+
+  def city_rank
+    date = Date.today
+    _limit = (params[:limit].presence || 10).to_i
+    _time_range = params[:time_range].presence || "3_day_ago"
+    dates = distance_of_time_range(
+      str: _time_range,
+      from_time: Time.now.end_of_day
+    )
+
+    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:city_rank:#{_limit}", raw: true, expires_in: 30.minutes) {
+      _counts = Shopkeeper.where(
+          created_at: dates
+        ).where.not(city: "").
+        group(:city).order("count(city) desc").
+        limit(_limit).pluck_s(
+          "`city` as city",
+          "count(`city`) as count"
+        )
+
+      _counts.map.with_index(1).each {|item, index|
+        {
+          index: index,
+          city: item.city,
           count: item.count
         }
       }.to_yaml
