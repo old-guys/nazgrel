@@ -19,6 +19,11 @@ namespace :api, defaults: { format: :json } do
           get :sales
         end
       end
+      resources :shops, only: [:index] do
+        member do
+          get :summary
+        end
+      end
 
       resources :auth, only: [] do
         collection do
