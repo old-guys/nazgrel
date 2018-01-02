@@ -46,4 +46,52 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
 
     @result = YAML.load(_raw_result)
   end
+
+  def city_rank
+    shop = Shop.find(params[:id])
+    _limit = (params[:limit].presence || 10).to_i
+
+    _rank_proc = proc {|date, limit|
+      _expires_in = (date <= Date.today) ? 1.months : 30.minutes
+      _raw_result = Rails.cache.fetch("open_mobile:shops:#{shop.id}:#{date.to_s}:city_rank:#{limit}", raw: true, expires_in: _expires_in) {
+        _counts = shop.shopkeeper.descendant_entities.where(
+            created_at: date.to_time.beginning_of_month..date.to_time.end_of_day
+          ).where.not(city: "").
+          group(:city).order("count(city) desc").
+          limit(limit).pluck_s(
+            "`city` as city",
+            "count(`city`) as count"
+          )
+
+        _counts.map.with_index(1).each {|item, index|
+          {
+            index: index,
+            city: item.city,
+            count: item.count
+          }
+        }.to_yaml
+      }
+
+      YAML.load(_raw_result)
+    }
+    date = Date.today
+    _this_month_result = _rank_proc.call(date, _limit)
+    _recent_month_result = _rank_proc.call(1.months.ago(date), _limit * 5)
+    _state_hash = {
+      up: 1,
+      eq: 0,
+      down: -1
+    }
+
+    @result = _this_month_result.map {|item|
+      _recent_item = _recent_month_result.find{|recent_item|
+        item[:city] == recent_item[:city]
+      }
+      _state = _recent_item ? _recent_item.index <=> item.index : 1
+
+      item.merge(
+        state: _state_hash.invert[_state]
+      )
+    }
+  end
 end
