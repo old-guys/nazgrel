@@ -74,6 +74,43 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     @result = YAML.load(_raw_result)
   end
 
+  def order_amount_rank
+    _limit = (params[:limit].presence || 10).to_i
+    _time_range = params[:time_range].presence || "3_day_ago"
+    dates = distance_of_time_range(
+      str: _time_range,
+      from_time: Time.now.end_of_day
+    )
+
+    _raw_result = Rails.cache.fetch("open_mobile:dashboard:sales_rank:#{_time_range}:limit:#{_limit}", raw: true, expires_in: 30.minutes) {
+      _counts = ReportShopActivity.where(
+        report_date: dates
+      ).group(:shop_id).order(
+        "sum(`order_amount`) desc"
+        ).limit(_limit).pluck_s(
+          "`shop_id` as shop_id",
+          "sum(`order_amount`) as amount"
+        )
+      _shopkeepers = Shopkeeper.preload(:shop).where(shop_id: _counts.pluck(:shop_id))
+      _counts.map.with_index(1).each {|item, index|
+        _shopkeeper = _shopkeepers.find{|record|
+          record.shop_id == item.shop_id
+        }
+
+        {
+          index: index,
+          shop_id: _shopkeeper.shop_id,
+          shop_name: _shopkeeper.shop.to_s,
+          Shopkeeper_name: _shopkeeper.to_s,
+          city: _shopkeeper.city,
+          amount: item.amount
+        }
+      }.to_yaml
+    }
+
+    @result = YAML.load(_raw_result)
+  end
+
   def city_rank
     date = Date.today
     _limit = (params[:limit].presence || 10).to_i

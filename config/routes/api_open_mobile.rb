@@ -10,7 +10,7 @@ namespace :api, defaults: { format: :json } do
       resources :dashboard, only: [:index] do
         collection do
           get :user_grade_stat, :children_rank
-          get :city_rank
+          get :city_rank, :order_amount_rank
         end
       end
 
