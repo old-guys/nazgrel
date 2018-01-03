@@ -13,6 +13,8 @@ gem 'rails', '~> 5.1', '>= 5.1.4'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
+# Adds cache_collection! to jbuilder. Uses memcache fetch_multi/read_multi
+gem 'jbuilder_cache_multi', '~> 0.1.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
