@@ -1,7 +1,8 @@
 record = @shop.shopkeeper
-json.id record.id
 
-json.cache! ['api/open/mobile/shops/summary', @shopkeeper, expires_in: 5.minutes] do
+json.cache! ['api/open/mobile/shops/summary', record, @shop.shopkeeper] do
+  json.id record.id
+
   json.shop_name record.shop.to_s
   json.shopkeeper_name record.to_s
 
