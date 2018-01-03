@@ -1,0 +1,23 @@
+<%
+  _shopkeeper = record.shopkeeper
+  _parent = _shopkeeper.try(:parent)
+%>
+<tr>
+  <th scope="row"><%= record_counter + 1 %></th>
+  <td><%= record.id %></td>
+  <td><%= record.to_s %></td>
+  <td><%= record.shopkeeper.to_s %></td>
+  <td><%= _shopkeeper.try :province %></td>
+  <td><%= _shopkeeper.try :city %></td>
+  <td><%= _shopkeeper.try :created_at %></td>
+  <td><%= _shopkeeper.try :user_grade_i18n %></td>
+  <td><%= number_to_currency _shopkeeper.try(:order_amount).to_f, unit: "¥"%></td>
+  <td><%= number_to_currency _shopkeeper.try(:commission_income_amount).to_f, unit: "¥" %></td>
+  <td>
+    白金(<%= _shopkeeper.children_grade_platinum_size %>)
+    黄金(<%= _shopkeeper.children_grade_gold_size %>)
+  </td>
+  <td><%= _parent.to_s %></td>
+  <td><%= _parent.try :user_phone %></td>
+  <td><%= _shopkeeper.parents.map{|s| "#{s}(#{s.user_id})"}.join(" > ") %></td>
+</tr>
