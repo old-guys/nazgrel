@@ -1,5 +1,6 @@
 class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
   include ActionSearchable
+  include ActionUtilable
 
   def summary
     @shop = Shop.find(params[:id])
@@ -15,7 +16,7 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch("open_mobile:shops/#{shop.id}/:children_stat:#{_time_range}:limit:#{_limit}", raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(action_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = shop.shopkeeper.descendant_entities.where(
         created_at: dates
       ).group(:invite_user_id).order(
@@ -53,7 +54,7 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
 
     _rank_proc = proc {|date, limit|
       _expires_in = (date <= Date.today) ? 1.months : 30.minutes
-      _raw_result = Rails.cache.fetch("open_mobile:shops:#{shop.id}:#{date.to_s}:city_rank:#{limit}", raw: true, expires_in: _expires_in) {
+      _raw_result = Rails.cache.fetch(action_cache_key(date, limit), raw: true, expires_in: _expires_in) {
         _counts = shop.shopkeeper.descendant_entities.where(
             created_at: date.to_time.beginning_of_month..date.to_time.end_of_day
           ).where.not(city: "").

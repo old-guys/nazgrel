@@ -1,6 +1,8 @@
 class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
   include ActionSearchable
+  include ActionUtilable
   include Api::OpenMobile::ActionOwnable
+
 
   before_action :set_shops
 
@@ -153,9 +155,9 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
 
   private
   def get_cache_key(*key)
-    key = [request.path] << Array.wrap(key)
+    key = Array.wrap(key)
     key << @permit_shops if params[:shop_id].present?
 
-    ActiveSupport::Cache.expand_cache_key(key)
+    action_cache_key(key)
   end
 end
