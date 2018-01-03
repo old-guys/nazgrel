@@ -16,13 +16,13 @@ namespace :api, defaults: { format: :json } do
 
       resources :shopkeepers, only: [:index] do
         collection do
-          get :sales
+          get :sales, :report
         end
       end
       resources :shops, only: [:index] do
         member do
           get :summary, :children_rank, :city_rank
-          get :stat
+          get :stat, :report
         end
       end
 
