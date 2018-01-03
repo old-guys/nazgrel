@@ -70,13 +70,18 @@ class SesameMall::ShopSeek
 
     def partial_sync(duration: 30.minutes)
       seek = self.new
-      _relation = source_records_from_seek_record(klass: SesameMall::Source::Shop, duration: duration)
+      _relation = source_records_from_seek_record(
+        klass: SesameMall::Source::Shop,
+        duration: duration
+      )
       _shop_from_shopkeeper_relation = SesameMall::Source::Shop.where(
-        USER_ID: source_records_from_seek_record(klass: SesameMall::Source::Shopkeeper, duration: duration)
+        USER_ID: source_records_from_seek_record(
+          klass: SesameMall::Source::Shopkeeper,
+          duration: duration
+        ).select(:user_id)
       )
 
-      seek.do_partial_sync(relation: _relation)
-      seek.do_partial_sync(relation: _shop_from_shopkeeper_relation)
+      seek.do_partial_sync(relation: _relation.or(_shop_from_shopkeeper_relation))
     end
   end
 end
