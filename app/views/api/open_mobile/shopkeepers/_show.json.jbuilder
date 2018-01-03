@@ -10,7 +10,7 @@ json.city record.city
 json.user_grade record.user_grade
 json.user_grade_text record.user_grade_i18n
 
-_report_record = locals[:report_records].find{|report_record|
+_report_record = report_records.find{|report_record|
   report_record.shop_id == record.shop_id
 }
 json.today_order_amount _report_record.try(:order_amount).to_f.to_s
