@@ -3,7 +3,7 @@ records = records.unscope(
 )
 
 json.summary do
-  json.cache! ['api/web/report/channel_shop_newers/time_type_month_summary', records, expires_in: 10.minutes] do
+  json.cache! ['api/web/report/channel_shop_newers/time_type_month_summary', records] do
     json.stage_1_grade_platinum records.sum(:stage_1_grade_platinum).values.sum
     json.stage_1_grade_gold records.sum(:stage_1_grade_gold).values.sum
     json.stage_2_grade_platinum records.sum(:stage_2_grade_platinum).values.sum
