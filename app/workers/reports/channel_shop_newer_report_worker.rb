@@ -8,23 +8,25 @@ class ChannelShopNewerReportWorker
     logger.info "start: args #{args}"
     options = args.extract_options!
     _type = options["type"] || "partial"
-    channels = case _type
+    case _type
       when "whole"
-        Channel.normal
+        ChannelShopNewer::UpdateReport.update_report(
+          channels: Channel.normal
+        )
       when "partial"
         _key = ChannelShopNewer::UpdateReport::CHANNEL_IDS_CACHE_KEY
 
         # FIXME SPOP not accept count argument for redis < 3.2
-        # _ids = $redis.SPOP(_key, 50)
-        _ids = $redis.SRANDMEMBER(_key, 50)
-        $redis.SREM(_key, _ids) if _ids.present?
+        # _ids = $redis.SPOP(_key, 100)
+        _ids = $redis.SMEMBERS(_key)
+        $redis.DEL(_key) if _ids.present?
 
-        Channel.where(id: _ids)
+        _ids.each_slice(500) {|ids|
+          ChannelShopNewer::UpdateReport.update_report(
+            channels: Channel.where(id: ids)
+          )
+        }
     end
-
-    ChannelShopNewer::UpdateReport.update_report(
-      channels: channels
-    )
 
     logger.info "finished"
   end

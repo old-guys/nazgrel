@@ -8,27 +8,29 @@ class ShopActivityReportWorker
     logger.info "start: args #{args}"
     options = args.extract_options!
     _type = options["type"] || "partial"
-    shops = case _type
+    case _type
       when "whole"
-        Shop.where(
-          user_id: Shopkeeper.where(
-            updated_at: Time.now.all_week,
-          ).select(:user_id)
+        ShopActivity::UpdateReport.update_report(
+          shops: Shop.preload(:shopkeeper).where(
+            user_id: Shopkeeper.where(
+              updated_at: Time.now.all_week,
+            ).select(:user_id)
+          )
         )
       when "partial"
         _key = ShopActivity::UpdateReport::SHOP_IDS_CACHE_KEY
 
         # FIXME SPOP not accept count argument for redis < 3.2
-        # _ids = $redis.SPOP(_key, 50)
-        _ids = $redis.SRANDMEMBER(_key, 50)
-        $redis.SREM(_key, _ids) if _ids.present?
+        # _ids = $redis.SPOP(_key, 100)
+        _ids = $redis.SMEMBERS(_key)
+        $redis.DEL(_key) if _ids.present?
 
-        Shop.where(id: _ids)
+        _ids.each_slice(500) {|ids|
+          ShopActivity::UpdateReport.update_report(
+            shops: Shop.preload(:shopkeeper).where(id: _ids)
+          )
+        }
     end
-
-    ShopActivity::UpdateReport.update_report(
-      shops: shops.preload(:shopkeeper)
-    )
 
     logger.info "finished"
   end
