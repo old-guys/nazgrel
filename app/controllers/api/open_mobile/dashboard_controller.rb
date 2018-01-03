@@ -54,15 +54,11 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     )
 
     _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
-      _counts = Shopkeeper.where(
-        shop_id: @permit_shops,
-        created_at: dates
-      ).group(:invite_user_id).order(
-        "count(`invite_user_id`) desc"
-        ).limit(_limit).pluck_s(
-          "`invite_user_id` as user_id",
-          "count(`invite_user_id`) as count"
-        )
+      _counts = Shopkeeper.children_rank(
+        records: Shopkeeper.where(shop_id: @permit_shops),
+        dates: dates,
+        limit: _limit
+      )
       _shopkeepers = Shopkeeper.preload(:shop).where(user_id: _counts.pluck(:user_id))
 
       _counts.map.with_index(1).each {|item, index|
@@ -93,15 +89,11 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     )
 
     _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
-      _counts = ReportShopActivity.where(
-        shop_id: @permit_shops,
-        report_date: dates
-      ).group(:shop_id).order(
-        "sum(`order_amount`) desc"
-        ).limit(_limit).pluck_s(
-          "`shop_id` as shop_id",
-          "sum(`order_amount`) as amount"
-        )
+      _counts = Shopkeeper.order_amount_rank(
+        records: Shopkeeper.where(shop_id: @permit_shops),
+        dates: dates,
+        limit: _limit
+      )
       _shopkeepers = Shopkeeper.preload(:shop).where(shop_id: _counts.pluck(:shop_id))
       _counts.map.with_index(1).each {|item, index|
         _shopkeeper = _shopkeepers.find{|record|
@@ -131,15 +123,11 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     )
 
     _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
-      _counts = Shopkeeper.where(
-          shop_id: @permit_shops,
-          created_at: dates
-        ).where.not(city: "").
-        group(:city).order("count(city) desc").
-        limit(_limit).pluck_s(
-          "`city` as city",
-          "count(`city`) as count"
-        )
+      _counts = Shopkeeper.city_rank(
+        records: Shopkeeper.where(shop_id: @permit_shops),
+        dates: dates,
+        limit: _limit
+      )
 
       _counts.map.with_index(1).each {|item, index|
         {

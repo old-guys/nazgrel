@@ -22,6 +22,7 @@ namespace :api, defaults: { format: :json } do
       resources :shops, only: [:index] do
         member do
           get :summary, :children_rank, :city_rank
+          get :stat
         end
       end
 

@@ -17,14 +17,11 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
     )
 
     _raw_result = Rails.cache.fetch(action_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
-      _counts = shop.shopkeeper.descendant_entities.where(
-        created_at: dates
-      ).group(:invite_user_id).order(
-        "count(`invite_user_id`) desc"
-        ).limit(_limit).pluck_s(
-          "`invite_user_id` as user_id",
-          "count(`invite_user_id`) as count"
-        )
+      _counts = Shopkeeper.children_rank(
+        records: shop.shopkeeper.descendant_entities,
+        dates: dates,
+        limit: _limit
+      )
       _shopkeepers = Shopkeeper.preload(:shop).where(user_id: _counts.pluck(:user_id))
 
       _counts.map.with_index(1).each {|item, index|
@@ -94,5 +91,9 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
         state: _state_hash.invert[_state]
       )
     }
+  end
+
+  def stat
+    @shop = Shop.find(params[:id])
   end
 end

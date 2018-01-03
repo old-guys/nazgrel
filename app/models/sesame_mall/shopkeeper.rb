@@ -22,6 +22,7 @@ class Shopkeeper < ApplicationRecord
   }
 
   include ShopkeeperStatusable
+  include ShopkeeperStatable
   include Searchable
 
   simple_search_on fields: [
