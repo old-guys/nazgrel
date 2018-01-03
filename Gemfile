@@ -16,6 +16,9 @@ gem 'jbuilder', '~> 2.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# The fastest JSON parser and object serializer.
+gem 'oj', '~> 3.3', '>= 3.3.10'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
