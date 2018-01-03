@@ -1,10 +1,12 @@
 class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
   include ActionSearchable
+  include Api::OpenMobile::ActionOwnable
+  before_action :set_shopkeepers
 
   # order: "order_number desc" # "shopkeeper.commission_income_amount ASC"
   # query: "张三"
   def index
-    @shopkeepers = Shopkeeper.preload(:shop)
+    @shopkeepers = @permit_shopkeepers.preload(:shop)
     if index_params[:user_grade].present?
       @shopkeepers = @shopkeepers.where(user_grade: Shopkeeper.user_grades[index_params[:user_grade]])
     end
@@ -19,7 +21,7 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
   end
 
   def sales
-    @shopkeepers = Shopkeeper.preload(:shop)
+    @shopkeepers = @permit_shopkeepers.preload(:shop)
     if index_params[:user_grade].present?
       @shopkeepers = @shopkeepers.where(user_grade: Shopkeeper.user_grades[index_params[:user_grade]])
     end

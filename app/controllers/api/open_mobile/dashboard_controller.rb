@@ -1,16 +1,21 @@
 class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
   include ActionSearchable
+  include Api::OpenMobile::ActionOwnable
+
+  before_action :set_shops
 
   def index
     date = Date.today
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 30.minutes) {
       {
         date: Date.today,
-        shop_count: Shop.where(created_at: date.to_time.all_day).size,
+        shop_count: @permit_shops.where(created_at: date.to_time.all_day).size,
         order_count: Order.sales_order.valided_order.where(
+          shop_id: @permit_shops,
           created_at: date.to_time.all_day
         ).size,
         order_amount: Order.sales_order.valided_order.where(
+          shop_id: @permit_shops,
           created_at: date.to_time.all_day
         ).sum(:total_price)
       }.to_yaml
@@ -21,8 +26,10 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
 
   def user_grade_stat
     date = Date.today
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:index", raw: true, expires_in: 30.minutes) {
-      _counts = Shopkeeper.group(:user_grade).count
+    _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 30.minutes) {
+      _counts = Shopkeeper.where(
+        shop_id: @permit_shops
+      ).group(:user_grade).count
 
       Shopkeeper.user_grades_i18n.map{|k,v|
         {
@@ -44,8 +51,9 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:children_rank:#{_time_range}:limit:#{_limit}", raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.where(
+        shop_id: @permit_shops,
         created_at: dates
       ).group(:invite_user_id).order(
         "count(`invite_user_id`) desc"
@@ -82,8 +90,9 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:sales_rank:#{_time_range}:limit:#{_limit}", raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = ReportShopActivity.where(
+        shop_id: @permit_shops,
         report_date: dates
       ).group(:shop_id).order(
         "sum(`order_amount`) desc"
@@ -112,7 +121,6 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
   end
 
   def city_rank
-    date = Date.today
     _limit = (params[:limit].presence || 10).to_i
     _time_range = params[:time_range].presence || "3_day_ago"
     dates = distance_of_time_range(
@@ -120,8 +128,9 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch("open_mobile:dashboard:#{date.to_s}:city_rank:#{_limit}", raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.where(
+          shop_id: @permit_shops,
           created_at: dates
         ).where.not(city: "").
         group(:city).order("count(city) desc").
@@ -140,5 +149,13 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     }
 
     @result = YAML.load(_raw_result)
+  end
+
+  private
+  def get_cache_key(*key)
+    key = [request.path] << Array.wrap(key)
+    key << @permit_shops if params[:shop_id].present?
+
+    ActiveSupport::Cache.expand_cache_key(key)
   end
 end
