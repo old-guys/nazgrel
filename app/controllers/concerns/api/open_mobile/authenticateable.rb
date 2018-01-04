@@ -20,6 +20,10 @@ module Api::OpenMobile::Authenticateable
       raise Errors::UserAuthenticationError.new(change_reason)
     end
 
+    if not current_user.try(:open_manager?)
+      raise Errors::UserAuthenticationError.new("未授权用户")
+    end
+
     if current_user.try(:deleted?)
       raise Errors::UserAuthenticationError.new("该用户已经被删除")
     end

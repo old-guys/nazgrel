@@ -7,6 +7,11 @@ class User < ApplicationRecord
 
   has_one :api_key, dependent: :destroy
 
+  enum role_type: {
+    manager: 0,
+    open_manager: 1
+  }
+
   def api_token
     return @api_token if @api_token.present?
 
