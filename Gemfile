@@ -57,7 +57,7 @@ gem 'whenever', '~> 0.10', '>= 0.10.0', require: false
 
 #### authorization  #####
 # Flexible authentication solution for Rails with Warden
-gem 'devise', '~> 4.3', '>= 4.3.0'
+gem 'devise', '~> 4.4'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
