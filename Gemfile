@@ -1,5 +1,5 @@
 source 'https://gems.ruby-china.org'
-ruby "2.4.1"
+ruby "2.5.0"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -51,13 +51,13 @@ gem 'httparty', '~> 0.15', '>= 0.15.6'
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
-gem 'request_store', '~> 1.3', '>= 1.3.2'
+gem 'request_store', '~> 1.4'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.10', '>= 0.10.0', require: false
 
 #### authorization  #####
 # Flexible authentication solution for Rails with Warden
-gem 'devise', '~> 4.3', '>= 4.3.0'
+gem 'devise', '~> 4.4'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
