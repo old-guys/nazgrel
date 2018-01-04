@@ -4,7 +4,7 @@ json.cache! ['api/open/mobile/shops/stat', record, @shop.shopkeeper, expires_in:
   json.id record.id
 
   json.descendant_count record.descendant_size
-  json.children_count record.children.size
+  json.children_count record.children_size
 
   json.order_number record.order_number
   json.order_amount record.order_amount
