@@ -51,7 +51,7 @@ gem 'httparty', '~> 0.15', '>= 0.15.6'
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
-gem 'request_store', '~> 1.3', '>= 1.3.2'
+gem 'request_store', '~> 1.4'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.10', '>= 0.10.0', require: false
 
