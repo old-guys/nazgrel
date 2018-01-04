@@ -34,7 +34,7 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
   end
 
   def report
-    @shopkeepers = Shopkeeper.preload(:shop, :parent)
+    @shopkeepers = @permit_shopkeepers.preload(:shop, :parent)
     @shopkeepers = filter_by_pagination(relation: @shopkeepers)
   end
 
