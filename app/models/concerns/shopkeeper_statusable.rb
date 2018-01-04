@@ -7,7 +7,9 @@ module ShopkeeperStatusable
         keys = parents.compact.map {|record|
           id = record.id
           [
-            "shopkeeper:#{id}:descendant_count",
+            "shopkeeper:#{id}:descendant_size",
+            "shopkeeper:#{id}:descendant_grade_platinum_size",
+            "shopkeeper:#{id}:descendant_grade_gold_size",
             "shopkeeper:#{id}:children_size",
             "shopkeeper:#{id}:children_grade_platinum_size",
             "shopkeeper:#{id}:children_grade_gold_size"
@@ -34,8 +36,20 @@ module ShopkeeperStatusable
   end
 
   def descendant_size
-    @descendant_size ||= Rails.cache.fetch("shopkeeper:#{id}:descendant_count", raw: true) {
+    @descendant_size ||= Rails.cache.fetch("shopkeeper:#{id}:descendant_size", raw: true) {
       descendant_entities.size
+    }.to_i
+  end
+
+  def descendant_grade_platinum_size
+    @descendant_grade_platinum_size ||= Rails.cache.fetch("shopkeeper:#{id}:descendant_grade_platinum_size", raw: true) {
+      descendant_entities.grade_platinum.size
+    }.to_i
+  end
+
+  def descendant_grade_gold_size
+    @descendant_grade_gold_size ||= Rails.cache.fetch("shopkeeper:#{id}:descendant_grade_gold_size", raw: true) {
+      descendant_entities.grade_gold.size
     }.to_i
   end
 
@@ -45,20 +59,28 @@ module ShopkeeperStatusable
     }.to_i
   end
 
-  def indirectly_descendant_size
-    @indirectly_descendant_size ||= descendant_size - children_size
-  end
-
   def children_grade_platinum_size
-    Rails.cache.fetch("shopkeeper:#{id}:children_grade_platinum_size", raw: true) {
+    @children_grade_platinum_size ||= Rails.cache.fetch("shopkeeper:#{id}:children_grade_platinum_size", raw: true) {
       children.grade_platinum.size
     }.to_i
   end
 
   def children_grade_gold_size
-    Rails.cache.fetch("shopkeeper:#{id}:children_grade_gold_size", raw: true) {
+    @children_grade_gold_size ||= Rails.cache.fetch("shopkeeper:#{id}:children_grade_gold_size", raw: true) {
       children.grade_gold.size
     }.to_i
+  end
+
+  def indirectly_descendant_size
+    @indirectly_descendant_size ||= descendant_size - children_size
+  end
+
+  def indirectly_descendant_grade_platinum_size
+    @indirectly_descendant_grade_platinum_size ||= descendant_grade_platinum_size - children_grade_platinum_size
+  end
+
+  def indirectly_descendant_grade_gold_size
+    @indirectly_descendant_grade_gold_size ||= descendant_grade_gold_size - children_grade_gold_size
   end
 
   def descendant_order_number

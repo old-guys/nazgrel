@@ -91,7 +91,7 @@ module ChannelUserStatusable
       if region_manager?
         channel_region.channels.map(&:invite_children_amount).sum
       else
-        own_shopkeeper.children.size * BigDecimal.new(50)
+        own_shopkeeper.children_size * BigDecimal.new(50)
       end
     }
   end
@@ -101,7 +101,7 @@ module ChannelUserStatusable
       if region_manager?
         channel_region.channels.map(&:indirectly_descendant_amount).sum
       else
-        _rate = own_shop.indirectly_descendants.size > 1000 ? 0.08 : 0.05
+        _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
         _amount = Order.where(shop_id: own_shop.indirectly_descendants.select(:id)).sales_order.valided_order.sum(:comm)
         _amount * _rate
       end

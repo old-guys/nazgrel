@@ -54,7 +54,7 @@ module ChannelStatusable
 
   def invite_children_amount
     Rails.cache.fetch("channel:#{id}:invite_amount:raw", raw: true, expires_in: 3.minutes) {
-      own_shopkeeper.children.size * BigDecimal.new(50)
+      own_shopkeeper.children_size * BigDecimal.new(50)
     }
   end
 

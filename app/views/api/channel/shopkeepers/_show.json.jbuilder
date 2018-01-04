@@ -8,8 +8,8 @@ json.child_count do
 end
 json.indirectly_descendant_count do
   json.count record.indirectly_descendant_size
-  json.grade_platinum_count record.indirectly_descendants.grade_platinum.size
-  json.grade_gold_count record.indirectly_descendants.grade_gold.size
+  json.grade_platinum_count record.indirectly_descendant_grade_platinum_size
+  json.grade_gold_count record.indirectly_descendant_grade_gold_size
 end
 
 # parent shopkeeper
