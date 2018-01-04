@@ -3,6 +3,15 @@ module ActionSearchable
 
   included do
   end
+  def distance_of_time_range(str: , from_time: nil)
+    from_time ||= Time.now
+
+    case str.to_s
+      when /\d+_day_ago/, /\d+_month_ago/, /\d+_year_ago/
+        _str_values = str.split("_")
+        _str_values[0].to_i.send(_str_values[1]).ago(from_time)..from_time
+    end
+  end
 
   def parse_datetime(str: )
     Time.parse(str)

@@ -1,0 +1,8 @@
+{
+  <% cache [@code.to_i, @message, @remark] do %>
+  "code": <%= raw @code.to_i %>,
+  "message": <%= raw JSON.dump @message.to_s %>,
+  "remark": <%= raw JSON.dump @remark.to_s %>,
+  <% end %>
+  "data": <%= raw yield %>
+}

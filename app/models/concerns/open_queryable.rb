@@ -16,6 +16,8 @@ module OpenQueryable
     result[:resultcode].eql?("200") ? result["result"] : nil
   rescue => e
     open_query_logger.error "exception: #{e.message}"
+
+    nil
   end
 
   def tel_phone_belong_to_juhe(number: )
@@ -27,6 +29,8 @@ module OpenQueryable
     end
   rescue => e
     open_query_logger.error "exception: #{e.message}"
+
+    nil
   end
 
   def ip_belong_to_juhe(ip: )
@@ -38,6 +42,8 @@ module OpenQueryable
     end
   rescue => e
     open_query_logger.error "exception: #{e.message}"
+
+    nil
   end
 
   #showji.com 手机号归属地、区号查询接口
@@ -47,6 +53,8 @@ module OpenQueryable
     HashWithIndifferentAccess.new(JSON.parse(open_query_get(url).body))
   rescue => e
     open_query_logger.error "exception: #{e.message}"
+
+    nil
   end
 
   private

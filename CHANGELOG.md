@@ -1,3 +1,15 @@
+## 店主平台运营程序接口 (2018-01-04)
+
+- #feature# 店主平台运营程序接口
+- #enhance# 使用 `jbuilder_cache_multi` 加速缓存读取速度
+- #enhance# 大量页面缓存的使用, 减少 `json` 渲染时间
+- #support# 升级 Ruby 版本到 `2.5.0`
+
+```shell
+cap production deploy:runrake task=db:seed
+cap production unicorn:stop && cap production unicorn:start
+```
+
 ## 渠道的新增店主报表 (2017-12-25)
 
 - 渠道的新增店主报表

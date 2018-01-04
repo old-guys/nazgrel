@@ -1,4 +1,4 @@
-class Api::Web::AuthController < Api::Web::BaseController
+class Api::OpenMobile::AuthController < Api::OpenMobile::BaseController
   skip_before_action :authenticate!, only: [:login], raise: false
 
   def login
@@ -20,6 +20,6 @@ class Api::Web::AuthController < Api::Web::BaseController
   end
 
   def ping
-    render 'api/mobile/ping/index', layout: false
+    render 'api/open_mobile/ping/index', layout: false
   end
 end
