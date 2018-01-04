@@ -9,8 +9,8 @@ json.cache! ['api/open/mobile/shops/stat', record, @shop.shopkeeper, expires_in:
   json.order_number record.order_number
   json.order_amount record.order_amount
 
-  json.all_order_number record.descendant_entities.sum(:order_number)
-  json.all_order_amount record.descendant_entities.sum(:order_amount)
+  json.all_order_number record.self_and_descendant_entities.sum(:order_number)
+  json.all_order_amount record.self_and_descendant_entities.sum(:order_amount)
 
   json.partial! 'api/open_mobile/shops/fast_add_shop',
     locals: {
