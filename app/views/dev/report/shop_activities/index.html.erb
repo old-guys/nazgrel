@@ -49,10 +49,12 @@
           </tr>
         </thead>
         <tbody>
-          <%= render partial: "dev/report/shop_activities/index_tr",
-            collection: @report_shop_activities,
-            as: :record, cached: true
-          %>
+          <% cache ["dev/report/shop_activities/index", @report_shop_activities] do %>
+            <%= render partial: "dev/report/shop_activities/index_tr",
+              collection: @report_shop_activities,
+              as: :record, cached: true
+            %>
+          <% end %>
         </tbody>
       </table>
 

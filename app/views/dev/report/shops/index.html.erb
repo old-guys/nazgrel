@@ -32,13 +32,15 @@
           </tr>
         </thead>
         <tbody>
-          <%
-            Shopkeeper.with_preload_parents(records: @shops.map(&:shopkeeper))
-          %>
-          <%= render partial: "dev/report/shops/index_tr",
-            collection: @shops,
-            as: :record, cached: true
-          %>
+          <% cache ["dev/report/shops/index", @shops] do %>
+            <%
+              Shopkeeper.with_preload_parents(records: @shops.map(&:shopkeeper))
+            %>
+            <%= render partial: "dev/report/shops/index_tr",
+              collection: @shops,
+              as: :record, cached: true
+            %>
+          <% end %>
         </tbody>
       </table>
 
