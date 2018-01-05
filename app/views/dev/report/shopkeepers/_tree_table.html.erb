@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% cache ["dev/report/shopkeepers/tree", records] do %>
+    <% cache ["dev/report/shopkeepers/tree_table", records] do %>
       <%= render partial: "dev/report/shopkeepers/tree_tr",
         collection: records,
         as: :record, cached: true
