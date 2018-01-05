@@ -31,10 +31,9 @@ brew install yarn
 ```shell
 cd nazgrel
 # sudo -i
-# rvm use 2.4.1@nazgrel --create
+# rvm use 2.5.0@nazgrel --create
 # https://rvm.io/workflow/projects/
-rvm --create --ruby-version use 2.4.1@nazgrel
-rvm --create --ruby-version use 2.4.1@nazgrel
+rvm --create --ruby-version use 2.5.0@nazgrel
 ```
 
 ### choose and add gems

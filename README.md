@@ -60,8 +60,8 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
       gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
       \curl -sSL https://get.rvm.io | bash -s stable
       echo "ruby_url=https://cache.ruby-china.org/pub/ruby" > ~/.rvm/user/db
-      rvm install 2.4.1
-      rvm use 2.4.1 --default
+      rvm install 2.5.0
+      rvm use 2.5.0 --default
       rvm gemset create nazgrel
       rvm gemset use nazgrel
       echo 'gem: "--no-doc --no-ri"' >> ~/.gemrc
