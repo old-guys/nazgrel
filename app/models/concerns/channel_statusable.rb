@@ -34,32 +34,52 @@ module ChannelStatusable
     }.to_i
   end
 
+  def commission_amount_cache_key
+    "channel:#{id}:commissiont:raw"
+  end
+
   def commission_amount
-    Rails.cache.fetch("channel:#{id}:commissiont:raw", raw: true, expires_in: 3.minutes) {
+    Rails.cache.fetch(commission_amount_cache_key, raw: true, expires_in: 30.minutes) {
       orders.sales_order.valided_order.sum(:comm)
     }.to_i
   end
 
+  def invite_children_reward_amount_cache_key
+    "channel:#{id}:invite_children_reward:raw"
+  end
+
   def invite_children_reward_amount
-    Rails.cache.fetch("channel:#{id}:invite_children_reward:raw", raw: true, expires_in: 3.minutes) {
+    Rails.cache.fetch(invite_children_reward_amount_cache_key, raw: true, expires_in: 30.minutes) {
       own_shopkeeper.children_grade_gold_size * 200 + own_shopkeeper.children_grade_platinum_size * 100
     }
   end
 
+  def children_comission_amount_cache_key
+    "channel:#{id}:children_comission:raw"
+  end
+
   def children_comission_amount
-    Rails.cache.fetch("channel:#{id}:children_comission:raw", raw: true, expires_in: 3.minutes) {
+    Rails.cache.fetch(children_comission_amount_cache_key, raw: true, expires_in: 30.minutes) {
       Order.where(shop_id: own_shop.children.select(:id)).sales_order.valided_order.sum(:comm) * 0.15
     }
   end
 
+  def invite_children_amount_cache_key
+    "channel:#{id}:invite_amount:raw"
+  end
+
   def invite_children_amount
-    Rails.cache.fetch("channel:#{id}:invite_amount:raw", raw: true, expires_in: 3.minutes) {
+    Rails.cache.fetch(invite_children_amount_cache_key, raw: true, expires_in: 30.minutes) {
       own_shopkeeper.children_size * BigDecimal.new(50)
     }
   end
 
+  def indirectly_descendant_amount_cache_key
+    "channel:#{id}:indirectly_descendant_amount:raw"
+  end
+
   def indirectly_descendant_amount
-    Rails.cache.fetch("channel:#{id}:indirectly_descendant_comission:raw", raw: true, expires_in: 3.minutes) {
+    Rails.cache.fetch(indirectly_descendant_amount_cache_key, raw: true, expires_in: 30.minutes) {
       _rate = own_shop.indirectly_descendants.size > 1000 ? 0.08 : 0.05
       _amount = Order.where(shop_id: own_shop.indirectly_descendants.select(:id)).sales_order.valided_order.sum(:comm)
       _amount * _rate
