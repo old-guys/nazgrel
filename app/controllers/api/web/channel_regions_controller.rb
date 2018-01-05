@@ -23,7 +23,12 @@ class Api::Web::ChannelRegionsController < Api::Web::BaseController
   end
 
   def show
-    @channel_region = ::ChannelRegion.find(params[:id])
+    @channel_region = ::ChannelRegion.preload(
+      :channel_users,
+      channel_channel_region_maps: [
+        channel: [:own_shop, :own_shopkeeper, :channel_users]
+      ]
+    ).find(params[:id])
   end
 
   def create
