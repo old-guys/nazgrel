@@ -25,15 +25,16 @@
           <%
             records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
               tree_depth, operator: "="
-            ).order("invite_user_id")
+            )
           %>
           <% break if not records.exists? %>
-
-          <%= render partial: "dev/report/shopkeepers/tree_table",
-            locals: {
-              records: records
-            }
-          %>
+          <% records.in_batches(of: 500) do |_records|%>
+            <%= render partial: "dev/report/shopkeepers/tree_table",
+              locals: {
+                records: _records.order("invite_user_id")
+              }
+            %>
+          <% end %>
         <% end %>
       <% else %>
         <div class="alert alert-info" role="alert">
