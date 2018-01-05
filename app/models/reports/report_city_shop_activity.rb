@@ -1,6 +1,4 @@
-class ReportChannelShopNewer < ApplicationRecord
-  belongs_to :channel, required: false
-
+class ReportCityShopActivity < ApplicationRecord
 
   class << self
     def prune_old_records
