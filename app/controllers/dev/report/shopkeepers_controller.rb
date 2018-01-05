@@ -2,7 +2,8 @@ class Dev::Report::ShopkeepersController < Dev::Report::BaseController
   include ActionSearchable
 
   def tree
-    @shopkeeper = Shopkeeper.find_by tree_params if tree_params.present?
+    _query = tree_params.select{|_,v| v.presence }
+    @shopkeeper = Shopkeeper.find_by _query if _query.present?
   end
 
   private
