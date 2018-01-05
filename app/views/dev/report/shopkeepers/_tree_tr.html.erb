@@ -1,0 +1,15 @@
+<tr>
+  <th scope="row"><%= record.tree_depth %></th>
+  <td><%= record.user_name %></td>
+  <td><%= record.province %></td>
+  <td><%= record.city %></td>
+  <td><%= record.shop %></td>
+  <td><%= record.created_at %></td>
+  <td><%= record.user_grade_i18n %></td>
+  <td><%= record.user_phone %></td>
+  <td><%= number_to_currency record.total_income_amount.to_f, unit: "¥"%></td>
+  <td><%= number_to_currency record.balance_amount.to_f, unit: "¥" %></td>
+  <td><%= record.children_size %></td>
+  <td><%= record.parent.try(:user_name) %></td>
+  <td><%= record.parent.try(:user_phone) %></td>
+</tr>

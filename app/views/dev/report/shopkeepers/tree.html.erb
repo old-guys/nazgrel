@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">店主组织架构树</h4>
+      <form class="form-inline">
+        <label class="sr-only" for="user_phone">手机号码</label>
+        <%= text_field_tag :user_phone, params[:user_phone], class: "form-control mb-2 mr-sm-2", placeholder: "店主手机号"%>
+
+        <button type="submit" class="btn btn-primary mb-2">查询</button>
+      </form>
+      <% if @shopkeeper.present? %>
+        <%= render partial: "dev/report/shopkeepers/tree_table",
+          locals: {
+            records: Array.wrap(@shopkeeper)
+          }
+        %>
+
+        <% (@shopkeeper.tree_depth + 1).upto(@shopkeeper.tree_depth + 20).each do |tree_depth| %>
+          <%
+            records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
+              tree_depth, operator: "="
+            ).order("invite_user_id")
+          %>
+          <% break if not records.exists? %>
+
+          <%= render partial: "dev/report/shopkeepers/tree_table",
+            locals: {
+              records: records
+            }
+          %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

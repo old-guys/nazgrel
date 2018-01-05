@@ -4,5 +4,11 @@ namespace :dev do
 
     resources :shops
     resources :shop_activities
+
+    resources :shopkeepers, only: [:index] do
+      collection do
+        get :tree
+      end
+    end
   end
 end

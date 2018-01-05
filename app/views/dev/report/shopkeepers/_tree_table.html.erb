@@ -1,0 +1,25 @@
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">层级</th>
+      <th scope="col">店主姓名</th>
+      <th scope="col">省份</th>
+      <th scope="col">城市</th>
+      <th scope="col">店铺名称</th>
+      <th scope="col">创建时间</th>
+      <th scope="col">店铺等级</th>
+      <th scope="col">手机号码</th>
+      <th scope="col">总收入</th>
+      <th scope="col">账户余额</th>
+      <th scope="col">直接邀请总数</th>
+      <th scope="col">邀请人姓名</th>
+      <th scope="col">邀请人号码</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "dev/report/shopkeepers/tree_tr",
+      collection: records,
+      as: :record, cached: true
+    %>
+  </tbody>
+</table>
