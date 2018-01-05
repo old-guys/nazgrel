@@ -3,6 +3,9 @@
     <div class="card-body">
       <h4 class="card-title">店主组织架构树</h4>
       <form class="form-inline">
+        <label class="sr-only" for="user_phone">层级</label>
+        <%= text_field_tag :tree_depth, params[:tree_depth], class: "form-control mb-2 mr-sm-2", placeholder: "请输入特定层级"%>
+
         <label class="sr-only" for="user_phone">ID</label>
         <%= text_field_tag :id, params[:id], class: "form-control mb-2 mr-sm-2", placeholder: "店主ID"%>
 
@@ -21,19 +24,31 @@
           }
         %>
 
-        <% (@shopkeeper.tree_depth + 1).upto(@shopkeeper.tree_depth + 20).each do |tree_depth| %>
-          <%
-            records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
-              tree_depth, operator: "="
-            )
-          %>
-          <% break if not records.exists? %>
+        <% _capture = proc do |records| %>
           <% records.in_batches(of: 500) do |_records|%>
             <%= render partial: "dev/report/shopkeepers/tree_table",
               locals: {
                 records: _records.order("invite_user_id")
               }
             %>
+          <% end %>
+        <% end %>
+        <% if params[:tree_depth].present? %>
+          <%
+            records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
+              params[:tree_depth].to_i, operator: "="
+            )
+          %>
+          <% _capture.call(records) %>
+        <% else %>
+          <% (@shopkeeper.tree_depth + 1).upto(@shopkeeper.tree_depth + 20).each do |tree_depth| %>
+            <%
+              records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
+                tree_depth, operator: "="
+              )
+            %>
+            <% break if not records.exists? %>
+            <% _capture.call(records) %>
           <% end %>
         <% end %>
       <% else %>
