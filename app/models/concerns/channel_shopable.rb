@@ -15,19 +15,20 @@ module ChannelShopable
 
   # this channel invite shops was channel own shop
   def channel_shops
-    @_channel_shops ||= Shop.joins(:channel).where({
-      channels: {
-        status: Channel.statuses[:normal]
-      },
-      shops: {
-        id: Shop.descendant_entities(own_shop, column: :channel_path)
-      }
-    })
+    @_channel_shops ||= Shop.joins(:channel).
+      descendant_entities(
+        own_shop,
+        column: :channel_path
+      ).where(
+        channels: {
+          status: Channel.statuses[:normal]
+        }
+      )
   end
 
   def channel_shop_ids
     @channel_shop_ids ||= proc {
-      _result = Rails.cache.fetch("#{cache_key}:channel_shop_ids", raw: true, expires_in: 3.minutes) {
+      _result = Rails.cache.fetch("#{cache_key}:#{Channel.normal.cache_key}:channel_shop_ids", raw: true) {
         channel_shops.pluck(:id).to_yaml
       }
 

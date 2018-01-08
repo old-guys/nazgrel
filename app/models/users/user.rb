@@ -16,7 +16,7 @@ class User < ApplicationRecord
     return @api_token if @api_token.present?
 
     _cache_key = ApiKey.api_token_cache_key(id)
-    @api_token = Rails.cache.fetch(_cache_key, expires_in: 1.hour, raw: true) do
+    @api_token = Rails.cache.fetch(_cache_key, raw: true) do
       _api_key = ApiKey.where(user_id: id).first_or_create
       _api_key.access_token
     end

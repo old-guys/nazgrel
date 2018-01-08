@@ -7,7 +7,7 @@ module ChannelRegionShopable
 
   def shops
     @shops ||= proc {
-      Rails.cache.fetch("#{cache_key}:shops", expires_in: 1.minutes) {
+      Rails.cache.fetch("#{cache_key}:shops:#{channels.cache_key}") {
         real_shops.all
       }
     }.call
