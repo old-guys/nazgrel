@@ -3,8 +3,7 @@
   _parent = _shopkeeper.try(:parent)
 %>
 <tr>
-  <th scope="row"><%= record_counter + 1 %></th>
-  <td><%= record.id %></td>
+  <th scope="row"><%= record.id %></th>
   <td><%= record.to_s %></td>
   <td><%= record.shopkeeper.to_s %></td>
   <td><%= _shopkeeper.try :province %></td>
