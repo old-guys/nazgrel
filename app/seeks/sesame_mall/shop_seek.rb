@@ -66,6 +66,10 @@ class SesameMall::ShopSeek
         record.shopkeeper.try(:city)
       }.uniq
     )
+
+    ChannelShopActivity::UpdateReport.insert_to_partial_channel(
+      id: _channel_ids
+    )
   end
   class << self
     def whole_sync

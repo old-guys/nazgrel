@@ -1,4 +1,4 @@
-class ReportChannelShopNewer < ApplicationRecord
+class ReportChannelShopActivity < ApplicationRecord
   belongs_to :channel, required: false
 
   class << self
