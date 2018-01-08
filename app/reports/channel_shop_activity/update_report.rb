@@ -7,7 +7,7 @@ class ChannelShopActivity::UpdateReport
       _record = ReportChannelShopActivity.where(
         channel: channel,
         report_date: report_date
-      ).first_or_create
+      ).first_or_initialize
       _time = Time.now
 
       return if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
