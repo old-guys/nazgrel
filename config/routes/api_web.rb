@@ -40,6 +40,12 @@ namespace :api, defaults: { format: :json } do
           get :report
         end
       end
+
+      resources :channel_shop_activities, only: [:index] do
+        collection do
+          get :report
+        end
+      end
     end
   end
 end
