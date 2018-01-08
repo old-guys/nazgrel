@@ -114,3 +114,18 @@ shop_activity_report_partial:
   queue: :report
   args:
     type: "partial"
+
+city_shop_activity_report:
+  cron: "41 11,23 * * *"
+  name: "全量当天更新城市店主行为报表"
+  class: "CityShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "whole"
+city_shop_activity_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新城市店主行为数据"
+  class: "CityShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "partial"
