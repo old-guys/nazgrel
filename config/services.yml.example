@@ -13,6 +13,7 @@ defaults: &defaults
     job_db: 1
     cache_db: 2
     timeout: 5000
+    expires_in: <%= 2.weeks %>
 
   sesame_mall_db:
     adapter: mysql2
