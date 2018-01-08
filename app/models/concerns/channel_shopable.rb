@@ -20,9 +20,7 @@ module ChannelShopable
         own_shop,
         column: :channel_path
       ).where(
-        channels: {
-          status: Channel.statuses[:normal]
-        }
+        id: self.class.normal_channel_shop_ids
       )
   end
 
@@ -80,5 +78,12 @@ module ChannelShopable
   end
 
   module ClassMethods
+    def normal_channel_shop_ids
+      _result = Rails.cache.fetch("#{Channel.normal.cache_key}:channel_shop_ids", raw: true) {
+        pluck(:shop_id).to_yaml
+      }
+
+      YAML.load(_result)
+    end
   end
 end
