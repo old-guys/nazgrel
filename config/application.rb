@@ -33,13 +33,6 @@ module Nazgrel
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Locale
-    config.i18n.load_path += Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
-    config.i18n.available_locales = [:'zh-CN', :zh, :en]
-    config.i18n.default_locale = :'zh-CN'
-
-    ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
-
     # Models are organized in sub-directories
     # FIXME namespace directories should not autoload
     # config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
@@ -57,13 +50,6 @@ module Nazgrel
                                Dir[Rails.root.join("app/workers/seeks")] +
                                Dir[Rails.root.join("app/workers/reports")]
 
-    redis_conf = SERVICES_CONFIG['redis']
-    config.cache_store = :redis_store, {
-      host: redis_conf['host'],
-      port: redis_conf['port'],
-      db: redis_conf['cache_db'],
-      password: redis_conf['password'],
-      expires_in: 2.days
-    }
+    ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
   end
 end
