@@ -60,6 +60,12 @@ class SesameMall::ShopSeek
     ShopActivity::UpdateReport.insert_to_partial_shops(
       id: records.map(&:id)
     )
+
+    CityShopActivity::UpdateReport.insert_to_partial_city(
+      city: records.map{|record|
+        record.shopkeeper.try(:city)
+      }.uniq
+    )
   end
   class << self
     def whole_sync

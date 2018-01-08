@@ -24,7 +24,10 @@ class CityShopActivity::UpdateReport
 
     def insert_to_partial_city(city: )
       _key = CITY_CACHE_KEY
-      $redis.SADD(_key, city)
+
+      Array.wrap(city).uniq.each {|c|
+        $redis.SADD(_key, c) if c.present?
+      }
     end
   end
   include CityShopActivity::Calculations

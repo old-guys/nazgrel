@@ -148,7 +148,7 @@ class ShopActivity::UpdateReport
 定时队列
 
 ```ruby
-# head -n 5 app/workers/reports/channel_shop_newer_report_worker.rb
+# head -n 5 app/workers/reports/shop_activity_report_worker.rb
 class ShopActivityReportWorker
   include Sidekiq::Worker
   include ReportWorkable
@@ -187,3 +187,87 @@ end
 - 更新店铺之后应该触发报表更新机制
 - 更新店主之后应该触发报表更新机制
 - 每隔一段时间触发一次报表的更新
+
+## 城市店主行为分析报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_city_shop_activity.rb
+class ReportCityShopActivity < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/city_shop_activity
+app/reports/city_shop_activity
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+class CityShopActivity::Reporting
+  class << self
+    delegate :update_report, to: "CityShopActivity::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module CityShopActivity::Calculations
+```
+
+更新报表
+
+```ruby
+class CityShopActivity::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/city_shop_activity_report_worker.rb
+class CityShopActivityReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```yaml
+city_shop_activity_report:
+  cron: "41 11,23 * * *"
+  name: "全量当天更新城市店主行为报表"
+  class: "CityShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "whole"
+city_shop_activity_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新城市店主行为数据"
+  class: "CityShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "partial"
+```
+
+定时清理 seek record
+
+```ruby
+# config/schedule.rb
+every 2.months do
+  runner "ReportCityShopActivity.prune_old_records"
+end
+```
+
+### 更新机制
+
+- 更新店铺之后应该触发城市报表更新机制
