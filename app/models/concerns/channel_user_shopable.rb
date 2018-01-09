@@ -10,12 +10,20 @@ module ChannelUserShopable
   end
 
   def self_and_descendant_shops
-    Shop.self_and_descendant_entities(own_shop, column: :channel_path)
+    @self_and_descendant_shops ||= Shop.self_and_descendant_entities(own_shop, column: :channel_path)
   end
   alias :shops :self_and_descendant_shops
 
+  def shop_ids
+    @shop_ids ||= shops.pluck(:id)
+  end
+
   def descendant_shops
-    Shop.descendant_entities(own_shop, column: :channel_path)
+    Shop.where(id: shop_ids.reject{|id| id == own_shop.id })
+  end
+
+  def descendant_shop_ids
+    @descendant_shops_ids ||= shop_ids.reject{|id| id == own_shop.id }
   end
 
   module ClassMethods

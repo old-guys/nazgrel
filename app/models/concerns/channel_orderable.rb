@@ -5,7 +5,7 @@ module ChannelOrderable
   end
 
   def orders
-    Order.where(shop_id: shops.select(:id))
+    Order.where(shop_id: shop_ids)
   end
 
   module ClassMethods

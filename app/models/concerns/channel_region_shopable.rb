@@ -13,6 +13,10 @@ module ChannelRegionShopable
     }.call
   end
 
+  def shop_ids
+    @shop_ids ||= shops.pluck(:id)
+  end
+
   def real_shops
     @real_shops ||= proc {
       _channels = channels.preload(:own_shop).to_a

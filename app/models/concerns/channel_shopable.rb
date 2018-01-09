@@ -60,10 +60,16 @@ module ChannelShopable
   end
   alias :shops :self_and_descendant_shops
 
+  def shop_ids
+    @shop_ids ||= shops.pluck(:id)
+  end
+
   def descendant_shops
-    self_and_descendant_shops.where.not(id:
-      shop_id
-    )
+    Shop.where(id: shop_ids.reject{|id| id == shop_id })
+  end
+
+  def descendant_shop_ids
+    @descendant_shops_ids ||= shop_ids.reject{|id| id == shop_id }
   end
 
   def set_shops_channel_path

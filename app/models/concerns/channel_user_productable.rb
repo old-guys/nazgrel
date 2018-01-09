@@ -5,7 +5,7 @@ module ChannelUserProductable
   end
 
   def products
-    Product.joins(:product_shops).where(product_shops: {shop_id: shops.select(:id)})
+    Product.joins(:product_shops).where(product_shops: {shop_id: shop_ids})
   end
 
   module ClassMethods

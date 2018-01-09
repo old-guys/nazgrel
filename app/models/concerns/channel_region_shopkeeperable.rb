@@ -6,11 +6,11 @@ module ChannelRegionShopkeeperable
   end
 
   def shopkeepers
-    Shopkeeper.where(shop_id: shops.select(:id))
+    Shopkeeper.where(shop_id: shop_ids)
   end
 
   def root_shopkeepers
-    Shopkeeper.where(shop_id: root_shops.select(:id))
+    Shopkeeper.where(shop_id: root_shop_ids)
   end
   module ClassMethods
   end

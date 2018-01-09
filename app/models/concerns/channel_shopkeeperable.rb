@@ -6,7 +6,7 @@ module ChannelShopkeeperable
   end
 
   def shopkeepers
-    Shopkeeper.where(shop_id: shops.select(:id))
+    Shopkeeper.where(shop_id: shop_ids)
   end
 
   module ClassMethods
