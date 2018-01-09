@@ -6,6 +6,12 @@ namespace :dev do
     resources :shop_activities
     resources :city_shop_activities
 
+    resources :orders, only: [:index] do
+      collection do
+        get :sales
+      end
+    end
+
     resources :shopkeepers, only: [:index] do
       collection do
         get :tree
