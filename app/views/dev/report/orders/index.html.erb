@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">订单信息</h4>
+      <form class="form-inline">
+        <label>商品名称: </label>
+        <%= text_field_tag :product_name, params[:product_name], class: "form-control mb-2 mr-sm-2", placeholder: "请输入商品名称" %>
+
+        <label>品牌名称: </label>
+        <%= text_field_tag :supplier_name, params[:supplier_name], class: "form-control mb-2 mr-sm-2", placeholder: "请输入品牌名称" %>
+
+        <label>分类名称: </label>
+        <%= text_field_tag :category_name, params[:category_name], class: "form-control mb-2 mr-sm-2", placeholder: "请输入分类名称" %>
+
+        <button type="submit" class="btn btn-primary mb-2">查询</button>
+      </form>
+
+      <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">订单编号</th>
+          <th scope="col">店铺名称</th>
+          <th scope="col">店主姓名</th>
+          <th scope="col">收件人姓名</th>
+          <th scope="col">收件人手机号</th>
+          <th scope="col">商品信息</th>
+          <th scope="col">订单金额</th>
+          <th scope="col">时间</th>
+          <th scope="col">省份</th>
+          <th scope="col">城市</th>
+          <th scope="col">收货地址</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% cache ["dev/report/orders/index", @orders] do %>
+          <%= render partial: "dev/report/orders/index_tr",
+            collection: @orders,
+            as: :record, cached: true
+          %>
+        <% end %>
+        <% if @orders.blank? %>
+          <tr>
+            <th colspan="11">
+              <div class='text-center'>没有符合条件的数据</div>
+            </th>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <%= paginate @orders %>
+    </div>
+  </div>
+</div>

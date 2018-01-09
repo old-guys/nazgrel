@@ -84,6 +84,13 @@ supplier_seek_job:
   queue: :seek
   args:
     duration: 35
+category_seek_job:
+  cron: "* */1 * * *"
+  name: "同步类别"
+  class: "CategorySeekWorker"
+  queue: :seek
+  args:
+    type: "whole"
 
 channel_shop_newer_report:
   cron: "51 11,23 * * *"

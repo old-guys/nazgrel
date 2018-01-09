@@ -146,7 +146,7 @@ module TreeDescendantable
   end
 
   def generate_tree_path
-    paths = [self.send(:tree_primary_key)]
+    paths = [self.send(tree_primary_key)]
     _parent = self.parent
     self.class.tree_depth.times do
       break if _parent.nil?

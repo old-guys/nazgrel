@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   has_many :order_expresses, through: :order_subs
 
   has_many :order_details, through: :order_subs
-  has_many :products, through: :order_subs
+  has_many :products, through: :order_details
 
   enum order_status: {
     awaiting_payment: 0,
