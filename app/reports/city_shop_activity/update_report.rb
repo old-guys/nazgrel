@@ -2,7 +2,8 @@ class CityShopActivity::UpdateReport
   class << self
     def update_report(city: , report_date: Date.today, force_update: false, interval_time: 30.minutes)
       report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
-        shopkeepers: {city: city}
+        shopkeepers: {city: city},
+        report_date: report_date
       )
       _record = ReportCityShopActivity.where(
         city: city,

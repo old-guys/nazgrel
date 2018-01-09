@@ -2,7 +2,8 @@ class ChannelShopActivity::UpdateReport
   class << self
     def update_report(channel: , report_date: Date.today, force_update: false, interval_time: 30.minutes)
       report_shop_activities = ReportShopActivity.where(
-        shop_id: channel.shops
+        shop_id: channel.shops,
+        report_date: report_date
       )
       _record = ReportChannelShopActivity.where(
         channel: channel,
