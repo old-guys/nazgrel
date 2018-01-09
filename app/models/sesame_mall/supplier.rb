@@ -3,4 +3,8 @@ class Supplier < ApplicationRecord
     normal: 0,
     locked: 1
   }
+
+  def to_s
+    name
+  end
 end

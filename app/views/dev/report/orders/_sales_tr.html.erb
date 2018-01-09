@@ -1,0 +1,35 @@
+<%
+  report = report_shop_activities.find {|report|
+    report.shop_id == record.shop_id
+  }
+%>
+<% record.order_subs.each do |order_sub|%>
+  <%
+    _supplier = order_sub.try(:supplier)
+  %>
+
+  <% order_sub.order_details.each do |order_detail|%>
+    <%
+      _product = order_detail.try(:product)
+    %>
+    <tr>
+      <th scope="row"><%= record.order_no %></th>
+      <td><%= record.shop_name %></td>
+      <td><%= record.shop_username %></td>
+      <td><%= record.shop_phone %></td>
+      <td><%= report.try :shared_count %></td>
+      <td><%= report.try :view_count %></td>
+      <td><%= _product.no %></td>
+      <td><%= order_detail.product_name %></td>
+      <td><%= _supplier %></td>
+      <td><%= '商品分类' %></td>
+      <td><%= order_detail.product_num %></td>
+      <td><%= number_to_currency order_detail.product_market_price, unit: "¥" %></td>
+      <td><%= number_to_currency order_detail.product_sale_price, unit: "¥" %></td>
+      <td><%= number_to_currency record.pay_price, unit: "¥" %></td>
+      <td><%= time_tag record.created_at %></td>
+      <td><%= record.province %></td>
+      <td><%= record.city %></td>
+    </tr>
+  <% end %>
+<% end %>

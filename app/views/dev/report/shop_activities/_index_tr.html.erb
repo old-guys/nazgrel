@@ -8,7 +8,7 @@
   <td><%= _shop.to_s %></td>
   <td><%= _shopkeeper.try :province %></td>
   <td><%= _shopkeeper.try :city %></td>
-  <td><%= _shopkeeper.try :created_at %></td>
+  <td><%= time_tag _shopkeeper.try :created_at if _shopkeeper %></td>
   <td><%= _shopkeeper.try :user_grade_i18n %></td>
   <td><%= record.shared_count %></td>
   <td><%= record.view_count %></td>
