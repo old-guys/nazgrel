@@ -1,7 +1,7 @@
 record = @shop.shopkeeper
 
 json.cache! ['api/open/mobile/shops/summary', record, @shop.shopkeeper] do
-  json.id record.id
+  json.id @shop.id
 
   json.shop_name record.shop.to_s
   json.shopkeeper_name record.to_s
