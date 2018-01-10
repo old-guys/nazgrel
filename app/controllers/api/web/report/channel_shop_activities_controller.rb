@@ -2,7 +2,7 @@ class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseControll
   include ActionSearchable
 
   def index
-    _report_date = index_params[:report_date] || Date.today.all_month
+    _report_date = range_within_date(str: index_params[:report_date])
     @records = ReportChannelShopActivity.where(
       report_date: _report_date
     ).preload(channel: :channel_users)
