@@ -17,6 +17,12 @@ class Product < ApplicationRecord
     shopkeeper_exclusive: 2,
   }
 
+  include Searchable
+
+  simple_search_on fields: [
+    :name
+  ]
+
   def to_s
     name
   end
