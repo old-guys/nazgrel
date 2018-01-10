@@ -20,12 +20,12 @@ json.parent_shop_id record.parent.try :shop_id
 
 
 json.order_number record.order_number
-json.order_amount record.order_amount
-json.commission_income_amount record.commission_income_amount
+json.order_amount record.order_amount.to_f.to_s
+json.commission_income_amount record.commission_income_amount.to_f.to_s
 
 json.descendant_order_number record.descendant_order_number
-json.descendant_order_amount record.descendant_order_amount
-json.descendant_commission_income_amount record.descendant_commission_income_amount
+json.descendant_order_amount record.descendant_order_amount.to_f.to_s
+json.descendant_commission_income_amount record.descendant_commission_income_amount.to_f.to_s
 
 json.children_count record.children_size
 json.descendant_count record.descendant_size
