@@ -6,7 +6,7 @@
   <td><%= record.recv_phone_no %></td>
   <td><%= record.recv_phone_no %></td>
   <td><%= record.total_price %></td>
-  <td><%= record.created_at %></td>
+  <td><%= time_tag record.created_at %></td>
   <td><%= record.province %></td>
   <td><%= record.city %></td>
   <td><%= [record.province, record.city, record.detail_address].join(" ") %></td>

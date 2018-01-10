@@ -1,5 +1,8 @@
 class Product < ApplicationRecord
   has_many :product_shops
+  belongs_to :category, primary_key: :id,
+    foreign_key: :category_id,
+    class_name: :Category, required: false
 
   enum status: {
     init: 10,

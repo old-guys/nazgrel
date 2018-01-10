@@ -22,7 +22,7 @@
       <td><%= _product.no %></td>
       <td><%= order_detail.product_name %></td>
       <td><%= _supplier %></td>
-      <td><%= '商品分类' %></td>
+      <td><%= order_detail.try :category %></td>
       <td><%= order_detail.product_num %></td>
       <td><%= number_to_currency order_detail.product_market_price, unit: "¥" %></td>
       <td><%= number_to_currency order_detail.product_sale_price, unit: "¥" %></td>

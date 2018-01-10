@@ -11,4 +11,8 @@ class Category < ApplicationRecord
   simple_search_on fields: [
     :name
   ]
+
+  def to_s
+    name
+  end
 end

@@ -11,6 +11,10 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     search_supplier_related_orders
     search_category_related_orders
 
+    if params[:created_at].present?
+      @orders = @orders.where(created_at: range_within_datetime(str: params[:created_at]))
+    end
+
     @orders = filter_by_pagination(relation: @orders, default_per_page: 50)
   end
 
@@ -20,7 +24,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     @orders = Order.preload(
       order_subs: [
         :supplier,
-        {order_details: :product}
+        {order_details: [:product, :category]}
       ]
     ).sales_order.valided_order.where(created_at: @dates)
 
@@ -37,17 +41,15 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   end
 
   def search_supplier_related_orders
-    return if params[:supplier_name].blank?
+    return if params[:supplier_id].blank?
 
-    supplier_ids = Supplier.simple_search(params[:supplier_name]).pluck(:id)
-    @orders = @orders.where(suppliers: { id: supplier_ids })
+    @orders = @orders.where(suppliers: { id: params[:supplier_id] })
   end
 
   def search_category_related_orders
-    return if params[:category_name].blank?
+    return if params[:category_id].blank?
 
-    category_ids = Category.simple_search(params[:category_name]).pluck(:id)
-    @orders = @orders.where(products: { id: category_ids })
+    @orders = @orders.where(products: { id: params[:category_id] })
   end
 
 end
