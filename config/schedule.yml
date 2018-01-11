@@ -35,7 +35,7 @@ order_sub_seek_job:
   queue: :seek
   args:
     duration: 18
-order_sub_seek_job:
+order_express_seek_job:
   cron: "*/15 * * * *"
   name: "同步物流订单"
   class: "OrderExpressSeekWorker"
