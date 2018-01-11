@@ -11,3 +11,4 @@ end
 json.(record,
   *ReportChannelShopActivity.stat_fields
 )
+json.ecn_count record.ecn_grade_platinum_count.to_i + record.ecn_grade_gold_count.to_i
