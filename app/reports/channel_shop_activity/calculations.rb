@@ -7,6 +7,8 @@ module ChannelShopActivity::Calculations
 
     report_shop_activities.pluck_h(
       *_sum_fields
-    ).pop
+    ).pop.reject{|_,v|
+      v.blank?
+    }
   end
 end
