@@ -80,7 +80,7 @@ module ChannelStatusable
 
   def indirectly_descendant_amount
     Rails.cache.fetch(indirectly_descendant_amount_cache_key, raw: true, expires_in: 30.minutes) {
-      _rate = own_shopkeeper.indirectly_descendants.size > 1000 ? 0.08 : 0.05
+      _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
       _amount = Order.where(shop_id: own_shopkeeper.indirectly_descendants.select(:shop_id)).sales_order.valided_order.sum(:comm)
       _amount * _rate
     }
