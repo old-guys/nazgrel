@@ -60,7 +60,7 @@ module ChannelStatusable
 
   def children_comission_amount
     Rails.cache.fetch(children_comission_amount_cache_key, raw: true, expires_in: 30.minutes) {
-      Order.where(shop_id: own_shop.children.select(:id)).sales_order.valided_order.sum(:comm) * 0.15
+      Order.where(shop_id: own_shopkeeper.children.select(:shop_id)).sales_order.valided_order.sum(:comm) * 0.15
     }
   end
 
@@ -80,8 +80,8 @@ module ChannelStatusable
 
   def indirectly_descendant_amount
     Rails.cache.fetch(indirectly_descendant_amount_cache_key, raw: true, expires_in: 30.minutes) {
-      _rate = own_shop.indirectly_descendants.size > 1000 ? 0.08 : 0.05
-      _amount = Order.where(shop_id: own_shop.indirectly_descendants.select(:id)).sales_order.valided_order.sum(:comm)
+      _rate = own_shopkeeper.indirectly_descendants.size > 1000 ? 0.08 : 0.05
+      _amount = Order.where(shop_id: own_shopkeeper.indirectly_descendants.select(:shop_id)).sales_order.valided_order.sum(:comm)
       _amount * _rate
     }
   end

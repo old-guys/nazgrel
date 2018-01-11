@@ -70,7 +70,7 @@ module ChannelUserStatusable
   def invite_children_reward_amount
     if region_manager?
       fetch_multi(
-        records: channel_region.channels,
+        records: channel_region.channels.preload(:own_shopkeeper),
         cache_key: :invite_children_reward_amount_cache_key,
         raw: true
       ) {|record|
@@ -86,7 +86,7 @@ module ChannelUserStatusable
   def children_comission_amount
     if region_manager?
       fetch_multi(
-        records: channel_region.channels,
+        records: channel_region.channels.preload(:own_shopkeeper),
         cache_key: :children_comission_amount_cache_key,
         raw: true
       ) {|record|
@@ -102,7 +102,7 @@ module ChannelUserStatusable
   def invite_children_amount
     if region_manager?
       fetch_multi(
-        records: channel_region.channels,
+        records: channel_region.channels.preload(:own_shopkeeper),
         cache_key: :invite_children_amount_cache_key,
         raw: true
       ) {|record|
@@ -118,7 +118,7 @@ module ChannelUserStatusable
   def indirectly_descendant_amount
     if region_manager?
       fetch_multi(
-        records: channel_region.channels,
+        records: channel_region.channels.preload(:own_shopkeeper),
         cache_key: :indirectly_descendant_amount_cache_key,
         raw: true
       ) {|record|
