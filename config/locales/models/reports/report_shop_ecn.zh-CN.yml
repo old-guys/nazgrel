@@ -1,0 +1,23 @@
+zh-CN:
+  activerecord:
+    models:
+      report_shop_ecn: "店主ECN数据"
+    attributes:
+      report_shop_ecn:
+        id: "ID"
+        channel_id: "渠道ID"
+        shop_id: "店铺ID"
+        ecn_count: "ECN数"
+        ancestry_rate: "上级总数占比"
+        ecn_grade_platinum_count: "ECN白金数"
+        ecn_grade_gold_count: "ECN黄金数"
+        children_count: "直接邀请数"
+        children_grade_platinum_count: "直接ECN白金数"
+        children_grade_gold_count: "直接ECN黄金数"
+        indirectly_descendant_count: "间接邀请数"
+        indirectly_descendant_grade_platinum_count: "间接ECN白金数"
+        indirectly_descendant_grade_gold_count: "间接ECN黄金数"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

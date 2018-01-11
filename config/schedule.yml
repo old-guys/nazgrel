@@ -122,6 +122,21 @@ shop_activity_report_partial:
   args:
     type: "partial"
 
+shop_ecn_report:
+  cron: "31 10,23 * * *"
+  name: "全量当天更新店主ECN报表"
+  class: "ShopEcnReportWorker"
+  queue: :report
+  args:
+    type: "whole"
+shop_ecn_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新店主ECN数据"
+  class: "ShopEcnReportWorker"
+  queue: :report
+  args:
+    type: "partial"
+
 city_shop_activity_report:
   cron: "41 11,23 * * *"
   name: "全量当天更新城市店主行为报表"
