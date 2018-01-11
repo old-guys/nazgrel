@@ -3,13 +3,13 @@
     <div class="card-body">
       <h4 class="card-title">店主组织架构树</h4>
       <form class="form-inline">
-        <label class="sr-only" for="user_phone">层级</label>
+        <label class="sr-only" for="tree_depth">层级</label>
         <%= text_field_tag :tree_depth, params[:tree_depth], class: "form-control mb-2 mr-sm-2", placeholder: "请输入特定层级"%>
 
-        <label class="sr-only" for="user_phone">ID</label>
+        <label class="sr-only" for="id">ID</label>
         <%= text_field_tag :id, params[:id], class: "form-control mb-2 mr-sm-2", placeholder: "店主ID"%>
 
-        <label class="sr-only" for="user_phone">店主用户ID</label>
+        <label class="sr-only" for="user_id">店主用户ID</label>
         <%= text_field_tag :user_id, params[:user_id], class: "form-control mb-2 mr-sm-2", placeholder: "店主用户ID"%>
 
         <label class="sr-only" for="user_phone">手机号码</label>

@@ -6,6 +6,8 @@ namespace :dev do
     resources :shop_activities
     resources :city_shop_activities
 
+    resources :shop_ecns
+
     resources :orders, only: [:index] do
       collection do
         get :sales
