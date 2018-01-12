@@ -3,14 +3,14 @@ zh-CN:
     models:
       user: "用户"
     attributes:
-      channel_user:
+      user:
         id: "ID"
         name: "名称"
         created_at: "创建时间"
         updated_at: "更新于"
         deleted_at: "删除于"
   enums:
-    channel_user:
+    user:
       role_type:
         manager: "管理员"
         open_manager: "开放平台管理员"

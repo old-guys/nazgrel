@@ -9,8 +9,13 @@ class User < ApplicationRecord
 
   enum role_type: {
     manager: 0,
+    normal: 2,
     open_manager: 1
   }
+  has_and_belongs_to_many :roles
+  has_many :permissions, through: :roles
+
+  include UserPermissionable
 
   def api_token
     return @api_token if @api_token.present?

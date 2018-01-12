@@ -122,5 +122,34 @@ namespace :data_migrations do
         end
       }
     end
+
+    desc 'init web permission'
+    task :v1_1_1_init_web_permission => :environment do
+      data = [
+        {
+          name: "权限配置",
+          subject: "权限管理",
+          uid: "/permissions",
+        },
+        {
+          name: "角色配置",
+          subject: "权限管理",
+          uid: "/roles",
+        },
+        {
+          name: "用户配置",
+          subject: "用户管理",
+          uid: "/users",
+        }
+      ]
+
+      data.map{|d|
+        _record = Permission.where(uid: d[:uid]).first_or_initialize
+
+        _record.update(
+          d
+        )
+      }
+    end
   end
 end

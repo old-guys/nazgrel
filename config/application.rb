@@ -38,6 +38,7 @@ module Nazgrel
     # config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
     #                         Dir[Rails.root.join("app/controllers/entities")]
     config.autoload_paths += Dir[Rails.root.join("app/models/users")] +
+                               Dir[Rails.root.join("app/models/authorizations")] +
                                Dir[Rails.root.join("app/models/reports")] +
                                Dir[Rails.root.join("app/models/channels")] +
                                Dir[Rails.root.join("app/models/sesame_mall")] +
