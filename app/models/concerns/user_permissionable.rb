@@ -6,8 +6,11 @@ module UserPermissionable
 
   def permited_permissions
     _permissions = manager? ? Permission.all : permissions
-    Rails.cache.fetch("permit:#{role_type}#{_permissions.cache_key}") do
-      _permissions.pluck_h(:name, :subject, :uid)
+  end
+
+  def cached_permited_permissions
+    Rails.cache.fetch("permit:#{role_type}#{permited_permissions.cache_key}") do
+      permited_permissions.pluck_h(:name, :subject, :uid)
     end.map{|h| OpenStruct.new h }
   end
 
