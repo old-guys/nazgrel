@@ -9,8 +9,9 @@ class Dev::Report::ShopEcnsController < Dev::Report::BaseController
       @report_shop_ecns = @report_shop_ecns.where(shop_id:
         Shopkeeper.where(@shopkeeper_query).select(:shop_id)
       )
-    else
-      _dates = range_within_datetime(str: params[:created_at]) if params[:created_at].present?
+    end
+    if params[:created_at].present?
+      _dates = range_within_datetime(str: params[:created_at])
 
       @report_shop_ecns = @report_shop_ecns.where(shops: {created_at: _dates})
     end
