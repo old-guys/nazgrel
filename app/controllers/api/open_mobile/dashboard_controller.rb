@@ -10,12 +10,15 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     date = Date.today
     _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 30.minutes) {
       {
-        date: Date.today,
         shop_count: @permit_shops.where(created_at: date.to_time.all_day).size,
         order_count: Order.sales_order.valided_order.where(
           shop_id: @permit_shops,
           created_at: date.to_time.all_day
         ).size,
+        commission_income_amount: Order.sales_order.valided_order.where(
+          shop_id: @permit_shops,
+          created_at: date.to_time.all_day
+        ).sum(:comm),
         order_amount: Order.sales_order.valided_order.where(
           shop_id: @permit_shops,
           created_at: date.to_time.all_day
@@ -24,6 +27,9 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
     }
 
     @result = YAML.load(_raw_result)
+    @result.merge!(
+      datetime: Time.now.to_s(:db)
+    )
   end
 
   def user_grade_stat
