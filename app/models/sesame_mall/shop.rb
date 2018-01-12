@@ -24,7 +24,7 @@ class Shop < ApplicationRecord
   end
 
   def ancestor_shopkeepers
-    @_shopes ||= Shopkeeper.where(user_id: shopkeeper.path.to_s.split("/"))
+    @ancestor_shopkeepers ||= Shopkeeper.where(user_id: shopkeeper.path.to_s.split("/"))
   end
 
   def set_path
