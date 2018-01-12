@@ -46,6 +46,8 @@ namespace :api, defaults: { format: :json } do
           get :report
         end
       end
+
+      resources :shop_ecns
     end
   end
 end

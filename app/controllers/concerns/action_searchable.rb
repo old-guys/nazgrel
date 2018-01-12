@@ -39,6 +39,18 @@ module ActionSearchable
     end
   end
 
+  def range_within_number(str: )
+    _values = str.split("..")
+
+    if str.include?("..")
+      _values = str.split("..")
+
+      _values[0].to_d.._values[1].to_d
+    else
+      str.to_s
+    end
+  end
+
   # records, [{
   #   name: "created_at", field_type: "datetime",
   #   operator: "within", query: "today"
