@@ -7,10 +7,10 @@
         <%= text_field_tag :product_name, params[:product_name], class: "form-control mb-2 mr-sm-2", placeholder: "请输入商品名称" %>
 
         <label>品牌名称: </label>
-        <%= select_tag "supplier_id", options_from_collection_for_select(Supplier.all, "id", "name", params[:supplier_id]), class: "form-control mb-2 mr-sm-2", prompt: "请选择品牌" %>
+        <%= select_tag "supplier_id", options_for_select(Supplier.select_options, params[:supplier_id]), class: "form-control mb-2 mr-sm-2", prompt: "请选择品牌" %>
 
         <label>分类名称: </label>
-        <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "name", params[:category_id]), class: "form-control mb-2 mr-sm-2", prompt: "请选择分类" %>
+        <%= select_tag "category_id", options_for_select(Category.select_options, params[:category_id]), class: "form-control mb-2 mr-sm-2", prompt: "请选择分类" %>
 
         <label>下单时间: </label>
         <%= select_tag "created_at", options_for_select([

@@ -2,10 +2,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   include ActionSearchable
 
   def index
-    @orders = Order.joins(:products, order_subs: [
-        :supplier,
-      ]
-    ).sales_order.valided_order
+    @orders = Order.preload(:order_details).sales_order.valided_order
 
     search_product_related_orders
     search_supplier_related_orders
@@ -32,24 +29,37 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   end
 
   private
-
   def search_product_related_orders
     return if params[:product_name].blank?
 
     product_ids = Product.simple_search(params[:product_name]).pluck(:id)
-    @orders = @orders.where(products: { id: product_ids })
+    @orders = @orders.joins(:products).where(
+      products: {
+        id: product_ids
+      }
+    )
   end
 
   def search_supplier_related_orders
     return if params[:supplier_id].blank?
 
-    @orders = @orders.where(suppliers: { id: params[:supplier_id] })
+    @orders = @orders.joins(
+      :order_subs
+    ).where(
+      order_subs: {
+        supplier_id: params[:supplier_id]
+      }
+    )
   end
 
   def search_category_related_orders
     return if params[:category_id].blank?
 
-    @orders = @orders.where(products: { id: params[:category_id] })
+    @orders = @orders.joins(:products).where(
+      products: {
+        id: params[:category_id]
+      }
+    )
   end
 
 end

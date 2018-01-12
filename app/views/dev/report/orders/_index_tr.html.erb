@@ -4,7 +4,12 @@
   <td><%= record.shop_username %></td>
   <td><%= record.recv_user_name %></td>
   <td><%= record.recv_phone_no %></td>
-  <td><%= record.recv_phone_no %></td>
+  <td>
+    <% record.order_details.each do |order_detail| %>
+      <%= "#{order_detail.product_name} * #{order_detail.product_sale_price} * #{order_detail.product_num}" %>
+      <br />
+    <% end %>
+  </td>
   <td><%= record.total_price %></td>
   <td><%= time_tag record.created_at %></td>
   <td><%= record.province %></td>

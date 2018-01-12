@@ -15,4 +15,12 @@ class Category < ApplicationRecord
   def to_s
     name
   end
+
+  class << self
+    def select_options
+      Rails.cache.fetch("select_options:#{all.cache_key}") {
+        pluck(:name, :id)
+      }
+    end
+  end
 end
