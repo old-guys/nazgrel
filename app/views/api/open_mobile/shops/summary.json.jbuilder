@@ -15,8 +15,9 @@ json.cache! ['api/open/mobile/shops/summary', record, @shop.shopkeeper] do
   json.balance_amount record.balance_amount
   json.withdraw_amount record.withdraw_amount
 
-  json.last_three_day_descendant_count record.descendant_entities.where(
-    created_at: 3.day.ago.beginning_of_day..Time.now.end_of_day
+  _time = Time.now.end_of_day
+  json.last_three_day_descendant_count @shop.shopkeeper.descendant_entities.where(
+    created_at: 3.day.ago(_time).._time
   ).size
   json.descendant_count record.descendant_size
 
