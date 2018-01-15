@@ -1,0 +1,23 @@
+zh-CN:
+  activerecord:
+    models:
+      share_journals: "店铺分享日志"
+    attributes:
+      share_journals:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    share_journals:
+      type:
+        wechat_friend: "微信好友"
+        app: "app"
+        wechat_moment: "微信朋友圈"
+        qq: "qq"
+        qq_zone: "qq空间"
+        sms: "短信"
+        qrcord: "二维码"
+      share_type:
+        :share_shop: "店铺分享"
+        :share_invite: "邀请分享"

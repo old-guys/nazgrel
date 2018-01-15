@@ -1,3 +1,12 @@
+## 同步店铺分享日志 (2018-01-15)
+
+- #feature# 同步店铺分享日志
+- #feature# 同步店铺浏览日志
+ 
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_0_11_init_seek_trigger
+```
+
 ## 店主ECN报表 (2018-01-12)
 
 - #feature# 店主ECN报表

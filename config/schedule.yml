@@ -84,6 +84,23 @@ supplier_seek_job:
   queue: :seek
   args:
     duration: 35
+
+view_journal_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步店铺浏览日志"
+  class: "ViewJournalSeekWorker"
+  queue: :seek
+  args:
+    duration: 35
+
+share_journal_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步店铺分享日志"
+  class: "ShareJournalSeekWorker"
+  queue: :seek
+  args:
+    duration: 35
+
 category_seek_job:
   cron: "* */1 * * *"
   name: "同步类别"

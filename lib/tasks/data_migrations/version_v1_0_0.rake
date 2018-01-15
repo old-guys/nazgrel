@@ -73,5 +73,19 @@ namespace :data_migrations do
         ChannelShopNewer::Reporting.reset_report(channels: records)
       end
     end
+
+    desc 'init seek trigger for view_journal share_journal'
+    task :v1_0_11_init_seek_trigger => :environment do
+      SesameMall::ViewJournalSeek.whole_sync
+      SesameMall::ShareJournalSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::ViewJournal, SesameMall::Source::ShareJournal,
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

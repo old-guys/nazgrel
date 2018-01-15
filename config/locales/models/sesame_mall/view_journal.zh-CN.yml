@@ -1,0 +1,26 @@
+zh-CN:
+  activerecord:
+    models:
+      view_journal: "店铺浏览日志"
+    attributes:
+      view_journal:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    view_journal:
+      type:
+        wechat_friend: "微信好友"
+        app: "app"
+        wechat_moment: "微信朋友圈"
+        qq: "qq"
+        qq_zone: "qq空间"
+        sms: "短信"
+        qrcord: "二维码"
+      kind:
+        :view_shop: "店铺(访客次数)"
+        :view_product: "商品"
+      view_type:
+        :from_shop: "店铺"
+        :from_invite: "邀请"
