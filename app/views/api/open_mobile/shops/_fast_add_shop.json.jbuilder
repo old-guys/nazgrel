@@ -18,7 +18,7 @@
         json.shopkeeper_name _shopkeeper.to_s
         json.city _shopkeeper.city
         json.count item.count
-        json.proportion number_to_percentage(item.count / _total_count.to_f, precision: 1)
+        json.proportion number_to_percentage((item.count / _total_count.to_f) * 100, precision: 1)
       end
     end
   end

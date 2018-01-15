@@ -110,6 +110,41 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
     @result = YAML.load(_raw_result)
   end
 
+  def summary
+    @shop = Shop.find(params[:id])
+
+    _limit = (params[:limit].presence || 10).to_i
+    _time_range = params[:time_range].presence || "3_day_ago"
+    dates = distance_of_time_range(
+      str: _time_range,
+      from_time: Time.now.end_of_day
+    )
+
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+      _view_type_counts = Shopkeeper.shop_view_type_count(
+        shop_id: @shop.id,
+        dates: dates,
+        limit: _limit
+      )
+      _shared_type_counts = Shopkeeper.shop_shared_type_count(
+        shop_id: @shop.id,
+        dates: dates,
+        limit: _limit
+      )
+
+      ViewJournal.types_i18n.map{|k,v|
+        {
+          type: k,
+          type_text: v,
+          view_count: _view_type_counts[k] || 0,
+          shared_count: _shared_type_counts[k] || 0
+        }
+      }.to_yaml
+    }
+
+    @result = YAML.load(_raw_result)
+  end
+
   private
   def get_cache_key(*key)
     key = Array.wrap(key)
