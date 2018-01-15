@@ -25,13 +25,13 @@ module ShopkeeperStatusable
 
   def share_journal_count
     Rails.cache.fetch("shopkeeper:#{id}:shop_count:raw", raw: true, expires_in: 30.minutes) {
-      SesameMall::Source::ShareJournal.where(shop_id: shop_id).count
+      ShareJournal.where(shop_id: shop_id).count
     }.to_i
   end
 
   def view_journal_count
     Rails.cache.fetch("shopkeeper:#{id}:view_journal_count:raw", raw: true, expires_in: 30.minutes) {
-      SesameMall::Source::ViewJournal.where(shop_id: shop_id).count
+      ViewJournal.where(shop_id: shop_id).count
     }.to_i
   end
 

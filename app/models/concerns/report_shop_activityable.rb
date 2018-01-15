@@ -9,7 +9,7 @@ module ReportShopActivityable
   module ClassMethods
     def stat_categories
       %w(
-        shared_count view_count order_number shopkeeper_order_number
+        shared_count view_count viewer_count order_number shopkeeper_order_number
         sale_order_number order_amount shopkeeper_order_amount
         sale_order_amount children_grade_platinum_count
         children_grade_gold_count ecn_grade_platinum_count
@@ -23,6 +23,8 @@ module ReportShopActivityable
         stage_3_shared_count month_shared_count year_shared_count
         view_count stage_1_view_count stage_2_view_count
         stage_3_view_count month_view_count year_view_count
+        viewer_count stage_1_viewer_count stage_2_viewer_count
+        stage_3_viewer_count month_viewer_count year_viewer_count
         order_number stage_1_order_number stage_2_order_number
         stage_3_order_number month_order_number year_order_number
         shopkeeper_order_number stage_1_shopkeeper_order_number

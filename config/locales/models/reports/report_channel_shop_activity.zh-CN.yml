@@ -21,6 +21,13 @@ zh-CN:
         month_view_count: "本月累计浏览次数"
         year_view_count: "本年累计浏览次数"
 
+        viewer_count: "访客数"
+        stage_1_viewer_count: "00:00-9:00 访客数"
+        stage_2_viewer_count: "09:00-18:00 访客数"
+        stage_3_viewer_count: "18:00-24:00 访客数"
+        month_viewer_count: "本月累计访客数"
+        year_viewer_count: "本年累计访客数"
+
         order_number: "订单数"
         stage_1_order_number: "00:00-9:00 订单数"
         stage_2_order_number: "09:00-18:00 订单数"
