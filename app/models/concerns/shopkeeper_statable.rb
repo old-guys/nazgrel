@@ -40,6 +40,24 @@ module ShopkeeperStatable
         )
     end
 
+    def shop_view_type_count(shop_id: , dates: , limit: 10)
+      ViewJournal.where(
+        shop_id: shop_id,
+        created_at: dates
+      ).group(:type).order(
+        "count(`type`) desc"
+      ).limit(limit).count
+    end
+
+    def shop_shared_type_count(shop_id: , dates: , limit: 10)
+      ShareJournal.where(
+        shop_id: shop_id,
+        created_at: dates
+      ).group(:type).order(
+        "count(`type`) desc"
+      ).limit(limit).count
+    end
+
     def viewer_count_rank(records: , dates: , limit: 10)
       ViewJournal.where(
         shop_id: records.select(:shop_id),
