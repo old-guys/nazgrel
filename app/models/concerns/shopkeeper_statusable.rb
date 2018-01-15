@@ -96,7 +96,7 @@ module ShopkeeperStatusable
   end
 
   def descendant_commission_income_amount
-    Rails.cache.fetch("shopkeeper:#{id}:descendant_order_amount", raw: true, expires_in: 1.hours) {
+    Rails.cache.fetch("shopkeeper:#{id}:descendant_commission_income_amount", raw: true, expires_in: 1.hours) {
       descendant_entities.sum(:commission_income_amount)
     }
   end
