@@ -77,9 +77,9 @@ class Shopkeeper < ApplicationRecord
       )
 
       records.each {|record|
-        record.parents = _shopkeepers.select{|shopkeeper|
-          shopkeeper.user_id.to_s.in?(record.parent_ids)
-        }
+        record.parents = record.parent_ids.map{|user_id|
+          _shopkeepers.find{|shopkeeper| shopkeeper.user_id.to_s == user_id.to_s}
+        }.compact
       }
 
       records
