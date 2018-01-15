@@ -3,17 +3,25 @@ module ShopActivity::Calculations
     _date = date.dup
     result = {}
 
-    _records = SesameMall::Source::ViewJournal.where(shop_id: shop.id)
+    _records = ViewJournal.where(shop_id: shop.id)
     result.merge!(aggregation_field_by_day(
       field: :view_count, date: date, records: _records,
-      date_column: :DATE, force_utc: true,
+      date_column: :created_at, force_utc: true,
       partial_update: partial_update
     ))
 
-    _records = SesameMall::Source::ShareJournal.where(shop_id: shop.id)
+    _records = ViewJournal.where(shop_id: shop.id)
+    result.merge!(aggregation_field_by_day(
+      field: :viewer_count, date: date, records: _records,
+      date_column: :created_at, force_utc: true,
+      partial_update: partial_update,
+      sum_block: proc{|sql| sql.count("distinct(viewer_id)") }
+    ))
+
+    _records = ::ShareJournal.where(shop_id: shop.id)
     result.merge!(aggregation_field_by_day(
       field: :shared_count, date: date, records: _records,
-      date_column: :DATE, force_utc: true,
+      date_column: :created_at, force_utc: true,
       partial_update: partial_update
     ))
 
