@@ -145,6 +145,19 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
     @result = YAML.load(_raw_result)
   end
 
+  def show
+    _time_range = params[:time_range].presence || "3_day_ago"
+    @date_range = distance_of_date_range(
+      str: _time_range,
+      from_time: Time.now.end_of_day
+    )
+
+    @report_shop_activities = ReportShopActivity.where(
+      shop_id: params[:id],
+      report_date: @date_range
+    )
+  end
+
   private
   def get_cache_key(*key)
     key = Array.wrap(key)
