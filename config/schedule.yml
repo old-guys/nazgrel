@@ -107,7 +107,7 @@ category_seek_job:
   class: "CategorySeekWorker"
   queue: :seek
   args:
-    type: "whole"
+    duration: 65
 
 channel_shop_newer_report:
   cron: "51 11,23 * * *"
