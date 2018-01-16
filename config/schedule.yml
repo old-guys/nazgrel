@@ -102,12 +102,12 @@ share_journal_seek_job:
     duration: 35
 
 category_seek_job:
-  cron: "* */1 * * *"
+  cron: "1 */2 * * *"
   name: "同步类别"
   class: "CategorySeekWorker"
   queue: :seek
   args:
-    duration: 65
+    duration: 125
 
 channel_shop_newer_report:
   cron: "51 11,23 * * *"
