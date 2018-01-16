@@ -6,14 +6,14 @@ module ShopActivity::Calculations
     _records = ViewJournal.where(shop_id: shop.id)
     result.merge!(aggregation_field_by_day(
       field: :view_count, date: date, records: _records,
-      date_column: :created_at, force_utc: true,
+      date_column: :created_at,
       partial_update: partial_update
     ))
 
     _records = ViewJournal.where(shop_id: shop.id)
     result.merge!(aggregation_field_by_day(
       field: :viewer_count, date: date, records: _records,
-      date_column: :created_at, force_utc: true,
+      date_column: :created_at,
       partial_update: partial_update,
       sum_block: proc{|sql| sql.count("distinct(viewer_id)") }
     ))
@@ -21,7 +21,7 @@ module ShopActivity::Calculations
     _records = ::ShareJournal.where(shop_id: shop.id)
     result.merge!(aggregation_field_by_day(
       field: :shared_count, date: date, records: _records,
-      date_column: :created_at, force_utc: true,
+      date_column: :created_at,
       partial_update: partial_update
     ))
 
@@ -105,25 +105,38 @@ module ShopActivity::Calculations
 
   private
   def aggregation_field_by_day(field: , date: , records: , date_column: :created_at, force_utc: false, partial_update: true, sum_block: nil)
-    sum_block ||= proc {|sql|
-      sql.size
+    sum_block ||= proc {|relation|
+      relation.size
     }
     _time = force_utc ? date.to_time.utc : date.to_time
 
     result = {
-      "#{field}": sum_block.call(records.where(
-        "#{date_column}": _time.all_day
-      )),
-      "stage_1_#{field}": sum_block.call(records.where(
-        "#{date_column}": _time.change(hour: 0).._time.utc.change(hour: 8).end_of_hour
-      )),
-      "stage_2_#{field}": sum_block.call(records.where(
-        "#{date_column}": _time.change(hour: 9).._time.change(hour: 17).end_of_hour
-      )),
-      "stage_3_#{field}": sum_block.call(records.where(
-        "#{date_column}": _time.change(hour: 18).._time.change(hour: 23).end_of_hour
-      ))
+      "stage_1_#{field}": cached_daily_result(
+        datetimes: _time.change(hour: 0).._time.change(hour: 8).end_of_hour,
+        relation: records.where(
+          "#{date_column}": _time.change(hour: 0).._time.change(hour: 8).end_of_hour
+        ),
+        sum_block: sum_block
+      ),
+      "stage_2_#{field}": cached_daily_result(
+        datetimes: _time.change(hour: 9).._time.change(hour: 17).end_of_hour,
+        relation: records.where(
+          "#{date_column}": _time.change(hour: 9).._time.change(hour: 17).end_of_hour
+        ),
+        sum_block: sum_block
+      ),
+      "stage_3_#{field}": cached_daily_result(
+        datetimes: _time.change(hour: 18).._time.change(hour: 23).end_of_hour,
+        relation: records.where(
+          "#{date_column}": _time.change(hour: 18).._time.change(hour: 23).end_of_hour
+        ),
+        sum_block: sum_block
+      )
     }
+
+    result.merge!(
+      "#{field}": result.values.compact.sum
+    )
 
     if not partial_update
       result.merge!({
@@ -137,5 +150,25 @@ module ShopActivity::Calculations
     end
 
     result
+  end
+
+  def cached_daily_result(datetimes: , relation: , sum_block: )
+    return sum_block.call(relation) if not datetimes.first.to_date == Date.today
+    _time = Time.now
+    _cache_key = "cached_daily_result:" << Digest::SHA1.hexdigest(relation.to_sql)
+    if _time < datetimes.first
+      return 0
+    end
+    if _time.between?(datetimes.first, datetimes.last)
+      _value = sum_block.call(relation)
+      Rails.cache.write(_cache_key, _value)
+
+      return _value
+    end
+    if _time > datetimes.last
+      return Rails.cache.fetch(_cache_key) {
+        sum_block.call(relation)
+      }
+    end
   end
 end
