@@ -15,7 +15,8 @@ class ShopActivityReportWorker
             user_id: Shopkeeper.where(
               updated_at: Time.now.all_week,
             ).select(:user_id)
-          )
+          ),
+          interval_time: 8.hours
         )
       when "partial"
         _key = ShopActivity::UpdateReport::SHOP_IDS_CACHE_KEY

@@ -14,7 +14,8 @@ class ChannelShopActivityReportWorker
 
         _channels.each {|channel|
           ChannelShopActivity::UpdateReport.update_report(
-            channel: channel
+            channel: channel,
+            interval_time: 8.hours
           )
         }
       when "partial"

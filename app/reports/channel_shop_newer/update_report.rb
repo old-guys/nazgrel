@@ -1,10 +1,11 @@
 class ChannelShopNewer::UpdateReport
   class << self
-    def update_report(channels: , report_date: Date.today)
+    def update_report(channels: , report_date: Date.today, force_update: false, interval_time: 30.minutes)
       _records = ReportChannelShopNewer.where(
         channel: channels,
         report_date: report_date
       ).find_each.to_a
+      _time = Time.now
 
       channels.each {|channel|
         _record = _records.find{|record|
@@ -26,6 +27,7 @@ class ChannelShopNewer::UpdateReport
           _recent_record.channel_id == _record.channel_id
         }
         next if _recent_record.blank?
+        next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
         logger.info "update report for channel_id: #{_record.channel_id}"
 
         _report = ChannelShopNewer::UpdateReport.new(

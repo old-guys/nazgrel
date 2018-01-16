@@ -11,7 +11,8 @@ class ChannelShopNewerReportWorker
     case _type
       when "whole"
         ChannelShopNewer::UpdateReport.update_report(
-          channels: Channel.normal
+          channels: Channel.normal,
+          interval_time: 8.hours
         )
       when "partial"
         _key = ChannelShopNewer::UpdateReport::CHANNEL_IDS_CACHE_KEY

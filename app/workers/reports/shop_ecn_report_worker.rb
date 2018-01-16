@@ -15,7 +15,8 @@ class ShopEcnReportWorker
             user_id: Shopkeeper.where(
               updated_at: Time.now.all_week,
             ).select(:user_id)
-          )
+          ),
+          interval_time: 8.hours
         )
       when "partial"
         _key = ShopEcn::UpdateReport::SHOP_IDS_CACHE_KEY
