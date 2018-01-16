@@ -12,7 +12,7 @@ module ShopEcn::Calculations
     {
       ecn_count: _shopkeeper.descendant_size,
       ancestry_rate: ancestry_rate,
-      activation_rate: _shopkeeper.descendant_activation_rate,
+      descendant_activation_rate: _shopkeeper.descendant_activation_rate,
       ecn_grade_platinum_count: _shopkeeper.descendant_grade_platinum_size,
       ecn_grade_gold_count: _shopkeeper.descendant_grade_gold_size,
       children_count: _shopkeeper.children_size,

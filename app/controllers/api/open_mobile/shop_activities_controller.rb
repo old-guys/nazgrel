@@ -158,6 +158,14 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
     )
   end
 
+  # order: "descendant_activation_rate desc" # "descendant_activation_rate ASC"
+  def activation_rank
+    @report_shop_ecns = ReportShopEcn.where(
+      shop_id: Array.wrap(params[:shop_ids]),
+    ).preload(shop: :shopkeeper)
+    @report_shop_ecns = sort_records(relation: @report_shop_ecns)
+  end
+
   private
   def get_cache_key(*key)
     key = Array.wrap(key)
