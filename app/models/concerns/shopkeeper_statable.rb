@@ -28,6 +28,60 @@ module ShopkeeperStatable
         )
     end
 
+    def view_count_rank(records: , dates: , limit: 10)
+      ViewJournal.where(
+        shop_id: records.select(:shop_id),
+        created_at: dates
+      ).group(:shop_id).order(
+        "count(`shop_id`) desc"
+        ).limit(limit).pluck_s(
+          "`shop_id` as shop_id",
+          "count(`user_id`) as count"
+        )
+    end
+
+    def shop_view_type_count(shop_id: , dates: , limit: 10)
+      ViewJournal.where(
+        shop_id: shop_id,
+        created_at: dates
+      ).group(:type).order(
+        "count(`type`) desc"
+      ).limit(limit).count
+    end
+
+    def shop_shared_type_count(shop_id: , dates: , limit: 10)
+      ShareJournal.where(
+        shop_id: shop_id,
+        created_at: dates
+      ).group(:type).order(
+        "count(`type`) desc"
+      ).limit(limit).count
+    end
+
+    def viewer_count_rank(records: , dates: , limit: 10)
+      ViewJournal.where(
+        shop_id: records.select(:shop_id),
+        created_at: dates
+      ).group(:shop_id).order(
+        "count(distinct(`viewer_id`)) desc"
+        ).limit(limit).pluck_s(
+          "`shop_id` as shop_id",
+          "count(distinct(`viewer_id`)) as count"
+        )
+    end
+
+    def share_count_rank(records: , dates: , limit: 10)
+      ShareJournal.where(
+        shop_id: records.select(:shop_id),
+        created_at: dates
+      ).group(:shop_id).order(
+        "count(`shop_id`) desc"
+        ).limit(limit).pluck_s(
+          "`shop_id` as shop_id",
+          "count(`user_id`) as count"
+        )
+    end
+
     def city_rank(records: , dates: , limit: 10)
       records.where(
         created_at: dates

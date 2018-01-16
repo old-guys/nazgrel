@@ -13,6 +13,12 @@ module ActionSearchable
     end
   end
 
+  def distance_of_date_range(str: , from_time: nil)
+    _range = distance_of_time_range(str: str, from_time: from_time)
+
+    _range.first.to_date.._range.last.to_date if _range
+  end
+
   def parse_datetime(str: )
     Time.parse(str)
   end

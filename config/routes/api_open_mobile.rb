@@ -26,6 +26,16 @@ namespace :api, defaults: { format: :json } do
         end
       end
 
+      resources :shop_activities, only: [:show] do
+        collection do
+          get :view_count_rank, :shared_count_rank, :viewer_count_rank
+          match :activation_rank, via: [:get, :post]
+        end
+        member do
+          get :summary
+        end
+      end
+
       resources :auth, only: [] do
         collection do
           post :login

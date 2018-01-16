@@ -1,5 +1,5 @@
 _shopkeeper = record.shopkeeper
-_ancestry_rate = record.ancestry_rate.blank? ? nil : number_to_percentage(record.ancestry_rate)
+_ancestry_rate = record.ancestry_rate.blank? ? nil : number_to_percentage(record.ancestry_rate * 100, precision: 1)
 json.id record.id
 json.shop_id record.shop_id
 json.shop_name record.shop.to_s

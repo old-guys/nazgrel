@@ -8,6 +8,7 @@ module ShopkeeperStatusable
           id = record.id
           [
             "shopkeeper:#{id}:descendant_size",
+            "shopkeeper:#{id}:descendant_activation_size",
             "shopkeeper:#{id}:descendant_grade_platinum_size",
             "shopkeeper:#{id}:descendant_grade_gold_size",
             "shopkeeper:#{id}:children_size",
@@ -39,6 +40,20 @@ module ShopkeeperStatusable
     @descendant_size ||= Rails.cache.fetch("shopkeeper:#{id}:descendant_size", raw: true) {
       descendant_entities.size
     }.to_i
+  end
+
+  def descendant_activation_size
+    @descendant_activation_size ||= Rails.cache.fetch("shopkeeper:#{id}:descendant_activation_size", raw: true) {
+      descendant_entities.where.not(order_number: nil).size
+    }.to_i
+  end
+
+  def descendant_activation_rate
+    if descendant_size.to_f > 0
+      descendant_activation_size / descendant_size.to_f
+    else
+      nil
+    end
   end
 
   def descendant_grade_platinum_size
