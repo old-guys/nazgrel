@@ -22,25 +22,29 @@ module SesameMall::Seekable
     key ||= primary_key
     self.batch_size ||= 1000
     logger.info "start sync: batch_size: #{batch_size}"
+    _synced_count = 0
 
     relation.in_batches(of: batch_size) {|records|
       self.source_data = records
+      _synced_count += records.size
 
       process
     }
-    logger.info "sync finished: #{relation.count} synced"
+    logger.info "sync finished: #{_synced_count} synced"
   end
 
   def do_partial_sync(relation: )
     self.batch_size ||= 1000
     logger.info "start sync: batch_size: #{batch_size}"
+    _synced_count = 0
 
     relation.in_batches(of: batch_size){|records|
       self.source_data = records
+      _synced_count += records.size
 
       process
     }
-    logger.info "sync finished: #{relation.count} synced"
+    logger.info "sync finished: #{_synced_count} synced"
   end
 
   def process
