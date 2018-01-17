@@ -5,7 +5,7 @@ class OrderDetail < ApplicationRecord
 
   has_one :order_sub, foreign_key: :sub_order_no, primary_key: :sub_order_no
 
-  belongs_to :product
+  belongs_to :product, required: false
   has_one :category, through: :product
 
   enum is_free_delivery: {
