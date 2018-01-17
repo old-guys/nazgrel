@@ -32,8 +32,7 @@ class Shop < ApplicationRecord
   end
 
   def set_channel_path
-    _user_ids = shopkeeper.path.to_s.split("/")
-    _channels = Channel.where(shopkeeper_user_id: _user_ids).pluck_s(:id, :shopkeeper_user_id)
+    _channels = Channel.where(shopkeeper_user_id: shopkeeper.parent_ids).pluck_s(:id, :shopkeeper_user_id)
     _shop_ids = []
 
     shopkeeper.parents.each{|shopkeeper|
