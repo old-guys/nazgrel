@@ -79,7 +79,7 @@ class ShopEcn::UpdateReport
     )
   end
   def write
-    record.changed? && record.save
+    record.changed? ? record.save : record.touch
   end
 
   private

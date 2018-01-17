@@ -98,6 +98,6 @@ class ChannelShopNewer::UpdateReport
     )
   end
   def write
-    record.changed? && record.save
+    record.changed? ? record.save : record.touch
   end
 end
