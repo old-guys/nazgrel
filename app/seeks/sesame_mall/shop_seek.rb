@@ -48,11 +48,14 @@ class SesameMall::ShopSeek
   end
 
   def after_process_shopkeeper(records: )
-    _channel_ids = Channel.where(
+    _channels = Channel.where(
       shop_id: records.map{|s|
         s.channel_path.to_s.split("/")[1]
       }.uniq.compact
-    ).pluck(:id)
+    )
+    _channel_ids = Rails.cache.fetch("channel_ids:#{Digest::SHA1.hexdigest(_channels.to_sql)}", expires_in: 30.minutes) {
+      _channels.pluck(:id)
+    }
 
     ChannelShopNewer::UpdateReport.insert_to_partial_channels(
       id: _channel_ids
