@@ -1,58 +1,56 @@
-<div class="container-fluid">
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">订单销售</h4>
-      <ul>
-        <li>
-           <%= link_to "今日", url_for(created_at: Date.today)%>
-           <%= link_to "昨日", url_for(created_at: Date.yesterday)%>
-           <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week)%>
-           <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month)%>
-           <%= link_to "本周", url_for(created_at: DateTime.now.all_week)%>
-           <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
-        </li>
-      </ul>
-      <table class="table table-hover">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">店铺名称</th>
-            <th scope="col">店主姓名</th>
-            <th scope="col">店主手机号</th>
-            <th scope="col">分享数</th>
-            <th scope="col">浏览量</th>
-            <th scope="col">商品编号</th>
-            <th scope="col">商品名称</th>
-            <th scope="col">商品分类</th>
-            <th scope="col">品牌</th>
-            <th scope="col">商品数量(件)</th>
-            <th scope="col">市场价格(元)</th>
-            <th scope="col">商品单价(元)</th>
-            <th scope="col">支付金额</th>
-            <th scope="col">下单时间</th>
-            <th scope="col">省份</th>
-            <th scope="col">城市</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% cache ["dev/report/orders/sales", @orders] do %>
-            <%
-              report_shop_activities = ReportShopActivity.where(
-                shop_id: @orders.map(&:shop_id),
-                report_date: @orders.map{|o| o.created_at.to_date }.uniq
-              )
-            %>
-            <%= render partial: "dev/report/orders/sales_tr",
-              collection: @orders,
-              as: :record, cached: true, locals: {
-                report_shop_activities: report_shop_activities
-              }
-            %>
-          <% end %>
-        </tbody>
-      </table>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">订单销售</h4>
+    <ul>
+      <li>
+         <%= link_to "今日", url_for(created_at: Date.today)%>
+         <%= link_to "昨日", url_for(created_at: Date.yesterday)%>
+         <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week)%>
+         <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month)%>
+         <%= link_to "本周", url_for(created_at: DateTime.now.all_week)%>
+         <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
+      </li>
+    </ul>
+    <table class="table table-responsive-sm table-responsive-md table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">店铺名称</th>
+          <th scope="col">店主姓名</th>
+          <th scope="col">店主手机号</th>
+          <th scope="col">分享数</th>
+          <th scope="col">浏览量</th>
+          <th scope="col">商品编号</th>
+          <th scope="col">商品名称</th>
+          <th scope="col">商品分类</th>
+          <th scope="col">品牌</th>
+          <th scope="col">商品数量(件)</th>
+          <th scope="col">市场价格(元)</th>
+          <th scope="col">商品单价(元)</th>
+          <th scope="col">支付金额</th>
+          <th scope="col">下单时间</th>
+          <th scope="col">省份</th>
+          <th scope="col">城市</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% cache ["dev/report/orders/sales", @orders] do %>
+          <%
+            report_shop_activities = ReportShopActivity.where(
+              shop_id: @orders.map(&:shop_id),
+              report_date: @orders.map{|o| o.created_at.to_date }.uniq
+            )
+          %>
+          <%= render partial: "dev/report/orders/sales_tr",
+            collection: @orders,
+            as: :record, cached: true, locals: {
+              report_shop_activities: report_shop_activities
+            }
+          %>
+        <% end %>
+      </tbody>
+    </table>
 
-      <%= paginate @orders %>
-    </div>
+    <%= paginate @orders %>
   </div>
 </div>

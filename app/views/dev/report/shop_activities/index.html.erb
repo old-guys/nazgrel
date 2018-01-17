@@ -1,66 +1,64 @@
-<div class="container-fluid">
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">店主行为报表</h4>
-      <ul>
-        <li>
-           <%= link_to "今日", url_for(report_date: Date.today)%>
-           <%= link_to "昨日", url_for(report_date: Date.yesterday)%>
-           <% 7.days.ago.to_date.upto(2.days.ago.to_date).reverse_each do |date| %>
-             <%= link_to date.strftime("%m-%d"), url_for(report_date: date.to_s)%>
-           <% end %>
-        </li>
-      </ul>
-      <table class="table table-hover">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">店主姓名</th>
-            <th scope="col">店铺名称</th>
-            <th scope="col">省份</th>
-            <th scope="col">城市</th>
-            <th scope="col">创建时间</th>
-            <th scope="col">店铺等级</th>
-            <th scope="col">分享次数</th>
-            <th scope="col">访问次数</th>
-            <th scope="col">访客数</th>
-            <th scope="col">订单数</th>
-            <th scope="col">自购订单</th>
-            <th scope="col">销售订单</th>
-            <th scope="col">订单金额</th>
-            <th scope="col">自购订单金额</th>
-            <th scope="col">销售订单金额</th>
-            <th scope="col">邀请白金店主</th>
-            <th scope="col">邀请黄金店主</th>
-            <th scope="col">ECN白金店主</th>
-            <th scope="col">ECN黄金店主</th>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">店主行为报表</h4>
+    <ul>
+      <li>
+         <%= link_to "今日", url_for(report_date: Date.today)%>
+         <%= link_to "昨日", url_for(report_date: Date.yesterday)%>
+         <% 7.days.ago.to_date.upto(2.days.ago.to_date).reverse_each do |date| %>
+           <%= link_to date.strftime("%m-%d"), url_for(report_date: date.to_s)%>
+         <% end %>
+      </li>
+    </ul>
+    <table class="table table-fixed table-responsive table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">店主姓名</th>
+          <th scope="col">店铺名称</th>
+          <th scope="col">省份</th>
+          <th scope="col">城市</th>
+          <th scope="col">创建时间</th>
+          <th scope="col">店铺等级</th>
+          <th scope="col">分享次数</th>
+          <th scope="col">访问次数</th>
+          <th scope="col">访客数</th>
+          <th scope="col">订单数</th>
+          <th scope="col">自购订单</th>
+          <th scope="col">销售订单</th>
+          <th scope="col">订单金额</th>
+          <th scope="col">自购订单金额</th>
+          <th scope="col">销售订单金额</th>
+          <th scope="col">邀请白金店主</th>
+          <th scope="col">邀请黄金店主</th>
+          <th scope="col">ECN白金店主</th>
+          <th scope="col">ECN黄金店主</th>
 
-            <th scope="col">本月分享次数</th>
-            <th scope="col">本月访问次数</th>
-            <th scope="col">本月访客数</th>
-            <th scope="col">本月订单数</th>
-            <th scope="col">本月自购订单</th>
-            <th scope="col">本月销售订单</th>
-            <th scope="col">本月订单金额</th>
-            <th scope="col">本月自购订单金额</th>
-            <th scope="col">本月销售订单金额</th>
-            <th scope="col">本月邀请白金店主</th>
-            <th scope="col">本月邀请黄金店主</th>
-            <th scope="col">本月ECN白金店主</th>
-            <th scope="col">本月ECN黄金店主</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% cache ["dev/report/shop_activities/index", @report_shop_activities] do %>
-            <%= render partial: "dev/report/shop_activities/index_tr",
-              collection: @report_shop_activities,
-              as: :record, cached: true
-            %>
-          <% end %>
-        </tbody>
-      </table>
+          <th scope="col">本月分享次数</th>
+          <th scope="col">本月访问次数</th>
+          <th scope="col">本月访客数</th>
+          <th scope="col">本月订单数</th>
+          <th scope="col">本月自购订单</th>
+          <th scope="col">本月销售订单</th>
+          <th scope="col">本月订单金额</th>
+          <th scope="col">本月自购订单金额</th>
+          <th scope="col">本月销售订单金额</th>
+          <th scope="col">本月邀请白金店主</th>
+          <th scope="col">本月邀请黄金店主</th>
+          <th scope="col">本月ECN白金店主</th>
+          <th scope="col">本月ECN黄金店主</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% cache ["dev/report/shop_activities/index", @report_shop_activities] do %>
+          <%= render partial: "dev/report/shop_activities/index_tr",
+            collection: @report_shop_activities,
+            as: :record, cached: true
+          %>
+        <% end %>
+      </tbody>
+    </table>
 
-      <%= paginate @report_shop_activities %>
-    </div>
+    <%= paginate @report_shop_activities %>
   </div>
 </div>

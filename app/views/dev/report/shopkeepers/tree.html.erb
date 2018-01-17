@@ -1,62 +1,60 @@
-<div class="container-fluid">
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">店主组织架构树</h4>
-      <form class="form-inline">
-        <label class="sr-only" for="tree_depth">层级</label>
-        <%= text_field_tag :tree_depth, params[:tree_depth], class: "form-control mb-2 mr-sm-2", placeholder: "请输入特定层级"%>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">店主组织架构树</h4>
+    <form class="form-inline">
+      <label class="sr-only" for="tree_depth">层级</label>
+      <%= text_field_tag :tree_depth, params[:tree_depth], class: "form-control mb-2 mr-sm-2", placeholder: "请输入特定层级"%>
 
-        <label class="sr-only" for="id">ID</label>
-        <%= text_field_tag :id, params[:id], class: "form-control mb-2 mr-sm-2", placeholder: "店主ID"%>
+      <label class="sr-only" for="id">ID</label>
+      <%= text_field_tag :id, params[:id], class: "form-control mb-2 mr-sm-2", placeholder: "店主ID"%>
 
-        <label class="sr-only" for="user_id">店主用户ID</label>
-        <%= text_field_tag :user_id, params[:user_id], class: "form-control mb-2 mr-sm-2", placeholder: "店主用户ID"%>
+      <label class="sr-only" for="user_id">店主用户ID</label>
+      <%= text_field_tag :user_id, params[:user_id], class: "form-control mb-2 mr-sm-2", placeholder: "店主用户ID"%>
 
-        <label class="sr-only" for="user_phone">手机号码</label>
-        <%= text_field_tag :user_phone, params[:user_phone], class: "form-control mb-2 mr-sm-2", placeholder: "店主手机号"%>
+      <label class="sr-only" for="user_phone">手机号码</label>
+      <%= text_field_tag :user_phone, params[:user_phone], class: "form-control mb-2 mr-sm-2", placeholder: "店主手机号"%>
 
-        <button type="submit" class="btn btn-primary mb-2">查询</button>
-      </form>
-      <% if @shopkeeper.present? %>
-        <%= render partial: "dev/report/shopkeepers/tree_table",
-          locals: {
-            records: Array.wrap(@shopkeeper)
-          }
-        %>
+      <button type="submit" class="btn btn-primary mb-2">查询</button>
+    </form>
+    <% if @shopkeeper.present? %>
+      <%= render partial: "dev/report/shopkeepers/tree_table",
+        locals: {
+          records: Array.wrap(@shopkeeper)
+        }
+      %>
 
-        <% _capture = proc do |records| %>
-          <% records.in_batches(of: 500) do |_records|%>
-            <%= render partial: "dev/report/shopkeepers/tree_table",
-              locals: {
-                records: _records.order("invite_user_id")
-              }
-            %>
-          <% end %>
+      <% _capture = proc do |records| %>
+        <% records.in_batches(of: 500) do |_records|%>
+          <%= render partial: "dev/report/shopkeepers/tree_table",
+            locals: {
+              records: _records.order("invite_user_id")
+            }
+          %>
         <% end %>
-        <% if params[:tree_depth].present? %>
+      <% end %>
+      <% if params[:tree_depth].present? %>
+        <%
+          records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
+            params[:tree_depth].to_i, operator: "="
+          )
+        %>
+        <% _capture.call(records) %>
+      <% else %>
+        <% (@shopkeeper.tree_depth + 1).upto(@shopkeeper.tree_depth + 20).each do |tree_depth| %>
           <%
             records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
-              params[:tree_depth].to_i, operator: "="
+              tree_depth, operator: "="
             )
           %>
+          <% break if not records.exists? %>
           <% _capture.call(records) %>
-        <% else %>
-          <% (@shopkeeper.tree_depth + 1).upto(@shopkeeper.tree_depth + 20).each do |tree_depth| %>
-            <%
-              records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
-                tree_depth, operator: "="
-              )
-            %>
-            <% break if not records.exists? %>
-            <% _capture.call(records) %>
-          <% end %>
         <% end %>
-      <% else %>
-        <div class="alert alert-info" role="alert">
-          <h4 class="alert-heading">查询店主失败!</h4>
-          <p>无效的店主手机号请重新输入.</p>
-        </div>
       <% end %>
-    </div>
+    <% else %>
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">查询店主失败!</h4>
+        <p>无效的店主手机号请重新输入.</p>
+      </div>
+    <% end %>
   </div>
 </div>
