@@ -74,7 +74,7 @@ TriggerService.setup_trigger klass: klass
 定时队列
 
 ```ruby
-# head -n 5 app/workers/order_seek_worker.rb
+# head -n 5 app/workers/seeks/order_seek_worker.rb
 class OrderSeekWorker
   include Sidekiq::Worker
   sidekiq_options queue: :seek, retry: false, backtrace: true
@@ -89,6 +89,33 @@ shop_seek_job:
   name: "同步店铺"
   class: "ShopSeekWorker"
   queue: :seek
+```
+
+清除芝蚂城已经移除的记录
+
+```ruby
+# head -n 5 app/workers/seeks/deleted_record_seek_worker.rb
+class DeletedRecordSeekWorker
+  include Sidekiq::Worker
+  include SeekWorkable
+
+  sidekiq_options queue: :seek, retry: false, backtrace: true
+```
+
+```ruby
+head -n 5 app/seeks/sesame_mall/deleted_record_seek.rb
+class SesameMall::DeletedRecordSeek
+  include SesameMall::SeekLoggerable
+```
+
+```yaml
+deleted_record_seek_job:
+  cron: "3 * * * *"
+  name: "删除芝蚂城已经删除的记录"
+  class: "DeletedRecordSeekWorker"
+  queue: :seek
+  args:
+    duration: 125
 ```
 
 定时清理 seek record

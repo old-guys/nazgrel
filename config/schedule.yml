@@ -109,6 +109,14 @@ category_seek_job:
   args:
     duration: 125
 
+deleted_record_seek_job:
+  cron: "3 * * * *"
+  name: "删除芝蚂城已经删除的记录"
+  class: "DeletedRecordSeekWorker"
+  queue: :seek
+  args:
+    duration: 125
+
 channel_shop_newer_report:
   cron: "51 11,23 * * *"
   name: "全量当天更新渠道新增报表"
