@@ -30,9 +30,12 @@ class SesameMall::DeletedRecordSeek
 
       if _seek and hash[:ids].present?
         logger.info "sync deleted: #{hash[:ids].length} #{_klass.name} synced"
-        _klass.where(
-          _seek.new.primary_key => hash[:ids]
-        ).delete_all
+
+        hash[:ids].each_slice(500) {|ids|
+          _klass.where(
+            _seek.new.primary_key => ids
+          ).delete_all
+        }
       end
     }
   end
