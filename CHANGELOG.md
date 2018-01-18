@@ -1,9 +1,11 @@
-## 优化渠道下属店铺查询 (2018-01-15)
+## 优化渠道下属店铺查询 (2018-01-18)
 
 - #enhance# 优化渠道下属店铺查询
+- #feature# 店主平台运营程序店铺对象相关接口返回店铺头像
 
 ```shell
 cap production deploy:runrake task=data_migrations:version:v1_0_12_migrate_shop_channel_id
+cap production deploy:runrake task=data_migrations:version:v1_0_13_migrate_shop_info
 ```
 
 ## 同步店铺分享日志 (2018-01-15)
