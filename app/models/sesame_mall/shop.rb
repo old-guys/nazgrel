@@ -32,13 +32,15 @@ class Shop < ApplicationRecord
   end
 
   def set_channel_path
-    _channels = Channel.where(shopkeeper_user_id: shopkeeper.parent_ids).pluck_s(:id, :shopkeeper_user_id)
+    _channels = Channel.where(shopkeeper_user_id: shopkeeper.parent_ids).pluck_s(:id, :shop_id)
     _shop_ids = []
 
     shopkeeper.parents.each{|shopkeeper|
       _shop_ids << shopkeeper.shop_id
+      _channel = _channels.find{|s| s.shop_id.to_s == id.to_s }
+      if _channel.present?
+        self.channel_id = _channel.id
 
-      if _channels.find{|s| s.shopkeeper_user_id.to_s == user_id}
         break
       end
     }
