@@ -32,22 +32,6 @@ module ShopkeeperStatable
         )
     end
 
-    def view_count_rank(records: , dates: , limit: 10)
-      _records = ViewJournal.where(
-        created_at: dates
-      )
-      if records.where_sql.present?
-        _records = _records.where(shop_id: records.select(:shop_id))
-      end
-
-      _records.group(:shop_id).order(
-        "count(`shop_id`) desc"
-        ).limit(limit).pluck_s(
-          "`shop_id` as shop_id",
-          "count(`shop_id`) as count"
-        )
-    end
-
     def shop_view_type_count(shop_id: , dates: , limit: 10)
       _records = ViewJournal.where(
         created_at: dates
@@ -72,6 +56,22 @@ module ShopkeeperStatable
       _records.group(:type).order(
         "count(`type`) desc"
       ).limit(limit).count
+    end
+
+    def view_count_rank(records: , dates: , limit: 10)
+      _records = ViewJournal.where(
+        created_at: dates
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:shop_id).order(
+        "count(`shop_id`) desc"
+        ).limit(limit).pluck_s(
+          "`shop_id` as shop_id",
+          "count(`shop_id`) as count"
+        )
     end
 
     def viewer_count_rank(records: , dates: , limit: 10)
