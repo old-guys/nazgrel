@@ -9,7 +9,9 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   # order: "order_number desc" # "shopkeeper.commission_income_amount ASC"
   # query: "张三"
   def index
-    @shops = own_record_by_channel_user(klass: Shop).preload(:shopkeeper).joins(:shopkeeper)
+    @shops = own_record_by_channel_user(klass: Shop).preload(
+      :shopkeeper, :parent
+    ).joins(:shopkeeper)
 
     @shops = filter_records_by(relation: @shops)
     @shops = simple_search(relation: @shops)
