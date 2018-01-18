@@ -87,5 +87,19 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'migrate shop#channel_id'
+    task :v1_0_11_init_seek_trigger => :environment do
+      Shop.preload(:shopkeeper).in_batches {|records|
+        Shopkeeper.with_preload_parents(records: records.map(&:shopkeeper).compact)
+
+        records.each {|record|
+          if record.shopkeeper
+            record.set_channel_path
+            record.save
+          end
+        }
+      }
+    end
   end
 end

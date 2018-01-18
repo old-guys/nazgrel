@@ -8,6 +8,8 @@ module ChannelShopable
     belongs_to :own_shopkeeper, class_name: "Shopkeeper",
       foreign_key: :shopkeeper_user_id, primary_key: :user_id, required: false
 
+    has_many :own_shops, class_name: "Shop"
+
     after_create if: :shop_id do
       set_shops_channel_path
     end
