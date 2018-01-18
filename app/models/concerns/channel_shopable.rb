@@ -38,12 +38,11 @@ module ChannelShopable
     return Shop.none if channel_shop_ids.blank?
     _root_shops = Shop.where(id: channel_shop_ids).to_a
 
-    _shops = Shop.self_and_descendant_entities(_root_shops.shift, column: :channel_path)
-    _root_shops.each {|shop|
-      _shops = _shops.or(Shop.self_and_descendant_entities(shop, column: :channel_path))
-    }
-
-    _shops
+    Shop.where(
+      _root_shops.map{|shop|
+        Utility.where_sql_str(Shop.self_and_descendant_entities(shop, column: :channel_path))
+      }.join(" OR ")
+    )
   end
 
   def self_and_descendant_shops

@@ -21,12 +21,11 @@ module ChannelRegionShopable
     @real_shops ||= proc {
       _channels = channels.preload(:own_shop).to_a
 
-      _shops = _channels.shift.shops
-      _channels.each {|channel|
-        _shops = _shops.or(channel.shops)
-      }
-
-      _shops
+      Shop.where(
+        _channels.map{|channel|
+          Utility.where_sql_str(channel.shops)
+        }.join(" OR ")
+      )
     }.call
   end
 
