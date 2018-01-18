@@ -17,10 +17,14 @@ module ShopkeeperStatable
     end
 
     def order_amount_rank(records: , dates: , limit: 10)
-      ReportShopActivity.where(
-        shop_id: records.select(:shop_id),
+      _records = ReportShopActivity.where(
         report_date: dates
-      ).group(:shop_id).order(
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:shop_id).order(
         "sum(`order_amount`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
@@ -29,10 +33,14 @@ module ShopkeeperStatable
     end
 
     def view_count_rank(records: , dates: , limit: 10)
-      ViewJournal.where(
-        shop_id: records.select(:shop_id),
+      _records = ViewJournal.where(
         created_at: dates
-      ).group(:shop_id).order(
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:shop_id).order(
         "count(`shop_id`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
@@ -41,28 +49,40 @@ module ShopkeeperStatable
     end
 
     def shop_view_type_count(shop_id: , dates: , limit: 10)
-      ViewJournal.where(
-        shop_id: shop_id,
+      _records = ViewJournal.where(
         created_at: dates
-      ).group(:type).order(
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:type).order(
         "count(`type`) desc"
       ).limit(limit).count
     end
 
     def shop_shared_type_count(shop_id: , dates: , limit: 10)
-      ShareJournal.where(
-        shop_id: shop_id,
+      _records = ShareJournal.where(
         created_at: dates
-      ).group(:type).order(
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:type).order(
         "count(`type`) desc"
       ).limit(limit).count
     end
 
     def viewer_count_rank(records: , dates: , limit: 10)
-      ViewJournal.where(
-        shop_id: records.select(:shop_id),
+      _records = ViewJournal.where(
         created_at: dates
-      ).group(:shop_id).order(
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:shop_id).order(
         "count(distinct(`viewer_id`)) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
@@ -71,14 +91,18 @@ module ShopkeeperStatable
     end
 
     def share_count_rank(records: , dates: , limit: 10)
-      ShareJournal.where(
-        shop_id: records.select(:shop_id),
+      _records = ShareJournal.where(
         created_at: dates
-      ).group(:shop_id).order(
+      )
+      if records.where_sql.present?
+        _records = _records.where(shop_id: records.select(:shop_id))
+      end
+
+      _records.group(:shop_id).order(
         "count(`shop_id`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
-          "count(`user_id`) as count"
+          "count(`shop_id`) as count"
         )
     end
 
