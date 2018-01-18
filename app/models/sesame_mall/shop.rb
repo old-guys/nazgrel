@@ -23,6 +23,10 @@ class Shop < ApplicationRecord
     name || id.to_s
   end
 
+  def shop_img_url
+    "http://zmcimg.ishanggang.com/static/img/#{shop_img}"
+  end
+
   def ancestor_shopkeepers
     @ancestor_shopkeepers ||= Shopkeeper.where(user_id: shopkeeper.path.to_s.split("/"))
   end

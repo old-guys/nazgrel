@@ -26,6 +26,11 @@ class SesameMall::ShopSeek
       user_id: data[:USER_ID],
       desc: data[:SHOP_DESC],
 
+      shop_template_id: data[:SHOP_TEMPLATE_ID],
+      shop_theme: data[:SHOP_THEME],
+      shop_img: data[:SHOP_IMG],
+      share_shop_qrcode: data[:SHARE_SHOP_QRCODE],
+
       created_at: parse_no_timezone(datetime: data[:CREATE_DATE]),
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:UPDATE_TIME])
     )

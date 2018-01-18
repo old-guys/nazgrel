@@ -101,5 +101,26 @@ namespace :data_migrations do
         }
       }
     end
+
+    desc 'migrate shop info'
+    task :v1_0_13_migrate_shop_info => :environment do
+      SesameMall::Source::Shop.in_batches {|records|
+        _shops = Shop.where(id: records.pluck(:ID))
+
+        Shop.transaction do
+          _shops.each {|record|
+            _source = records.find{|source| source.ID == record.id}
+            if _source and record.shop_img.blank?
+              record.update_columns(
+                shop_template_id: _source.SHOP_TEMPLATE_ID,
+                shop_theme: _source.SHOP_THEME,
+                shop_img: _source.SHOP_IMG,
+                share_shop_qrcode: _source.SHARE_SHOP_QRCODE
+              )
+            end
+          }
+        end
+      }
+    end
   end
 end

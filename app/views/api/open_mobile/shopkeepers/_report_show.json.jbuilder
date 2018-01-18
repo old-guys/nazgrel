@@ -9,6 +9,7 @@ json.city record.city
 
 json.user_phone record.user_phone
 json.shop_name record.shop.to_s
+json.shop_img_url record.shop_img_url
 
 json.user_grade record.user_grade
 json.user_grade_text record.user_grade_i18n
