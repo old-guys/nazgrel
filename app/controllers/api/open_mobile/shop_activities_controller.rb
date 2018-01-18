@@ -3,7 +3,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
   include ActionUtilable
   include Api::OpenMobile::ActionOwnable
 
-  before_action :set_shops, only: [
+  before_action :set_shopkeepers, only: [
     :view_count_rank, :shared_count_rank,
     :viewer_count_rank
   ]
@@ -18,7 +18,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
 
     _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.view_count_rank(
-        records: Shopkeeper.where(shop_id: @permit_shops),
+        records: @permit_shopkeepers,
         dates: dates,
         limit: _limit
       )
@@ -52,7 +52,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
 
     _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.share_count_rank(
-        records: Shopkeeper.where(shop_id: @permit_shops),
+        records: @permit_shopkeepers,
         dates: dates,
         limit: _limit
       )
@@ -86,7 +86,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
 
     _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
       _counts = Shopkeeper.viewer_count_rank(
-        records: Shopkeeper.where(shop_id: @permit_shops),
+        records: @permit_shopkeepers,
         dates: dates,
         limit: _limit
       )
@@ -169,7 +169,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
   private
   def get_cache_key(*key)
     key = Array.wrap(key)
-    key << @permit_shops if params[:shop_id].present?
+    key << @permit_shopkeepers if params[:shop_id].present?
 
     action_cache_key(key)
   end

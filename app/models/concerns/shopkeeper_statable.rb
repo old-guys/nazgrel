@@ -36,7 +36,7 @@ module ShopkeeperStatable
         "count(`shop_id`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
-          "count(`user_id`) as count"
+          "count(`shop_id`) as count"
         )
     end
 
