@@ -7,7 +7,7 @@ module ChannelShopkeeperable
   end
 
   def shopkeepers
-    Shopkeeper.where(shop_id: shop_ids)
+    own_shopkeepers
   end
 
   module ClassMethods

@@ -8,27 +8,11 @@ module ChannelRegionShopable
   end
 
   def shops
-    @shops ||= proc {
-      Rails.cache.fetch("#{cache_key}:shops:#{channels.cache_key}") {
-        real_shops.all
-      }
-    }.call
+    own_shops
   end
 
   def shop_ids
-    @shop_ids ||= shops.pluck(:id)
-  end
-
-  def real_shops
-    @real_shops ||= proc {
-      _channels = channels.preload(:own_shop).to_a
-
-      Shop.where(
-        _channels.map{|channel|
-          Utility.where_sql_str(channel.shops)
-        }.join(" OR ")
-      )
-    }.call
+    own_shop_ids
   end
 
   module ClassMethods

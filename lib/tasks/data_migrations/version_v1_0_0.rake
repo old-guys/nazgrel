@@ -89,7 +89,7 @@ namespace :data_migrations do
     end
 
     desc 'migrate shop#channel_id'
-    task :v1_0_11_init_seek_trigger => :environment do
+    task :v1_0_12_migrate_shop_channel_id => :environment do
       Shop.preload(:shopkeeper).in_batches {|records|
         Shopkeeper.with_preload_parents(records: records.map(&:shopkeeper).compact)
 

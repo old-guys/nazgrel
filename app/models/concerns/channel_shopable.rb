@@ -17,47 +17,17 @@ module ChannelShopable
 
   # this channel invite shops was channel own shop
   def channel_shops
-    @_channel_shops ||= Shop.joins(:channel).
-      descendant_entities(
-        own_shop,
-        column: :channel_path
-      ).where(
-        id: self.class.normal_channel_shop_ids
-      )
+    @_channel_shops ||= own_shop.descendant_entities.where.
+      not(channel_id: nil).where.
+      not(channel_id: id)
   end
 
   def channel_shop_ids
-    @channel_shop_ids ||= proc {
-      _result = Rails.cache.fetch("#{cache_key}:#{Channel.normal.cache_key}:channel_shop_ids", raw: true) {
-        channel_shops.pluck(:id).to_yaml
-      }
-
-      YAML.load(_result)
-    }.call
-  end
-
-  def descendant_channel_shops
-    return Shop.none if channel_shop_ids.blank?
-    _root_shops = Shop.where(id: channel_shop_ids).to_a
-
-    Shop.where(
-      _root_shops.map{|shop|
-        Utility.where_sql_str(Shop.self_and_descendant_entities(shop, column: :channel_path))
-      }.join(" OR ")
-    )
+    @channel_shop_ids ||= channel_shops.pluck(:id)
   end
 
   def self_and_descendant_shops
-    @self_and_descendant_shops ||= proc {
-      _shops = Shop.self_and_descendant_entities(own_shop, column: :channel_path)
-      if channel_shop_ids.present?
-        _shops = _shops.where.not(
-          id: descendant_channel_shops.select(:id)
-        )
-      end
-
-      _shops
-    }.call
+    @self_and_descendant_shops ||= own_shops
   end
   alias :shops :self_and_descendant_shops
 
