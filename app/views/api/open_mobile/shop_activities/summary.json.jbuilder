@@ -5,6 +5,7 @@ json.cache! ['api/open/mobile/shop_activities/summary', record, @shop.shopkeeper
   json.id @shop.id
 
   json.shop_name record.shop.to_s
+  json.shop_img_url record.shop.shop_img_url
   json.shopkeeper_name record.to_s
 
   json.province record.province

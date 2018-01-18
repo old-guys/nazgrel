@@ -33,6 +33,8 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
           shop_id: _shopkeeper.shop_id,
           shop_name: _shopkeeper.shop.to_s,
           Shopkeeper_name: _shopkeeper.to_s,
+          shop_img_url: _shopkeeper.shop_img_url,
+
           city: _shopkeeper.city,
           count: item.count
         }
@@ -66,6 +68,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
           index: index,
           shop_id: _shopkeeper.shop_id,
           shop_name: _shopkeeper.shop.to_s,
+          shop_img_url: _shopkeeper.shop_img_url,
           Shopkeeper_name: _shopkeeper.to_s,
           city: _shopkeeper.city,
           count: item.count
@@ -100,6 +103,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
           index: index,
           shop_id: _shopkeeper.shop_id,
           shop_name: _shopkeeper.shop.to_s,
+          shop_img_url: _shopkeeper.shop_img_url,
           Shopkeeper_name: _shopkeeper.to_s,
           city: _shopkeeper.city,
           count: item.count

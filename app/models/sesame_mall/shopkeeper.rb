@@ -31,6 +31,8 @@ class Shopkeeper < ApplicationRecord
     "shopkeepers.user_phone"
   ], joins: :shop
 
+  delegate :shop_img_url, to: :shop, allow_nil: true
+
   def to_s
     user_name || id.to_s
   end

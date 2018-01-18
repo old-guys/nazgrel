@@ -6,6 +6,7 @@ json.cache! ['api/open/mobile/shop_activities/activation_rank', @report_shop_ecn
 
     json.shop_id _shop.id
     json.shop_name _shop.to_s
+    json.shop_img_url _shop.shop_img_url
     json.shopkeeper_name _shopkeeper.to_s
 
     json.province _shopkeeper.province

@@ -33,6 +33,7 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
           index: index,
           shop_id: _shopkeeper.shop_id,
           shop_name: _shopkeeper.shop.to_s,
+          shop_img_url: _shopkeeper.shop_img_url,
           Shopkeeper_name: _shopkeeper.to_s,
           order_amount: _shopkeeper.order_amount.to_f.to_s,
           commission_income_amount: _shopkeeper.commission_income_amount.to_f.to_s,

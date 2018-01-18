@@ -73,6 +73,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
         {
           index: index,
           shop_id: _shopkeeper.shop_id,
+          shop_img_url: _shopkeeper.shop_img_url,
           shop_name: _shopkeeper.shop.to_s,
           Shopkeeper_name: _shopkeeper.to_s,
           city: _shopkeeper.city,
@@ -107,6 +108,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
         {
           index: index,
           shop_id: _shopkeeper.shop_id,
+          shop_img_url: _shopkeeper.shop_img_url,
           shop_name: _shopkeeper.shop.to_s,
           Shopkeeper_name: _shopkeeper.to_s,
           city: _shopkeeper.city,
