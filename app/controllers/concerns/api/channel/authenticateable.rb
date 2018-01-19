@@ -21,8 +21,8 @@ module Api::Channel::Authenticateable
     end
 
     RequestStore.store[:current_channel_user] = current_channel_user
-    RequestStore.store[:current_channel] = current_channel_user.try(:channel)
-    RequestStore.store[:current_channel_region] = current_channel_user.try(:channel_region)
+    RequestStore.store[:current_channel] = current_channel_user.try(:channel) if not current_channel_user.region_manager?
+    RequestStore.store[:current_channel_region] = current_channel_user.try(:channel_region) if current_channel_user.region_manager?
 
     @current_channel_user = RequestStore.store[:current_channel_user]
     @current_channel = RequestStore.store[:current_channel]
@@ -60,15 +60,11 @@ module Api::Channel::Authenticateable
   end
 
   def current_channel
-    @current_channel ||= -> {
-      RequestStore.store[:current_channel] = current_channel_user.try(:channel)
-    }.call
+    @current_channel
   end
 
   def current_channel_region
-    @current_channel_region ||= -> {
-      RequestStore.store[:current_channel_region] = current_channel_user.try(:channel_region)
-    }.call
+    @current_channel_region
   end
 
   def current_app
