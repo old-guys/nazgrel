@@ -1,0 +1,1 @@
+json.partial! "api/web/permissions/show", record: @permission

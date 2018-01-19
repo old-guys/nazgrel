@@ -6,6 +6,8 @@ namespace :api, defaults: { format: :json } do
       end
     end
 
+    resources :permissions
+
     resources :auth, only: [] do
       collection do
         post :login
