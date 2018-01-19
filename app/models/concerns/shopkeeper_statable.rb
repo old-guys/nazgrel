@@ -45,7 +45,7 @@ module ShopkeeperStatable
       # while whole shops rank, set min daily value to match high value shop
       if records.where_sql.blank?
         _shop_ids = ReportShopActivity.where(
-          report_date: dates
+          report_date: 1.months.ago(dates.last)..dates.last
         ).where(
           "view_count >= ?", min_daily_value
         ).select("distinct(shop_id)")
@@ -69,7 +69,7 @@ module ShopkeeperStatable
       # while whole shops rank, set min daily value to match high value shop
       if records.where_sql.blank?
         _shop_ids = ReportShopActivity.where(
-          report_date: dates
+          report_date: 1.months.ago(dates.last)..dates.last
         ).where(
           "shared_count >= ?", min_daily_value
         ).select("distinct(shop_id)")
@@ -93,7 +93,7 @@ module ShopkeeperStatable
       # while whole shops rank, set min daily value to match high value shop
       if records.where_sql.blank?
         _shop_ids = ReportShopActivity.where(
-          report_date: dates
+          report_date: 1.months.ago(dates.last)..dates.last
         ).where(
           "view_count >= ?", min_daily_value
         ).select("distinct(shop_id)")
@@ -120,7 +120,7 @@ module ShopkeeperStatable
       # while whole shops rank, set min daily value to match high value shop
       if records.where_sql.blank?
         _shop_ids = ReportShopActivity.where(
-          report_date: dates
+          report_date: 1.months.ago(dates.last)..dates.last
         ).where(
           "viewer_count >= ?", min_daily_value
         ).select("distinct(shop_id)")
@@ -147,7 +147,7 @@ module ShopkeeperStatable
       # while whole shops rank, set min daily value to match high value shop
       if records.where_sql.blank?
         _shop_ids = ReportShopActivity.where(
-          report_date: dates
+          report_date: 1.months.ago(dates.last)..dates.last
         ).where(
           "shared_count >= ?", min_daily_value
         ).select("distinct(shop_id)")
