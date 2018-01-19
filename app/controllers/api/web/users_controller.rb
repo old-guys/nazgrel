@@ -1,5 +1,5 @@
 class Api::Web::UsersController < Api::Web::BaseController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :access_status, :destroy]
   include ActionSearchable
 
   # GET /api/web/users
@@ -37,6 +37,19 @@ class Api::Web::UsersController < Api::Web::BaseController
     end
   end
 
+  def access_status
+    _opert_name = "#{user_access_status_params[:access_status]}_access!"
+
+    if _opert_name.eql?("lock_access!")
+      @user.lock_access!(send_instructions: false)
+    end
+    if _opert_name.eql?("unlock_access!")
+      @user.unlock_access!
+    end
+
+    render :show
+  end
+
   # # DELETE /api/web/users/1
   # # DELETE /api/web/users/1.json
   # def destroy
@@ -57,6 +70,12 @@ class Api::Web::UsersController < Api::Web::BaseController
       :email, :phone, :password,
       :role_type,
       role_ids: []
+    )
+  end
+
+  def user_access_status_params
+    params.fetch(:user).permit(
+      :access_status
     )
   end
 end

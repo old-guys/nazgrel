@@ -1,4 +1,4 @@
-json.extract! record, :id, :email, :phone
+json.extract! record, :id, :email, :phone, :access_locked?
 
 json.role_type record.role_type
 json.role_type_text record.role_type_i18n

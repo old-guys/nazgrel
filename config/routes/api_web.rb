@@ -6,7 +6,12 @@ namespace :api, defaults: { format: :json } do
       end
     end
 
-    resources :permissions, :roles, :users
+    resources :permissions, :roles
+    resources :users do
+      member do
+        match :access_status, via: [:patch, :put]
+      end
+    end
 
     resources :auth, only: [] do
       collection do
