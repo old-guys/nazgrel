@@ -34,7 +34,7 @@ module ShopkeeperStatable
         )
     end
 
-    def shop_view_type_count(shop_id: , dates: , limit: 10, min_daily_value: 100)
+    def shop_view_type_count(shop_id: , dates: , limit: 10, min_daily_value: 150)
       _records = ViewJournal.where(
         created_at: dates
       )
@@ -48,7 +48,7 @@ module ShopkeeperStatable
           report_date: dates
         ).where(
           "view_count >= ?", min_daily_value
-        ).select(:shop_id)
+        ).select("distinct(shop_id)")
 
         _records = _records.where(shop_id: _shop_ids)
       end
@@ -72,7 +72,7 @@ module ShopkeeperStatable
           report_date: dates
         ).where(
           "shared_count >= ?", min_daily_value
-        ).select(:shop_id)
+        ).select("distinct(shop_id)")
 
         _records = _records.where(shop_id: _shop_ids)
       end
@@ -82,7 +82,7 @@ module ShopkeeperStatable
       ).limit(limit).count
     end
 
-    def view_count_rank(records: , dates: , limit: 10, min_daily_value: 100)
+    def view_count_rank(records: , dates: , limit: 10, min_daily_value: 150)
       _records = ViewJournal.where(
         created_at: dates
       )
@@ -96,7 +96,7 @@ module ShopkeeperStatable
           report_date: dates
         ).where(
           "view_count >= ?", min_daily_value
-        ).select(:shop_id)
+        ).select("distinct(shop_id)")
 
         _records = _records.where(shop_id: _shop_ids)
       end
@@ -109,8 +109,8 @@ module ShopkeeperStatable
         )
     end
 
-    def viewer_count_rank(records: , dates: , limit: 10, min_daily_value: 100)
-      _records = ViewJournal.where(
+    def viewer_count_rank(records: , dates: , limit: 10, min_daily_value: 150)
+      _records = ViewJournal.from("#{ViewJournal.table_name} FORCE INDEX(index_view_journals_on_shop_id_and_created_at)").where(
         created_at: dates
       )
       if records.where_sql.present?
@@ -122,8 +122,8 @@ module ShopkeeperStatable
         _shop_ids = ReportShopActivity.where(
           report_date: dates
         ).where(
-          "view_count >= ?", min_daily_value
-        ).select(:shop_id)
+          "viewer_count >= ?", min_daily_value
+        ).select("distinct(shop_id)")
 
         _records = _records.where(shop_id: _shop_ids)
       end
@@ -150,7 +150,7 @@ module ShopkeeperStatable
           report_date: dates
         ).where(
           "shared_count >= ?", min_daily_value
-        ).select(:shop_id)
+        ).select("distinct(shop_id)")
 
         _records = _records.where(shop_id: _shop_ids)
       end
