@@ -10,7 +10,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   # query: "张三"
   def index
     @shops = own_record_by_channel_user(klass: Shop).preload(
-      :shopkeeper, :parent
+      shopkeeper: :parent
     ).joins(:shopkeeper)
 
     @shops = filter_records_by(relation: @shops)
