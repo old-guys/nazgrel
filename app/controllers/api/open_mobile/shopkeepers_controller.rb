@@ -34,7 +34,10 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
   end
 
   def report
-    @shopkeepers = Shopkeeper.preload(:shop, :parent)
+    @shopkeepers = Shopkeeper.preload(
+      :shop, :parent,
+      :shop_user
+    )
 
     if params[:shop_id].present?
       @shopkeepers = @shopkeepers.where(shop_id: params[:shop_id])

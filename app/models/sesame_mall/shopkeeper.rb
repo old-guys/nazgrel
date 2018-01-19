@@ -11,6 +11,10 @@ class Shopkeeper < ApplicationRecord
     foreign_key: :invite_user_id,
     class_name: :Shopkeeper, required: false
 
+  belongs_to :shop_user, primary_key: :user_id,
+    foreign_key: :user_id,
+    class_name: :ShopUser, required: false
+
   has_many :income_records, foreign_key: :user_id
 
   attr_accessor :parents

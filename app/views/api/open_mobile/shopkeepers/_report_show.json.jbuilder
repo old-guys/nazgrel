@@ -3,6 +3,7 @@ json.shop_id record.shop_id
 
 json.user_id record.user_id
 json.shopkeeper_name record.to_s
+json.shopkeeper_real_name record.shop_user.try(:real_name)
 
 json.province record.province
 json.city record.city

@@ -1,5 +1,6 @@
 class Shop < ApplicationRecord
   has_one :shopkeeper
+  has_one :shop_user, through: :shopkeeper
 
   has_one :channel
 
