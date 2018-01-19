@@ -46,15 +46,15 @@ class Api::Web::PermissionsController < Api::Web::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_permission
-      @permission = Permission.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_permission
+    @permission = Permission.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def permission_params
-      params.fetch(:permission).permit(
-        :name, :subject, :uid
-      )
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def permission_params
+    params.fetch(:permission).permit(
+      :name, :subject, :uid
+    )
+  end
 end
