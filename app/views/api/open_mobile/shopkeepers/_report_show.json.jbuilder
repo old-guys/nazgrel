@@ -25,6 +25,8 @@ json.order_number record.order_number.to_i
 json.order_amount record.order_amount.to_f.to_s
 json.shopkeeper_order_number record.shopkeeper_order_number.to_i
 json.shopkeeper_order_amount record.shopkeeper_order_amount.to_f.to_s
+json.sale_order_number record.sale_order_number.to_i
+json.sale_order_amount record.sale_order_amount.to_f.to_s
 json.commission_income_amount record.commission_income_amount.to_f.to_s
 
 json.descendant_order_number record.descendant_order_number.to_i
