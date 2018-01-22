@@ -16,7 +16,7 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
 
     # @shopkeepers = filter_records_by(relation: @shopkeepers)
     @shopkeepers = simple_search(relation: @shopkeepers)
-    @shopkeepers = sort_records(relation: @shopkeepers)
+    @shopkeepers = sort_records(relation: @shopkeepers, default_order: {created_at: :desc})
     @shopkeepers = filter_by_pagination(relation: @shopkeepers)
   end
 

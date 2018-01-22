@@ -15,7 +15,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
 
     @shops = filter_records_by(relation: @shops)
     @shops = simple_search(relation: @shops)
-    @shops = sort_records(relation: @shops)
+    @shops = sort_records(relation: @shops, default_order: {created_at: :desc})
     @shops = filter_by_pagination(relation: @shops)
   end
 
@@ -25,7 +25,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
 
     @shops = filter_records_by(relation: @shops)
     @shops = simple_search(relation: @shops)
-    @shops = sort_records(relation: @shops)
+    @shops = sort_records(relation: @shops, default_order: {created_at: :desc})
     @shops = filter_by_pagination(relation: @shops)
   end
 

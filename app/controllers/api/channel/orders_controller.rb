@@ -13,7 +13,7 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
 
     @orders = filter_records_by(relation: @orders)
     @orders = simple_search(relation: @orders)
-    @orders = sort_records(relation: @orders)
+    @orders = sort_records(relation: @orders, default_order: {created_at: :desc})
     @orders = filter_by_pagination(relation: @orders)
   end
 
@@ -22,7 +22,7 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
 
     @orders = filter_records_by(relation: @orders)
     @orders = simple_search(relation: @orders)
-    @orders = sort_records(relation: @orders)
+    @orders = sort_records(relation: @orders, default_order: {created_at: :desc})
     @orders = filter_by_pagination(relation: @orders)
   end
 
@@ -31,7 +31,7 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
 
     @orders = filter_records_by(relation: @orders)
     @orders = simple_search(relation: @orders)
-    @orders = sort_records(relation: @orders)
+    @orders = sort_records(relation: @orders, default_order: {created_at: :desc})
     @orders = filter_by_pagination(relation: @orders)
   end
 

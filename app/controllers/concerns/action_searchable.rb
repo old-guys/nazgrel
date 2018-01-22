@@ -85,7 +85,7 @@ module ActionSearchable
     relation = relation.page(params[:page]).per(params[:per_page])
   end
 
-  def sort_records(relation: )
+  def sort_records(relation: , default_order: nil)
     if search_params[:order].present?
       _order_options = search_params[:order].split(",").map(&:presence)
 
@@ -99,7 +99,8 @@ module ActionSearchable
     end
 
     if relation.order_values.blank?
-      _order_options ||= {relation.klass.primary_key => :desc}
+      default_order ||= {relation.klass.primary_key => :desc}
+      _order_options ||= default_order
     end
 
     _order_options.present? ? relation.order!(_order_options) : relation
