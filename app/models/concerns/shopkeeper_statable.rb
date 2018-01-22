@@ -38,20 +38,6 @@ module ShopkeeperStatable
       _records = ViewJournal.where(
         created_at: dates
       )
-      if records.where_sql.present?
-        _records = _records.where(shop_id: records.select(:shop_id))
-      end
-
-      # while whole shops rank, set min daily value to match high value shop
-      if records.where_sql.blank?
-        _shop_ids = ReportShopActivity.where(
-          report_date: 1.months.ago(dates.last)..dates.last
-        ).where(
-          "view_count >= ?", min_daily_value
-        ).select("distinct(shop_id)")
-
-        _records = _records.where(shop_id: _shop_ids)
-      end
 
       _records.group(:type).order(
         "count(`type`) desc"
@@ -62,20 +48,6 @@ module ShopkeeperStatable
       _records = ShareJournal.where(
         created_at: dates
       )
-      if records.where_sql.present?
-        _records = _records.where(shop_id: records.select(:shop_id))
-      end
-
-      # while whole shops rank, set min daily value to match high value shop
-      if records.where_sql.blank?
-        _shop_ids = ReportShopActivity.where(
-          report_date: 1.months.ago(dates.last)..dates.last
-        ).where(
-          "shared_count >= ?", min_daily_value
-        ).select("distinct(shop_id)")
-
-        _records = _records.where(shop_id: _shop_ids)
-      end
 
       _records.group(:type).order(
         "count(`type`) desc"
