@@ -3,7 +3,7 @@ require_relative 'boot'
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
-require "active_job/railtie"
+# require "active_job/railtie"
 require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
@@ -51,5 +51,11 @@ module Nazgrel
                                Dir[Rails.root.join("app/workers/reports")]
 
     ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
+
+    # config.middleware.delete Rack::Sendfile
+    config.middleware.delete ActionDispatch::Cookies
+    config.middleware.delete ActionDispatch::Session::CookieStore
+    config.middleware.delete ActionDispatch::Flash
+    config.middleware.delete Rack::ETag
   end
 end
