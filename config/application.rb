@@ -52,7 +52,9 @@ module Nazgrel
 
     ::SERVICES_CONFIG = OpenStruct.new(config_for(:services))
 
-    # config.middleware.delete Rack::Sendfile
+    config.middleware.delete Rack::Sendfile
+    config.middleware.delete Rack::Head
+    config.middleware.delete Rack::ConditionalGet
     config.middleware.delete ActionDispatch::Cookies
     config.middleware.delete ActionDispatch::Session::CookieStore
     config.middleware.delete ActionDispatch::Flash
