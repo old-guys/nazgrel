@@ -7,6 +7,9 @@ class Api::Web::UsersController < Api::Web::BaseController
   def index
     @users = User.preload(:roles).all
 
+    @users = filter_records_by(relation: @users)
+    @users = simple_search(relation: @users)
+    @users = sort_records(relation: @users)
     @users = filter_by_pagination(relation: @users)
   end
 
