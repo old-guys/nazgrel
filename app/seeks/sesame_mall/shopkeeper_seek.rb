@@ -58,10 +58,7 @@ class SesameMall::ShopkeeperSeek
     )
 
     # REVIEW shopkeeper#order_number
-    record.assign_attributes(
-      order_number: record.orders.valided_order.sales_order.size,
-      order_amount: record.orders.sales_order.valided_order.sum(:total_price),
-    ) if record.persisted?
+    set_shopkeeper_order_content(record: record) if record.persisted?
 
     if record.persisted?
       _commission_income_amount = record.orders.
@@ -75,6 +72,29 @@ class SesameMall::ShopkeeperSeek
     record
   end
 
+  private
+  def set_shopkeeper_order_content(record: )
+    return if not record.try(:persisted?)
+    _order_number = record.orders.valided_order.sales_order.size
+    return if record.order_number == _order_number
+
+    _order_amount = record.orders.sales_order.valided_order.sum(:total_price)
+    _shopkeeper_order_number = record.orders.valided_order.sales_order.where(
+      user_id: record.user_id
+    ).size
+    _shopkeeper_order_amount = record.orders.valided_order.sales_order.where(
+      user_id: record.user_id
+    ).sum(:total_price)
+
+    record.assign_attributes(
+      order_number: _order_number,
+      order_amount: _order_amount,
+      shopkeeper_order_number: _shopkeeper_order_number,
+      shopkeeper_order_amount: _shopkeeper_order_amount,
+      sale_order_number: _order_number - _shopkeeper_order_number,
+      sale_order_amount: _order_amount - _shopkeeper_order_amount,
+    )
+  end
   class << self
     def whole_sync
       seek = self.new
