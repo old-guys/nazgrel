@@ -52,10 +52,8 @@ module Api::Channel::Authenticateable
 
   def current_channel_user
     return @current_channel_user if defined?(@current_channel_user)
-    @current_channel_user = ChannelUser.joins(:api_key).find_by(
-      ChannelApiKey.table_name => {
-        access_token: auth_params[:user_token]
-      }
+    @current_channel_user = ChannelUser.find_for_access_token(
+      access_token: auth_params[:user_token]
     )
   end
 

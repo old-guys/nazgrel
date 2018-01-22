@@ -29,10 +29,8 @@ module Api::Mobile::Authenticateable
 
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = User.joins(:api_key).find_by(
-      ApiKey.table_name => {
-        access_token: auth_params[:user_token]
-      }
+    @current_user = User.find_for_access_token(
+      access_token: auth_params[:user_token]
     )
   end
 

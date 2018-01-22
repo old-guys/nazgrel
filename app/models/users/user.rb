@@ -36,5 +36,15 @@ class User < ApplicationRecord
       end
       where(conditions)
     end
+
+    def find_for_access_token(access_token: )
+      _api_key_klass = ApiKey
+
+      find_by(
+        id: _api_key_klass.where(
+          access_token: access_token
+        ).select(_api_key_klass.user_id_column)
+      )
+    end
   end
 end
