@@ -98,8 +98,8 @@ module TreeDescendantable
   end
 
   def self_and_ancestor_entity_ids
-    _ids = send(path_column).split("/")
-    _ids.reject!{|_id| _id.eql? "0"}
+    _ids = send(path_column).to_s.split("/")
+    _ids.reject{|_id| _id.eql? "0"}
   end
 
   def self_and_ancestor_entities
