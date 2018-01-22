@@ -13,7 +13,7 @@ class ShopActivityReportWorker
         ShopActivity::UpdateReport.update_report(
           shops: Shop.preload(:shopkeeper).where(
             user_id: Shopkeeper.where(
-              updated_at: Time.now.all_week,
+              updated_at: Time.now.all_day,
             ).select(:user_id)
           ),
           interval_time: 8.hours
