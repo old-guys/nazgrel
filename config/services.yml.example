@@ -34,6 +34,15 @@ defaults: &defaults
   rack_cors:
     origins: '*'
 
+  faye_push:
+    host: "http://localhost:3007"
+
+  qiniu:
+    bucket: "xxxx"
+    access_key: "xxxx"
+    secret_key: "xxxx"
+    host: "xxxx"
+
 development:
   <<: *defaults
 

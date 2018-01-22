@@ -1,5 +1,6 @@
 class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
   include ActionSearchable
+  include ActionExportable
 
   def index
     _report_date = range_within_date(str: index_params[:report_date])
@@ -53,8 +54,10 @@ class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
       report_date: report_date
     ).preload(channel: :channel_users)
     @records= @records.where(channel_id: channel_id) if channel_id.present?
-    @records = filter_by_pagination(relation: @records)
 
+    preload_export(service: 'ChannelShopNewer', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
+
+    @records = filter_by_pagination(relation: @records)
     @records
   end
 
@@ -66,6 +69,9 @@ class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
       report_date: report_date,
       channel: @channels
     ).group(:channel_id)
+
+    preload_export(service: 'ChannelShopNewer', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
+
     @records = filter_by_pagination(relation: @records)
     @record_list = @records.pluck_s(
       "channel_id",

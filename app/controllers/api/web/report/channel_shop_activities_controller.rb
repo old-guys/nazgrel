@@ -1,5 +1,6 @@
 class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseController
   include ActionSearchable
+  include ActionExportable
 
   def index
     _report_date = range_within_date(str: index_params[:report_date])
@@ -53,8 +54,10 @@ class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseControll
       report_date: report_date
     ).preload(channel: :channel_users)
     @records= @records.where(channel_id: channel_id) if channel_id.present?
-    @records = filter_by_pagination(relation: @records)
 
+    preload_export(service: 'ChannelShopActivity', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
+
+    @records = filter_by_pagination(relation: @records)
     @records
   end
 
@@ -66,11 +69,14 @@ class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseControll
       report_date: report_date,
       channel: @channels
     ).group(:channel_id)
-    @records = filter_by_pagination(relation: @records)
 
+    preload_export(service: 'ChannelShopActivity', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
+
+    @records = filter_by_pagination(relation: @records)
     _sum_proc = proc {|field|
       [
-        "sum(stage_1_#{field}) as stage_1#{field}",
+        "sum(#{field}) as #{field}",
+        "sum(stage_1_#{field}) as stage_1_#{field}",
         "sum(stage_2_#{field}) as stage_2_#{field}",
         "sum(stage_3_#{field}) as stage_3_#{field}",
         "max(week_#{field}) as week_#{field}",
