@@ -70,10 +70,10 @@ class ChannelUser < ApplicationRecord
     def find_for_access_token(access_token: )
       _api_key_klass = ChannelApiKey
 
-      find_by(
-        id: _api_key_klass.where(
+      joins(:api_key).find_by(
+        _api_key_klass.table_name => {
           access_token: access_token
-        ).select(_api_key_klass.user_id_column)
+        }
       )
     end
   end
