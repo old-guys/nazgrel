@@ -11,11 +11,15 @@ module ApiKeyable
     send(user_id_column)
   end
 
-  def delete_api_token_cache(value: nil)
-    value ||= send(user_id_column)
-    _cache_key = self.class.api_token_cache_key(value)
+  def delete_api_token_cache
+    _value = send(user_id_column)
 
-    Rails.cache.delete(_cache_key)
+    $memory_cache.delete(
+      self.class.keyable_cache_key_by(access_token: access_token)
+    )
+    Rails.cache.delete(
+      self.class.api_token_cache_key(_value)
+    )
   end
 
   private
@@ -32,6 +36,10 @@ module ApiKeyable
 
       before_update :delete_api_token_cache
       before_destroy :delete_api_token_cache
+    end
+
+    def keyable_cache_key_by(access_token: )
+      "#{name}:#{access_token}"
     end
 
     def api_token_cache_key(value)

@@ -39,12 +39,15 @@ class User < ApplicationRecord
 
     def find_for_access_token(access_token: )
       _api_key_klass = ApiKey
+      _cache_key = _api_key_klass.keyable_cache_key_by(access_token: access_token)
 
-      joins(:api_key).find_by(
-        _api_key_klass.table_name => {
-          access_token: access_token
-        }
-      )
+      $memory_cache.fetch (_cache_key) {
+        joins(:api_key).find_by(
+          _api_key_klass.table_name => {
+            access_token: access_token
+          }
+        )
+      }
     end
   end
 end
