@@ -30,7 +30,8 @@ module ApiKeyable
     def api_key_on(column: )
       self.user_id_column = column
 
-      after_commit :delete_api_token_cache, on: :update
+      before_update :delete_api_token_cache
+      before_destroy :delete_api_token_cache
     end
 
     def api_token_cache_key(value)
