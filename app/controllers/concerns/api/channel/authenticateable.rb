@@ -3,13 +3,12 @@ module Api::Channel::Authenticateable
   extend ActiveSupport::Concern
 
   included do
-    helper_method :version_code
+    DEVICES = %w(ios android h5)
   end
 
   private
   def authenticate_app!
-    _devices = %w(ios android h5)
-    raise Errors::InvalidAppError.new("device参数错误") unless device.in?(_devices)
+    raise Errors::InvalidAppError.new("device参数错误") unless device.in?(DEVICES)
   end
 
   def authenticate!
@@ -21,16 +20,12 @@ module Api::Channel::Authenticateable
     end
 
     RequestStore.store[:current_channel_user] = current_channel_user
-    RequestStore.store[:current_channel] = current_channel_user.try(:channel) if not current_channel_user.region_manager?
-    RequestStore.store[:current_channel_region] = current_channel_user.try(:channel_region) if current_channel_user.region_manager?
+    RequestStore.store[:current_channel] = current_channel_user.channel if not current_channel_user.region_manager?
+    RequestStore.store[:current_channel_region] = current_channel_user.channel_region if current_channel_user.region_manager?
 
     @current_channel_user = RequestStore.store[:current_channel_user]
     @current_channel = RequestStore.store[:current_channel]
     @current_channel_region = RequestStore.store[:current_channel_region]
-
-    if current_channel_user.try(:deleted?)
-      raise Errors::UserAuthenticationError.new("该用户已经被删除")
-    end
 
     if current_channel_user.try(:access_locked?)
       raise Errors::UserAuthenticationError.new("该用户已经被冻结")
@@ -65,19 +60,13 @@ module Api::Channel::Authenticateable
     @current_channel_region
   end
 
-  def current_app
-    RequestStore.store[:current_app] ||= device
-  end
-
   def auth_params
-    @auth_params ||= begin
+    @auth_params ||= proc {
       token, options = token_and_options(request)
       return params unless options
       options[:user_token] = token
       options
-    end
-  rescue
-    params
+    }.call
   end
 
   def version_code

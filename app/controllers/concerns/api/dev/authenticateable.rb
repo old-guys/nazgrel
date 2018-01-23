@@ -3,7 +3,6 @@ module Api::Dev::Authenticateable
   extend ActiveSupport::Concern
 
   included do
-    helper_method :version_code
   end
 
   private
@@ -14,14 +13,12 @@ module Api::Dev::Authenticateable
   end
 
   def auth_params
-    @auth_params ||= begin
+    @auth_params ||= proc {
       token, options = token_and_options(request)
       return params unless options
       options[:user_token] = token
       options
-    end
-  rescue
-    params
+    }.call
   end
 
   def version_code
