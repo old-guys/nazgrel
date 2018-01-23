@@ -1,7 +1,7 @@
 ActiveSupport::Notifications.subscribe "sql.active_record" do |name, start, finish, id, payload|
   duration = (finish - start) * 1000
 
-  if SERVICES_CONFIG["log_active_record"]
+  if SERVICES_CONFIG["log_active_record"].to_s == "true"
     logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new("#{Rails.root}/log/active_record.log", "weekly"))
 
     if duration >= 1
@@ -11,7 +11,7 @@ ActiveSupport::Notifications.subscribe "sql.active_record" do |name, start, fini
     end
   end
 
-  if SERVICES_CONFIG["log_active_record_slow"]
+  if SERVICES_CONFIG["log_active_record_slow"].to_s == "true"
     slow_logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new("#{Rails.root}/log/active_record-slow.log", "weekly"))
 
     if duration > (SERVICES_CONFIG["log_active_record_slow"] || 5000)
