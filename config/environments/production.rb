@@ -37,10 +37,13 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  log_conf = SERVICES_CONFIG['log']
+  if log_conf.present?
+    config.log_level = log_conf.fetch("level", :debug)
 
-  # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+    # Prepend all log lines with the following tags.
+    config.log_tags = log_conf.fetch("tags", [:uuid])
+  end
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
