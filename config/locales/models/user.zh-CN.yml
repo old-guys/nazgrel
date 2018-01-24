@@ -14,3 +14,4 @@ zh-CN:
       role_type:
         manager: "管理员"
         open_manager: "开放平台管理员"
+        normal_user: "普通用户"

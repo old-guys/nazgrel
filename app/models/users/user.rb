@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   enum role_type: {
     manager: 0,
-    normal: 2,
+    normal_user: 2,
     open_manager: 1
   }
   has_and_belongs_to_many :roles
