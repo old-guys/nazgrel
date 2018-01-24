@@ -1,3 +1,11 @@
+## web 端权限控制 (2018-01-24)
+
+- #feature# web 端权限控制
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_1_init_web_permission
+```
+
 ## 优化渠道下属店铺查询 (2018-01-18)
 
 - #enhance# 优化渠道下属店铺查询
