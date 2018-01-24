@@ -1,4 +1,4 @@
-class Api::Web::AuthController < Api::Web::BaseController
+class Api::Mobile::AuthController < Api::Mobile::BaseController
   skip_before_action :authenticate!, only: [:login], raise: false
 
   def login

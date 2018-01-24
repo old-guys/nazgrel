@@ -19,6 +19,9 @@ module Api::Mobile::Authenticateable
       raise Errors::UserAuthenticationError.new(change_reason)
     end
 
+    if current_user.try(:access_locked?)
+      raise Errors::UserAuthenticationError.new("该用户已经被冻结")
+    end
     RequestStore.store[:current_user] = current_user
   end
 

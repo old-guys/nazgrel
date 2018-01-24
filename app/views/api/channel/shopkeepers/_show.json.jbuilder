@@ -1,4 +1,6 @@
-json.partial! 'api/channel/shopkeepers/profile', record: @shop.shopkeeper
+json.cache! ['api/channel/shopkeepers/profile', @shop.shopkeeper] do
+  json.partial! 'api/channel/shopkeepers/profile', record: @shop.shopkeeper
+end
 
 # invite shopkeeper
 json.child_count do
@@ -16,11 +18,14 @@ end
 json.parent({})
 json.parent do
   if record.parent.present?
-    json.partial! 'api/channel/shopkeepers/profile', record: record.parent
+    json.cache! ['api/channel/shopkeepers/profile', record.parent] do
+      json.partial! 'api/channel/shopkeepers/profile', record: record.parent
+    end
 
     json.tree_list do
-      json.array! record.parents do |parent|
-        json.partial! 'api/channel/shopkeepers/profile', record: parent
+      json.cache_collection! record.parents.to_a, key: proc {|record| ['api/channel/shopkeepers/profile', record] } do |record|
+        json.partial! 'api/channel/shopkeepers/profile',
+          locals: {record: record}
       end
     end
   end

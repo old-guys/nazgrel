@@ -23,6 +23,9 @@ module Api::OpenMobile::Authenticateable
       raise Errors::UserAuthenticationError.new("未授权用户")
     end
 
+    if current_user.try(:access_locked?)
+      raise Errors::UserAuthenticationError.new("该用户已经被冻结")
+    end
     RequestStore.store[:current_user] = current_user
   end
 

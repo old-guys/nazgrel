@@ -1,0 +1,1 @@
+json.extract! record, :id, :name, :subject, :uid, :updated_at, :created_at
