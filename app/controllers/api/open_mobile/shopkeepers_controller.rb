@@ -42,6 +42,7 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
     if params[:shop_id].present?
       @shopkeepers = @shopkeepers.where(shop_id: params[:shop_id])
     end
+    @shopkeepers = sort_records(relation: @shopkeepers, default_order: {id: :asc})
 
     @shopkeepers = filter_by_pagination(relation: @shopkeepers)
   end
