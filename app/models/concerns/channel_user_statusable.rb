@@ -5,38 +5,42 @@ module ChannelUserStatusable
     include RecordCacheable
   end
 
+  def own_shopkeepers_cache_key
+    @own_shopkeepers_cache_key ||= own_shopkeepers.cache_key
+  end
+
   def shop_count
-    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:shop_count:raw", raw: true) {
+    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:shop_count:raw", raw: true) {
       own_shopkeepers.size
     }.to_i
   end
 
   def order_count
-    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:order_count:raw", raw: true) {
+    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:order_count:raw", raw: true) {
       own_shopkeepers.sum(:order_number)
     }.to_i
   end
 
   def total_order_amount
-    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:order_total_price:raw", raw: true) {
+    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:order_total_price:raw", raw: true) {
       own_shopkeepers.sum(:order_amount)
     }
   end
 
   def today_shop_count
-    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:today_shop_count:raw", raw: true) {
+    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:today_shop_count:raw", raw: true) {
       own_shopkeepers.where(created_at: Time.now.all_day).size
     }.to_i
   end
 
   def today_order_count
-    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:today_order_count:raw", raw: true) {
+    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:today_order_count:raw", raw: true) {
       own_orders.where(created_at: Time.now.all_day).sales_order.valided_order.size
     }.to_i
   end
 
   def today_hot_sales_product
-    _data = Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:today_hot_sales_product:raw", raw: true) {
+    _data = Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:today_hot_sales_product:raw", raw: true) {
       result = own_order_details.hot_sales_product(times: Time.now.all_day)
       _products = Product.where(id: result.pluck(:product_id))
 
@@ -62,7 +66,7 @@ module ChannelUserStatusable
   end
 
   def commission_amount
-    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers.cache_key}:commissiont:raw", raw: true) {
+    Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:commissiont:raw", raw: true) {
       own_shopkeepers.sum(:commission_income_amount)
     }.to_i
   end

@@ -4,32 +4,36 @@ module ChannelStatusable
   included do
   end
 
+  def shopkeepers_cache_key
+    @shopkeepers_cache_key ||= shopkeepers.cache_key
+  end
+
   def shop_count
-    Rails.cache.fetch("channel:#{id}:#{shopkeepers.cache_key}:shop_count:raw") {
+    Rails.cache.fetch("channel:#{id}:#{shopkeepers_cache_key}:shop_count:raw") {
       shopkeepers.size
     }.to_i
   end
 
   def order_count
-    Rails.cache.fetch("channel:#{id}:#{shopkeepers.cache_key}:order_count:raw", raw: true) {
+    Rails.cache.fetch("channel:#{id}:#{shopkeepers_cache_key}:order_count:raw", raw: true) {
       shopkeepers.sum(:order_number)
     }.to_i
   end
 
   def total_order_amount
-    Rails.cache.fetch("channel:#{id}:#{shopkeepers.cache_key}:order_total_price:raw", raw: true) {
+    Rails.cache.fetch("channel:#{id}:#{shopkeepers_cache_key}:order_total_price:raw", raw: true) {
       shopkeepers.sum(:order_amount)
     }
   end
 
   def today_shop_count
-    Rails.cache.fetch("channel:#{id}:#{shopkeepers.cache_key}:today_shop_count:raw", raw: true) {
+    Rails.cache.fetch("channel:#{id}:#{shopkeepers_cache_key}:today_shop_count:raw", raw: true) {
       shops.where(created_at: Time.now.all_day).size
     }.to_i
   end
 
   def today_order_count
-    Rails.cache.fetch("channel:#{id}:#{shopkeepers.cache_key}:today_order_count:raw", raw: true) {
+    Rails.cache.fetch("channel:#{id}:#{shopkeepers_cache_key}:today_order_count:raw", raw: true) {
       orders.where(created_at: Time.now.all_day).sales_order.valided_order.size
     }.to_i
   end
@@ -55,7 +59,7 @@ module ChannelStatusable
   end
 
   def children_comission_amount_cache_key
-    "channel:#{id}:#{shopkeepers.cache_key}:children_comission:raw"
+    "channel:#{id}:#{shopkeepers_cache_key}:children_comission:raw"
   end
 
   def children_comission_amount
@@ -65,7 +69,7 @@ module ChannelStatusable
   end
 
   def invite_children_amount_cache_key
-    "channel:#{id}:#{shopkeepers.cache_key}:invite_amount:raw"
+    "channel:#{id}:#{shopkeepers_cache_key}:invite_amount:raw"
   end
 
   def invite_children_amount
@@ -75,7 +79,7 @@ module ChannelStatusable
   end
 
   def indirectly_descendant_amount_cache_key
-    "channel:#{id}:#{shopkeepers.cache_key}:indirectly_descendant_amount:raw"
+    "channel:#{id}:#{shopkeepers_cache_key}:indirectly_descendant_amount:raw"
   end
 
   def indirectly_descendant_amount
