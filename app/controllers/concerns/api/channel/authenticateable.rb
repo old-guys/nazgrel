@@ -19,45 +19,36 @@ module Api::Channel::Authenticateable
       raise Errors::UserAuthenticationError.new(change_reason)
     end
 
-    RequestStore.store[:current_channel_user] = current_channel_user
-    RequestStore.store[:current_channel] = current_channel_user.channel if not current_channel_user.region_manager?
-    RequestStore.store[:current_channel_region] = current_channel_user.channel_region if current_channel_user.region_manager?
-
-    @current_channel_user = RequestStore.store[:current_channel_user]
-    @current_channel = RequestStore.store[:current_channel]
-    @current_channel_region = RequestStore.store[:current_channel_region]
-
     if current_channel_user.try(:access_locked?)
       raise Errors::UserAuthenticationError.new("该用户已经被冻结")
     end
 
     if current_channel_user.region_manager?
-      if not @current_channel_region.try(:normal?)
+      if not current_channel_region.try(:normal?)
         raise Errors::UserAuthenticationError.new("该用户的渠道管理是无效的")
       end
     else
-      unless @current_channel
+      unless current_channel
         raise Errors::UserAuthenticationError.new("该用户的渠道是无效的")
       end
-      unless @current_channel.normal?
+      unless current_channel.normal?
         raise Errors::UserAuthenticationError.new("该用户的渠道已经被冻结")
       end
     end
   end
 
   def current_channel_user
-    return @current_channel_user if defined?(@current_channel_user)
-    @current_channel_user = ChannelUser.find_for_access_token(
+    RequestStore.store[:current_channel_user] ||= ChannelUser.find_for_access_token(
       access_token: auth_params[:user_token]
     )
   end
 
   def current_channel
-    @current_channel
+    RequestStore.store[:current_channel] ||= current_channel_user.try(:channel)
   end
 
   def current_channel_region
-    @current_channel_region
+    RequestStore.store[:current_channel_region] ||= current_channel_user.try(:channel_region)
   end
 
   def auth_params

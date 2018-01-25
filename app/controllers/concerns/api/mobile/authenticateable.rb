@@ -22,12 +22,10 @@ module Api::Mobile::Authenticateable
     if current_user.try(:access_locked?)
       raise Errors::UserAuthenticationError.new("该用户已经被冻结")
     end
-    RequestStore.store[:current_user] = current_user
   end
 
   def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = User.find_for_access_token(
+    RequestStore.store[:current_user] ||= User.find_for_access_token(
       access_token: auth_params[:user_token]
     )
   end
