@@ -85,43 +85,14 @@ class ShopActivity::UpdateReport
   def process
     if recent_record.present?
       @result = calculate(shop: shop, date: date, partial_update: true)
-      @result.merge!(
-        month_shared_count: increase_field_by(field: :shared_count, unit: :month),
-        month_view_count: increase_field_by(field: :view_count, unit: :month),
 
-        month_order_number: increase_field_by(field: :order_number, unit: :month),
-        month_shopkeeper_order_number: increase_field_by(field: :shopkeeper_order_number, unit: :month),
-        month_sale_order_number: increase_field_by(field: :sale_order_number, unit: :month),
+      %w(week month year).each {|dimension|
+        _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
+          hash[:"#{dimension}_#{category}"] = increase_field_by(field: category, unit: dimension)
+        }
 
-        month_order_amount: increase_field_by(field: :order_amount, unit: :month),
-        month_shopkeeper_order_amount: increase_field_by(field: :shopkeeper_order_amount, unit: :month),
-        month_sale_order_amount: increase_field_by(field: :sale_order_amount, unit: :month),
-
-        month_children_grade_platinum_count: increase_field_by(field: :children_grade_platinum_count, unit: :month),
-        month_children_grade_gold_count: increase_field_by(field: :children_grade_gold_count, unit: :month),
-
-        month_ecn_grade_platinum_count: increase_field_by(field: :ecn_grade_platinum_count, unit: :month),
-        month_ecn_grade_gold_count: increase_field_by(field: :ecn_grade_gold_count, unit: :month),
-      )
-
-      @result.merge!(
-        year_shared_count: increase_field_by(field: :shared_count, unit: :year),
-        year_view_count: increase_field_by(field: :view_count, unit: :year),
-
-        year_order_number: increase_field_by(field: :order_number, unit: :year),
-        year_shopkeeper_order_number: increase_field_by(field: :shopkeeper_order_number, unit: :year),
-        year_sale_order_number: increase_field_by(field: :sale_order_number, unit: :year),
-
-        year_order_amount: increase_field_by(field: :order_amount, unit: :year),
-        year_shopkeeper_order_amount: increase_field_by(field: :shopkeeper_order_amount, unit: :year),
-        year_sale_order_amount: increase_field_by(field: :sale_order_amount, unit: :year),
-
-        year_children_grade_platinum_count: increase_field_by(field: :children_grade_platinum_count, unit: :year),
-        year_children_grade_gold_count: increase_field_by(field: :children_grade_gold_count, unit: :year),
-
-        year_ecn_grade_platinum_count: increase_field_by(field: :ecn_grade_platinum_count, unit: :year),
-        year_ecn_grade_gold_count: increase_field_by(field: :ecn_grade_gold_count, unit: :year),
-      )
+        @result.merge!(_result)
+      }
     else
       @result = calculate(shop: shop, date: date, partial_update: false)
     end
@@ -136,8 +107,8 @@ class ShopActivity::UpdateReport
 
   private
   def increase_field_by(field: , unit: )
-    if recent_record.report_date.send(unit) == record.report_date.send(unit)
-      recent_record.send("#{unit}_#{field}") + result[field]
+    if record.report_date.in?(recent_record.report_date.send("all_#{unit}"))
+      recent_record.send("#{unit}_#{field}").to_f + result[field].to_f
     else
       result[field]
     end

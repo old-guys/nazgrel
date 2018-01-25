@@ -140,6 +140,9 @@ module ShopActivity::Calculations
 
     if not partial_update
       result.merge!({
+        "week_#{field}": sum_block.call(records.where(
+          "#{date_column}": _time.beginning_of_week.._time.end_of_day
+        )),
         "month_#{field}": sum_block.call(records.where(
           "#{date_column}": _time.beginning_of_month.._time.end_of_day
         )),

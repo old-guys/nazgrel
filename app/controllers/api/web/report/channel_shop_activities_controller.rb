@@ -73,6 +73,7 @@ class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseControll
         "sum(stage_1_#{field}) as stage_1#{field}",
         "sum(stage_2_#{field}) as stage_2_#{field}",
         "sum(stage_3_#{field}) as stage_3_#{field}",
+        "max(week_#{field}) as week_#{field}",
         "max(month_#{field}) as month_#{field}",
         "max(year_#{field}) as year_#{field}",
       ]
