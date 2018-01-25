@@ -18,7 +18,7 @@ class Api::Web::Report::ShopEcnsController < Api::Web::BaseController
     if params[:created_at].present?
       _dates = range_within_datetime(str: params[:created_at])
 
-      @report_shop_ecns = @report_shop_ecns.where(shops: {created_at: _dates})
+      @report_shop_ecns = @report_shop_ecns.joins(:shop).where(shops: {created_at: _dates})
     end
 
     @report_shop_ecns = filter_by_pagination(relation: @report_shop_ecns)
