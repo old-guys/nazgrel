@@ -68,6 +68,9 @@ class SesameMall::ShopSeek
     ShopActivity::UpdateReport.insert_to_partial_shops(
       id: records.map(&:id)
     )
+    CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
+      id: records.map(&:id)
+    )
     ShopEcn::UpdateReport.insert_to_partial_shops(
       id: records.map(&:ancestor_entity_ids).flatten.uniq
     )
