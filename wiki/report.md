@@ -86,7 +86,7 @@ channel_shop_newer_report_partial:
     type: "partial"
 ```
 
-定时清理 seek record
+定时清理
 
 ```ruby
 # config/schedule.rb
@@ -173,7 +173,7 @@ shop_activity_report_partial:
     type: "partial"
 ```
 
-定时清理 seek record
+定时清理
 
 ```ruby
 # config/schedule.rb
@@ -259,7 +259,7 @@ city_shop_activity_report_partial:
     type: "partial"
 ```
 
-定时清理 seek record
+定时清理
 
 ```ruby
 # config/schedule.rb
@@ -343,7 +343,7 @@ channel_shop_activity_report_partial:
     type: "partial"
 ```
 
-定时清理 seek record
+定时清理
 
 ```ruby
 # config/schedule.rb
@@ -355,3 +355,88 @@ end
 ### 更新机制
 
 - 更新店铺之后应该触发城市报表更新机制
+
+## 累计店主行为报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_cumulative_shop_activity.rb
+class ReportCumulativeShopActivity < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/cumulative_shop_activity
+app/reports/cumulative_shop_activity
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+class CumulativeShopActivity::Reporting
+  class << self
+    delegate :update_report, to: "CumulativeShopActivity::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module CumulativeShopActivity::Calculations
+```
+
+更新报表
+
+```ruby
+class CumulativeShopActivity::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/cumulative_shop_activity_report_worker.rb
+class CumulativeShopActivityReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```yaml
+cumulative_shop_activity_report_update_inactive:
+  cron: "53 23 * * *"
+  name: "更新非活跃累计店主行为数据"
+  class: "CumulativeShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "update_inactive"
+cumulative_shop_activity_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新累计店主行为数据"
+  class: "CumulativeShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "partial"
+```
+
+定时清理
+
+```ruby
+# config/schedule.rb
+every 2.weeks do
+  runner "ReportCumulativeShopActivity.prune_old_records"
+end
+```
+
+### 更新机制
+
+- 更新店铺之后应该触发累计店主行为数据更新机制
+- 每天晚上定时更新不活跃店铺数据

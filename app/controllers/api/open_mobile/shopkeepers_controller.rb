@@ -1,7 +1,7 @@
 class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
   include ActionSearchable
   include Api::OpenMobile::ActionOwnable
-  before_action :set_shopkeepers
+  before_action :set_shopkeepers, only: [:index, :sales]
 
   # order: "order_number desc" # "shopkeeper.commission_income_amount ASC"
   # query: "张三"

@@ -36,6 +36,10 @@ namespace :api, defaults: { format: :json } do
         end
       end
 
+      namespace :report do
+        resources :cumulative_shop_activities, only: [:index]
+      end
+
       resources :auth, only: [] do
         collection do
           post :login

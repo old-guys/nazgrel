@@ -191,3 +191,18 @@ channel_shop_activity_report_partial:
   queue: :report
   args:
     type: "partial"
+
+cumulative_shop_activity_report_update_inactive:
+  cron: "53 23 * * *"
+  name: "更新非活跃累计店主行为数据"
+  class: "CumulativeShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "update_inactive"
+cumulative_shop_activity_report_partial:
+  cron: "*/30 * * * *"
+  name: "实时更新累计店主行为数据"
+  class: "CumulativeShopActivityReportWorker"
+  queue: :report
+  args:
+    type: "partial"
