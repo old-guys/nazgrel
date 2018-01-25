@@ -58,7 +58,9 @@
         <% end %>
       </tbody>
     </table>
-
-    <%= paginate @report_shop_activities %>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_shop_activities
+      }
+    %>
   </div>
 </div>

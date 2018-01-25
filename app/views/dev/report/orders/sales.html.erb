@@ -51,6 +51,9 @@
       </tbody>
     </table>
 
-    <%= paginate @orders %>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @orders
+      }
+    %>
   </div>
 </div>

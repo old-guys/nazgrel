@@ -2,12 +2,12 @@ class Dev::Report::ShopEcnsController < Dev::Report::BaseController
   include ActionSearchable
 
   def index
-    @report_shop_ecns = ReportShopEcn.joins(:shop).preload(:shop, :shopkeeper, :channel)
+    @report_shop_ecns = ReportShopEcn.preload(:shop, :shopkeeper, :channel)
 
     @shopkeeper_query = shopkeeper_params.select{|_,v| v.presence }
     if @shopkeeper_query.present?
-      @report_shop_ecns = @report_shop_ecns.where(shop_id:
-        Shopkeeper.where(@shopkeeper_query).select(:shop_id)
+      @report_shop_ecns = @report_shop_ecns.joins(:shop).where(
+        shop_id: Shopkeeper.where(@shopkeeper_query).select(:shop_id)
       )
     end
     if params[:created_at].present?
