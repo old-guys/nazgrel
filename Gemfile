@@ -61,7 +61,8 @@ gem 'httparty', '~> 0.15', '>= 0.15.6'
 # gem 'axlsx_rails', '~> 0.5.1'
 # xlsx spreadsheet generation with charts, images,
 # automated column width, customizable styles and full schema validation.
-gem 'axlsx', '~> 2.1.0.pre'
+# gem 'axlsx', '~> 2.1.0.pre'
+gem 'axlsx', github: 'randym/axlsx'
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
