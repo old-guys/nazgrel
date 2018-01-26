@@ -62,13 +62,13 @@ class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseControll
   end
 
   def report_by_time_type_month(report_date: Date.today.all_month, channel_id: nil)
-    @channels = ::Channel.normal
-    @channels = @channels.where(id: channel_id) if channel_id.present?
-
     @records = ReportChannelShopActivity.where(
-      report_date: report_date,
-      channel: @channels
+      report_date: report_date
     ).group(:channel_id)
+
+    @records = @records.where(
+      channel_id: channel_id
+    ) if channel_id.present?
 
     preload_export(service: 'ChannelShopActivity', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
 
