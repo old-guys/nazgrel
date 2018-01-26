@@ -1,5 +1,6 @@
 class Api::Web::Report::ShopEcnsController < Api::Web::BaseController
   include ActionSearchable
+  include ActionExportable
 
   def index
     @report_shop_ecns = ReportShopEcn.preload(:shop, :shopkeeper, :channel)
@@ -20,6 +21,8 @@ class Api::Web::Report::ShopEcnsController < Api::Web::BaseController
 
       @report_shop_ecns = @report_shop_ecns.joins(:shop).where(shops: {created_at: _dates})
     end
+
+    preload_export(service: 'ReportShopEcn', action: 'index', relation: @report_shop_ecns, **shopkeeper_params.to_h.symbolize_keys)
 
     @report_shop_ecns = filter_by_pagination(relation: @report_shop_ecns)
   end
