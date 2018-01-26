@@ -241,7 +241,7 @@ module Export
     end
 
     def qiniu_file_key
-      "#{async_client_id}/#{action_name}_#{Time.now.strftime('%Y%m%d')}-#{page}.xlsx"
+      "tmp/#{async_client_id}/#{action_name}_#{Time.now.strftime('%Y%m%d')}-#{page}.xlsx"
     end
 
     def upload_file_to_qiniu
