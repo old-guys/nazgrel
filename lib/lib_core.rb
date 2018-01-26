@@ -4,3 +4,5 @@ require "errors/error_codes"
 require "errors/logger"
 
 require "utility"
+
+require 'faye_client'

@@ -127,3 +127,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rails-i18n'
+
+gem 'qiniu', '>= 6.9.0'
+gem 'axlsx_rails', '~> 0.5.1'
+gem 'axlsx', '~> 2.1.0.pre'

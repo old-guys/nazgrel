@@ -19,7 +19,7 @@ json.summary do
       json.set!("stage_3_#{field}", records.sum("stage_3_#{field}").values.sum)
       json.set!("week_#{field}", records.pluck("max(week_#{field})").sum)
       json.set!("month_#{field}", records.pluck("max(month_#{field})").sum)
-      json.set!("year_#{field}", records.pluck("max(month_#{field})").sum)
+      json.set!("year_#{field}", records.pluck("max(year_#{field})").sum)
     }
     json.set!("ecn_count", records.pluck("max(ecn_grade_gold_count)").sum + records.pluck("max(ecn_grade_platinum_count)").sum)
   end
