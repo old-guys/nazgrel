@@ -1,15 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">店主行为报表</h4>
-    <ul>
-      <li>
-         <%= link_to "今日", url_for(report_date: Date.today)%>
-         <%= link_to "昨日", url_for(report_date: Date.yesterday)%>
-         <% 7.days.ago.to_date.upto(2.days.ago.to_date).reverse_each do |date| %>
-           <%= link_to date.strftime("%m-%d"), url_for(report_date: date.to_s)%>
-         <% end %>
-      </li>
-    </ul>
+    <h4 class="card-title">累计店主行为报表</h4>
     <table class="table table-fixed table-responsive table-hover">
       <%
          _stat_fields = ReportCumulativeShopActivity.stat_fields.reject{|field|
