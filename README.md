@@ -16,15 +16,13 @@ Nazgrel is based on Rails + MySQL + Redis,
 安装依赖
 
         Mac OS X
-                brew install brew-cask
-                brew cask install java
-                brew install git mysql redis node
+                brew install git mysql redis
 
         Ubuntu
-                sudo apt-get install nodejs libmysqlclient-dev redis-server
+                sudo apt-get install libmysqlclient-dev redis-server
 
         Cent OS
-                sudo yum install nodejs mysql-devel redis-server git
+                sudo yum install mysql-devel redis-server git
 
 设置数据库
 
@@ -73,11 +71,6 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
 
       bundle exec rails s -p 3000 -b 0.0.0.0
 
-
-构建 api/v2 文档
-
-        cd slate; bundle; cd ..; ./build_doc.sh
-
 ### Debugging Rails
 
 在开发环境的时候可以启用一些开关，来方便开发
@@ -89,6 +82,8 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
   log_active_record: false
   # 记录 active_record 查询超过`1000 ms`到独立文件 `log/active_record-slow.log`
   log_active_record_slow: 1000
+  # 开启开发环境缓存
+  touch tmp/caching-dev.txt
 ```
 
 ## ishanggang server stack
@@ -116,7 +111,6 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
     monitor
       god
         /usr/bin/env ruby /home/ishanggang_dev/script/ishanggang_god_monitor.rb # wiki/god_monitor.md
-
       newrelic
     deployment
       capistrano
@@ -128,11 +122,13 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
 
     ======================= assign processer port ============================
     # normal port conventions
-    # stage 1
+    # qa
     nazgrel unicorn 7110
+    node_faye 7131 7132
 
-    # stage 2
+    # production
     nazgrel unicorn 7210
+    node_faye 7231 7232
 
     # and more
 
