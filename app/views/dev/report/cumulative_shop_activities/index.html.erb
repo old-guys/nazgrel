@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">店主行为报表</h4>
+    <ul>
+      <li>
+         <%= link_to "今日", url_for(report_date: Date.today)%>
+         <%= link_to "昨日", url_for(report_date: Date.yesterday)%>
+         <% 7.days.ago.to_date.upto(2.days.ago.to_date).reverse_each do |date| %>
+           <%= link_to date.strftime("%m-%d"), url_for(report_date: date.to_s)%>
+         <% end %>
+      </li>
+    </ul>
+    <table class="table table-fixed table-responsive table-hover">
+      <%
+         _stat_fields = ReportCumulativeShopActivity.stat_fields.reject{|field|
+          field.start_with?("day_3_", "day_60_")
+        }
+      %>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">店主姓名</th>
+          <th scope="col">店铺名称</th>
+          <th scope="col">省份</th>
+          <th scope="col">城市</th>
+          <th scope="col">创建时间</th>
+          <th scope="col">店铺等级</th>
+          <% _stat_fields.each {|field| %>
+            <th scope="col"><%= ReportCumulativeShopActivity.human_attribute_name(field) %></th>
+          <% } %>
+        </tr>
+      </thead>
+      <tbody>
+        <% cache ["dev/report/cumulative_shop_activities/index", @report_cumulative_shop_activities] do %>
+          <%= render partial: "dev/report/cumulative_shop_activities/index_tr",
+            collection: @report_cumulative_shop_activities,
+            as: :record, cached: true, locals: {
+              stat_fields: _stat_fields
+            }
+          %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_cumulative_shop_activities
+      }
+    %>
+  </div>
+</div>

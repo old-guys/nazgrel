@@ -2,9 +2,10 @@ namespace :dev do
   namespace :report do
     root :to => 'dashboard#index'
 
-    resources :shops
-    resources :shop_activities
-    resources :city_shop_activities
+    resources :shops, only: [:index]
+    resources :shop_activities, only: [:index]
+    resources :city_shop_activities, only: [:index]
+    resources :cumulative_shop_activities, only: [:index]
 
     resources :shop_ecns
 

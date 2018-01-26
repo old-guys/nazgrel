@@ -2,7 +2,6 @@ class ReportCumulativeShopActivity < ApplicationRecord
   belongs_to :shop, required: false
   has_one :shopkeeper, through: :shop
 
-  include ReportShopActivityable
   include ReportCumulativeShopActivityable
 
   class << self
