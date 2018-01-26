@@ -10,7 +10,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1', '>= 5.1.4'
 # Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'mysql2', '~> 0.4.10'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Adds cache_collection! to jbuilder. Uses memcache fetch_multi/read_multi
@@ -19,7 +19,7 @@ gem 'jbuilder_cache_multi', '~> 0.1.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # The fastest JSON parser and object serializer.
-gem 'oj', '~> 3.3', '>= 3.3.10'
+gem 'oj', '~> 3.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -40,6 +40,11 @@ gem 'enum_help', '~> 0.0.17'
 # Enumerated attributes with I18n and ActiveRecord/Mongoid/MongoMapper support
 gem 'enumerize', '~> 2.1', '>= 2.1.2'
 
+
+# A set of common locale data and translations to internationalize and/or
+# localize your Rails applications.
+gem 'rails-i18n', '~> 5.0', '>= 5.0.4'
+
 # Add schema comments in your migrations,
 # see them in model annotations and db/schema.rb dump
 gem 'migration_comments', '~> 0.4', '>= 0.4.1'
@@ -51,15 +56,26 @@ gem 'active_record_query_trace', '~> 1.5', '>= 1.5.4'
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.15', '>= 0.15.6'
 
+# Axlsx_Rails provides an Axlsx renderer
+# so you can move all your spreadsheet code from your controller into view files.
+# gem 'axlsx_rails', '~> 0.5.1'
+# xlsx spreadsheet generation with charts, images,
+# automated column width, customizable styles and full schema validation.
+gem 'axlsx', '~> 2.1.0.pre'
+
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
 gem 'request_store', '~> 1.4'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.10', '>= 0.10.0', require: false
 
+# Qiniu Resource (Cloud) Storage SDK for Ruby.
+# See: http://developer.qiniu.com/docs/v6/sdk/ruby-sdk.html
+gem 'qiniu', '~> 6.9'
+
 #### authorization  #####
 # Flexible authentication solution for Rails with Warden
-gem 'devise', '~> 4.4'
+gem 'devise', '~> 4.4', '>= 4.4.1'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
@@ -82,13 +98,13 @@ group :development, :test do
   gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw]
 
   # help to kill N+1 queries and unused eager loading
-  gem 'bullet', '~> 5.7', '>= 5.7.0'
+  gem 'bullet', '~> 5.7', '>= 5.7.2'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '~> 3.5', '>= 3.5.1'
-  gem 'listen', '~> 3.1', '>= 3.1.5'
+  # gem 'web-console', '~> 3.5', '>= 3.5.1'
+  # gem 'listen', '~> 3.1', '>= 3.1.5'
 
   # bundler-audit provides patch-level verification for Bundled apps.
   gem 'bundler-audit', '~> 0.6', '>= 0.6'
@@ -110,24 +126,19 @@ group :production do
   gem 'unicorn-worker-killer', '~> 0.4', '>= 0.4.4'
   # New Relic is a performance management system,
   # developed by New Relic, Inc (http://www.newrelic.com)
-  gem 'newrelic_rpm', '~> 4.6', '>= 4.6.0.338'
+  gem 'newrelic_rpm', '~> 4.7', '>= 4.7.1.340'
 end
 
 # Use Capistrano for deployment
 group :development do
   # Rails specific Capistrano tasks
-  gem 'capistrano-rails', '~> 1.3', '>= 1.3.0'
+  gem 'capistrano-rails', '~> 1.3', '>= 1.3.1'
   # Unicorn specific Capistrano tasks
   gem 'capistrano3-unicorn', '~> 0.2', '>= 0.2.1'
   # RVM integration for Capistrano
   gem 'capistrano-rvm', '~> 0.1', '>= 0.1.2'
-  gem 'capistrano-sidekiq', '~> 0.20', '>= 0.20.0'
+  gem 'capistrano-sidekiq', '~> 1.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'rails-i18n'
-
-gem 'qiniu', '>= 6.9.0'
-gem 'axlsx_rails', '~> 0.5.1'
-gem 'axlsx', '~> 2.1.0.pre'
