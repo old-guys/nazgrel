@@ -49,6 +49,13 @@ module ShopActivity::Calculations
 
     _records = shop.orders.valided_order.sales_order
     result.merge!(aggregation_field_by_day(
+      field: :commission_income_amount, date: date, records: _records,
+      partial_update: partial_update,
+      sum_block: proc{|sql| sql.sum(:comm) }
+    ))
+
+    _records = shop.orders.valided_order.sales_order
+    result.merge!(aggregation_field_by_day(
       field: :order_amount, date: date, records: _records,
       partial_update: partial_update,
       sum_block: proc{|sql| sql.sum(:total_price) }
