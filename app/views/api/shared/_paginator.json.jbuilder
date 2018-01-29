@@ -1,5 +1,5 @@
 cached = records.group_values.present? ? false : true
-json.cache_if! cached, ['api/shared/paginator', records, params.slice(:per_page, :page).as_json] do
+json.cache_if! cached, ['api/shared/paginator', records] do
   json.total_count records.try(:total_count) || 0
   json.total_pages records.try(:total_pages)
 
