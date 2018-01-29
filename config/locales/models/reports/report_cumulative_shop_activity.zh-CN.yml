@@ -56,6 +56,13 @@ zh-CN:
         day_30_order_amount: "30天订单金额"
         day_60_order_amount: "60天订单金额"
 
+        day_0_commission_income_amount: "当天店铺佣金"
+        day_3_commission_income_amount: "3天店铺佣金"
+        day_7_commission_income_amount: "7天店铺佣金"
+        day_15_commission_income_amount: "15天店铺佣金"
+        day_30_commission_income_amount: "30天店铺佣金"
+        day_60_commission_income_amount: "60天店铺佣金"
+
         day_0_shopkeeper_order_amount: "当天自购订单金额"
         day_3_shopkeeper_order_amount: "3天自购订单金额"
         day_7_shopkeeper_order_amount: "7天自购订单金额"

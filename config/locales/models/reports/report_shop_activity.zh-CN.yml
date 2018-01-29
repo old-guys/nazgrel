@@ -63,6 +63,14 @@ zh-CN:
         month_order_amount: "本月累计订单金额"
         year_order_amount: "本年累计订单金额"
 
+        commission_income_amount: "店铺佣金"
+        stage_1_commission_income_amount: "00:00-9:00 店铺佣金"
+        stage_2_commission_income_amount: "09:00-18:00 店铺佣金"
+        stage_3_commission_income_amount: "18:00-24:00 店铺佣金"
+        week_commission_income_amount: "本周累计店铺佣金"
+        month_commission_income_amount: "本月累计店铺佣金"
+        year_commission_income_amount: "本年累计店铺佣金"
+
         shopkeeper_order_amount: "自购订单金额"
         stage_1_shopkeeper_order_amount: "00:00-9:00 自购订单金额"
         stage_2_shopkeeper_order_amount: "09:00-18:00 自购订单金额"
