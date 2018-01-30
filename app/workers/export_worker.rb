@@ -10,7 +10,7 @@ class ExportWorker
     opts = HashWithIndifferentAccess.new(opts)
     return unless opts[:service].in?(Export::BaseService.services)
 
-    user = User.find_by_id(opts[:user_id])
+    user = User.find_by(id: opts[:user_id])
     return unless user
 
     @service = "Export::#{opts[:service]}Service".constantize.new(opts)

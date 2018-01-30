@@ -50,7 +50,7 @@ module Export
 
     def extend_attributes
       @channel = Export::BaseService.faye_channel(user_id)
-      @user = User.find_by_id(user_id)
+      @user = User.find_by(user_id)
       @per_page = per_page || Kaminari.config.max_per_page
       @quantify = quantify || QUANTIFY
       @page = page.to_i || 1
