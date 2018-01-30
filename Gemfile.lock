@@ -96,8 +96,6 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     enum_help (0.0.17)
       activesupport (>= 3.0.0)
-    enumerize (2.1.2)
-      activesupport (>= 3.2)
     erubi (1.7.0)
     et-orbi (1.0.9)
       tzinfo
@@ -298,7 +296,6 @@ DEPENDENCIES
   devise (~> 4.4, >= 4.4.1)
   devise-i18n (~> 1.5, >= 1.5.0)
   enum_help (~> 0.0.17)
-  enumerize (~> 2.1, >= 2.1.2)
   httparty (~> 0.15, >= 0.15.6)
   jbuilder (~> 2.7)
   jbuilder_cache_multi (~> 0.1.0)

@@ -38,7 +38,7 @@ gem 'pluck_to_hash', '~> 1.0', '>= 1.0.2'
 # Help ActiveRecord::Enum feature to work fine with I18n and simple_form.
 gem 'enum_help', '~> 0.0.17'
 # Enumerated attributes with I18n and ActiveRecord/Mongoid/MongoMapper support
-gem 'enumerize', '~> 2.1', '>= 2.1.2'
+# gem 'enumerize', '~> 2.1', '>= 2.1.2'
 
 
 # A set of common locale data and translations to internationalize and/or
