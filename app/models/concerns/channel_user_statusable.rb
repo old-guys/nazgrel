@@ -98,7 +98,7 @@ module ChannelUserStatusable
           record.children_comission_amount
         }.values.map(&:to_f).sum.to_s
       else
-        Order.where(shop_id: own_shop.children.select(:id)).sales_order.valided_order.sum(:comm) * 0.15
+        own_shop.children.sum(:commission_income_amount) * 0.15
       end
     }
   end
@@ -131,7 +131,7 @@ module ChannelUserStatusable
         }.values.map(&:to_f).sum.to_s
       else
         _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
-        _amount = Order.where(shop_id: own_shop.indirectly_descendants.select(:id)).sales_order.valided_order.sum(:comm)
+        _amount = own_shop.indirectly_descendants.sum(:commission_income_amount)
         _amount * _rate
       end
     }

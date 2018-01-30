@@ -44,8 +44,8 @@ module ChannelStatusable
 
   def commission_amount
     Rails.cache.fetch(commission_amount_cache_key, raw: true) {
-      orders.sales_order.valided_order.sum(:comm)
-    }.to_i
+      shopkeepers.sum(:commission_income_amount)
+    }
   end
 
   def invite_children_reward_amount_cache_key
@@ -64,7 +64,7 @@ module ChannelStatusable
 
   def children_comission_amount
     Rails.cache.fetch(children_comission_amount_cache_key, raw: true) {
-      Order.where(shop_id: own_shopkeeper.children.select(:shop_id)).sales_order.valided_order.sum(:comm) * 0.15
+      own_shopkeeper.children.sum(:commission_income_amount) * 0.15
     }
   end
 
@@ -85,7 +85,7 @@ module ChannelStatusable
   def indirectly_descendant_amount
     Rails.cache.fetch(indirectly_descendant_amount_cache_key, raw: true) {
       _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
-      _amount = Order.where(shop_id: own_shopkeeper.indirectly_descendants.select(:shop_id)).sales_order.valided_order.sum(:comm)
+      _amount = own_shopkeeper.indirectly_descendants.sum(:commission_income_amount)
       _amount * _rate
     }
   end

@@ -6,9 +6,9 @@ module UserSecureTokenable
 
   def temp_access_token
     "user_#{self.id}_temp_access_token"
-    #Rails.cache.fetch("#{cache_key}-temp_access_token-#{Time.now.strftime("%Y%m%d")}") do
-    #  SecureRandom.hex
-    #end
+    # Rails.cache.fetch("#{cache_key}-temp_access_token-#{Time.now.strftime("%Y%m%d")}") do
+    #   SecureRandom.hex
+    # end
   end
 
   def secure_access_token_with(salt = "base", expires_in = 300)

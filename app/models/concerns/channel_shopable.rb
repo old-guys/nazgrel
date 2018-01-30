@@ -13,6 +13,8 @@ module ChannelShopable
     after_create if: :shop_id do
       set_shops_channel_path
     end
+
+    alias :shops :own_shops
   end
 
   # this channel invite shops was channel own shop
@@ -26,21 +28,8 @@ module ChannelShopable
     @channel_shop_ids ||= channel_shops.pluck(:id)
   end
 
-  def self_and_descendant_shops
-    @self_and_descendant_shops ||= own_shops
-  end
-  alias :shops :self_and_descendant_shops
-
   def shop_ids
     @shop_ids ||= shops.pluck(:id)
-  end
-
-  def descendant_shops
-    Shop.where(id: shop_ids.reject{|id| id == shop_id })
-  end
-
-  def descendant_shop_ids
-    @descendant_shops_ids ||= shop_ids.reject{|id| id == shop_id }
   end
 
   def set_shops_channel_path
