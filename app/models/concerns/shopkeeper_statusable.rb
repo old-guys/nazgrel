@@ -24,8 +24,12 @@ module ShopkeeperStatusable
     end
   end
 
+  def descendant_entities_cache_key
+    @descendant_entities_cache_key ||= descendant_entities.cache_key
+  end
+
   def share_journal_count
-    Rails.cache.fetch("shopkeeper:#{id}:shop_count:raw", raw: true, expires_in: 30.minutes) {
+    Rails.cache.fetch("shopkeeper:#{id}:share_journal_count:raw", raw: true, expires_in: 30.minutes) {
       ShareJournal.where(shop_id: shop_id).count
     }.to_i
   end
@@ -99,19 +103,19 @@ module ShopkeeperStatusable
   end
 
   def descendant_order_number
-    Rails.cache.fetch("shopkeeper:#{id}:descendant_order_number", raw: true, expires_in: 1.hours) {
+    Rails.cache.fetch("shopkeeper:#{id}:#{descendant_entities_cache_key}:descendant_order_number", raw: true) {
       descendant_entities.sum(:order_number)
     }.to_i
   end
 
   def descendant_order_amount
-    Rails.cache.fetch("shopkeeper:#{id}:descendant_order_amount", raw: true, expires_in: 1.hours) {
+    Rails.cache.fetch("shopkeeper:#{id}:#{descendant_entities_cache_key}:descendant_order_amount", raw: true) {
       descendant_entities.sum(:order_amount)
     }
   end
 
   def descendant_commission_income_amount
-    Rails.cache.fetch("shopkeeper:#{id}:descendant_commission_income_amount", raw: true, expires_in: 1.hours) {
+    Rails.cache.fetch("shopkeeper:#{id}:#{descendant_entities_cache_key}:descendant_commission_income_amount", raw: true) {
       descendant_entities.sum(:commission_income_amount)
     }
   end

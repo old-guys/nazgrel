@@ -1,4 +1,4 @@
-  json.cache! ["api/open_mobile/shops/stat/fast_add_shop", record, expires_in: 30.minutes] do
+  json.cache! ["api/open_mobile/shops/stat/fast_add_shop", record, record.descendant_entities] do
     json.fast_add_shop({})
     json.fast_add_shop do
       item = Shopkeeper.children_rank(
