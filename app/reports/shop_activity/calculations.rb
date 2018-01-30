@@ -119,6 +119,7 @@ module ShopActivity::Calculations
 
     result = {
       "stage_1_#{field}": cached_daily_result(
+        field: field,
         datetimes: _time.change(hour: 0).._time.change(hour: 8).end_of_hour,
         relation: records.where(
           "#{date_column}": _time.change(hour: 0).._time.change(hour: 8).end_of_hour
@@ -126,6 +127,7 @@ module ShopActivity::Calculations
         sum_block: sum_block
       ),
       "stage_2_#{field}": cached_daily_result(
+        field: field,
         datetimes: _time.change(hour: 9).._time.change(hour: 17).end_of_hour,
         relation: records.where(
           "#{date_column}": _time.change(hour: 9).._time.change(hour: 17).end_of_hour
@@ -133,6 +135,7 @@ module ShopActivity::Calculations
         sum_block: sum_block
       ),
       "stage_3_#{field}": cached_daily_result(
+        field: field,
         datetimes: _time.change(hour: 18).._time.change(hour: 23).end_of_hour,
         relation: records.where(
           "#{date_column}": _time.change(hour: 18).._time.change(hour: 23).end_of_hour
@@ -162,10 +165,10 @@ module ShopActivity::Calculations
     result
   end
 
-  def cached_daily_result(datetimes: , relation: , sum_block: )
+  def cached_daily_result(field: , datetimes: , relation: , sum_block: )
     return sum_block.call(relation) if not datetimes.first.to_date == Date.today
     _time = Time.now
-    _cache_key = "cached_daily_result:" << Digest::SHA1.hexdigest(relation.to_sql)
+    _cache_key = "cached_daily_result:#{field}:" << Digest::SHA1.hexdigest(relation.to_sql)
     if _time < datetimes.first
       return 0
     end
