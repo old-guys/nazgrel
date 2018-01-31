@@ -3,10 +3,8 @@ module Export
 
     include Export::BaseService
 
-    attr_accessor :time_type
-
     def report_records_convert
-      return @records if time_type.eql?('day')
+      return records if params[:time_type].eql?('day')
 
       _sum_proc = proc {|field|
         [
@@ -22,11 +20,13 @@ module Export
         "channel_id"
       ]
 
-      ReportChannelShopActivity.stat_categories.each {|field|
-        _fields_sql.concat(_sum_proc.call(field))
-      }
+      _fields_sql.contact(
+        ReportChannelShopActivity.stat_categories.map {|field|
+          _sum_proc.call(field)
+        }.flatten
+      )
 
-      @record_list = @records.pluck_s(*_fields_sql)
+      @record_list = collection.pluck_s(*_fields_sql)
       @channel_list = ::Channel.preload(:channel_users).where(id: @record_list.pluck(:channel_id))
 
       @record_list.collect do |record|
@@ -69,120 +69,120 @@ module Export
     def write_report_day_head
       title_style = xlsx_package_wb.styles.add_style(bg_color: "996600", fg_color: "FFFFFF", sz: 14, format_code: "@",font_name: 'SimSun', alignment: {horizontal: :center})
 
-      records = self.records.unscope(
+      _records = collection.unscope(
         :limit, :offset
       )
 
       xlsx_package_ws.add_row [
         '合计', nil, nil,
-        records.sum("ecn_grade_gold_count").to_i + records.sum("ecn_grade_platinum_count").to_i,
-        records.sum(:stage_1_shared_count),
-        records.sum(:stage_1_view_count),
-        records.sum(:stage_1_order_number),
-        records.sum(:stage_1_shopkeeper_order_number),
-        records.sum(:stage_1_sale_order_number),
-        records.sum(:stage_1_order_amount),
-        records.sum(:stage_1_shopkeeper_order_amount),
-        records.sum(:stage_1_sale_order_amount),
+        _records.sum("ecn_grade_gold_count").to_i + _records.sum("ecn_grade_platinum_count").to_i,
+        _records.sum(:stage_1_shared_count),
+        _records.sum(:stage_1_view_count),
+        _records.sum(:stage_1_order_number),
+        _records.sum(:stage_1_shopkeeper_order_number),
+        _records.sum(:stage_1_sale_order_number),
+        _records.sum(:stage_1_order_amount),
+        _records.sum(:stage_1_shopkeeper_order_amount),
+        _records.sum(:stage_1_sale_order_amount),
 
-        records.sum(:stage_2_shared_count),
-        records.sum(:stage_2_view_count),
-        records.sum(:stage_2_order_number),
-        records.sum(:stage_2_shopkeeper_order_number),
-        records.sum(:stage_2_sale_order_number),
-        records.sum(:stage_2_order_amount),
-        records.sum(:stage_2_shopkeeper_order_amount),
-        records.sum(:stage_2_sale_order_amount),
+        _records.sum(:stage_2_shared_count),
+        _records.sum(:stage_2_view_count),
+        _records.sum(:stage_2_order_number),
+        _records.sum(:stage_2_shopkeeper_order_number),
+        _records.sum(:stage_2_sale_order_number),
+        _records.sum(:stage_2_order_amount),
+        _records.sum(:stage_2_shopkeeper_order_amount),
+        _records.sum(:stage_2_sale_order_amount),
 
-        records.sum(:stage_3_shared_count),
-        records.sum(:stage_3_view_count),
-        records.sum(:stage_3_order_number),
-        records.sum(:stage_3_shopkeeper_order_number),
-        records.sum(:stage_3_sale_order_number),
-        records.sum(:stage_3_order_amount),
-        records.sum(:stage_3_shopkeeper_order_amount),
-        records.sum(:stage_3_sale_order_amount),
+        _records.sum(:stage_3_shared_count),
+        _records.sum(:stage_3_view_count),
+        _records.sum(:stage_3_order_number),
+        _records.sum(:stage_3_shopkeeper_order_number),
+        _records.sum(:stage_3_sale_order_number),
+        _records.sum(:stage_3_order_amount),
+        _records.sum(:stage_3_shopkeeper_order_amount),
+        _records.sum(:stage_3_sale_order_amount),
 
-        records.sum(:month_shared_count),
-        records.sum(:month_view_count),
-        records.sum(:month_order_number),
-        records.sum(:month_shopkeeper_order_number),
-        records.sum(:month_sale_order_number),
-        records.sum(:month_order_amount),
-        records.sum(:month_shopkeeper_order_amount),
-        records.sum(:month_sale_order_amount),
+        _records.sum(:month_shared_count),
+        _records.sum(:month_view_count),
+        _records.sum(:month_order_number),
+        _records.sum(:month_shopkeeper_order_number),
+        _records.sum(:month_sale_order_number),
+        _records.sum(:month_order_amount),
+        _records.sum(:month_shopkeeper_order_amount),
+        _records.sum(:month_sale_order_amount),
 
-        records.sum(:year_shared_count),
-        records.sum(:year_view_count),
-        records.sum(:year_order_number),
-        records.sum(:year_shopkeeper_order_number),
-        records.sum(:year_sale_order_number),
-        records.sum(:year_order_amount),
-        records.sum(:year_shopkeeper_order_amount),
-        records.sum(:year_sale_order_amount),
+        _records.sum(:year_shared_count),
+        _records.sum(:year_view_count),
+        _records.sum(:year_order_number),
+        _records.sum(:year_shopkeeper_order_number),
+        _records.sum(:year_sale_order_number),
+        _records.sum(:year_order_amount),
+        _records.sum(:year_shopkeeper_order_amount),
+        _records.sum(:year_sale_order_amount),
       ], style: title_style
     end
 
     def write_report_month_head
       title_style = xlsx_package_wb.styles.add_style(bg_color: "996600", fg_color: "FFFFFF", sz: 14, format_code: "@",font_name: 'SimSun', alignment: {horizontal: :center})
 
-      records = self.records.unscope(
+      _records = collection.unscope(
         :limit, :offset
       )
 
       xlsx_package_ws.add_row [
         '合计', nil, nil,
-        records.pluck("max(ecn_grade_gold_count)").sum.to_i + records.pluck("max(ecn_grade_platinum_count)").sum.to_i,
+        _records.pluck("max(ecn_grade_gold_count)").sum.to_i + collection.pluck("max(ecn_grade_platinum_count)").sum.to_i,
 
-        records.sum(:stage_1_shared_count).values.sum,
-        records.sum(:stage_1_view_count).values.sum,
-        records.sum(:stage_1_order_number).values.sum,
-        records.sum(:stage_1_shopkeeper_order_number).values.sum,
-        records.sum(:stage_1_sale_order_number).values.sum,
-        records.sum(:stage_1_order_amount).values.sum,
-        records.sum(:stage_1_shopkeeper_order_amount).values.sum,
-        records.sum(:stage_1_sale_order_amount).values.sum,
+        _records.sum(:stage_1_shared_count).values.sum,
+        _records.sum(:stage_1_view_count).values.sum,
+        _records.sum(:stage_1_order_number).values.sum,
+        _records.sum(:stage_1_shopkeeper_order_number).values.sum,
+        _records.sum(:stage_1_sale_order_number).values.sum,
+        _records.sum(:stage_1_order_amount).values.sum,
+        _records.sum(:stage_1_shopkeeper_order_amount).values.sum,
+        _records.sum(:stage_1_sale_order_amount).values.sum,
 
-        records.sum(:stage_2_shared_count).values.sum,
-        records.sum(:stage_2_view_count).values.sum,
-        records.sum(:stage_2_order_number).values.sum,
-        records.sum(:stage_2_shopkeeper_order_number).values.sum,
-        records.sum(:stage_2_sale_order_number).values.sum,
-        records.sum(:stage_2_order_amount).values.sum,
-        records.sum(:stage_2_shopkeeper_order_amount).values.sum,
-        records.sum(:stage_2_sale_order_amount).values.sum,
+        _records.sum(:stage_2_shared_count).values.sum,
+        _records.sum(:stage_2_view_count).values.sum,
+        _records.sum(:stage_2_order_number).values.sum,
+        _records.sum(:stage_2_shopkeeper_order_number).values.sum,
+        _records.sum(:stage_2_sale_order_number).values.sum,
+        _records.sum(:stage_2_order_amount).values.sum,
+        _records.sum(:stage_2_shopkeeper_order_amount).values.sum,
+        _records.sum(:stage_2_sale_order_amount).values.sum,
 
-        records.sum(:stage_3_shared_count).values.sum,
-        records.sum(:stage_3_view_count).values.sum,
-        records.sum(:stage_3_order_number).values.sum,
-        records.sum(:stage_3_shopkeeper_order_number).values.sum,
-        records.sum(:stage_3_sale_order_number).values.sum,
-        records.sum(:stage_3_order_amount).values.sum,
-        records.sum(:stage_3_shopkeeper_order_amount).values.sum,
-        records.sum(:stage_3_sale_order_amount).values.sum,
+        _records.sum(:stage_3_shared_count).values.sum,
+        _records.sum(:stage_3_view_count).values.sum,
+        _records.sum(:stage_3_order_number).values.sum,
+        _records.sum(:stage_3_shopkeeper_order_number).values.sum,
+        _records.sum(:stage_3_sale_order_number).values.sum,
+        _records.sum(:stage_3_order_amount).values.sum,
+        _records.sum(:stage_3_shopkeeper_order_amount).values.sum,
+        _records.sum(:stage_3_sale_order_amount).values.sum,
 
-        records.pluck("max(month_shared_count)").sum,
-        records.pluck("max(month_view_count)").sum,
-        records.pluck("max(month_order_number)").sum,
-        records.pluck("max(month_shopkeeper_order_number)").sum,
-        records.pluck("max(month_sale_order_number)").sum,
-        records.pluck("max(month_order_amount)").sum,
-        records.pluck("max(month_shopkeeper_order_amount)").sum,
-        records.pluck("max(month_sale_order_amount)").sum,
+        _records.pluck("max(month_shared_count)").sum,
+        _records.pluck("max(month_view_count)").sum,
+        _records.pluck("max(month_order_number)").sum,
+        _records.pluck("max(month_shopkeeper_order_number)").sum,
+        _records.pluck("max(month_sale_order_number)").sum,
+        _records.pluck("max(month_order_amount)").sum,
+        _records.pluck("max(month_shopkeeper_order_amount)").sum,
+        _records.pluck("max(month_sale_order_amount)").sum,
 
-        records.pluck("max(year_shared_count)").sum,
-        records.pluck("max(year_view_count)").sum,
-        records.pluck("max(year_order_number)").sum,
-        records.pluck("max(year_shopkeeper_order_number)").sum,
-        records.pluck("max(year_sale_order_number)").sum,
-        records.pluck("max(year_order_amount)").sum,
-        records.pluck("max(year_shopkeeper_order_amount)").sum,
-        records.pluck("max(year_sale_order_amount)").sum,
+        _records.pluck("max(year_shared_count)").sum,
+        _records.pluck("max(year_view_count)").sum,
+        _records.pluck("max(year_order_number)").sum,
+        _records.pluck("max(year_shopkeeper_order_number)").sum,
+        _records.pluck("max(year_sale_order_number)").sum,
+        _records.pluck("max(year_order_amount)").sum,
+        _records.pluck("max(year_shopkeeper_order_amount)").sum,
+        _records.pluck("max(year_sale_order_amount)").sum,
       ], style: title_style
     end
 
     def write_report_head
-      send("write_report_#{time_type}_head")
+      send("write_report_#{params[:time_type]}_head")
 
       title_style = xlsx_package_wb.styles.add_style(bg_color: "996600", fg_color: "FFFFFF", sz: 14, format_code: "@",font_name: 'SimSun', alignment: {horizontal: :center})
       xlsx_package_ws.add_row [

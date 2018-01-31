@@ -24,7 +24,7 @@ module ActionExportable
       async_client_id: async_client_id,
       page: params[:page],
       action: action,
-      **options
+      params: options
     })
 
     return render json: {
