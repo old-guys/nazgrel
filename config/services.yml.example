@@ -1,7 +1,5 @@
 defaults: &defaults
-  log_cache: true
   perform_caching_in_development: true
-  active_record_query_trace: true
   log_active_record: true
   log_active_record_slow: 1000
   gc_profiler: true

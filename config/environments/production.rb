@@ -47,11 +47,15 @@ Rails.application.configure do
   # https://github.com/rails/rails/issues/29489
   redis_conf = SERVICES_CONFIG['redis']
   if redis_conf
-    config.cache_store = :redis_store, {
-      host: redis_conf['host'],
-      port: redis_conf['port'],
-      db: redis_conf['cache_db'],
-      password: redis_conf['password'],
+    _url = redis_conf['url']
+    _url ||= if redis_conf['password']
+       "redis://:#{redis_conf['password']}@#{redis_conf['host']}:#{redis_conf['port']}/#{redis_conf['cache_db']}"
+    else
+       "redis://#{redis_conf['host']}:#{redis_conf['port']}/#{redis_conf['cache_db']}"
+    end
+
+    config.cache_store = :redis_cache_store, {
+      url: _url,
       expires_in: redis_conf['expires_in'] || 5.days
     }
   end
@@ -84,6 +88,11 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  # Highlight code that triggered database queries in logs.
+  if SERVICES_CONFIG["verbose_query_logs"].to_s == "true"
+    config.active_record.verbose_query_logs = true
   end
 
   # Do not dump schema after migrations.

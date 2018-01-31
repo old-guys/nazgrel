@@ -47,10 +47,6 @@ gem 'rails-i18n', '~> 5.0', '>= 5.0.4'
 # see them in model annotations and db/schema.rb dump
 gem 'migration_comments', '~> 0.4', '>= 0.4.1'
 
-# Print stack trace of all queries to the Rails log.
-# Helpful to find where queries are being executed in your application.
-gem 'active_record_query_trace', '~> 1.5', '>= 1.5.4'
-
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.15', '>= 0.15.6'
 
@@ -83,9 +79,6 @@ gem 'devise-i18n', '~> 1.5', '>= 1.5.0'
 gem 'pundit', '~> 1.1', '>= 1.1.0'
 
 ########  framework  base support ########
-# Redis for Ruby on Rails
-gem 'redis-rails', '~> 5.0', '>= 5.0.2'
-
 # Simple, efficient background processing for Ruby.
 gem 'sidekiq', '~> 5.1', '>= 5.1.1'
 
