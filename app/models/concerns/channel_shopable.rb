@@ -25,11 +25,11 @@ module ChannelShopable
   end
 
   def channel_shop_ids
-    @channel_shop_ids ||= channel_shops.pluck(:id)
+    @channel_shop_ids ||= channel_shops.loaded? ? channel_shops.map(&:id) : channel_shops.pluck(:id)
   end
 
   def shop_ids
-    @shop_ids ||= shops.pluck(:id)
+    @shop_ids ||= shops.loaded? ? shops.map(&:id) : shops.pluck(:id)
   end
 
   def set_shops_channel_path

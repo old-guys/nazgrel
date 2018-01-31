@@ -14,7 +14,7 @@ module ChannelUserShopable
   end
 
   def shop_ids
-    @shop_ids ||= shops.pluck(:id)
+    @shop_ids ||= shops.loaded? ? shops.map(&:id) : shops.pluck(:id)
   end
 
   module ClassMethods

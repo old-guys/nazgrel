@@ -98,7 +98,7 @@ module ChannelUserStatusable
           record.children_comission_amount
         }.values.map(&:to_f).sum.to_s
       else
-        own_shop.children.sum(:commission_income_amount) * 0.15
+        own_shopkeeper.children.sum(:commission_income_amount) * 0.15
       end
     }
   end
@@ -131,7 +131,7 @@ module ChannelUserStatusable
         }.values.map(&:to_f).sum.to_s
       else
         _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
-        _amount = own_shop.indirectly_descendants.sum(:commission_income_amount)
+        _amount = own_shopkeeper.indirectly_descendants.sum(:commission_income_amount)
         _amount * _rate
       end
     }

@@ -95,13 +95,9 @@ module ChannelUserOwnable
   end
 
   def own_order_details(channel: nil, channel_only: false)
-    OrderDetail.joins(:order).where(
-      orders: {
-        order_no: own_orders(
-          channel: channel, channel_only: channel_only
-        ).select(:order_no)
-      }
-    )
+    OrderDetail.joins(:order).merge(own_orders(
+      channel: channel, channel_only: channel_only
+    ))
   end
 
   module ClassMethods
