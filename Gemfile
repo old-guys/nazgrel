@@ -1,14 +1,12 @@
 source 'https://gems.ruby-china.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
 ruby "2.5.0"
 
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
-end
-
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1', '>= 5.1.4'
+# gem 'rails', '~> 5.2', '>= 5.2.0'
+gem 'rails', '>= 5.2.0.rc1', "< 6.0"
+
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.4.10'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -94,12 +92,12 @@ gem 'sidekiq', '~> 5.1', '>= 5.1.1'
 # Enables to set jobs to be run in specified time (using CRON notation)
 gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
 
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw]
-
-  # help to kill N+1 queries and unused eager loading
-  gem 'bullet', '~> 5.7', '>= 5.7.2'
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development do
@@ -140,6 +138,14 @@ group :development do
   gem 'capistrano-rvm', '~> 0.1', '>= 0.1.2'
   gem 'capistrano-sidekiq', '~> 1.0'
 end
+
+# group :test do
+#   # Adds support for Capybara system testing and selenium driver
+#   gem 'capybara', '~> 2.15'
+#   gem 'selenium-webdriver'
+#   # Easy installation and use of chromedriver to run system tests with Chrome
+#   gem 'chromedriver-helper'
+# end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
