@@ -6,10 +6,8 @@ module Export
       # http://api.rubyonrails.org/classes/ActiveModel/Model.html
       include ActiveModel::Model
 
-      delegate :services, to: "self.class"
-
       attr_accessor :service, :action, :action_name
-      attr_accessor :user, :user_id
+      attr_accessor :user_id
       attr_accessor :params
       attr_accessor :cache_key, :cache_query
       attr_accessor :collection
@@ -22,8 +20,6 @@ module Export
 
       def initialize(attributes={})
         super(attributes)
-        self.user ||= User.find_by(id: user_id)
-        raise "user is blank" if user.blank?
 
         self.action_name = self.class.action_map_names["#{service}##{action}"]
         self.params = (self.params || {}).with_indifferent_access
@@ -79,17 +75,12 @@ module Export
     end
 
     module ClassMethods
-      def services
-        %w(
-          ChannelShopNewer ChannelShopActivity ReportShopEcn
-        ).freeze
-      end
-
       def action_map_names
         {
           'ChannelShopNewer#report' => '渠道新增店主',
           'ChannelShopActivity#report' => '渠道店主行为',
-          'ReportShopEcn#index' => '店主ECN'
+          'ReportShopEcn#index' => '店主ECN',
+          'Dev::Shop#report' => '导出新增',
         }.freeze
       end
     end

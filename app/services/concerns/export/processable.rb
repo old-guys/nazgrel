@@ -2,7 +2,7 @@ module Export::Processable
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :records, :total_count, :page, :max_size
+    attr_accessor :records, :total_count, :max_size
 
     def total_count
       @total_count ||= proc {
@@ -22,27 +22,23 @@ module Export::Processable
   def write_body
     return send("write_#{action}_body") if respond_to?("write_#{action}_body")
 
-    single_progress = 47.to_f / total_count
-    self.gap_progress = single_progress * 10
-
-    _collection = collection.page.per(1000)
+    _per_page = 100
+    _collection = collection.page.per(_per_page)
     1.upto(_collection.total_pages) do |page|
-      self.records = _collection.page(page)
-      self.page = page.to_i
+      self.records = _collection.page(page).per(_per_page)
 
       @convert_records = respond_to?("#{action}_records_convert") ? send("#{action}_records_convert") : @records
 
       @convert_records.each_with_index {|record, i|
-        if (i + 1) % 25 == 0
-          @progress = 4 + page * single_progress
+        if (i + 1) % 50 == 0
+          self.progress = (47 * (page *  _per_page + i) / _collection.total_count.to_f).round(2)
+          self.gap_progress = (47 / _collection.total_count.to_f).round(2) * 50
           send_to_message
         end
 
-        fields = send("#{action}_fields")
-        row = fields.collect{|field|
+        row = send("#{action}_fields").collect{|field|
           if respond_to?("#{action}_record_#{field}")
             send("#{action}_record_#{field}", record)
-            # next
           else
             if field.include?('.')
               field.split('.').each_with_object([record]) {|name, arr|
