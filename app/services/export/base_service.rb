@@ -82,6 +82,7 @@ module Export
           'ReportShopEcn#index' => '店主ECN',
           'Dev::Shop#report' => '店主新增报表',
           'Dev::ShopEcn#report' => '店主ECN报表',
+          'Dev::ShopActivity#report' => '店主行为报表',
         }.freeze
       end
     end

@@ -23,7 +23,7 @@ class Export::Dev::ShopService
 
   def report_head_names
     %w(
-      id 店铺名 店主姓名 省份 城市
+      id 店铺名称 店主姓名 省份 城市
       创建时间 店铺等级 销售业绩 佣金金额
       招募铂金店主总数 招募黄金店主总数 邀请人姓名
       邀请人号码 上级店主
