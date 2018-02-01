@@ -24,6 +24,8 @@ module Export::Messageable
 
   module ClassMethods
     def faye_channel(name)
+      name ||= "default"
+
       "/export/file/#{name}"
     end
   end
