@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">累计店主行为报表</h4>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+    </div>
     <table class="table table-fixed table-responsive table-hover">
       <%
          _stat_fields = ReportCumulativeShopActivity.stat_fields.reject{|field|
@@ -38,3 +41,5 @@
     %>
   </div>
 </div>
+
+<%= render "dev/shared/export_script"%>
