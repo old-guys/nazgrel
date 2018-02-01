@@ -22,13 +22,14 @@ module Export
       end
 
       def services
-        %w(ChannelShopNewer ChannelShopActivity)
+        %w(ChannelShopNewer ChannelShopActivity ReportShopEcn)
       end
 
       def action_map_names
         {
           'ChannelShopNewer#report' => '渠道新增店主',
-          'ChannelShopActivity#report' => '渠道店主行为'
+          'ChannelShopActivity#report' => '渠道店主行为',
+          'ReportShopEcn#index' => '店主ECN'
         }
       end
 
