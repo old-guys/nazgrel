@@ -80,7 +80,8 @@ module Export
           'ChannelShopNewer#report' => '渠道新增店主',
           'ChannelShopActivity#report' => '渠道店主行为',
           'ReportShopEcn#index' => '店主ECN',
-          'Dev::Shop#report' => '导出新增',
+          'Dev::Shop#report' => '店主新增报表',
+          'Dev::ShopEcn#report' => '店主ECN报表',
         }.freeze
       end
     end

@@ -21,13 +21,12 @@ class Export::Dev::ShopService
     }.join(" > ")
   end
 
-    def write_report_head
-      xlsx_package_wb.styles.add_style(bg_color: "996600", fg_color: "FFFFFF", sz: 14, format_code: "@",font_name: 'SimSun', alignment: {horizontal: :center})
-      xlsx_package_ws.add_row %w(
-        id 店铺名 店主姓名 省份 城市
-        创建时间 店铺等级 销售业绩 佣金金额
-        招募铂金店主总数 招募黄金店主总数 邀请人姓名
-        邀请人号码 上级店主
-      )
-    end
+  def report_head_names
+    %w(
+      id 店铺名 店主姓名 省份 城市
+      创建时间 店铺等级 销售业绩 佣金金额
+      招募铂金店主总数 招募黄金店主总数 邀请人姓名
+      邀请人号码 上级店主
+    )
+  end
 end

@@ -10,7 +10,7 @@
             导出任务执行成功，请<a class="download-file" v-bind:href="qiniu_file_path">点击下载文件</a>
           </p>
         </div>
-        <div class="progress" v-else-if="status == 'failure'">
+        <div class="alert alert-warning" v-else-if="status == 'failure'">
           <p>抱歉导出任务执行失败。</p>
         </div>
         <div class="progress" v-else>
