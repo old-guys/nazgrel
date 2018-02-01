@@ -84,6 +84,7 @@ module Export
           'Dev::ShopEcn#report' => '店主ECN报表',
           'Dev::ShopActivity#report' => '店主行为报表',
           'Dev::CumulativeShopActivity#report' => '累计店主行为报表',
+          'Dev::CityShopActivity#report' => '城市店主行为报表',
         }.freeze
       end
     end

@@ -10,45 +10,31 @@
          <% end %>
       </li>
     </ul>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+    </div>
     <table class="table table-responsive-sm table-responsive-md table-hover">
+      <%
+         _stat_fields = ReportCityShopActivity.stat_fields.reject{|field|
+          field.start_with?("day_3_", "day_60_", "stage_")
+        }
+      %>
       <thead class="thead-light">
         <tr>
           <th scope="col">#</th>
           <th scope="col">城市</th>
-          <th scope="col">分享次数</th>
-          <th scope="col">访问次数</th>
-          <th scope="col">访客数</th>
-          <th scope="col">订单数</th>
-          <th scope="col">自购订单</th>
-          <th scope="col">销售订单</th>
-          <th scope="col">订单金额</th>
-          <th scope="col">自购订单金额</th>
-          <th scope="col">销售订单金额</th>
-          <th scope="col">邀请白金店主</th>
-          <th scope="col">邀请黄金店主</th>
-          <th scope="col">ECN白金店主</th>
-          <th scope="col">ECN黄金店主</th>
-
-          <th scope="col">本月分享次数</th>
-          <th scope="col">本月访问次数</th>
-          <th scope="col">本月访客数</th>
-          <th scope="col">本月订单数</th>
-          <th scope="col">本月自购订单</th>
-          <th scope="col">本月销售订单</th>
-          <th scope="col">本月订单金额</th>
-          <th scope="col">本月自购订单金额</th>
-          <th scope="col">本月销售订单金额</th>
-          <th scope="col">本月邀请白金店主</th>
-          <th scope="col">本月邀请黄金店主</th>
-          <th scope="col">本月ECN白金店主</th>
-          <th scope="col">本月ECN黄金店主</th>
+          <% _stat_fields.each {|field| %>
+            <th scope="col"><%= ReportCityShopActivity.human_attribute_name(field) %></th>
+          <% } %>
         </tr>
       </thead>
       <tbody>
         <% cache ["dev/report/city_shop_activities/index", @report_city_shop_activities] do %>
           <%= render partial: "dev/report/city_shop_activities/index_tr",
             collection: @report_city_shop_activities,
-            as: :record, cached: true
+            as: :record, cached: true, locals: {
+              stat_fields: _stat_fields
+            }
           %>
         <% end %>
       </tbody>
@@ -59,3 +45,5 @@
     %>
   </div>
 </div>
+
+<%= render "dev/shared/export_script"%>
