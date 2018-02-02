@@ -42,7 +42,7 @@ class SesameMall::InvitePayRecordSeek
       records.select(&:success_payment?).select(&:create_shop?).each {|record|
         ::Shopkeeper.where(user_id: record.user_id).update_all(
           create_shop_amount: record.pay_amount
-        ) if record.changed? and record.user_id.to_i > 0
+        ) if record.user_id.to_i > 0
       }
     end
   end
