@@ -23,30 +23,31 @@ module Export::Processable
     return send("write_#{action}_body") if respond_to?("write_#{action}_body")
 
     _per_page = 100
-    _collection = collection.page.per(_per_page)
-    1.upto(_collection.total_pages) do |page|
-      self.records = _collection.page(page).per(_per_page)
+    _total_pages = (total_count / _per_page.to_f).ceil
+    _fields = send("#{action}_fields")
 
-      @convert_records = respond_to?("#{action}_records_convert") ? send("#{action}_records_convert") : @records
+    self.gap_progress = (47.0 / total_count).round(2) * 50
+    1.upto(_total_pages) do |page|
+      self.records = collection.page(page).per(_per_page)
+      _convert_records = respond_to?("#{action}_records_convert") ? send("#{action}_records_convert") : records
 
-      @convert_records.each_with_index {|record, i|
-        if (i + 1) % 50 == 0
-          self.progress = (47 * (page *  _per_page + i) / _collection.total_count.to_f).round(2)
-          self.gap_progress = (47 / _collection.total_count.to_f).round(2) * 50
+      _convert_records.each_with_index {|record, i|
+        _exported_record = page * _per_page + i
+
+        if i % 50 == 0
+          self.progress = (47.0 * _exported_record / total_count).round(2)
           send_to_message
         end
 
-        row = send("#{action}_fields").collect{|field|
-          if respond_to?("#{action}_record_#{field}")
-            send("#{action}_record_#{field}", record)
+        row = _fields.collect{|field|
+          _method = "#{action}_record_#{field}"
+
+          if respond_to?(_method, true)
+            send(_method, record)
           else
-            if field.include?('.')
-              field.split('.').each_with_object([record]) {|name, arr|
-                arr << arr.last.send(:try, name)
-              }.last
-            else
-              record.send(field)
-            end
+            field.split('.').inject(record) {|obj, name|
+              obj.send(name)
+            }
           end
         }
 
@@ -69,18 +70,6 @@ module Export::Processable
     send_to_message
   end
 
-  def xlsx_package
-    @xlsx_package ||= Axlsx::Package.new
-  end
-
-  def xlsx_package_wb
-    xlsx_package.workbook
-  end
-
-  def xlsx_package_ws
-    @ws ||= xlsx_package_wb.add_worksheet(name: action_name)
-  end
-
   private
   def build_file
     assign_attributes(
@@ -95,6 +84,18 @@ module Export::Processable
   def finally
     file_pathname.delete rescue nil
     Rails.cache.delete(cache_key)
+  end
+
+  def xlsx_package
+    @xlsx_package ||= Axlsx::Package.new
+  end
+
+  def xlsx_package_wb
+    xlsx_package.workbook
+  end
+
+  def xlsx_package_ws
+    @ws ||= xlsx_package_wb.add_worksheet(name: action_name)
   end
 
   module ClassMethods
