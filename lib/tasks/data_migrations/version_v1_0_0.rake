@@ -154,6 +154,16 @@ namespace :data_migrations do
 
     desc 'migrate shopkeeper info'
     task :v1_1_2_migrate_shopkeeper_info => :environment do
+      SesameMall::InvitePayRecordSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::InvitePayRecord
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+
       SesameMall::Source::Shopkeeper.in_batches {|records|
         _shopkeepers = Shopkeeper.where(id: records.pluck(:id))
         _keys = %w(

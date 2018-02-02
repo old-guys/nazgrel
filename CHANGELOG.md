@@ -1,3 +1,14 @@
+## 同步店主开店信息 (2018-02-02)
+
+- #seek# 同步店主开店信息
+- #feature# 店主平台运营程序拓扑接口增加开店支付金额,账户总收入,账户余额,
+  已提现金额,冻结金额,状态,邀请码
+
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_2_migrate_shopkeeper_info
+```
+
 ## Dev 报表导出到 Excel (2018-02-02)
 
 - #enhance# 重构导出服务，使用 active_model, 移除手动分页，封装参数到 `params`

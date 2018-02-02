@@ -1,0 +1,22 @@
+zh-CN:
+  activerecord:
+    models:
+      invite_pay_record: "邀请支付记录"
+    attributes:
+      invite_pay_record:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    invite_pay_record:
+      pay_way:
+        alipay: "支付宝"
+        wechat: "微信"
+      pay_status:
+        awaiting_payment: "未支付"
+        success_payment: "已支付"
+        failured: "支付失败"
+      source:
+        create_shop: "开店"
+        upgrade_shopkeeper_grade: "店主升级"
