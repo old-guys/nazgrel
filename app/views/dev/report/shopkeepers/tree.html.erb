@@ -16,6 +16,7 @@
 
       <button type="submit" class="btn btn-primary mb-2">查询</button>
     </form>
+
     <% if @shopkeeper.present? %>
       <%= render partial: "dev/report/shopkeepers/tree_table",
         locals: {
@@ -23,33 +24,9 @@
         }
       %>
 
-      <% _capture = proc do |records| %>
-        <% records.in_batches(of: 500) do |_records|%>
-          <%= render partial: "dev/report/shopkeepers/tree_table",
-            locals: {
-              records: _records.order("invite_user_id")
-            }
-          %>
-        <% end %>
-      <% end %>
-      <% if params[:tree_depth].present? %>
-        <%
-          records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
-            params[:tree_depth].to_i, operator: "="
-          )
-        %>
-        <% _capture.call(records) %>
-      <% else %>
-        <% (@shopkeeper.tree_depth + 1).upto(@shopkeeper.tree_depth + 20).each do |tree_depth| %>
-          <%
-            records = @shopkeeper.descendant_entities.preload(:shop, :parent).with_tree_depth(
-              tree_depth, operator: "="
-            )
-          %>
-          <% break if not records.exists? %>
-          <% _capture.call(records) %>
-        <% end %>
-      <% end %>
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <%= button_tag "导出所有", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+      </div>
     <% else %>
       <div class="alert alert-info" role="alert">
         <h4 class="alert-heading">查询店主失败!</h4>
@@ -58,3 +35,5 @@
     <% end %>
   </div>
 </div>
+
+<%= render "dev/shared/export_script"%>

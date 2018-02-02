@@ -87,6 +87,7 @@ module Export
           'Dev::CityShopActivity#report' => '城市店主行为报表',
           'Dev::Order#index' => '订单销售报表',
           'Dev::Order#sales' => '订单信息报表',
+          'Dev::Shopkeeper#tree' => '店主组织架构树报表',
         }.freeze
       end
     end

@@ -1,9 +1,13 @@
 class Dev::Report::ShopkeepersController < Dev::Report::BaseController
   include ActionSearchable
+  include ActionExportable
 
   def tree
     _query = tree_params.select{|_,v| v.presence }
-    @shopkeeper = Shopkeeper.find_by _query if _query.present?
+    if _query.present?
+      @shopkeeper = Shopkeeper.find_by _query
+      preload_export(service: 'Dev::Shopkeeper', action: 'tree', relation: Shopkeeper.where(_query), tree_depth: params[:tree_depth])
+    end
   end
 
   private
