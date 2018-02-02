@@ -3,6 +3,8 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   include ActionExportable
 
   def index
+    params[:created_at] ||= Date.today
+    _dates = range_within_datetime(str: params[:created_at]) rescue Date.today
     @orders = Order.preload(:order_details).sales_order.valided_order
 
     search_product_related_orders
@@ -10,7 +12,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     search_category_related_orders
 
     if params[:created_at].present?
-      @orders = @orders.where(created_at: range_within_datetime(str: params[:created_at]))
+      @orders = @orders.where(created_at: _dates)
     end
     preload_export(service: 'Dev::Order', action: 'index', relation: @orders)
 
@@ -18,14 +20,14 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   end
 
   def sales
-    @dates = range_within_datetime(str: params[:created_at]) rescue DateTime.now.all_day
+    _dates = range_within_datetime(str: params[:created_at]) rescue Date.today
 
     @orders = Order.preload(
       order_subs: [
         :supplier,
         {order_details: [:product, :category]}
       ]
-    ).sales_order.valided_order.where(created_at: @dates)
+    ).sales_order.valided_order.where(created_at: _dates)
     preload_export(service: 'Dev::Order', action: 'sales', relation: @orders)
 
     @orders = filter_by_pagination(relation: @orders, default_per_page: 50)
