@@ -44,6 +44,10 @@
       event.preventDefault;
       $("#export_modal").modal("show");
 
+      if (app_export_modal.status == "success") {
+        return null;
+      }
+
       $.getJSON($export_btn.attr("data-href"));
 
       faye_client.subscribe(window.settings.export_channel, function(data) {
