@@ -6,12 +6,12 @@
   <th scope="row"><%= record.id %></th>
   <td><%= record.to_s %></td>
   <td><%= record.shopkeeper.to_s %></td>
-  <td><%= _shopkeeper.try :province %></td>
-  <td><%= _shopkeeper.try :city %></td>
-  <td><%= time_tag _shopkeeper.try :created_at if _shopkeeper %></td>
+  <td><%= _shopkeeper.province %></td>
+  <td><%= _shopkeeper.city %></td>
+  <td><%= time_tag _shopkeeper.created_at %></td>
   <td><%= _shopkeeper.try :user_grade_i18n %></td>
-  <td><%= number_to_currency _shopkeeper.try(:order_amount).to_f, unit: "¥"%></td>
-  <td><%= number_to_currency _shopkeeper.try(:commission_income_amount).to_f, unit: "¥" %></td>
+  <td><%= number_to_currency _shopkeeper.order_amount.to_f, unit: "¥"%></td>
+  <td><%= number_to_currency _shopkeeper.commission_income_amount.to_f, unit: "¥" %></td>
   <td>
     白金(<%= _shopkeeper.children_grade_platinum_size %>)
     黄金(<%= _shopkeeper.children_grade_gold_size %>)

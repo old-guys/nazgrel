@@ -39,7 +39,7 @@
             Shopkeeper.with_preload_parents(records: @shops.map(&:shopkeeper))
           %>
           <%= render partial: "dev/report/shops/index_tr",
-            collection: @shops,
+            collection: @shops.select(&:shopkeeper),
             as: :record, cached: true
           %>
         <% end %>
