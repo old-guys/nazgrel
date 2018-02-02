@@ -1,0 +1,60 @@
+<div class="modal fade export-modal" tabindex="-1" role="dialog" id="export_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{title}}</h5>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" role="alert" v-if="status == 'success'">
+          <p>
+            导出任务执行成功，请<a class="download-file" v-bind:href="qiniu_file_path">点击下载文件</a>
+          </p>
+        </div>
+        <div class="alert alert-warning" v-else-if="status == 'failure'">
+          <p>抱歉导出任务执行失败。</p>
+        </div>
+        <div class="progress" v-else>
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: progress + '%' }">{{progress}}%</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag SERVICES_CONFIG.dig('faye_push','host').dup << "/faye/client.js" %>
+<script>
+  $(function () {
+    var faye_client = new Faye.Client(window.settings.faye_host + "/faye"),
+        $export_btn = $(".export-btn");
+
+    var app_export_modal = new Vue({
+      el: '#export_modal',
+      data: {
+        title: "导出任务",
+        status: "started",
+        progress: 0,
+        qiniu_file_path: "javascript:;"
+      }
+    });
+
+    $export_btn.on("click", function (event) {
+      event.preventDefault;
+      $("#export_modal").modal("show");
+
+      if (app_export_modal.status == "success") {
+        return null;
+      }
+
+      $.getJSON($export_btn.attr("data-href"));
+
+      faye_client.subscribe(window.settings.export_channel, function(data) {
+        app_export_modal.status = data.status;
+        app_export_modal.progress = data.progress;
+        app_export_modal.qiniu_file_path = data.qiniu_file_path;
+      });
+    });
+  });
+</script>

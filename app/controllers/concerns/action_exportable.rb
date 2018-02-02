@@ -5,32 +5,28 @@ module ActionExportable
   included do
   end
 
-  def preload_export(service: nil, action: nil, relation: [], user: nil, **options)
+  def preload_export(service: , action: , relation: , user_id: nil, **options)
     return unless params[:action_type].eql?('export')
+    relation.unscope!(:limit, :offset)
 
-    user            ||= current_user
-    async_client_id ||= SecureRandom.uuid
-    cache_key       ||= "export_#{current_user.id}_#{async_client_id}"
-    relation        ||= relation.unscope(:limit, :offset)
+    async_client_id = SecureRandom.uuid
+    cache_key       = "export_#{async_client_id}"
 
-    Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
-      relation
-    end
+    Rails.cache.write(cache_key, relation, expires_in: 30.minutes)
 
-    @jid = ExportWorker.perform_async({
+    jid = ExportWorker.perform_async(
       service: service,
       cache_key: cache_key,
-      user_id: user.id,
+      user_id: user_id,
       async_client_id: async_client_id,
-      page: params[:page],
       action: action,
-      **options
-    })
+      params: options
+    )
 
     return render json: {
       code: 0,
       data: {
-        jid: @jid,
+        jid: jid,
         async_client_id: async_client_id
       }
     }

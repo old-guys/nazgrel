@@ -4,36 +4,13 @@
 %>
 <tr>
   <th scope="row"><%= record.id %></th>
-  <td><%= _shopkeeper.to_s %></td>
   <td><%= _shop.to_s %></td>
+  <td><%= _shopkeeper.to_s %></td>
   <td><%= _shopkeeper.try :province %></td>
   <td><%= _shopkeeper.try :city %></td>
   <td><%= time_tag _shopkeeper.try :created_at if _shopkeeper %></td>
   <td><%= _shopkeeper.try :user_grade_i18n %></td>
-  <td><%= record.shared_count %></td>
-  <td><%= record.view_count %></td>
-  <td><%= record.viewer_count %></td>
-  <td><%= record.order_number %></td>
-  <td><%= record.shopkeeper_order_number %></td>
-  <td><%= record.sale_order_number %></td>
-  <td><%= number_to_currency record.order_amount, unit: "¥" %></td>
-  <td><%= number_to_currency record.shopkeeper_order_amount, unit: "¥" %></td>
-  <td><%= number_to_currency record.sale_order_amount, unit: "¥" %></td>
-  <td><%= record.children_grade_platinum_count %></td>
-  <td><%= record.children_grade_gold_count %></td>
-  <td><%= record.ecn_grade_platinum_count %></td>
-  <td><%= record.ecn_grade_gold_count %></td>
-  <td><%= record.month_shared_count %></td>
-  <td><%= record.month_view_count %></td>
-  <td><%= record.month_viewer_count %></td>
-  <td><%= record.month_order_number %></td>
-  <td><%= record.month_shopkeeper_order_number %></td>
-  <td><%= record.month_sale_order_number %></td>
-  <td><%= number_to_currency record.month_order_amount, unit: "¥" %></td>
-  <td><%= number_to_currency record.month_shopkeeper_order_amount, unit: "¥" %></td>
-  <td><%= number_to_currency record.month_sale_order_amount, unit: "¥" %></td>
-  <td><%= record.month_children_grade_platinum_count %></td>
-  <td><%= record.month_children_grade_gold_count %></td>
-  <td><%= record.month_ecn_grade_platinum_count %></td>
-  <td><%= record.month_ecn_grade_gold_count %></td>
+  <% stat_fields.each {|field| %>
+    <td><%= record.send(field) %></td>
+  <% } %>
 </tr>

@@ -1,4 +1,4 @@
-module ExportLoggerable
+module Export::Loggerable
   extend ActiveSupport::Concern
 
   included do

@@ -11,6 +11,10 @@
          <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
       </li>
     </ul>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+    </div>
+
     <table class="table table-responsive-sm table-responsive-md table-hover">
       <thead class="thead-light">
         <tr>
@@ -35,7 +39,7 @@
             Shopkeeper.with_preload_parents(records: @shops.map(&:shopkeeper))
           %>
           <%= render partial: "dev/report/shops/index_tr",
-            collection: @shops,
+            collection: @shops.select(&:shopkeeper),
             as: :record, cached: true
           %>
         <% end %>
@@ -48,3 +52,5 @@
     %>
   </div>
 </div>
+
+<%= render "dev/shared/export_script"%>

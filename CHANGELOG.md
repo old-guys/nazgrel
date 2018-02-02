@@ -1,3 +1,18 @@
+## Dev 报表导出到 Excel (2018-02-02)
+
+- #enhance# 重构导出服务，使用 active_model, 移除手动分页，封装参数到 `params`
+- #feature# dev 报表新增店主报表导出服务实现
+- #feature# dev 报表店主ECN报表导出服务实现
+- #feature# dev 报表店主行为报表导出服务实现
+- #feature# dev 报表累计店主行为报表导出服务实现
+- #feature# dev 报表城市店主行为报表导出服务实现
+- #feature# dev 报表订单销售报表导出服务实现
+- #feature# dev 报表订单信息导出服务实现
+- #feature# dev 报表店主组织架构树导出服务实现
+
+```shell
+```
+
 ## 店主平台运营程序 累计店主行为报表 (2018-01-25)
 
 - #feature# 店主平台运营程序 累计店主行为报表

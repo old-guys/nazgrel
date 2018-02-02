@@ -25,6 +25,15 @@ defaults: &defaults
     username: root
     password: xxxxxx
 
+  faye_push:
+    host: "http://xxxxxxxx:9596"
+
+  qiniu:
+    bucket: "nazgrel-qa"
+    access_key: "xxxxxxxxxx"
+    secret_key: "xxxxxxxxxxx"
+    host: "http://xxxxxxx.com"
+
   log:
     level: :info
     tags:

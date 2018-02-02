@@ -1,5 +1,6 @@
 class Dev::Report::ShopEcnsController < Dev::Report::BaseController
   include ActionSearchable
+  include ActionExportable
 
   def index
     @report_shop_ecns = ReportShopEcn.preload(:shop, :shopkeeper, :channel)
@@ -15,6 +16,8 @@ class Dev::Report::ShopEcnsController < Dev::Report::BaseController
 
       @report_shop_ecns = @report_shop_ecns.where(shops: {created_at: _dates})
     end
+
+    preload_export(service: 'Dev::ShopEcn', action: 'report', relation: @report_shop_ecns)
 
     @report_shop_ecns = filter_by_pagination(relation: @report_shop_ecns, default_per_page: 50)
   end

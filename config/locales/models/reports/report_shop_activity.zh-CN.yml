@@ -91,8 +91,8 @@ zh-CN:
         stage_1_children_grade_platinum_count: "00:00-9:00 邀请白金店主数"
         stage_2_children_grade_platinum_count: "09:00-18:00 邀请白金店主数"
         stage_3_children_grade_platinum_count: "18:00-24:00 邀请白金店主数"
-        week_children_grade_platinum_countt: "本周累计邀请白金店主数"
-        month_children_grade_platinum_countt: "本月累计邀请白金店主数"
+        week_children_grade_platinum_count: "本周累计邀请白金店主数"
+        month_children_grade_platinum_count: "本月累计邀请白金店主数"
         year_children_grade_platinum_count: "本年累计邀请白金店主数"
 
         children_grade_gold_count: "邀请黄金店主数"

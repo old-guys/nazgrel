@@ -44,6 +44,7 @@ module Nazgrel
                                Dir[Rails.root.join("app/models/sesame_mall")] +
                                Dir[Rails.root.join("app/models/settings")] +
                                Dir[Rails.root.join("app/services")] +
+                               Dir[Rails.root.join("app/services/concerns")] +
                                Dir[Rails.root.join("app/seeks")] +
                                Dir[Rails.root.join("app/seeks/concerns")] +
                                Dir[Rails.root.join("app/reports")] +
