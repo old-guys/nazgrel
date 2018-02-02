@@ -63,6 +63,13 @@ income_record_seek_job:
   queue: :seek
   args:
     duration: 8
+invite_pay_record_seek_job:
+  cron: "*/5 * * * *"
+  name: "同步邀请支付记录"
+  class: "InvitePayRecordSeekWorker"
+  queue: :seek
+  args:
+    duration: 8
 shop_user_seek_job:
   cron: "*/15 * * * *"
   name: "同步用户信息"
