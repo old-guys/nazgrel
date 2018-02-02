@@ -26,28 +26,32 @@ module Export::Processable
     _total_pages = (total_count / _per_page.to_f).ceil
     _fields = send("#{action}_fields")
 
-    self.gap_progress = (47.0 / total_count).round(2) * 50
+    self.gap_progress = (70.0 / _total_pages).round(2)
     1.upto(_total_pages) do |page|
       self.records = collection.page(page).per(_per_page)
       _convert_records = respond_to?("#{action}_records_convert") ? send("#{action}_records_convert") : records
 
       _convert_records.each_with_index {|record, i|
-        _exported_record = page * _per_page + i
-
-        if i % 50 == 0
-          self.progress = (47.0 * _exported_record / total_count).round(2)
+        if i % _per_page == 0
+          self.progress = (70 * page.to_f / _total_pages).round(2)
           send_to_message
         end
 
         row = _fields.collect{|field|
           _method = "#{action}_record_#{field}"
 
-          if respond_to?(_method, true)
-            send(_method, record)
-          else
-            field.split('.').inject(record) {|obj, name|
-              obj.send(name)
-            }
+          begin
+            if respond_to?(_method, true)
+              send(_method, record)
+            else
+              field.split('.').inject(record) {|obj, name|
+                obj.send(name) rescue nil
+              }
+            end
+          rescue => e
+            logger.error "export record #{record}, failure #{e.message}"
+
+            ErrorLogger.log_error(e)
           end
         }
 
@@ -64,8 +68,8 @@ module Export::Processable
 
     assign_attributes(
       status: :before_upload,
-      progress: 52,
-      gap_progress: 47
+      progress: 70,
+      gap_progress: 29
     )
     send_to_message
   end
