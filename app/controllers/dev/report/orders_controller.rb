@@ -1,5 +1,6 @@
 class Dev::Report::OrdersController < Dev::Report::BaseController
   include ActionSearchable
+  include ActionExportable
 
   def index
     @orders = Order.preload(:order_details).sales_order.valided_order
@@ -11,6 +12,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     if params[:created_at].present?
       @orders = @orders.where(created_at: range_within_datetime(str: params[:created_at]))
     end
+    preload_export(service: 'Dev::Order', action: 'index', relation: @orders)
 
     @orders = filter_by_pagination(relation: @orders, default_per_page: 50)
   end
@@ -24,6 +26,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
         {order_details: [:product, :category]}
       ]
     ).sales_order.valided_order.where(created_at: @dates)
+    preload_export(service: 'Dev::Order', action: 'sales', relation: @orders)
 
     @orders = filter_by_pagination(relation: @orders, default_per_page: 50)
   end

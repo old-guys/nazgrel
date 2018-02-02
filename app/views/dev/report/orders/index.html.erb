@@ -23,7 +23,9 @@
 
       <button type="submit" class="btn btn-primary mb-2">查询</button>
     </form>
-
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+    </div>
     <table class="table table-hover">
       <thead class="thead-light">
       <tr>
@@ -62,3 +64,5 @@
     %>
   </div>
 </div>
+
+<%= render "dev/shared/export_script"%>

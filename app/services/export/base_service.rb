@@ -85,6 +85,8 @@ module Export
           'Dev::ShopActivity#report' => '店主行为报表',
           'Dev::CumulativeShopActivity#report' => '累计店主行为报表',
           'Dev::CityShopActivity#report' => '城市店主行为报表',
+          'Dev::Order#index' => '订单销售报表',
+          'Dev::Order#sales' => '订单信息报表',
         }.freeze
       end
     end
