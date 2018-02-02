@@ -24,6 +24,15 @@ class Shopkeeper < ApplicationRecord
     grade_gold: 1,
     grade_trainee: 2
   }
+  enum status: {
+    normal: 0,
+    locked: 1,
+    was_invalid: 2
+  }
+  enum ticket_send_flag: {
+    yes: 1,
+    no: 0
+  }, _prefix: true
 
   include ShopkeeperStatusable
   include ShopkeeperStatable
@@ -60,6 +69,14 @@ class Shopkeeper < ApplicationRecord
     set_phone_belong_to if super.blank? and user_phone.present?
 
     super
+  end
+
+  def invite_qrcode_url
+    if invite_qrcode_path
+      "http://inte.ishanggang.com/#{invite_qrcode_path}"
+    else
+      nil
+    end
   end
 
   private

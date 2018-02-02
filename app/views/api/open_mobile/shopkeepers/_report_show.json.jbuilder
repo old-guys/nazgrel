@@ -8,6 +8,9 @@ json.shopkeeper_real_name record.shop_user.try(:real_name)
 json.province record.province
 json.city record.city
 
+json.status record.status
+json.status_text record.status_i18n
+
 json.user_phone record.user_phone
 json.shop_name record.shop.to_s
 json.shop_img_url record.shop_img_url
@@ -20,6 +23,14 @@ json.parent_shopkeeper_name record.parent.try :user_name
 json.parent_user_phone record.parent.try :user_phone
 json.parent_shop_id record.parent.try :shop_id
 
+json.total_income_amount record.total_income_amount
+json.balance_amount record.balance_amount
+json.withdraw_amount record.withdraw_amount
+json.blocked_amount record.blocked_amount
+json.create_shop_amount record.create_shop_amount
+
+json.invite_code record.invite_code
+json.invite_qrcode_url record.invite_qrcode_url
 
 json.order_number record.order_number.to_i
 json.order_amount record.order_amount.to_f.to_s

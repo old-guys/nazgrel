@@ -151,5 +151,27 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate shopkeeper info'
+    task :v1_1_2_migrate_shopkeeper_info => :environment do
+      SesameMall::Source::Shopkeeper.in_batches {|records|
+        _shopkeepers = Shopkeeper.where(id: records.pluck(:id))
+        _keys = %w(
+          invite_code invite_qrcode_path my_qrcode_path
+          remark ticket_send_flag
+        )
+
+        Shopkeeper.transaction do
+          _shopkeepers.each {|record|
+            _source = records.find{|source| source.id == record.id}
+            if _source and record.invite_code.blank?
+              record.update_columns(
+                _source.attributes.slice(*_keys)
+              )
+            end
+          }
+        end
+      }
+    end
   end
 end

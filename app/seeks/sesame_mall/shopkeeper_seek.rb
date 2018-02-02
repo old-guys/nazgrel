@@ -35,11 +35,18 @@ class SesameMall::ShopkeeperSeek
       # REVIEW 不同步因为, shopkeeper#order_number 计算逻辑不一致
       # order_number: data[:order_number],
 
-      status: data[:status],
       invite_user_id: data[:invite_user_id],
       # city: data[:city],
       # province: data[:province],
       ticket_no: data[:ticket_no],
+
+      invite_code: data[:invite_code],
+      invite_qrcode_path: data[:invite_qrcode_path],
+      my_qrcode_path: data[:my_qrcode_path],
+      remark: data[:remark],
+
+      ticket_send_flag: ::Shopkeeper.ticket_send_flags.invert[data[:ticket_send_flag]],
+      status: ::Shopkeeper.statuses.invert[data[:status]],
 
       expire_time: parse_no_timezone(datetime: data[:expire_time]),
       use_invite_number: data[:use_invite_number],
