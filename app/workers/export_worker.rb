@@ -2,7 +2,7 @@ class ExportWorker
   include Sidekiq::Worker
   include Export::Loggerable
 
-  sidekiq_options queue: :default, retry: false, backtrace: true
+  sidekiq_options queue: :low, retry: false, backtrace: true
 
   def perform(opts = {})
     logger.info "start: opts #{opts}"
