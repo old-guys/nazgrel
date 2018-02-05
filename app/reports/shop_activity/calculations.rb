@@ -158,7 +158,8 @@ module ShopActivity::Calculations
         )),
         "year_#{field}": sum_block.call(records.where(
           "#{date_column}": _time.beginning_of_year.._time.end_of_day
-        ))
+        )),
+        "total_#{field}": sum_block.call(records)
       })
     end
 

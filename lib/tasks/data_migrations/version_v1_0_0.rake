@@ -183,5 +183,22 @@ namespace :data_migrations do
         end
       }
     end
+
+    desc 'migrate shop_acitvity total_stat'
+    task :v1_1_3_migrate_shop_acitvity_total_stat => :environment do
+      shop_ids = ReportShopActivity.where(report_date: Date.today).select(:shop_id);
+      ShopActivity::UpdateReport.update_report(
+        shops: Shop.preload(:shopkeeper).where(
+          id: shop_ids
+        ),
+        force_update: true
+      )
+
+      CumulativeShopActivity::UpdateReport.update_report(
+        shops: Shop.where(id: shop_ids),
+        interval_time: 8.hours,
+        force_update: true
+      )
+    end
   end
 end
