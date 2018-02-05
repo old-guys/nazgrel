@@ -1,3 +1,13 @@
+## 店主行为报表相关增加总数据 (2018-02-05)
+
+- #feature# 店主行为报表相关增加总数据
+- #feature# 店主平台运营程序累计店主行为报表-增加总数据
+
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_migrate_shop_acitvity_total_stat
+```
+
 ## 同步店主开店信息 (2018-02-02)
 
 - #seek# 同步店主开店信息
