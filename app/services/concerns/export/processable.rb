@@ -33,7 +33,7 @@ module Export::Processable
 
       _convert_records.each_with_index {|record, i|
         if i % _per_page == 0
-          self.progress = (70 * page.to_f / _total_pages).round(2)
+          self.progress = 3 + (70 * page.to_f / _total_pages).round(2)
           send_to_message
         end
 
@@ -68,8 +68,8 @@ module Export::Processable
 
     assign_attributes(
       status: :before_upload,
-      progress: 70,
-      gap_progress: 29
+      progress: 73,
+      gap_progress: 26
     )
     send_to_message
   end
