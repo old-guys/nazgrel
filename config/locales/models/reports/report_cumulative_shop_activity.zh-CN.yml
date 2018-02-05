@@ -13,6 +13,7 @@ zh-CN:
         day_15_shared_count: "15天分享次数"
         day_30_shared_count: "30天分享次数"
         day_60_shared_count: "60天分享次数"
+        total_shared_count: "累计分享次数"
 
         day_0_view_count: "当天浏览次数"
         day_3_view_count: "3天浏览次数"
@@ -20,6 +21,7 @@ zh-CN:
         day_15_view_count: "15天浏览次数"
         day_30_view_count: "30天浏览次数"
         day_60_view_count: "60天浏览次数"
+        total_view_count: "累计浏览次数"
 
         day_0_viewer_count: "当天访客数"
         day_3_viewer_count: "3天访客数"
@@ -27,6 +29,7 @@ zh-CN:
         day_15_viewer_count: "15天访客数"
         day_30_viewer_count: "30天访客数"
         day_60_viewer_count: "60天访客数"
+        total_viewer_count: "累计访客数"
 
         day_0_order_number: "当天订单数"
         day_3_order_number: "3天订单数"
@@ -34,6 +37,7 @@ zh-CN:
         day_15_order_number: "15天订单数"
         day_30_order_number: "30天订单数"
         day_60_order_number: "60天订单数"
+        total_order_number: "累计订单数"
 
         day_0_shopkeeper_order_number: "当天自购订单数"
         day_3_shopkeeper_order_number: "3天自购订单数"
@@ -41,6 +45,7 @@ zh-CN:
         day_15_shopkeeper_order_number: "15天自购订单数"
         day_30_shopkeeper_order_number: "30天自购订单数"
         day_60_shopkeeper_order_number: "60天自购订单数"
+        total_shopkeeper_order_number: "累计自购订单数"
 
         day_0_sale_order_number: "当天销售订单数"
         day_3_sale_order_number: "3天销售订单数"
@@ -48,6 +53,7 @@ zh-CN:
         day_15_sale_order_number: "15天销售订单数"
         day_30_sale_order_number: "30天销售订单数"
         day_60_sale_order_number: "60天销售订单数"
+        total_sale_order_number: "累计销售订单数"
 
         day_0_order_amount: "当天订单金额"
         day_3_order_amount: "3天订单金额"
@@ -55,6 +61,7 @@ zh-CN:
         day_15_order_amount: "15天订单金额"
         day_30_order_amount: "30天订单金额"
         day_60_order_amount: "60天订单金额"
+        total_order_amount: "累计订单金额"
 
         day_0_commission_income_amount: "当天店铺佣金"
         day_3_commission_income_amount: "3天店铺佣金"
@@ -62,6 +69,7 @@ zh-CN:
         day_15_commission_income_amount: "15天店铺佣金"
         day_30_commission_income_amount: "30天店铺佣金"
         day_60_commission_income_amount: "60天店铺佣金"
+        total_commission_income_amount: "累计店铺佣金"
 
         day_0_shopkeeper_order_amount: "当天自购订单金额"
         day_3_shopkeeper_order_amount: "3天自购订单金额"
@@ -69,6 +77,7 @@ zh-CN:
         day_15_shopkeeper_order_amount: "15天自购订单金额"
         day_30_shopkeeper_order_amount: "30天自购订单金额"
         day_60_shopkeeper_order_amount: "60天自购订单金额"
+        total_shopkeeper_order_amount: "累计自购订单金额"
 
         day_0_sale_order_amount: "当天销售订单金额"
         day_3_sale_order_amount: "3天销售订单金额"
@@ -76,6 +85,7 @@ zh-CN:
         day_15_sale_order_amount: "15天销售订单金额"
         day_30_sale_order_amount: "30天销售订单金额"
         day_60_sale_order_amount: "60天销售订单金额"
+        total_sale_order_amount: "累计销售订单金额"
 
         day_0_children_grade_platinum_count: "当天邀请白金店主数"
         day_3_children_grade_platinum_count: "3天邀请白金店主数"
@@ -83,6 +93,7 @@ zh-CN:
         day_15_children_grade_platinum_count: "15天邀请白金店主数"
         day_30_children_grade_platinum_count: "30天邀请白金店主数"
         day_60_children_grade_platinum_count: "60天邀请白金店主数"
+        total_children_grade_platinum_count: "累计邀请白金店主数"
 
         day_0_children_grade_gold_count: "当天邀请黄金店主数"
         day_3_children_grade_gold_count: "3天邀请黄金店主数"
@@ -90,6 +101,7 @@ zh-CN:
         day_15_children_grade_gold_count: "15天邀请黄金店主数"
         day_30_children_grade_gold_count: "30天邀请黄金店主数"
         day_60_children_grade_gold_count: "60天邀请黄金店主数"
+        total_children_grade_gold_count: "累计邀请黄金店主数"
 
         day_0_ecn_grade_platinum_count: "当天ECN白金店主数"
         day_3_ecn_grade_platinum_count: "3天ECN白金店主数"
@@ -97,6 +109,8 @@ zh-CN:
         day_15_ecn_grade_platinum_count: "15天ECN白金店主数"
         day_30_ecn_grade_platinum_count: "30天ECN白金店主数"
         day_60_ecn_grade_platinum_count: "60天ECN白金店主数"
+        total_ecn_grade_platinum_count: "累计ECN白金店主数"
+
 
         day_0_ecn_grade_gold_count: "当天ECN黄金店主数"
         day_3_ecn_grade_gold_count: "3天ECN黄金店主数"
@@ -104,6 +118,7 @@ zh-CN:
         day_15_ecn_grade_gold_count: "15天ECN黄金店主数"
         day_30_ecn_grade_gold_count: "30天ECN黄金店主数"
         day_60_ecn_grade_gold_count: "60天ECN黄金店主数"
+        total_ecn_grade_gold_count: "累计ECN黄金店主数"
 
         report_date: "报表日期"
         created_at: "创建时间"

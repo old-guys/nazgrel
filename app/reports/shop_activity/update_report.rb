@@ -93,6 +93,17 @@ class ShopActivity::UpdateReport
 
         @result.merge!(_result)
       }
+      %w(total).each {|dimension|
+        _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
+          _field = :"#{dimension}_#{category}"
+
+          hash.merge!(
+            _field => recent_record.send(_field).to_f + result[category].to_f
+          )
+        }
+
+        @result.merge!(_result)
+      }
     else
       @result = calculate(shop: shop, date: date, partial_update: false)
     end

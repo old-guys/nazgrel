@@ -17,11 +17,17 @@ module ReportShopActivityable
       ).freeze
     end
 
+    def total_stat_fields
+      stat_categories.map{|category|
+        "total_#{category}"
+      }
+    end
+
     def stat_fields
       @stat_fields ||= proc {
         _dimensions = [
           nil, "stage_1", "stage_2", "stage_3",
-          "week", "month", "year"
+          "week", "month", "year", "total"
         ]
         stat_categories.map {|category|
           _dimensions.map{|dimension|

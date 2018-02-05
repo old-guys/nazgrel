@@ -8,7 +8,7 @@ _categories = %w(
   ecn_grade_platinum_count ecn_grade_gold_count
 )
 
-_stages = %w(day_0 day_7 day_30)
+_stages = %w(day_0 day_7 day_30 total)
 _categories.each {|category|
   _stages.each {|stage|
     json.(record, "#{stage}_#{category}")
