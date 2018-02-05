@@ -70,7 +70,13 @@ class Api::Web::Report::ChannelShopActivitiesController < Api::Web::BaseControll
       channel_id: channel_id
     ) if channel_id.present?
 
-    preload_export(service: 'ChannelShopActivity', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
+    preload_export(
+      service: 'ChannelShopActivity',
+      action: 'report',
+      relation: @records,
+      user_id: current_user.try(:id),
+      **report_params.to_h.symbolize_keys
+    )
 
     @records = filter_by_pagination(relation: @records)
     _sum_proc = proc {|field|

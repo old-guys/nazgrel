@@ -55,7 +55,13 @@ class Api::Web::Report::ChannelShopNewersController < Api::Web::BaseController
     ).preload(channel: :channel_users)
     @records= @records.where(channel_id: channel_id) if channel_id.present?
 
-    preload_export(service: 'ChannelShopNewer', action: 'report', relation: @records, **report_params.to_h.symbolize_keys)
+    preload_export(
+      service: 'ChannelShopNewer',
+      action: 'report',
+      relation: @records,
+      user_id: current_user.try(:id),
+      **report_params.to_h.symbolize_keys
+    )
 
     @records = filter_by_pagination(relation: @records)
     @records
