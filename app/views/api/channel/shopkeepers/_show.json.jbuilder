@@ -46,7 +46,7 @@ json.invite_amount record.invite_amount
 # 邀请总人数
 json.invite_number record.invite_number
 # 店铺收益
-json.commission_income_income_amount record.income_records.commission_income.sum(:income_amount)
+json.commission_income_income_amount record.commission_income_income_amount
 # 订单金额
 json.order_amount	record.order_amount
 
