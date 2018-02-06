@@ -36,7 +36,8 @@ module ShopkeeperStatable
 
     def shop_view_type_count(shop_id: , dates: , limit: 10, min_daily_value: 150)
       _records = ViewJournal.where(
-        created_at: dates
+        created_at: dates,
+        shop_id: shop_id
       )
 
       _records.group(:type).order(
@@ -46,7 +47,8 @@ module ShopkeeperStatable
 
     def shop_shared_type_count(shop_id: , dates: , limit: 10, min_daily_value: 50)
       _records = ShareJournal.where(
-        created_at: dates
+        created_at: dates,
+        shop_id: shop_id
       )
 
       _records.group(:type).order(
