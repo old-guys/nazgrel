@@ -3,6 +3,7 @@ module SesameMall::SeekLoggerable
 
   included do
     delegate :logger, to: "self.class"
+    delegate :log_error, to: "ErrorLogger"
   end
 
   module ClassMethods
