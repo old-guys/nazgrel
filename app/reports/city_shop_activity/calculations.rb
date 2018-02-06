@@ -7,7 +7,7 @@ module CityShopActivity::Calculations
 
     report_shop_activities.pluck_h(
       *_sum_fields
-    ).pop.reject{|_,v|
+    ).pop.try(:reject){|_,v|
       v.blank?
     }
   end

@@ -53,6 +53,7 @@ class CityShopActivity::UpdateReport
       write if @result.present?
     rescue => e
       logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
+      log_error(e)
     end
   end
 

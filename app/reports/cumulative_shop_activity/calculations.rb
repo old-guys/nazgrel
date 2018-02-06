@@ -22,7 +22,7 @@ module CumulativeShopActivity::Calculations
     ReportShopActivity.where(
       report_date: dates,
       shop_id: shop_id
-    ).pluck_h(*_sum_fields).pop.reject{|_,v|
+    ).pluck_h(*_sum_fields).pop.try(:reject){|_,v|
       v.blank?
     }
   end
@@ -35,7 +35,7 @@ module CumulativeShopActivity::Calculations
     ReportShopActivity.where(
       report_date: date,
       shop_id: shop_id
-    ).pluck_h(*_sum_fields).pop.reject{|_,v|
+    ).pluck_h(*_sum_fields).pop.try(:reject){|_,v|
       v.blank?
     }
   end
