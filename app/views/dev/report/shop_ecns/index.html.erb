@@ -24,41 +24,44 @@
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
       <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
     </div>
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">店铺名称</th>
-          <th scope="col">店主姓名</th>
-          <th scope="col">渠道</th>
-          <th scope="col">省份</th>
-          <th scope="col">城市</th>
-          <th scope="col">创建时间</th>
-          <th scope="col">店铺等级</th>
-          <th scope="col">ECN数</th>
-          <th scope="col">上级总数占比</th>
-          <th scope="col">ECN白金数</th>
-          <th scope="col">ECN黄金数</th>
-          <th scope="col">直接邀请数</th>
-          <th scope="col">直接ECN白金数</th>
-          <th scope="col">直接ECN黄金数</th>
-          <th scope="col">间接邀请数</th>
-          <th scope="col">间接ECN白金数</th>
-          <th scope="col">间接ECN黄金数</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% cache ["dev/report/shop_ecns/index", @report_shop_ecns] do %>
-          <%
-            Shopkeeper.with_preload_parents(records: @report_shop_ecns.map(&:shopkeeper))
-          %>
-          <%= render partial: "dev/report/shop_ecns/index_tr",
-            collection: @report_shop_ecns,
-            as: :record, cached: true
-          %>
-        <% end %>
-      </tbody>
-    </table>
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">店铺名称</th>
+            <th scope="col">店主姓名</th>
+            <th scope="col">渠道</th>
+            <th scope="col">省份</th>
+            <th scope="col">城市</th>
+            <th scope="col">创建时间</th>
+            <th scope="col">店铺等级</th>
+            <th scope="col">ECN数</th>
+            <th scope="col">上级总数占比</th>
+            <th scope="col">ECN白金数</th>
+            <th scope="col">ECN黄金数</th>
+            <th scope="col">直接邀请数</th>
+            <th scope="col">直接ECN白金数</th>
+            <th scope="col">直接ECN黄金数</th>
+            <th scope="col">间接邀请数</th>
+            <th scope="col">间接ECN白金数</th>
+            <th scope="col">间接ECN黄金数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/shop_ecns/index", @report_shop_ecns] do %>
+            <%
+              Shopkeeper.with_preload_parents(records: @report_shop_ecns.map(&:shopkeeper))
+            %>
+            <%= render partial: "dev/report/shop_ecns/index_tr",
+              collection: @report_shop_ecns,
+              as: :record, cached: true
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
     <%= render partial: "dev/shared/paginate", locals: {
         records: @report_shop_ecns

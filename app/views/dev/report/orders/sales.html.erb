@@ -14,45 +14,47 @@
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
       <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
     </div>
-    <table class="table table-responsive-sm table-responsive-md table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">店铺名称</th>
-          <th scope="col">店主姓名</th>
-          <th scope="col">店主手机号</th>
-          <th scope="col">分享数</th>
-          <th scope="col">浏览量</th>
-          <th scope="col">商品编号</th>
-          <th scope="col">商品名称</th>
-          <th scope="col">商品分类</th>
-          <th scope="col">品牌</th>
-          <th scope="col">商品数量(件)</th>
-          <th scope="col">市场价格(元)</th>
-          <th scope="col">商品单价(元)</th>
-          <th scope="col">支付金额</th>
-          <th scope="col">下单时间</th>
-          <th scope="col">省份</th>
-          <th scope="col">城市</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% cache ["dev/report/orders/sales", @orders] do %>
-          <%
-            report_shop_activities = ReportShopActivity.where(
-              shop_id: @orders.map(&:shop_id),
-              report_date: @orders.map{|o| o.created_at.to_date }.uniq
-            )
-          %>
-          <%= render partial: "dev/report/orders/sales_tr",
-            collection: @orders,
-            as: :record, cached: true, locals: {
-              report_shop_activities: report_shop_activities
-            }
-          %>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">店铺名称</th>
+            <th scope="col">店主姓名</th>
+            <th scope="col">店主手机号</th>
+            <th scope="col">分享数</th>
+            <th scope="col">浏览量</th>
+            <th scope="col">商品编号</th>
+            <th scope="col">商品名称</th>
+            <th scope="col">商品分类</th>
+            <th scope="col">品牌</th>
+            <th scope="col">商品数量(件)</th>
+            <th scope="col">市场价格(元)</th>
+            <th scope="col">商品单价(元)</th>
+            <th scope="col">支付金额</th>
+            <th scope="col">下单时间</th>
+            <th scope="col">省份</th>
+            <th scope="col">城市</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/orders/sales", @orders] do %>
+            <%
+              report_shop_activities = ReportShopActivity.where(
+                shop_id: @orders.map(&:shop_id),
+                report_date: @orders.map{|o| o.created_at.to_date }.uniq
+              )
+            %>
+            <%= render partial: "dev/report/orders/sales_tr",
+              collection: @orders,
+              as: :record, cached: true, locals: {
+                report_shop_activities: report_shop_activities
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
     <%= render partial: "dev/shared/paginate", locals: {
         records: @orders
