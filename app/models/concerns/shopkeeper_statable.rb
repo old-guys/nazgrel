@@ -55,83 +55,53 @@ module ShopkeeperStatable
     end
 
     def view_count_rank(records: , dates: , limit: 10, min_daily_value: 150)
-      _records = ViewJournal.where(
-        created_at: dates
+      _records = ReportShopActivity.where(
+        report_date: dates
       )
       if records.where_sql.present?
         _records = _records.where(shop_id: records.select(:shop_id))
       end
 
-      # while whole shops rank, set min daily value to match high value shop
-      if records.where_sql.blank?
-        _shop_ids = ReportShopActivity.where(
-          report_date: 1.months.ago(dates.last)..dates.last
-        ).where(
-          "view_count >= ?", min_daily_value
-        ).select("distinct(shop_id)")
-
-        _records = _records.where(shop_id: _shop_ids)
-      end
-
       _records.group(:shop_id).order(
-        "count(`shop_id`) desc"
+        "sum(`view_count`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
-          "count(`shop_id`) as count"
+          "sum(`view_count`) as count"
         )
     end
 
     def viewer_count_rank(records: , dates: , limit: 10, min_daily_value: 150)
-      _records = ViewJournal.from("#{ViewJournal.table_name} FORCE INDEX(index_view_journals_on_shop_id_and_created_at)").where(
-        created_at: dates
+      # _records = ViewJournal.from("#{ViewJournal.table_name} FORCE INDEX(index_view_journals_on_shop_id_and_created_at)").where(
+      #   created_at: dates
+      # )
+      _records = ReportShopActivity.where(
+        report_date: dates
       )
       if records.where_sql.present?
         _records = _records.where(shop_id: records.select(:shop_id))
       end
 
-      # while whole shops rank, set min daily value to match high value shop
-      if records.where_sql.blank?
-        _shop_ids = ReportShopActivity.where(
-          report_date: 1.months.ago(dates.last)..dates.last
-        ).where(
-          "viewer_count >= ?", min_daily_value
-        ).select("distinct(shop_id)")
-
-        _records = _records.where(shop_id: _shop_ids)
-      end
-
       _records.group(:shop_id).order(
-        "count(distinct(`viewer_id`)) desc"
+        "sum(`viewer_count`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
-          "count(distinct(`viewer_id`)) as count"
+          "sum(`viewer_count`) as count"
         )
     end
 
     def share_count_rank(records: , dates: , limit: 10, min_daily_value: 50)
-      _records = ShareJournal.where(
-        created_at: dates
+      _records = ReportShopActivity.where(
+        report_date: dates
       )
       if records.where_sql.present?
         _records = _records.where(shop_id: records.select(:shop_id))
       end
 
-      # while whole shops rank, set min daily value to match high value shop
-      if records.where_sql.blank?
-        _shop_ids = ReportShopActivity.where(
-          report_date: 1.months.ago(dates.last)..dates.last
-        ).where(
-          "shared_count >= ?", min_daily_value
-        ).select("distinct(shop_id)")
-
-        _records = _records.where(shop_id: _shop_ids)
-      end
-
       _records.group(:shop_id).order(
-        "count(`shop_id`) desc"
+        "sum(`shared_count`) desc"
         ).limit(limit).pluck_s(
           "`shop_id` as shop_id",
-          "count(`shop_id`) as count"
+          "sum(`shared_count`) as count"
         )
     end
 
