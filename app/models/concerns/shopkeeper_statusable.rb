@@ -7,22 +7,21 @@ module ShopkeeperStatusable
 
     before_save do
       if path_changed? and parents
-        _keys = parents.flat_map(&:cache_keys)
+        _keys = parents.compact.flat_map(&:cache_status_keys)
 
         Rails.cache.with {|c|
-          c.del(keys)
+          c.del(_keys)
         }
       end
     end
 
     def delete_cache_data
       Rails.cache.with {|c|
-        c.del(cache_keys)
+        c.del(cache_status_keys)
       }
     end
 
-    private
-    def cache_keys
+    def cache_status_keys
       [
         "shopkeeper:#{id}:descendant_size",
         "shopkeeper:#{id}:descendant_activation_size",
