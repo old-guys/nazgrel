@@ -6,25 +6,32 @@ module ShopkeeperStatusable
       foreign_key: :shop_id, primary_key: :shop_id, required: false
 
     before_save do
-      if path_changed?
-        keys = parents.compact.map {|record|
-          id = record.id
-          [
-            "shopkeeper:#{id}:descendant_size",
-            "shopkeeper:#{id}:descendant_activation_size",
-            "shopkeeper:#{id}:descendant_grade_platinum_size",
-            "shopkeeper:#{id}:descendant_grade_gold_size",
-            "shopkeeper:#{id}:children_size",
-            "shopkeeper:#{id}:children_grade_platinum_size",
-            "shopkeeper:#{id}:children_grade_gold_size",
-            "shopkeeper:#{id}:commission_income_income_amount"
-          ]
-        }.flatten
+      if path_changed? and parents
+        _keys = parents.flat_map(&:cache_keys)
 
         Rails.cache.with {|c|
           c.del(keys)
-        } if keys.present?
+        }
       end
+    end
+
+    def delete_cache_data
+      Rails.cache.with {|c|
+        c.del(cache_keys)
+      }
+    end
+
+    private
+    def cache_keys
+      [
+        "shopkeeper:#{id}:descendant_size",
+        "shopkeeper:#{id}:descendant_activation_size",
+        "shopkeeper:#{id}:descendant_grade_platinum_size",
+        "shopkeeper:#{id}:descendant_grade_gold_size",
+        "shopkeeper:#{id}:children_size",
+        "shopkeeper:#{id}:children_grade_platinum_size",
+        "shopkeeper:#{id}:children_grade_gold_size"
+      ].freeze
     end
   end
 
@@ -125,7 +132,7 @@ module ShopkeeperStatusable
   end
 
   def commission_income_income_amount
-    Rails.cache.fetch("shopkeeper:#{id}:commission_income_income_amount", raw: true) {
+    Rails.cache.fetch("shopkeeper:#{cache_key}:commission_income_income_amount", raw: true) {
       income_records.commission_income.sum(:income_amount)
     }
   end
