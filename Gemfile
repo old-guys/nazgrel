@@ -48,7 +48,7 @@ gem 'rails-i18n', '~> 5.0', '>= 5.0.4'
 gem 'migration_comments', '~> 0.4', '>= 0.4.1'
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
-gem 'httparty', '~> 0.15', '>= 0.15.6'
+gem 'httparty', '~> 0.15', '>= 0.15.7'
 
 # Axlsx_Rails provides an Axlsx renderer
 # so you can move all your spreadsheet code from your controller into view files.
@@ -56,7 +56,7 @@ gem 'httparty', '~> 0.15', '>= 0.15.6'
 # xlsx spreadsheet generation with charts, images,
 # automated column width, customizable styles and full schema validation.
 # gem 'axlsx', '~> 2.1.0.pre'
-gem 'axlsx', github: 'randym/axlsx'
+gem 'axlsx', github: 'randym/axlsx', branch: "release-3.0.0"
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
@@ -74,7 +74,7 @@ gem 'devise', '~> 4.4', '>= 4.4.1'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
-gem 'devise-i18n', '~> 1.5', '>= 1.5.0'
+gem 'devise-i18n', '~> 1.5', '>= 1.5.1'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1', '>= 1.1.0'
 
@@ -86,7 +86,7 @@ gem 'sidekiq', '~> 5.1', '>= 5.1.1'
 gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.1.8', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -99,7 +99,7 @@ group :development do
   # gem 'listen', '~> 3.1', '>= 3.1.5'
 
   # bundler-audit provides patch-level verification for Bundled apps.
-  gem 'bundler-audit', '~> 0.6', '>= 0.6'
+  # gem 'bundler-audit', '~> 0.6', '>= 0.6'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 2.0', '>= 2.0.2'
   gem 'spring-watcher-listen', '~> 2.0', '>= 2.0.1'
@@ -118,7 +118,7 @@ group :production do
   gem 'unicorn-worker-killer', '~> 0.4', '>= 0.4.4'
   # New Relic is a performance management system,
   # developed by New Relic, Inc (http://www.newrelic.com)
-  gem 'newrelic_rpm', '~> 4.7', '>= 4.7.1.340'
+  gem 'newrelic_rpm', '~> 4.8', '>= 4.8.0.341'
 end
 
 # Use Capistrano for deployment
