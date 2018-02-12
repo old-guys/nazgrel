@@ -5,7 +5,7 @@ class Dev::Report::ShopsController < Dev::Report::BaseController
   def index
     _dates = range_within_datetime(str: params[:created_at]) rescue DateTime.now.all_day
 
-    @shops = Shop.preload(shopkeeper: :parent).where(created_at: _dates)
+    @shops = Shop.preload(shopkeeper: [:parent, :report_cumulative_shop_activity]).where(created_at: _dates)
 
     preload_export(service: 'Dev::Shop', action: 'report', relation: @shops)
 

@@ -2,8 +2,7 @@ module ShopkeeperStatusable
   extend ActiveSupport::Concern
 
   included do
-    has_one :report_cumulative_shop_activity, class_name: "ReportCumulativeShopActivity",
-      foreign_key: :shop_id, primary_key: :shop_id, required: false
+    has_one :report_cumulative_shop_activity, through: :shop
 
     before_save do
       if path_changed? and parents

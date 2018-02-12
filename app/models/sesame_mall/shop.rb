@@ -10,6 +10,9 @@ class Shop < ApplicationRecord
   has_many :product_shops
   has_many :products, through: :product_shops
 
+  has_one :report_cumulative_shop_activity, class_name: "ReportCumulativeShopActivity",
+    foreign_key: :shop_id, primary_key: :id, required: false
+
   include TreeDescendantable
   include ShopProductable
   include Searchable
