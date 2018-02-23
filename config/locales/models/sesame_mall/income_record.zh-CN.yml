@@ -19,6 +19,9 @@ zh-CN:
         team_income: "团队收入"
         commission_income: "佣金收入（店铺佣金）"
         chargeback_income: "消费退单"
+      record_type:
+        income: "收入"
+        expend: "支出"
       status:
         awaiting_confirm: "待确认"
         confirmed: "已确认"

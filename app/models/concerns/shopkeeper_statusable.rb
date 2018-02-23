@@ -129,12 +129,6 @@ module ShopkeeperStatusable
     }
   end
 
-  def commission_income_income_amount
-    Rails.cache.fetch("shopkeeper:#{cache_key}:commission_income_income_amount", raw: true) {
-      income_records.commission_income.sum(:income_amount)
-    }
-  end
-
   module ClassMethods
   end
 end

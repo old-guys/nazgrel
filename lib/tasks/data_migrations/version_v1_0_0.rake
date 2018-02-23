@@ -198,5 +198,30 @@ namespace :data_migrations do
         force_update: true
       )
     end
+
+    task :v1_1_3_2_migrate_shop_income_amount => :environment do
+      SesameMall::IncomeRecordSeek.whole_sync
+
+      Shopkeeper.find_each {|record|
+        _commission_income_amount = record.income_records.commission_income.confirmed.
+          sum(:income_amount)
+        # _invite_amount = record.income_records.invite_income.confirmed.
+        #   sum(:income_amount)
+        _team_income_amount = record.income_records.team_income.confirmed.
+          sum(:income_amount)
+        _shop_sales_amount = record.orders.sales_order.valided_order.
+          where(
+            order_no: record.income_records.commission_income.confirmed.select(:order_id)
+          ).
+          sum(:pay_price).to_f
+
+        record.update(
+          commission_income_amount: _commission_income_amount,
+          # invite_amount: _invite_amount,
+          team_income_amount: _team_income_amount,
+          shop_sales_amount: _shop_sales_amount,
+        )
+      }
+    end
   end
 end

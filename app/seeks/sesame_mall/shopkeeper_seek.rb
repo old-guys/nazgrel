@@ -68,11 +68,23 @@ class SesameMall::ShopkeeperSeek
     set_shopkeeper_order_content(record: record) if record.persisted?
 
     if record.persisted?
-      _commission_income_amount = record.orders.
-        sales_order.valided_order.sum(:comm)
+      _commission_income_amount = record.income_records.commission_income.confirmed.
+        sum(:income_amount)
+      # _invite_amount = record.income_records.invite_income.confirmed.
+      #   sum(:income_amount)
+      _team_income_amount = record.income_records.team_income.confirmed.
+        sum(:income_amount)
+      _shop_sales_amount = record.orders.sales_order.valided_order.
+        where(
+          order_no: record.commission_income.confirmed.select(:order_id)
+        ).
+        sum(:pay_price).to_f
 
       record.assign_attributes(
-        commission_income_amount: _commission_income_amount
+        commission_income_amount: _commission_income_amount,
+        # invite_amount: _invite_amount,
+        team_income_amount: _team_income_amount,
+        shop_sales_amount: _shop_sales_amount,
       )
     end
 

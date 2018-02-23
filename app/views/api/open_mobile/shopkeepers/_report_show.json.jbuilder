@@ -29,6 +29,12 @@ json.withdraw_amount record.withdraw_amount
 json.blocked_amount record.blocked_amount
 json.create_shop_amount record.create_shop_amount
 
+json.commission_income_amount record.commission_income_amount.to_f.to_s
+json.team_income_amount record.team_income_amount
+json.invite_amount record.invite_amount
+
+json.shop_sales_amount record.shop_sales_amount
+
 json.invite_code record.invite_code
 json.invite_qrcode_url record.invite_qrcode_url
 
@@ -38,7 +44,6 @@ json.shopkeeper_order_number record.shopkeeper_order_number.to_i
 json.shopkeeper_order_amount record.shopkeeper_order_amount.to_f.to_s
 json.sale_order_number record.sale_order_number.to_i
 json.sale_order_amount record.sale_order_amount.to_f.to_s
-json.commission_income_amount record.commission_income_amount.to_f.to_s
 
 json.descendant_order_number record.descendant_order_number.to_i
 json.descendant_order_amount record.descendant_order_amount.to_f.to_s

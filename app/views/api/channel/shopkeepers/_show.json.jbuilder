@@ -34,19 +34,24 @@ end
 # income
 # 账户总收入
 json.total_income_amount record.total_income_amount
-# 店铺佣金
+# 店铺佣金 店铺收益 销售佣金
 json.commission_income_amount record.commission_income_amount
 
 # 已提现金额
 json.withdraw_amount record.withdraw_amount
 # 冻结金额
 # json.blocked_amount	record.blocked_amount
-# 邀请收入 培训奖励
-json.invite_amount record.invite_amount
+
 # 邀请总人数
 json.invite_number record.invite_number
-# 店铺收益
-json.commission_income_income_amount record.commission_income_income_amount
+# 店铺佣金 店铺收益 销售佣金
+json.commission_income_amount record.commission_income_amount
+# 团队收益
+json.team_income_amount record.team_income_amount
+# 邀请收入 培训奖励
+json.invite_amount record.invite_amount
+# 销售业绩
+json.shop_sales_amount record.shop_sales_amount
 # 订单金额
 json.order_amount	record.order_amount
 

@@ -1,3 +1,13 @@
+## 店主行为报表相关增加总数据 (2018-02-23)
+
+- #feature# 店主运营程序店铺运营分析报表接口增加店铺总收入分类收入字段
+- #feature# 芝蚂助手店主详情接口增加店铺总收入分类收入字段
+
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_2_migrate_shop_income_amount
+```
+
 ## 店主行为报表相关增加总数据 (2018-02-05)
 
 - #feature# 店主行为报表相关增加总数据
