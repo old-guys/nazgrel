@@ -115,7 +115,7 @@ class ShopActivity::UpdateReport
     )
   end
   def write
-    record.changed? ? record.save : record.touch
+    record.has_changes_to_save? ? record.save : record.touch
   end
 
   private

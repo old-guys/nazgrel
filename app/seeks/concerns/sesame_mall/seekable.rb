@@ -66,7 +66,7 @@ module SesameMall::Seekable
 
       ActiveRecord::Base.transaction do
         _records.each {|record|
-          next if record.changes.except(:updated_at, :created_at).blank?
+          next if record.saved_changes.except(:updated_at, :created_at).blank?
 
           begin
             record.save!

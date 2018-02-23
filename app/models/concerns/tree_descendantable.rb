@@ -40,7 +40,7 @@ module TreeDescendantable
       order(%Q{tree_depth_calcul_sql(column: column) #{sort}})
     end
 
-    before_update :clean_descendant_cache, if: :path_changed?
+    before_update :clean_descendant_cache, if: :will_save_change_to_path?
 
     self.tree_depth = DEFAULT_TREE_DEPTH
   end
