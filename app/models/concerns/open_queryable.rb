@@ -66,7 +66,11 @@ module OpenQueryable
   end
   module ClassMethods
     def open_query_logger
-      @open_query_logger ||= ActiveSupport::TaggedLogging.new(Logger.new("#{Rails.root}/log/open_query.log", "weekly"))
+      @open_query_logger ||= proc {
+        _logger = ActiveSupport::Logger.new("#{Rails.root}/log/open_query.log", "weekly")
+        _logger.formatter = Logger::Formatter.new
+        _tagged_logger = ActiveSupport::TaggedLogging.new(_logger)
+      }.call
     end
   end
 end
