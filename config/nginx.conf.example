@@ -46,9 +46,9 @@ server {
   location @unicorn {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
-    # set https for load balancer within production env
-    # proxy_set_header X-Forwarded-Proto https;
-    proxy_set_header X-Forwarded-Ssl on;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Real-IP $proxy_protocol_addr;
+    # proxy_set_header X-Forwarded-Ssl on;
     proxy_redirect off;
     proxy_pass http://nazgrel_qa_unicorn;
   }
