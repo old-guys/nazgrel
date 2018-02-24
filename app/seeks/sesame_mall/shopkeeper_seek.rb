@@ -76,7 +76,7 @@ class SesameMall::ShopkeeperSeek
         sum(:income_amount)
       _shop_sales_amount = record.orders.sales_order.valided_order.
         where(
-          order_no: record.commission_income.confirmed.select(:order_id)
+          order_no: record.income_records.commission_income.confirmed.select(:order_id)
         ).
         sum(:pay_price).to_f
 
