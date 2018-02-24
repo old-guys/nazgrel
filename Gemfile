@@ -89,7 +89,7 @@ gem 'pundit', '~> 1.1', '>= 1.1.0'
 gem 'redis-rails', '~> 5.0', '>= 5.0.2'
 
 # Simple, efficient background processing for Ruby.
-gem 'sidekiq', '~> 5.0', '>= 5.0.5'
+gem 'sidekiq', '~> 5.1', '>= 5.1.1'
 
 # Enables to set jobs to be run in specified time (using CRON notation)
 gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
