@@ -223,5 +223,19 @@ namespace :data_migrations do
         )
       }
     end
+
+    task :v1_1_3_3_migrate_shop_activity_children_stat_field => :environment do
+      shops = Shop.where(id: ReportShopActivity.where(report_date: Date.today).select(:shop_id))
+      ShopActivity::UpdateReport.update_report(
+        shops: shops.preload(:shopkeeper),
+        force_update: true
+      )
+
+      CumulativeShopActivity::UpdateReport.update_report(
+        shops: shops,
+        interval_time: 8.hours,
+        force_update: true
+      )
+    end
   end
 end

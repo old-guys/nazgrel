@@ -1,5 +1,5 @@
 class ReportCityShopActivity < ApplicationRecord
-  include ReportShopActivityable
+  include ReportCollectShopActivityable
 
   class << self
     def prune_old_records

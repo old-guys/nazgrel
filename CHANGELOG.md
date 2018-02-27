@@ -1,3 +1,11 @@
+## 店主行为相关报表添加下级和直接邀请相关统计 (2018-02-26)
+
+- #feature# 店主行为相关报表添加 `children_size`, `descendant_size`, `descendant_order_number`, `descendant_order_amount`, `descendant_commission_income_amount` 字段
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_3_migrate_shop_activity_children_stat_field
+```
+
 ## 店主行为报表相关增加总数据 (2018-02-23)
 
 - #feature# 店主运营程序店铺运营分析报表接口增加店铺总收入分类收入字段
