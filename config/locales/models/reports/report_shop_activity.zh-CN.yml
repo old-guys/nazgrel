@@ -124,6 +124,15 @@ zh-CN:
         year_children_count: "本年累计邀请店主数"
         total_children_count: "累计邀请店主数"
 
+        children_commission_income_amount: "邀请店铺佣金"
+        stage_1_children_commission_income_amount: "00:00-9:00 邀请店铺佣金"
+        stage_2_children_commission_income_amount: "09:00-18:00 邀请店铺佣金"
+        stage_3_children_commission_income_amount: "18:00-24:00 邀请店铺佣金"
+        week_children_commission_income_amount: "本周累计邀请店铺佣金"
+        month_children_commission_income_amount: "本月累计邀请店铺佣金"
+        year_children_commission_income_amount: "本年累计邀请店铺佣金"
+        total_children_commission_income_amount: "累计邀请店铺佣金"
+
         descendant_count: "下级店主数"
         stage_1_descendant_count: "00:00-9:00 下级店主数"
         stage_2_descendant_count: "09:00-18:00 下级店主数"

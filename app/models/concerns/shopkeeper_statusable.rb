@@ -95,6 +95,12 @@ module ShopkeeperStatusable
     }.to_i
   end
 
+  def children_commission_income_amount
+    BigDecimal.new(Rails.cache.fetch("#{status_cache_key}:children_commission_income_amount", raw: true) {
+      report_cumulative_shop_activity.try(:total_children_commission_income_amount) || children.sum(:commission_income_amount)
+    })
+  end
+
   def indirectly_descendant_size
     @indirectly_descendant_size ||= descendant_size - children_size
   end

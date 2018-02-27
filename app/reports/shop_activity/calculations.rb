@@ -97,6 +97,13 @@ module ShopActivity::Calculations
       partial_update: partial_update
     ))
 
+    _records = shop.shopkeeper.children
+    result.merge!(aggregation_field_by_day(
+      field: :children_commission_income_amount, date: date, records: _records,
+      partial_update: partial_update,
+      sum_block: proc{|sql| sql.sum(:commission_income_amount) }
+    ))
+
     _records = shop.shopkeeper.descendant_entities
     result.merge!(aggregation_field_by_day(
       field: :descendant_count, date: date, records: _records,
