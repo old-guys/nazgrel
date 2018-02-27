@@ -49,12 +49,12 @@ module ChannelStatusable
   end
 
   def invite_children_reward_amount_cache_key
-    "channel:#{id}:invite_children_reward:raw"
+    "channel:#{id}:#{own_shopkeeper.cache_key}:invite_children_reward:raw"
   end
 
   def invite_children_reward_amount
     Rails.cache.fetch(invite_children_reward_amount_cache_key, raw: true) {
-      own_shopkeeper.children_grade_gold_size * 200 + own_shopkeeper.children_grade_platinum_size * 100
+      own_shopkeeper.invite_amount
     }
   end
 
@@ -64,7 +64,7 @@ module ChannelStatusable
 
   def children_comission_amount
     Rails.cache.fetch(children_comission_amount_cache_key, raw: true) {
-      own_shopkeeper.children.sum(:commission_income_amount) * 0.15
+      own_shopkeeper.children_commission_income_amount * 0.15
     }
   end
 

@@ -75,7 +75,7 @@ module ChannelUserStatusable
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:invite_children_reward:raw", raw: true) {
       if region_manager?
         fetch_multi(
-          records: channel_region.channels.preload(:own_shopkeeper),
+          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
           cache_key: :invite_children_reward_amount_cache_key,
           raw: true
         ) {|record|
@@ -91,7 +91,7 @@ module ChannelUserStatusable
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:children_comission:raw", raw: true) {
       if region_manager?
         fetch_multi(
-          records: channel_region.channels.preload(:own_shopkeeper),
+          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
           cache_key: :children_comission_amount_cache_key,
           raw: true
         ) {|record|
@@ -107,7 +107,7 @@ module ChannelUserStatusable
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:invite_amount:raw", raw: true) {
       if region_manager?
         fetch_multi(
-          records: channel_region.channels.preload(:own_shopkeeper),
+          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
           cache_key: :invite_children_amount_cache_key,
           raw: true
         ) {|record|
@@ -123,7 +123,7 @@ module ChannelUserStatusable
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:indirectly_descendant_comission:raw", raw: true) {
       if region_manager?
         fetch_multi(
-          records: channel_region.channels.preload(:own_shopkeeper),
+          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
           cache_key: :indirectly_descendant_amount_cache_key,
           raw: true
         ) {|record|
