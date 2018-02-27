@@ -1,7 +1,7 @@
 class ReportChannelShopActivity < ApplicationRecord
   belongs_to :channel, required: false
 
-  include ReportShopActivityable
+  include ReportCollectShopActivityable
 
   class << self
     def prune_old_records

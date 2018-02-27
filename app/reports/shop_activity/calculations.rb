@@ -91,6 +91,39 @@ module ShopActivity::Calculations
       partial_update: partial_update
     ))
 
+    _records = shop.shopkeeper.children
+    result.merge!(aggregation_field_by_day(
+      field: :children_count, date: date, records: _records,
+      partial_update: partial_update
+    ))
+
+    _records = shop.shopkeeper.descendant_entities
+    result.merge!(aggregation_field_by_day(
+      field: :descendant_count, date: date, records: _records,
+      partial_update: partial_update
+    ))
+
+    _records = shop.shopkeeper.descendant_entities
+    result.merge!(aggregation_field_by_day(
+      field: :descendant_order_number, date: date, records: _records,
+      partial_update: partial_update,
+      sum_block: proc{|sql| sql.sum(:order_number) }
+    ))
+
+    _records = shop.shopkeeper.descendant_entities
+    result.merge!(aggregation_field_by_day(
+      field: :descendant_order_amount, date: date, records: _records,
+      partial_update: partial_update,
+      sum_block: proc{|sql| sql.sum(:order_amount) }
+    ))
+
+    _records = shop.shopkeeper.descendant_entities
+    result.merge!(aggregation_field_by_day(
+      field: :descendant_commission_income_amount, date: date, records: _records,
+      partial_update: partial_update,
+      sum_block: proc{|sql| sql.sum(:commission_income_amount) }
+    ))
+
     _records = shop.shopkeeper.descendant_entities.grade_platinum
     result.merge!(aggregation_field_by_day(
       field: :ecn_grade_platinum_count, date: date, records: _records,
