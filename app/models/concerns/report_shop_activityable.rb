@@ -13,6 +13,8 @@ module ReportShopActivityable
         sale_order_number order_amount commission_income_amount shopkeeper_order_amount
         sale_order_amount children_grade_platinum_count
         children_grade_gold_count ecn_grade_platinum_count
+        children_count descendant_count descendant_order_number
+        descendant_order_amount descendant_commission_income_amount
         ecn_grade_gold_count
       ).freeze
     end
