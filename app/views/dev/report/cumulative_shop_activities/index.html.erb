@@ -1,6 +1,29 @@
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">累计店主行为报表</h4>
+    <ul>
+      <li>
+         <%= link_to "今日", url_for(created_at: Date.today)%>
+         <%= link_to "昨日", url_for(created_at: Date.yesterday)%>
+         <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week)%>
+         <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month)%>
+         <%= link_to "本周", url_for(created_at: DateTime.now.all_week)%>
+         <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
+      </li>
+    </ul>
+    <form class="form-inline">
+      <label class="sr-only" for="id">ID</label>
+      <%= text_field_tag :id, params[:id], class: "form-control mb-2 mr-sm-2", placeholder: "店主ID"%>
+
+      <label class="sr-only" for="user_id">店主用户ID</label>
+      <%= text_field_tag :user_id, params[:user_id], class: "form-control mb-2 mr-sm-2", placeholder: "店主用户ID"%>
+
+      <label class="sr-only" for="user_phone">手机号码</label>
+      <%= text_field_tag :user_phone, params[:user_phone], class: "form-control mb-2 mr-sm-2", placeholder: "店主手机号"%>
+
+      <button type="submit" class="btn btn-primary mb-2">查询</button>
+    </form>
+
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
       <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
     </div>

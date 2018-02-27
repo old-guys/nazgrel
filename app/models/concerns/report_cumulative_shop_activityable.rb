@@ -8,7 +8,7 @@ module ReportCumulativeShopActivityable
       def stat_fields
         @stat_fields ||= proc {
           stat_categories.map {|category|
-            stat_cumulative_stages.map{|stage|
+            stat_cumulative_stages.dup.push("total").map{|stage|
               "#{stage}_#{category}"
             }
           }.flatten.freeze
