@@ -413,11 +413,11 @@ class CumulativeShopActivityReportWorker
 ```yaml
 cumulative_shop_activity_report_update_inactive:
   cron: "53 23 * * *"
-  name: "更新非活跃累计店主行为数据"
+  name: "重置当天累计店主行为数据"
   class: "CumulativeShopActivityReportWorker"
   queue: :report
   args:
-    type: "update_inactive"
+    type: "update_old"
 cumulative_shop_activity_report_partial:
   cron: "*/30 * * * *"
   name: "实时更新累计店主行为数据"

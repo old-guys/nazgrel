@@ -11,8 +11,7 @@ class CumulativeShopActivityReportWorker
     case _type
       when "update_old"
         _stage = ReportCumulativeShopActivity.stat_cumulative_stages.last
-        date = Date.yesterday
-        dates = (_stage.split("_").last.to_i).days.ago(date)..date
+        dates = Date.yesterday..date
 
         ReportCumulativeShopActivity.where(
           report_date: dates
