@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">每日运营报表</h4>
+    <ul>
+      <li>
+         <%= link_to "今日", url_for(report_date: Date.today)%>
+         <%= link_to "昨日", url_for(report_date: Date.yesterday)%>
+         <%= link_to "上周", url_for(report_date: DateTime.now.last_week.all_week)%>
+         <%= link_to "上月", url_for(report_date: DateTime.now.last_month.all_month)%>
+         <%= link_to "本周", url_for(report_date: DateTime.now.all_week)%>
+         <%= link_to "本月", url_for(report_date: DateTime.now.all_month)%>
+      </li>
+    </ul>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <%
+           _stat_fields = %w(
+             total_shopkeeper_count shopkeeper_count activation_shopkeeper_count
+             activation_shopkeeper_rate view_count viewer_count shared_count
+             order_total_price order_count order_pay_price order_conversion_rate
+             order_total_price_avg commission_income_amount
+           )
+        %>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">日期</th>
+            <% _stat_fields.each {|field| %>
+              <th scope="col"><%= ReportDailyOperational.human_attribute_name(field) %></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/daily_operationals/index", @report_daily_operationals] do %>
+            <%= render partial: "dev/report/daily_operationals/index_tr",
+              collection: @report_daily_operationals,
+              as: :record, cached: true, locals: {
+                stat_fields: _stat_fields
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_daily_operationals
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>

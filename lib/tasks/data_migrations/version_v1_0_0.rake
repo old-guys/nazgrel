@@ -237,5 +237,12 @@ namespace :data_migrations do
         force_update: true
       )
     end
+
+    desc 'migrate daily_operational_report'
+    task :v1_1_3_4_migrate_daily_operational_report => :environment do
+      1.months.ago.to_date.upto(Date.today) {|date|
+        DailyOperational::UpdateReport.update_report(report_date: date)
+      }
+    end
   end
 end

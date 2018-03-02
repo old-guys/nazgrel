@@ -213,3 +213,11 @@ cumulative_shop_activity_report_partial:
   queue: :report
   args:
     type: "partial"
+
+daily_operational_report:
+  cron: "1 */2 * * *"
+  name: "更新当天每日运营报表数据"
+  class: "DailyOperationalReportWorker"
+  queue: :report
+  args:
+    type: "partial"

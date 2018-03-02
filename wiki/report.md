@@ -440,3 +440,81 @@ end
 
 - 更新店铺之后应该触发累计店主行为数据更新机制
 - 每天晚上定时更新不活跃店铺数据
+
+## 每日运营报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_daily_operational.rb
+class ReportDailyOperational < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/daily_operational/
+app/reports/daily_operational/
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+cat app/reports/daily_operational/calculations.rb
+module DailyOperational::Calculations
+  class << self
+    delegate :update_report, to: "DailyOperational::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module DailyOperational::Calculations
+```
+
+更新报表
+
+```ruby
+class DailyOperational::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/daily_operational_report_worker.rb
+class DailyOperationalReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```yaml
+daily_operational_report:
+  cron: "1 */2 * * *"
+  name: "更新当天每日运营报表数据"
+  class: "DailyOperationalReportWorker"
+  queue: :report
+  args:
+    type: "partial"
+```
+
+定时清理
+
+```ruby
+# config/schedule.rb
+every 2.weeks do
+  runner "ReportDailyOperational.prune_old_records"
+end
+```
+
+### 更新机制
+
+- 每隔一个小时定时更新每日运营报表数据更新机制

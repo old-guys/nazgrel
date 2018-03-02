@@ -1,0 +1,33 @@
+zh-CN:
+  activerecord:
+    models:
+      report_daily_operational: "每日运营报表"
+    attributes:
+      report_daily_operational:
+        id: "ID"
+        report_date: "报表日期"
+
+        total_shopkeeper_count: "累计店主数"
+        shopkeeper_count: "店主数"
+
+        activation_shopkeeper_count: "活跃店主数"
+        activation_shopkeeper_rate: "活跃店主比例"
+
+        view_count: "浏览量"
+        viewer_count: "访客数"
+        shared_count: "分享数"
+
+        order_total_price: "订单总额"
+        order_count: "订单数"
+        order_pay_price: "支付金额"
+
+        order_conversion_rate: "订单转化率"
+        order_total_price_avg: "平均每单金额"
+
+        commission_income_amount: "佣金"
+        activity_ticket_amount: "现金券"
+        product_cost: "成本"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
