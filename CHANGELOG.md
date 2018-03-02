@@ -1,3 +1,11 @@
+##  (2018-03-02)
+
+- #feature# 新增每日运营报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_4_migrate_daily_operational_report
+```
+
 ## 店主行为相关报表添加下级和直接邀请相关统计 (2018-02-26)
 
 - #feature# 店主行为相关报表添加 `children_size`, `descendant_size`, `descendant_order_number`, `descendant_order_amount`, `descendant_commission_income_amount` 字段
