@@ -41,14 +41,14 @@ gem 'enum_help', '~> 0.0.17'
 
 # A set of common locale data and translations to internationalize and/or
 # localize your Rails applications.
-gem 'rails-i18n', '~> 5.0', '>= 5.0.4'
+gem 'rails-i18n', '~> 5.1', '>= 5.1.1'
 
 # Add schema comments in your migrations,
 # see them in model annotations and db/schema.rb dump
 gem 'migration_comments', '~> 0.4', '>= 0.4.1'
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
-gem 'httparty', '~> 0.15', '>= 0.15.7'
+gem 'httparty', '~> 0.16', '>= 0.16.0'
 
 # Axlsx_Rails provides an Axlsx renderer
 # so you can move all your spreadsheet code from your controller into view files.
@@ -74,7 +74,7 @@ gem 'devise', '~> 4.4', '>= 4.4.1'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
-gem 'devise-i18n', '~> 1.5', '>= 1.5.1'
+gem 'devise-i18n', '~> 1.6', '>= 1.6.0'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1', '>= 1.1.0'
 
