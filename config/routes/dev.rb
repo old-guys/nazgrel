@@ -6,6 +6,7 @@ namespace :dev do
     resources :shop_activities, only: [:index]
     resources :city_shop_activities, only: [:index]
     resources :cumulative_shop_activities, only: [:index]
+    resources :daily_operationals, only: [:index]
 
     resources :shop_ecns
 

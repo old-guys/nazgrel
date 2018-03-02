@@ -88,6 +88,7 @@ module Export
           'Dev::Order#index' => '订单销售报表',
           'Dev::Order#sales' => '订单信息报表',
           'Dev::Shopkeeper#tree' => '店主组织架构树报表',
+          'Dev::DailyOperational#report' => '每日运营报表',
         }.freeze
       end
     end
