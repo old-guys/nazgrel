@@ -7,7 +7,7 @@ class DailyOperational::UpdateReport
 
       _time = Time.now
 
-      return if _record.persisted? and (_record.updated_at + interval_time) >= _time
+      return if !force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
       logger.info "update daily_operational report for: #{report_date}"
 
       _report = DailyOperational::UpdateReport.new(
