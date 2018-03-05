@@ -91,11 +91,13 @@ namespace :data_migrations do
       SesameMall::ProductSkuSeek.whole_sync
       SesameMall::ActTicketSeek.whole_sync
       SesameMall::ActTicketActivitySeek.whole_sync
+      SesameMall::ActUserTicketSeek.whole_sync
 
       _klasses = [
         SesameMall::Source::ProductSku,
         SesameMall::Source::ActTicket,
-        SesameMall::Source::ActTicketActivity
+        SesameMall::Source::ActTicketActivity,
+        SesameMall::Source::ActUserTicket
       ]
 
       _klasses.each {|klass|

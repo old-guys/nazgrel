@@ -1,0 +1,21 @@
+zh-CN:
+  activerecord:
+    models:
+      act_user_ticket: "券"
+    attributes:
+      act_user_ticket:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    act_user_ticket:
+      ticket_type:
+        :normal: "普通券"
+        :platinum_create_shop_deduction : "白金会员开店抵扣券"
+        :gold_create_shop_deduction : "黄金会员开店抵扣券"
+      status:
+        :available: "可用"
+        :used: "已使用"
+        :was_invalid: "冻结失效"
+        :was_donated: "已转赠"

@@ -140,6 +140,14 @@ act_ticket_activity_seek_job:
   args:
     duration: 35
 
+act_user_ticket_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步券"
+  class: "ActUserTicketSeekWorker"
+  queue: :seek
+  args:
+    duration: 35
+
 deleted_record_seek_job:
   cron: "3 * * * *"
   name: "删除芝蚂城已经删除的记录"
