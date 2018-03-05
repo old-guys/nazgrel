@@ -31,11 +31,13 @@ module DailyOperational::Calculations
         _order_count > 0 ? (_order_total_price / _order_count.to_f) : nil,
       commission_income_amount: _orders.sum(:comm),
       activity_ticket_amount: ActUserTicket.where(
-        id: orders.where.not(user_ticket_id: nil).select(:user_ticket_id)
+        id: _orders.where.not(user_ticket_id: nil).select(:user_ticket_id)
       ).sum("`act_user_tickets`.`amount`"),
       product_cost: OrderDetail.joins(
-        :order, :product_sku).merge(orders
-      ).sum("`order_details`.`product_num`*`product_skus`.`cost_price`")
+        :order, :product_sku
+      ).merge(_orders).sum(
+        "`order_details`.`product_num`*`product_skus`.`cost_price`"
+      )
     }
   end
 
