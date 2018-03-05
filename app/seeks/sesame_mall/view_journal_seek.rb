@@ -24,7 +24,7 @@ class SesameMall::ViewJournalSeek
 
       viewer_id: data[:VIEWER_ID],
 
-      view_type: ::ViewJournal.view_types.invert[data[:VIEW_type].to_i],
+      view_type: ::ViewJournal.view_types.invert[data[:VIEW_TYPE].to_i],
 
       created_at: parse_no_timezone(datetime: data[:DATE]),
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])

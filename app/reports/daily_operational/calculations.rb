@@ -30,10 +30,12 @@ module DailyOperational::Calculations
       order_total_price_avg:
         _order_count > 0 ? (_order_total_price / _order_count.to_f) : nil,
       commission_income_amount: _orders.sum(:comm),
-      # TODO Calculate 现金券金额
-      activity_ticket_amount: nil,
-      # TODO Calculate 成本
-      product_cost: nil
+      activity_ticket_amount: ActUserTicket.where(
+        id: orders.where.not(user_ticket_id: nil).select(:user_ticket_id)
+      ).sum("`act_user_tickets`.`amount`"),
+      product_cost: OrderDetail.joins(
+        :order, :product_sku).merge(orders
+      ).sum("`order_details`.`product_num`*`product_skus`.`cost_price`")
     }
   end
 

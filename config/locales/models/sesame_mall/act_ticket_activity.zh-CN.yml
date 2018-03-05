@@ -1,0 +1,22 @@
+zh-CN:
+  activerecord:
+    models:
+      act_ticket_activity: "券活动"
+    attributes:
+      act_ticket_activity:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    act_ticket_activity:
+      ticket_type:
+        :coupon: "优惠券活动"
+        :deduction_shop: "开店抵扣券"
+      status:
+        :normal: "正常"
+        :was_invalid: "失效"
+      include_user_group:
+        :was_invalid: "无效"
+        :was_included: "包括"
+        :was_excluded: "排除"

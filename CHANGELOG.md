@@ -1,3 +1,12 @@
+## 每日运营报表计算成本和券(2018-03-05)
+
+- #feature# 每日运营报表计算成本和券
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_5_init_seek_trigger
+cap production deploy:runrake task=data_migrations:version:v1_1_3_4_migrate_daily_operational_report
+```
+
 ## 每日运营报表(2018-03-02)
 
 - #feature# 新增每日运营报表
