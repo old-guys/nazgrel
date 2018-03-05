@@ -90,10 +90,12 @@ namespace :data_migrations do
     task :v1_1_3_5_init_seek_trigger => :environment do
       SesameMall::ProductSkuSeek.whole_sync
       SesameMall::ActTicketSeek.whole_sync
+      SesameMall::ActTicketActivitySeek.whole_sync
 
       _klasses = [
         SesameMall::Source::ProductSku,
-        SesameMall::Source::ActTicket
+        SesameMall::Source::ActTicket,
+        SesameMall::Source::ActTicketActivity
       ]
 
       _klasses.each {|klass|
