@@ -7,6 +7,7 @@ class OrderDetail < ApplicationRecord
 
   belongs_to :product, required: false
   has_one :category, through: :product
+  belongs_to :product_sku
 
   enum is_free_delivery: {
     yes: 1,

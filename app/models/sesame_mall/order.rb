@@ -10,6 +10,11 @@ class Order < ApplicationRecord
 
   has_many :order_details, through: :order_subs
   has_many :products, through: :order_details
+  has_many :product_skus, through: :order_details
+
+  belongs_to :act_user_ticket, primary_key: :id,
+    foreign_key: :user_ticket_id,
+    class_name: :ActUserTicket, required: false
 
   enum order_status: {
     awaiting_payment: 0,

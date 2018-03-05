@@ -12,8 +12,8 @@ zh-CN:
     act_user_ticket:
       ticket_type:
         :normal: "普通券"
-        :platinum_create_shop_deduction : "白金会员开店抵扣券"
-        :gold_create_shop_deduction : "黄金会员开店抵扣券"
+        :platinum_create_shop_deduction: "白金会员开店抵扣券"
+        :gold_create_shop_deduction: "黄金会员开店抵扣券"
       status:
         :available: "可用"
         :used: "已使用"
