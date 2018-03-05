@@ -86,12 +86,14 @@ namespace :data_migrations do
       }
     end
 
-    desc 'init seek trigger for sesame_mall sub order'
-    task :v1_0_6_init_seek_trigger => :environment do
+    desc 'init seek trigger for sesame_mall product_sku act_ticket'
+    task :v1_1_3_5_init_seek_trigger => :environment do
       SesameMall::ProductSkuSeek.whole_sync
+      SesameMall::ActTicketSeek.whole_sync
 
       _klasses = [
-        SesameMall::Source::ProductSku
+        SesameMall::Source::ProductSku,
+        SesameMall::Source::ActTicket
       ]
 
       _klasses.each {|klass|

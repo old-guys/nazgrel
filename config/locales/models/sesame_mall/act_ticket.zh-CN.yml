@@ -1,0 +1,15 @@
+zh-CN:
+  activerecord:
+    models:
+      act_ticket: "券"
+    attributes:
+      act_ticket:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    act_ticket:
+      ticket_type:
+        :normal: "普通券"
+        :deduction_shop: "开店抵扣券"
