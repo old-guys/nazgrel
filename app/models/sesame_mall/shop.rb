@@ -40,7 +40,7 @@ class Shop < ApplicationRecord
   end
 
   def set_channel_path
-    _channels = Channel.where(shopkeeper_user_id: shopkeeper.parent_ids).pluck_s(:id, :shop_id)
+    _channels = Channel.where(shopkeeper_user_id: shopkeeper.parent_ids).select(:id, :shop_id)
     _shop_ids = []
 
     shopkeeper.parents.reverse.each{|shopkeeper|
@@ -49,6 +49,7 @@ class Shop < ApplicationRecord
 
       if _channel.present?
         self.channel_id = _channel.id
+        _channel.channel_channel_region_maps.map(&:touch)
 
         break
       end
