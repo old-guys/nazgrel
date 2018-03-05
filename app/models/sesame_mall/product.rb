@@ -4,6 +4,8 @@ class Product < ApplicationRecord
     foreign_key: :category_id,
     class_name: :Category, required: false
 
+  has_many :product_skus
+
   enum status: {
     init: 10,
     online: 20,

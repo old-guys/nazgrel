@@ -8,72 +8,6 @@ namespace :data_migrations do
       })
     end
 
-    desc 'init seek trigger for sesame_mall'
-    task :v1_0_5_init_seek_trigger => :environment do
-      SesameMall::ProductSeek.whole_sync
-      SesameMall::ProductShopSeek.whole_sync
-      SesameMall::OrderDetailSeek.whole_sync
-
-      TriggerService.setup source: :sesame_mall
-
-      _klasses = [
-        SesameMall::Source::IncomeRecord, SesameMall::Source::Order,
-        SesameMall::Source::OrderDetail,
-        SesameMall::Source::ProductShop, SesameMall::Source::Product,
-        SesameMall::Source::Shop, SesameMall::Source::Shopkeeper
-      ]
-
-      _klasses.each {|klass|
-        TriggerService.setup_trigger klass: klass
-      }
-    end
-
-    desc 'init seek trigger for sesame_mall sub order'
-    task :v1_0_6_init_seek_trigger => :environment do
-      SesameMall::OrderSubSeek.whole_sync
-      SesameMall::OrderExpressSeek.whole_sync
-
-      _klasses = [
-        SesameMall::Source::OrderSub, SesameMall::Source::OrderExpress
-      ]
-
-      _klasses.each {|klass|
-        TriggerService.setup_trigger klass: klass
-      }
-    end
-
-    desc 'migrate shopkeeper#commission_income_amount'
-    task :v1_0_7_shopkeeper_income_amount => :environment do
-      Shopkeeper.where(commission_income_amount: nil).find_each {|s|
-        _commission_income_amount = s.orders.sales_order.valided_order.sum(:comm)
-
-        s.update_columns(commission_income_amount: _commission_income_amount)
-      }
-    end
-
-    desc 'init seek trigger for sesame_mall sub order'
-    task :v1_0_8_init_seek_trigger => :environment do
-      SesameMall::ShopUserSeek.whole_sync
-      SesameMall::ShopWechatUserSeek.whole_sync
-      SesameMall::SupplierSeek.whole_sync
-
-      _klasses = [
-        SesameMall::Source::ShopUser, SesameMall::Source::ShopWechatUser,
-        SesameMall::Source::Supplier
-      ]
-
-      _klasses.each {|klass|
-        TriggerService.setup_trigger klass: klass
-      }
-    end
-
-    desc 'init report_channel_shop_newer'
-    task :v1_0_10_init_report_channel_shop_newer => :environment do
-      Channel.normal.in_batches(of: 50) do |records|
-        ChannelShopNewer::Reporting.reset_report(channels: records)
-      end
-    end
-
     desc 'init seek trigger for view_journal share_journal'
     task :v1_0_11_init_seek_trigger => :environment do
       SesameMall::ViewJournalSeek.whole_sync
@@ -85,41 +19,6 @@ namespace :data_migrations do
 
       _klasses.each {|klass|
         TriggerService.setup_trigger klass: klass
-      }
-    end
-
-    desc 'migrate shop#channel_id'
-    task :v1_0_12_migrate_shop_channel_id => :environment do
-      Shop.preload(:shopkeeper).in_batches {|records|
-        Shopkeeper.with_preload_parents(records: records.map(&:shopkeeper).compact)
-
-        records.each {|record|
-          if record.shopkeeper
-            record.set_channel_path
-            record.save
-          end
-        }
-      }
-    end
-
-    desc 'migrate shop info'
-    task :v1_0_13_migrate_shop_info => :environment do
-      SesameMall::Source::Shop.in_batches {|records|
-        _shops = Shop.where(id: records.pluck(:ID))
-
-        Shop.transaction do
-          _shops.each {|record|
-            _source = records.find{|source| source.ID == record.id}
-            if _source and record.shop_img.blank?
-              record.update_columns(
-                shop_template_id: _source.SHOP_TEMPLATE_ID,
-                shop_theme: _source.SHOP_THEME,
-                shop_img: _source.SHOP_IMG,
-                share_shop_qrcode: _source.SHARE_SHOP_QRCODE
-              )
-            end
-          }
-        end
       }
     end
 
@@ -152,53 +51,6 @@ namespace :data_migrations do
       }
     end
 
-    desc 'migrate shopkeeper info'
-    task :v1_1_2_migrate_shopkeeper_info => :environment do
-      SesameMall::InvitePayRecordSeek.whole_sync
-
-      _klasses = [
-        SesameMall::Source::InvitePayRecord
-      ]
-
-      _klasses.each {|klass|
-        TriggerService.setup_trigger klass: klass
-      }
-
-      SesameMall::Source::Shopkeeper.in_batches {|records|
-        _shopkeepers = Shopkeeper.where(id: records.pluck(:id))
-        _keys = %w(
-          invite_code invite_qrcode_path my_qrcode_path
-          remark ticket_send_flag
-        )
-
-        Shopkeeper.transaction do
-          _shopkeepers.each {|record|
-            _source = records.find{|source| source.id == record.id}
-            if _source and record.invite_code.blank?
-              record.update_columns(
-                _source.attributes.slice(*_keys)
-              )
-            end
-          }
-        end
-      }
-    end
-
-    desc 'migrate shop_acitvity total_stat'
-    task :v1_1_3_migrate_shop_acitvity_total_stat => :environment do
-      shops = Shop.all
-      ShopActivity::UpdateReport.update_report(
-        shops: shops.preload(:shopkeeper),
-        force_update: true
-      )
-
-      CumulativeShopActivity::UpdateReport.update_report(
-        shops: shops,
-        interval_time: 8.hours,
-        force_update: true
-      )
-    end
-
     task :v1_1_3_2_migrate_shop_income_amount => :environment do
       SesameMall::IncomeRecordSeek.whole_sync
 
@@ -224,20 +76,6 @@ namespace :data_migrations do
       }
     end
 
-    task :v1_1_3_3_migrate_shop_activity_children_stat_field => :environment do
-      shops = Shop.where(id: ReportShopActivity.where(report_date: Date.today).select(:shop_id))
-      ShopActivity::UpdateReport.update_report(
-        shops: shops.preload(:shopkeeper),
-        force_update: true
-      )
-
-      CumulativeShopActivity::UpdateReport.update_report(
-        shops: shops,
-        interval_time: 8.hours,
-        force_update: true
-      )
-    end
-
     desc 'migrate daily_operational_report'
     task :v1_1_3_4_migrate_daily_operational_report => :environment do
       1.months.ago.to_date.upto(Date.today) {|date|
@@ -245,6 +83,19 @@ namespace :data_migrations do
           report_date: date,
           force_update: true
         )
+      }
+    end
+
+    desc 'init seek trigger for sesame_mall sub order'
+    task :v1_0_6_init_seek_trigger => :environment do
+      SesameMall::ProductSkuSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::ProductSku
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
       }
     end
   end

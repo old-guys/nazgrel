@@ -116,6 +116,14 @@ category_seek_job:
   args:
     duration: 125
 
+product_sku_seek_job:
+  cron: "*/30 * * * *"
+  name: "同步产品库存"
+  class: "ProductSkuSeekWorker"
+  queue: :seek
+  args:
+    duration: 35
+
 deleted_record_seek_job:
   cron: "3 * * * *"
   name: "删除芝蚂城已经删除的记录"

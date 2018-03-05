@@ -1,0 +1,20 @@
+zh-CN:
+  activerecord:
+    models:
+      product_sku: "产品库存"
+    attributes:
+      product_sku:
+        id: "ID"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    product_sku:
+      status:
+        init: "初始化"
+        opening: "营业中"
+        disabled: "停用"
+      is_online:
+        :yes: "是"
+        :no: "否"
