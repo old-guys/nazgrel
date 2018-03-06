@@ -19,12 +19,12 @@ module CumulativeShopActivity::Calculations
     }
     dates = (stage.split("_").last.to_i).days.ago(date)..date
 
-    ReportShopActivity.where(
-      report_date: dates,
-      shop_id: shop_id
-    ).pluck_h(*_sum_fields).pop.try(:reject){|_,v|
-      v.blank?
-    }
+    format_calculate_hash(
+      result: ReportShopActivity.where(
+        report_date: dates,
+        shop_id: shop_id
+      ).pluck_h(*_sum_fields).pop
+    )
   end
 
   def calculate_by_total(shop_id: , date:)
@@ -32,11 +32,11 @@ module CumulativeShopActivity::Calculations
       "(`report_shop_activities`.`total_#{field}`) as total_#{field}"
     }
 
-    ReportShopActivity.where(
-      report_date: date,
-      shop_id: shop_id
-    ).pluck_h(*_sum_fields).pop.try(:reject){|_,v|
-      v.blank?
-    }
+    format_calculate_hash(
+      result: ReportShopActivity.where(
+        report_date: date,
+        shop_id: shop_id
+      ).pluck_h(*_sum_fields).pop
+    )
   end
 end

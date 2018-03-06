@@ -10,11 +10,8 @@ class CumulativeShopActivityReportWorker
     _type = options["type"] || "partial"
     case _type
       when "update_old"
-        _stage = ReportCumulativeShopActivity.stat_cumulative_stages.last
-        dates = Date.yesterday..date
-
         ReportCumulativeShopActivity.where(
-          report_date: dates
+          "report_date <= ?", Date.yesterday
         ).in_batches do |records|
           CumulativeShopActivity::UpdateReport.update_report(
             shops: Shop.where(id: records.select(:shop_id)),

@@ -58,6 +58,7 @@ class ShopActivity::UpdateReport
   end
   include ShopActivity::Calculations
   include ReportLoggerable
+  include ReportCalculationable
 
   SHOP_IDS_CACHE_KEY = "shop_activity_report_shop_ids"
 

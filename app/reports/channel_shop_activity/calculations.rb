@@ -5,10 +5,10 @@ module ChannelShopActivity::Calculations
       "sum(`report_shop_activities`.`#{field}`) as #{field}"
     }
 
-    report_shop_activities.pluck_h(
-      *_sum_fields
-    ).pop.try(:reject){|_,v|
-      v.blank?
-    }
+    format_calculate_hash(
+      result: report_shop_activities.pluck_h(
+        *_sum_fields
+      ).pop
+    )
   end
 end

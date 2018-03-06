@@ -33,6 +33,7 @@ class CityShopActivity::UpdateReport
   end
   include CityShopActivity::Calculations
   include ReportLoggerable
+  include ReportCalculationable
 
   CITY_CACHE_KEY = "city_shop_activity_report_cities"
 

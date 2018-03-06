@@ -44,6 +44,7 @@ class CumulativeShopActivity::UpdateReport
   end
   include CumulativeShopActivity::Calculations
   include ReportLoggerable
+  include ReportCalculationable
 
   SHOP_IDS_CACHE_KEY = "shop_cumulative_report_shop_ids"
 

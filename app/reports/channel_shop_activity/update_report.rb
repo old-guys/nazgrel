@@ -33,6 +33,7 @@ class ChannelShopActivity::UpdateReport
   end
   include ChannelShopActivity::Calculations
   include ReportLoggerable
+  include ReportCalculationable
 
   CHANNEL_IDS_CACHE_KEY = "channel_shop_activity_report_channel_ids"
 

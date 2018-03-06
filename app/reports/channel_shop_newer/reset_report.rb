@@ -10,6 +10,7 @@ class ChannelShopNewer::ResetReport
   end
   include ChannelShopNewer::Calculations
   include ReportLoggerable
+  include ReportCalculationable
 
   attr_accessor :channel, :dates, :records, :new_records, :result
 

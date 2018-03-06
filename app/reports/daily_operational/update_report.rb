@@ -20,6 +20,7 @@ class DailyOperational::UpdateReport
   end
   include DailyOperational::Calculations
   include ReportLoggerable
+  include ReportCalculationable
 
   attr_accessor :record, :date, :result
 
