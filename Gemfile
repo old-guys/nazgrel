@@ -17,7 +17,7 @@ gem 'jbuilder_cache_multi', '~> 0.1.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # The fastest JSON parser and object serializer.
-gem 'oj', '~> 3.4'
+gem 'oj', '~> 3.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -74,7 +74,7 @@ gem 'devise', '~> 4.4', '>= 4.4.1'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
-gem 'devise-i18n', '~> 1.6', '>= 1.6.0'
+gem 'devise-i18n', '~> 1.6', '>= 1.6.1'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1', '>= 1.1.0'
 
