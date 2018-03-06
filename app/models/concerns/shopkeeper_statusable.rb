@@ -131,6 +131,10 @@ module ShopkeeperStatusable
     })
   end
 
+  def indirectly_descendant_commission_income_amount
+    descendant_commission_income_amount - children_commission_income_amount
+  end
+
   private
   def status_cache_key
     @status_cache_key ||= ActiveSupport::Cache.expand_cache_key([cache_key, report_cumulative_shop_activity])

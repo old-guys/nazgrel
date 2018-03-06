@@ -74,13 +74,11 @@ module ChannelUserStatusable
   def invite_children_reward_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:invite_children_reward:raw", raw: true) {
       if region_manager?
-        fetch_multi(
-          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
-          cache_key: :invite_children_reward_amount_cache_key,
-          raw: true
-        ) {|record|
-          record.invite_children_reward_amount
-        }.values.map(&:to_f).sum.to_s
+        BigDecimal.new(
+          channel_region_channel_records.map {|record|
+            record.invite_children_reward_amount
+          }.sum
+        )
       else
         own_shopkeeper.children_grade_gold_size * 200 + own_shopkeeper.children_grade_platinum_size * 100
       end
@@ -90,13 +88,11 @@ module ChannelUserStatusable
   def children_comission_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:children_comission:raw", raw: true) {
       if region_manager?
-        fetch_multi(
-          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
-          cache_key: :children_comission_amount_cache_key,
-          raw: true
-        ) {|record|
-          record.children_comission_amount
-        }.values.map(&:to_f).sum.to_s
+        BigDecimal.new(
+          channel_region_channel_records.map {|record|
+            record.children_comission_amount
+          }.sum
+        )
       else
         own_shopkeeper.children.sum(:commission_income_amount) * 0.15
       end
@@ -106,13 +102,11 @@ module ChannelUserStatusable
   def invite_children_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:invite_amount:raw", raw: true) {
       if region_manager?
-        fetch_multi(
-          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
-          cache_key: :invite_children_amount_cache_key,
-          raw: true
-        ) {|record|
-          record.invite_children_amount
-        }.values.map(&:to_f).sum.to_s
+        BigDecimal.new(
+          channel_region_channel_records.map {|record|
+            record.invite_children_amount
+          }.sum
+        )
       else
         own_shopkeeper.children_size * BigDecimal.new(50)
       end
@@ -122,19 +116,24 @@ module ChannelUserStatusable
   def indirectly_descendant_amount
     Rails.cache.fetch("channel_user:#{id}:#{role_type}:#{own_shopkeepers_cache_key}:indirectly_descendant_comission:raw", raw: true) {
       if region_manager?
-        fetch_multi(
-          records: channel_region.channels.preload(own_shopkeeper: :report_cumulative_shop_activity),
-          cache_key: :indirectly_descendant_amount_cache_key,
-          raw: true
-        ) {|record|
-          record.indirectly_descendant_amount
-        }.values.map(&:to_f).sum.to_s
+        BigDecimal.new(
+          channel_region_channel_records.map {|record|
+            record.indirectly_descendant_amount
+          }.sum.to_s
+        )
       else
         _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
         _amount = own_shopkeeper.indirectly_descendants.sum(:commission_income_amount)
         _amount * _rate
       end
     }
+  end
+
+  private
+  def channel_region_channel_records
+    @channel_region_channel_records ||= channel_region.channels.preload(
+      own_shopkeeper: :report_cumulative_shop_activity
+    )
   end
 
   module ClassMethods

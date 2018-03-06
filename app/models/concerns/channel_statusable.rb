@@ -48,46 +48,21 @@ module ChannelStatusable
     }
   end
 
-  def invite_children_reward_amount_cache_key
-    "channel:#{id}:#{own_shopkeeper.cache_key}:invite_children_reward:raw"
-  end
-
   def invite_children_reward_amount
-    Rails.cache.fetch(invite_children_reward_amount_cache_key, raw: true) {
-      own_shopkeeper.invite_amount
-    }
-  end
-
-  def children_comission_amount_cache_key
-    "channel:#{id}:#{shopkeepers_cache_key}:children_comission:raw"
+    own_shopkeeper.invite_amount
   end
 
   def children_comission_amount
-    Rails.cache.fetch(children_comission_amount_cache_key, raw: true) {
-      own_shopkeeper.children_commission_income_amount * 0.15
-    }
-  end
-
-  def invite_children_amount_cache_key
-    "channel:#{id}:#{shopkeepers_cache_key}:invite_amount:raw"
+    own_shopkeeper.children_commission_income_amount * 0.15
   end
 
   def invite_children_amount
-    Rails.cache.fetch(invite_children_amount_cache_key, raw: true) {
-      own_shopkeeper.children_size * BigDecimal.new(50)
-    }
-  end
-
-  def indirectly_descendant_amount_cache_key
-    "channel:#{id}:#{shopkeepers_cache_key}:indirectly_descendant_amount:raw"
+    own_shopkeeper.children_size * BigDecimal.new(50)
   end
 
   def indirectly_descendant_amount
-    Rails.cache.fetch(indirectly_descendant_amount_cache_key, raw: true) {
-      _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
-      _amount = own_shopkeeper.indirectly_descendants.sum(:commission_income_amount)
-      _amount * _rate
-    }
+    _rate = own_shopkeeper.indirectly_descendant_size > 1000 ? 0.08 : 0.05
+    own_shopkeeper.indirectly_descendant_commission_income_amount * _rate
   end
 
   module ClassMethods
