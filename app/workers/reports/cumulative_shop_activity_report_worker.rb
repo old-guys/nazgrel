@@ -11,7 +11,7 @@ class CumulativeShopActivityReportWorker
     case _type
       when "update_old"
         ReportCumulativeShopActivity.where(
-          "report_date <= ?", Date.yesterday
+          report_date: 60.days.ago..Date.yesterday
         ).in_batches do |records|
           CumulativeShopActivity::UpdateReport.update_report(
             shops: Shop.where(id: records.select(:shop_id)),
