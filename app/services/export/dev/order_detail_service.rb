@@ -35,7 +35,7 @@ class Export::Dev::OrderDetailService
       OpenStruct.new(
         product_category: _product.try(:category).to_s,
         product: _product.to_s,
-        suppliers_context: _suppliers.join(";"),
+        suppliers_context: _suppliers.find {|supplier| supplier.id == record.supplier_id }.to_s,
         product_skus_context: _product_skus.map{|product_sku|
           "SKU: #{product_sku.sku_n} 成本: #{product_sku.cost_price} 使用: #{product_sku.sales_n}/#{product_sku.sock_n}"
         }.join("\n"),

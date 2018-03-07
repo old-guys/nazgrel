@@ -1,4 +1,6 @@
 <% product = products.find {|product| product.id == record.product_id }%>
+<% supplier = suppliers.find {|supplier| supplier.id == record.supplier_id } %>
+
 <% product_skus =  ProductSku.where(
     id: all_order_details.where(product_id: record.product_id).select(:product_sku_id)
   )
@@ -8,10 +10,7 @@
   <td><%= product.category %></td>
   <td><%= product %></td>
   <td>
-    <% suppliers.each do |supplier| %>
-      <%= "#{supplier}" %>
-      <br />
-    <% end %>
+    <%= "#{supplier}" %>
   </td>
   <td>
     <% product_skus.each do |product_sku| %>
