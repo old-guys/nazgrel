@@ -10,7 +10,7 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   # query: "张三"
   def index
     @shops = own_record_by_channel_user(klass: Shop).preload(
-      shopkeeper: :parent
+      shopkeeper: [:parent, :report_cumulative_shop_activity]
     ).joins(:shopkeeper)
 
     @shops = filter_records_by(relation: @shops)
@@ -32,7 +32,9 @@ class Api::Channel::ShopsController < Api::Channel::BaseController
   def children
     @shop = current_channel_user.own_shops.find(params[:id])
 
-    @shops = @shop.children
+    @shops = @shop.children.preload(
+      shopkeeper: [:parent, :report_cumulative_shop_activity]
+    )
   end
 
   def show

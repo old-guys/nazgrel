@@ -35,7 +35,7 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
 
   def report
     @shopkeepers = Shopkeeper.preload(
-      :shop, :parent,
+      :shop, :parent, :report_cumulative_shop_activity,
       :shop_user
     )
 
