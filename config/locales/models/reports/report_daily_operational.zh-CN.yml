@@ -21,6 +21,12 @@ zh-CN:
         order_count: "订单数"
         order_pay_price: "支付金额"
 
+        sale_order_total_price: "销售订单总额"
+        sale_order_total_price_rate: "销售订单总额占比"
+
+        shopkeeper_order_total_price: "自购订单总额"
+        shopkeeper_order_total_price_rate: "自购订单总额占比"
+
         order_conversion_rate: "订单转化率"
         order_total_price_avg: "平均每单金额"
 
