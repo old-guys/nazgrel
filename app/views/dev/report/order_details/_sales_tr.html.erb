@@ -1,0 +1,24 @@
+<% product = products.find {|product| product.id == record.product_id }%>
+<% product_skus =  ProductSku.where(
+    id: all_order_details.where(product_id: record.product_id).select(:product_sku_id)
+  )
+%>
+
+<tr>
+  <td><%= product.category %></td>
+  <td><%= product %></td>
+  <td>
+    <% suppliers.each do |supplier| %>
+      <%= "#{supplier}" %>
+      <br />
+    <% end %>
+  </td>
+  <td>
+    <% product_skus.each do |product_sku| %>
+      <%= "SKU: #{product_sku.sku_n} 成本: #{product_sku.cost_price} 使用: #{product_sku.sales_n}/#{product_sku.sock_n}" %>
+      <br />
+    <% end %>
+  </td>
+  <td><%= record.number %></td>
+  <td><%= record.amount %></td>
+</tr>
