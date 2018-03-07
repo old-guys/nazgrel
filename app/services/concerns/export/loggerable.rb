@@ -3,6 +3,8 @@ module Export::Loggerable
 
   included do
     delegate :logger, to: "self.class"
+    delegate :log_error, to: "ErrorLogger"
+
   end
 
   module ClassMethods

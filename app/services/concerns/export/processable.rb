@@ -50,6 +50,7 @@ module Export::Processable
             end
           rescue => e
             logger.error "export record #{record}, failure #{e.message}"
+            log_error(e)
 
             ErrorLogger.log_error(e)
           end
