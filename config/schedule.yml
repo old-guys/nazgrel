@@ -252,4 +252,11 @@ daily_operational_report:
   class: "DailyOperationalReportWorker"
   queue: :report
   args:
-    type: "partial"
+    type: "today"
+daily_operational_report_yesterday:
+  cron: "3 0 * * *"
+  name: "更新昨天每日运营报表数据"
+  class: "DailyOperationalReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"
