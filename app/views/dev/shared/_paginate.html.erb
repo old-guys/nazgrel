@@ -3,6 +3,6 @@
   <div class="text-left">
     <small class="text-muted">共 <%= records.total_count %> 条</small>
 
-    <%= paginate records  %>
+    <%= paginate records, params: params.as_json  %>
   </div>
 <% end %>
