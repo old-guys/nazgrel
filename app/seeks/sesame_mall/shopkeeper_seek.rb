@@ -67,6 +67,10 @@ class SesameMall::ShopkeeperSeek
     # REVIEW shopkeeper#order_number
     set_shopkeeper_order_content(record: record) if record.persisted?
 
+    if record.province.blank? and record.user_phone.present?
+      record.set_phone_belong_to
+    end
+
     if record.persisted?
       _commission_income_amount = record.income_records.commission_income.confirmed.
         sum(:income_amount)

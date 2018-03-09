@@ -65,12 +65,6 @@ class Shopkeeper < ApplicationRecord
     }.call
   end
 
-  def province
-    set_phone_belong_to if super.blank? and user_phone.present?
-
-    super
-  end
-
   def invite_qrcode_url
     if invite_qrcode_path
       "http://inte.ishanggang.com/#{invite_qrcode_path}"
@@ -79,20 +73,20 @@ class Shopkeeper < ApplicationRecord
     end
   end
 
-  private
   def set_phone_belong_to
     if user_phone.present?
       _hash = phone_belong_to_juhe_hash phone: user_phone
       return if _hash.blank?
       _hash["city"] = _hash["province"] if _hash["city"].blank?
 
-      update_columns(
+      assign_attributes(
         city: _hash["city"],
         province: _hash["province"],
       )
     end
   end
 
+  private
   class << self
     def with_preload_parents(records: )
       _shopkeepers = Shopkeeper.where(
