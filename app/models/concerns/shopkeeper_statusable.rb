@@ -6,7 +6,7 @@ module ShopkeeperStatusable
 
     before_save do
       if path_changed? and parents
-        _keys = parents.compact.flat_map(&:cache_status_keys)
+        _keys = parents.preload(:report_cumulative_shop_activity).compact.flat_map(&:cache_status_keys)
 
         Rails.cache.with {|c|
           c.del(_keys)
@@ -22,33 +22,21 @@ module ShopkeeperStatusable
 
     def cache_status_keys
       [
-        "#{status_cache_key}:descendant_size",
         "#{status_cache_key}:descendant_activation_size",
-        "#{status_cache_key}:descendant_grade_platinum_size",
-        "#{status_cache_key}:descendant_grade_gold_size",
-        "#{status_cache_key}:children_size",
-        "#{status_cache_key}:children_grade_platinum_size",
-        "#{status_cache_key}:children_grade_gold_size"
       ].freeze
     end
   end
 
   def share_journal_count
-    report_cumulative_shop_activity.try(:total_shared_count) || Rails.cache.fetch("#{status_cache_key}:share_journal_count:raw", raw: true, expires_in: 30.minutes) {
-      ShareJournal.where(shop_id: shop_id).count
-    }.to_i
+    report_cumulative_shop_activity.try(:total_shared_count)
   end
 
   def view_journal_count
-    report_cumulative_shop_activity.try(:total_view_count) || Rails.cache.fetch("#{status_cache_key}:view_journal_count:raw", raw: true, expires_in: 30.minutes) {
-      ViewJournal.where(shop_id: shop_id).count
-    }.to_i
+    report_cumulative_shop_activity.try(:total_view_count)
   end
 
   def descendant_size
-    report_cumulative_shop_activity.try(:total_descendant_count) || Rails.cache.fetch("#{status_cache_key}:descendant_size", raw: true) {
-      descendant_entities.size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_descendant_count)
   end
 
   def descendant_activation_size
@@ -66,39 +54,27 @@ module ShopkeeperStatusable
   end
 
   def descendant_grade_platinum_size
-    report_cumulative_shop_activity.try(:total_ecn_grade_platinum_count) || @descendant_grade_platinum_size ||= Rails.cache.fetch("#{status_cache_key}:descendant_grade_platinum_size", raw: true) {
-      descendant_entities.grade_platinum.size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_ecn_grade_platinum_count)
   end
 
   def descendant_grade_gold_size
-    report_cumulative_shop_activity.try(:total_ecn_grade_gold_count) || Rails.cache.fetch("#{status_cache_key}descendant_grade_gold_size", raw: true) {
-      descendant_entities.grade_gold.size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_ecn_grade_gold_count)
   end
 
   def children_size
-    report_cumulative_shop_activity.try(:total_children_count) || Rails.cache.fetch("#{status_cache_key}:children_size", raw: true) {
-      children.size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_children_count)
   end
 
   def children_grade_platinum_size
-    report_cumulative_shop_activity.try(:total_children_grade_platinum_count) || Rails.cache.fetch("#{status_cache_key}:children_grade_platinum_size", raw: true) {
-      children.grade_platinum.size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_children_grade_platinum_count)
   end
 
   def children_grade_gold_size
-    report_cumulative_shop_activity.try(:total_children_grade_gold_count) || Rails.cache.fetch("#{status_cache_key}:children_grade_gold_size", raw: true) {
-      children.grade_gold.size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_children_grade_gold_count)
   end
 
   def children_commission_income_amount
-    report_cumulative_shop_activity.try(:total_children_commission_income_amount) || BigDecimal.new(Rails.cache.fetch("#{status_cache_key}:children_commission_income_amount", raw: true) {
-      children.sum(:commission_income_amount)
-    })
+    report_cumulative_shop_activity.try(:total_children_commission_income_amount)
   end
 
   def indirectly_descendant_size
@@ -114,21 +90,15 @@ module ShopkeeperStatusable
   end
 
   def descendant_order_number
-    report_cumulative_shop_activity.try(:total_descendant_order_number) || Rails.cache.fetch("#{status_cache_key}:descendant_order_number", raw: true) {
-      descendant_entities.sum(:order_number)
-    }.to_i
+    report_cumulative_shop_activity.try(:total_descendant_order_number)
   end
 
   def descendant_order_amount
-    report_cumulative_shop_activity.try(:total_descendant_order_amount) || BigDecimal.new(Rails.cache.fetch("#{status_cache_key}:descendant_order_amount", raw: true) {
-      descendant_entities.sum(:order_amount)
-    })
+    report_cumulative_shop_activity.try(:total_descendant_order_amount)
   end
 
   def descendant_commission_income_amount
-    report_cumulative_shop_activity.try(:total_descendant_commission_income_amount) || BigDecimal.new(Rails.cache.fetch("#{status_cache_key}:descendant_commission_income_amount", raw: true) {
-      descendant_entities.sum(:commission_income_amount)
-    })
+    report_cumulative_shop_activity.try(:total_descendant_commission_income_amount)
   end
 
   def indirectly_descendant_commission_income_amount
