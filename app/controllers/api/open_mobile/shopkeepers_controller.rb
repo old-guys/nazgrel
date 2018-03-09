@@ -14,6 +14,13 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
       @shopkeepers = @shopkeepers.where(city: index_params[:city])
     end
 
+    dates = distance_time_range_from_now(
+      str: params[:updated_at_range].presence,
+    )
+    if dates.present?
+      @shopkeepers = @shopkeepers.where(updated_at: dates)
+    end
+
     # @shopkeepers = filter_records_by(relation: @shopkeepers)
     @shopkeepers = simple_search(relation: @shopkeepers)
     @shopkeepers = sort_records(relation: @shopkeepers, default_order: {created_at: :desc})
@@ -27,6 +34,13 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
     end
     if index_params[:city].present?
       @shopkeepers = @shopkeepers.where(city: index_params[:city])
+    end
+
+    dates = distance_time_range_from_now(
+      str: params[:updated_at_range].presence,
+    )
+    if dates.present?
+      @shopkeepers = @shopkeepers.where(updated_at: dates)
     end
 
     @shopkeepers = @shopkeepers.order("order_amount DESC")
@@ -43,9 +57,8 @@ class Api::OpenMobile::ShopkeepersController < Api::OpenMobile::BaseController
       @shopkeepers = @shopkeepers.where(shop_id: params[:shop_id])
     end
 
-    dates = distance_of_time_range(
-      str: params[:time_range].presence,
-      from_time: Time.now.end_of_day
+    dates = distance_time_range_from_now(
+      str: params[:updated_at_range].presence,
     )
     if dates.present?
       @shopkeepers = @shopkeepers.where(updated_at: dates)
