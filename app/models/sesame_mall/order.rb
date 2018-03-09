@@ -22,7 +22,8 @@ class Order < ApplicationRecord
     deliveried: 2,
     finished: 3,
     canceled: 4,
-    finished_trouble: 5
+    finished_trouble: 5,
+    refund: 6
   }
   enum order_type: {
     create_shop: 0,

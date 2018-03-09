@@ -27,7 +27,7 @@ class Api::Channel::OrdersController < Api::Channel::BaseController
   end
 
   def refund
-    @orders = own_record_by_channel_user(klass: Order).sales_order.none
+    @orders = own_record_by_channel_user(klass: Order).sales_order.refund
 
     @orders = filter_records_by(relation: @orders)
     @orders = simple_search(relation: @orders)

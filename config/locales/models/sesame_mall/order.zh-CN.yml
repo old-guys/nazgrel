@@ -20,7 +20,8 @@ zh-CN:
         deliveried: "已发货"
         finished: "已完成"
         canceled: "已取消"
-        finished_trouble: "已完成(异常)"
+        finished_trouble: "已关闭"
+        refund: "退款退货"
       order_type:
         create_shop: "开店订单"
         shopkeeper_order: "店主订单"
