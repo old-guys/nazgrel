@@ -45,13 +45,6 @@ json.shopkeeper_order_amount record.shopkeeper_order_amount.to_f.to_s
 json.sale_order_number record.sale_order_number.to_i
 json.sale_order_amount record.sale_order_amount.to_f.to_s
 
-json.descendant_order_number record.descendant_order_number.to_i
-json.descendant_order_amount record.descendant_order_amount.to_f.to_s
-json.descendant_commission_income_amount record.descendant_commission_income_amount.to_f.to_s
-
-json.children_count record.children_size
-json.descendant_count record.descendant_size
-
 json.tree_depth record.tree_depth
 
 json.parent_names record.parents.map(&:to_s)
