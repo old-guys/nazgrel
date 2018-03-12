@@ -29,6 +29,10 @@ json.withdraw_amount record.withdraw_amount
 json.blocked_amount record.blocked_amount
 json.create_shop_amount record.create_shop_amount
 
+json.total_income_coin record.total_income_coin
+json.balance_coin	record.balance_coin
+json.use_coin	record.use_coin
+
 json.commission_income_amount record.commission_income_amount.to_f.to_s
 json.team_income_amount record.team_income_amount
 json.invite_amount record.invite_amount

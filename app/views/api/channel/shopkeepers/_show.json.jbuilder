@@ -44,7 +44,7 @@ json.withdraw_amount record.withdraw_amount
 
 # 总收入芝蚂币
 json.total_income_coin record.total_income_coin
-# 总收入芝蚂币
+# 芝蚂币余额
 json.balance_coin	record.balance_coin
 # 已使用芝蚂币
 json.use_coin	record.use_coin
