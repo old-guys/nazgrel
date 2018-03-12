@@ -22,6 +22,18 @@ zh-CN:
         canceled: "已取消"
         finished_trouble: "已关闭"
         refund: "退款退货"
+      after_sale_status:
+        awaiting_approve: "待审核"
+        awaiting_sendback: "待寄回"
+        awaiting_refund: "待退款"
+        refund_failure: "退款失败"
+        refund_success: "退款成功"
+        apply_cancel: "取消申请"
+        approve_rejected: "驳回申请"
+      order_sub_status:
+        normal: "正常订单"
+        partial_refund: "部分退款"
+        full_refund: "全部退款"
       order_type:
         create_shop: "开店订单"
         shopkeeper_order: "店主订单"

@@ -65,8 +65,25 @@ class SesameMall::OrderSeek
       discount_rate: data[:discount_rate],
       reduce_type: ::Order.reduce_types.invert[data[:reduce_type]],
 
+      virt_coin_reduce_price: data[:virt_coin_reduce_price],
+      refund_time: parse_no_timezone(datetime: data[:refund_time]),
+      refund_apply_time: parse_no_timezone(datetime: data[:refund_apply_time]),
+      after_sale_status: ::Order.after_sale_statuses.invert[data[:after_sale_status].to_i],
+      refunded_amount: data[:refunded_amount],
+      refunding_amount: data[:refunding_amount],
+      refunded_product_num: data[:refunded_product_num],
+      refunding_product_num: data[:refunding_product_num],
+      refunded_comm: data[:refunded_comm],
+      refunding_comm: data[:refunding_comm],
+      refunded_virt_coin_reduce_price: data[:refunded_virt_coin_reduce_price],
+      refunding_virt_coin_reduce_price: data[:refunding_virt_coin_reduce_price],
+      order_sub_status: ::Order.order_sub_statuses.invert[data[:order_sub_status].to_i],
+      old_order_status: data[:old_order_status],
+      order_product_num: data[:order_product_num],
+      cur_refund_order_no: data[:cur_refund_order_no],
+
       created_at: parse_no_timezone(datetime: data[:create_time]),
-      updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:modify_time])
     )
 
     record

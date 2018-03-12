@@ -25,6 +25,15 @@ class Order < ApplicationRecord
     finished_trouble: 5,
     refund: 6
   }
+  enum after_sale_status: {
+    awaiting_approve: 0,
+    awaiting_sendback: 1,
+    awaiting_refund: 2,
+    refund_failure: 3,
+    refund_success: 4,
+    apply_cancel: 5,
+    approve_rejected: 6
+  }
   enum order_type: {
     create_shop: 0,
     shopkeeper_order: 1,
@@ -53,6 +62,11 @@ class Order < ApplicationRecord
   }, _prefix: true
   enum reduce_type: {
     activity: 0
+  }
+  enum order_sub_status: {
+    normal: 0,
+    partial_refund: 1,
+    full_refund: 2
   }
 
   scope :sales_order, ->{
