@@ -77,7 +77,7 @@ module ChannelUserStatusable
         BigDecimal.new(
           channel_region_channel_records.map {|record|
             record.invite_children_reward_amount
-          }.sum
+          }.sum.to_s
         )
       else
         own_shopkeeper.children_grade_gold_size * 200 + own_shopkeeper.children_grade_platinum_size * 100
@@ -91,7 +91,7 @@ module ChannelUserStatusable
         BigDecimal.new(
           channel_region_channel_records.map {|record|
             record.children_comission_amount
-          }.sum
+          }.sum.to_s
         )
       else
         own_shopkeeper.children.sum(:commission_income_amount) * 0.15
@@ -105,7 +105,7 @@ module ChannelUserStatusable
         BigDecimal.new(
           channel_region_channel_records.map {|record|
             record.invite_children_amount
-          }.sum
+          }.sum.to_s
         )
       else
         own_shopkeeper.children_size * BigDecimal.new(50)
