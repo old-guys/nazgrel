@@ -1,3 +1,13 @@
+## 每日运营报表计算成本和券(2018-03-12)
+
+- #feature# 每日运营报表计算芝蚂币
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_9_migrate_order_coin
+cap production deploy:runrake task=data_migrations:version:v1_1_3_9_migrate_income_record_coin
+cap production deploy:runrake task=data_migrations:version:v1_1_3_4_migrate_daily_operational_report
+```
+
 ## 每日运营报表计算成本和券(2018-03-05)
 
 - #feature# 每日运营报表计算成本和券

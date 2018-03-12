@@ -30,6 +30,9 @@ zh-CN:
         order_conversion_rate: "订单转化率"
         order_total_price_avg: "平均每单金额"
 
+        income_coin: "收入芝蚂币"
+        use_coin: "已使用芝蚂币"
+
         commission_income_amount: "佣金"
         activity_ticket_amount: "现金券"
         product_cost: "成本"

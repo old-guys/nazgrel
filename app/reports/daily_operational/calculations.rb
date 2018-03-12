@@ -28,6 +28,8 @@ module DailyOperational::Calculations
       order_total_price: _order_total_price,
       order_count: _order_count,
       order_pay_price: _orders.sum(:pay_price),
+      income_coin: IncomeRecord.confirmed.income.sesame_coin.where(created_at: _datetimes).sum(:income_amount),
+      use_coin: _orders.sum(:virt_coin_reduce_price),
       sale_order_total_price: _sale_order_total_price,
       sale_order_total_price_rate:
         _order_total_price > 0 ? (_sale_order_total_price / _order_total_price.to_f) : nil,
