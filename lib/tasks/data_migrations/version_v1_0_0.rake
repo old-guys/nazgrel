@@ -129,7 +129,11 @@ namespace :data_migrations do
     end
     desc 'migrate shopkeeper coin'
     task :v1_1_3_9_migrate_order_coin => :environment do
-      SesameMall::OrderSeek.partial_sync(duration: 6.days)
+      SesameMall::OrderSeek.partial_sync(duration: 8.days)
+    end
+    desc 'migrate shopkeeper coin'
+    task :v1_1_3_9_migrate_income_record_coin => :environment do
+      SesameMall::IncomeRecordSeek.partial_sync(duration: 8.days)
     end
   end
 end

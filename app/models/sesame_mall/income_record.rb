@@ -20,6 +20,11 @@ class IncomeRecord < ApplicationRecord
     expend: 1
   }
 
+  enum asset_type: {
+    money: 1,
+    sesame_coin: 2
+  }
+
   enum status: {
     awaiting_confirm: 0,
     confirmed: 1

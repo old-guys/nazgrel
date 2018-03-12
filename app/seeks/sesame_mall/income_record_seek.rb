@@ -23,6 +23,7 @@ class SesameMall::IncomeRecordSeek
 
       income_type: ::IncomeRecord.income_types.invert[data[:income_type]],
       record_type: ::IncomeRecord.record_types.invert[data[:type]],
+      asset_type: ::IncomeRecord.asset_types.invert[data[:record_type]],
       status: ::IncomeRecord.statuses.invert[data[:status]],
 
       order_id: data[:order_id],

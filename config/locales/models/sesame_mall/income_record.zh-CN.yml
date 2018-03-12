@@ -22,6 +22,9 @@ zh-CN:
       record_type:
         income: "收入"
         expend: "支出"
+      asset_type:
+        money: "资金流水"
+        sesame_coin: "芝蚂币流水"
       status:
         awaiting_confirm: "待确认"
         confirmed: "已确认"
