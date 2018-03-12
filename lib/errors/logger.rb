@@ -12,6 +12,10 @@ module ErrorLogger
     error_traces = e.backtrace.select{|l| l.start_with?(Rails.root.to_s)}
     error_traces = e.backtrace if error_traces.blank?
 
+    if defined?(NewRelic)
+      NewRelic::Agent.notice_error(e, custom_params: {uuid: uuid})
+    end
+
     logger.tagged(uuid) {
       error_traces.each do |message|
         logger.info message
