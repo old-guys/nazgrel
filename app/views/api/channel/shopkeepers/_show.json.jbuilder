@@ -42,6 +42,13 @@ json.withdraw_amount record.withdraw_amount
 # 冻结金额
 # json.blocked_amount	record.blocked_amount
 
+# 总收入芝蚂币
+json.total_income_coin record.total_income_coin
+# 总收入芝蚂币
+json.balance_coin	record.balance_coin
+# 已使用芝蚂币
+json.use_coin	record.use_coin
+
 # 邀请总人数
 json.invite_number record.invite_number
 # 店铺佣金 店铺收益 销售佣金
