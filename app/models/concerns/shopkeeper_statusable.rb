@@ -6,7 +6,7 @@ module ShopkeeperStatusable
 
     before_save do
       if path_changed? and parents
-        _keys = parents.preload(:report_cumulative_shop_activity).compact.flat_map(&:cache_status_keys)
+        _keys = parents.compact.flat_map(&:cache_status_keys)
 
         Rails.cache.with {|c|
           c.del(_keys)
