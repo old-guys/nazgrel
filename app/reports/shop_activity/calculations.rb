@@ -209,20 +209,20 @@ module ShopActivity::Calculations
   def cached_daily_result(field: , datetimes: , relation: , sum_block: )
     return sum_block.call(relation) if not datetimes.first.to_date == Date.today
     _time = Time.now
-    _cache_key = "cached_daily_result:#{field}:" << Digest::SHA1.hexdigest(relation.to_sql)
+    _cache_key = "cached_daily_result:raw:#{field}:" << Digest::SHA1.hexdigest(relation.to_sql)
     if _time < datetimes.first
       return 0
     end
     if _time.between?(datetimes.first, datetimes.last)
       _value = sum_block.call(relation)
-      Rails.cache.write(_cache_key, _value)
+      Rails.cache.write(_cache_key, _value, expires_in: 2.days)
 
       return _value
     end
     if _time > datetimes.last
-      return Rails.cache.fetch(_cache_key) {
+      return BigDecimal.new(Rails.cache.fetch(_cache_key, expires_in: 2.days) {
         sum_block.call(relation)
-      }
+      })
     end
   end
 end
