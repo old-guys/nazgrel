@@ -104,5 +104,28 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'migrate shopkeeper coin'
+    task :v1_1_3_8_migrate_shopkeeper_coin => :environment do
+      _time = Time.parse("2018-03-06")
+      Shopkeeper.where(updated_at: _time..6.days.since(_time)).in_batches(of: 100) {|records|
+        _source_records = SesameMall::Source::Shopkeeper.where(id: records.map(&:id))
+
+        records.each {|record|
+          _source_record = _source_records.find{|source_record|
+            source_record.id == record.id
+          }
+          record.assign_attributes(
+            total_income_coin: _source_record.total_income_coin,
+            balance_coin: _source_record.balance_coin,
+            use_coin: _source_record.use_coin
+          ) if _source_record
+        }
+
+        Shopkeeper.transaction do
+          records.select(&:changed?).map(&:save)
+        end
+      }
+    end
   end
 end

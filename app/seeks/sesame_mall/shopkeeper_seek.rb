@@ -28,6 +28,11 @@ class SesameMall::ShopkeeperSeek
       balance_amount: data[:balance_amount],
       withdraw_amount: data[:withdraw_amount],
       blocked_amount: data[:blocked_amount],
+
+      total_income_coin: data[:total_income_coin],
+      balance_coin: data[:balance_coin],
+      use_coin: data[:use_coin],
+
       invite_amount: data[:invite_amount],
       invite_number: data[:invite_number],
       # REVIEW 不同步因为, shopkeeper#order_amount 计算逻辑不一致
