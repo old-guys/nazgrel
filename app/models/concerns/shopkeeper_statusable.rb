@@ -22,7 +22,7 @@ module ShopkeeperStatusable
 
     def cache_status_keys
       [
-        "#{status_cache_key}:descendant_activation_size",
+        "#{cache_key}:descendant_activation_size",
       ].freeze
     end
   end
@@ -40,7 +40,7 @@ module ShopkeeperStatusable
   end
 
   def descendant_activation_size
-    @descendant_activation_size ||= Rails.cache.fetch("#{status_cache_key}:descendant_activation_size", raw: true) {
+    @descendant_activation_size ||= Rails.cache.fetch("#{cache_key}:descendant_activation_size", raw: true) {
       descendant_entities.where.not(order_number: nil).size
     }.to_i
   end
@@ -106,9 +106,6 @@ module ShopkeeperStatusable
   end
 
   private
-  def status_cache_key
-    @status_cache_key ||= ActiveSupport::Cache.expand_cache_key([cache_key, report_cumulative_shop_activity])
-  end
   module ClassMethods
   end
 end
