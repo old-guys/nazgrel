@@ -48,7 +48,7 @@ gem 'rails-i18n', '~> 5.1', '>= 5.1.1'
 gem 'migration_comments', '~> 0.4', '>= 0.4.1'
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
-gem 'httparty', '~> 0.16', '>= 0.16.0'
+gem 'httparty', '~> 0.16', '>= 0.16.1'
 
 # Axlsx_Rails provides an Axlsx renderer
 # so you can move all your spreadsheet code from your controller into view files.
