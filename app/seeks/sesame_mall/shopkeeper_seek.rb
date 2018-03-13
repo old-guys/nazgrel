@@ -55,7 +55,7 @@ class SesameMall::ShopkeeperSeek
 
       expire_time: parse_no_timezone(datetime: data[:expire_time]),
       use_invite_number: data[:use_invite_number],
-      org_grade: data[:org_grade],
+      org_grade: ::Shopkeeper.org_grades.invert[data[:org_grade]],
 
       created_at: parse_no_timezone(datetime: data[:create_time]),
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])

@@ -24,6 +24,11 @@ class Shopkeeper < ApplicationRecord
     grade_gold: 1,
     grade_trainee: 2
   }
+  enum org_grade: {
+    grade_platinum: 0,
+    grade_gold: 1,
+    grade_trainee: 2
+  }, _prefix: true
   enum status: {
     normal: 0,
     locked: 1,
