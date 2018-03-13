@@ -1,3 +1,13 @@
+## 店主拓扑表增加等级变更时间(2018-03-13)
+
+- #feature# 店主拓扑表增加等级变更时间
+- #enhance# 调整店主运营程序缓存时效
+- #enhance# 缩短同步芝蚂城数据服务执行间隔到3分钟
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_10_migrate_shopkeeper_upgrade_grade_at
+```
+
 ## 每日运营报表计算成本和券(2018-03-12)
 
 - #feature# 每日运营报表计算芝蚂币
