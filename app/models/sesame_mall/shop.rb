@@ -36,14 +36,14 @@ class Shop < ApplicationRecord
   end
 
   def set_path
-    self.path = shopkeeper.parents.map(&:shop_id).unshift(0).join("/")
+    self.path = shopkeeper.parents.compact.map(&:shop_id).unshift(0).join("/")
   end
 
   def set_channel_path
     _channels = Channel.where(shopkeeper_user_id: shopkeeper.parent_ids).select(:id, :shop_id)
     _shop_ids = []
 
-    shopkeeper.parents.reverse.each{|shopkeeper|
+    shopkeeper.parents.compact.reverse.each{|shopkeeper|
       _shop_ids << shopkeeper.shop_id
       _channel = _channels.find{|s| s.shop_id.to_s == shopkeeper.shop_id.to_s }
 
