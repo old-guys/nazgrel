@@ -16,7 +16,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.view_count_rank(
         records: @permit_shopkeepers,
         dates: dates,
@@ -52,7 +52,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.share_count_rank(
         records: @permit_shopkeepers,
         dates: dates,
@@ -87,7 +87,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.viewer_count_rank(
         records: @permit_shopkeepers,
         dates: dates,
@@ -124,7 +124,7 @@ class Api::OpenMobile::ShopActivitiesController < Api::OpenMobile::BaseControlle
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _view_type_counts = Shopkeeper.shop_view_type_count(
         shop_id: @shop.id,
         dates: dates,

@@ -16,7 +16,7 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(action_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(action_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.children_rank(
         records: shop.shopkeeper.descendant_entities,
         dates: dates,
@@ -51,7 +51,7 @@ class Api::OpenMobile::ShopsController < Api::OpenMobile::BaseController
     _limit = (params[:limit].presence || 10).to_i
 
     _rank_proc = proc {|date, limit|
-      _expires_in = (date <= Date.today) ? 1.months : 30.minutes
+      _expires_in = (date <= Date.today) ? 1.months : 5.minutes
       _raw_result = Rails.cache.fetch(action_cache_key(date, limit), raw: true, expires_in: _expires_in) {
         _counts = shop.shopkeeper.descendant_entities.where(
             created_at: date.to_time.beginning_of_month..date.to_time.end_of_day

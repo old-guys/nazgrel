@@ -8,7 +8,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
 
   def index
     date = Date.today
-    _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 5.minutes) {
       {
         shop_count: @permit_shopkeepers.where(created_at: date.to_time.all_day).size,
         order_count: Order.sales_order.valided_order.where(
@@ -34,7 +34,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
 
   def user_grade_stat
     date = Date.today
-    _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(date), raw: true, expires_in: 5.minutes) {
       _counts = @permit_shopkeepers.group(:user_grade).count
 
       Shopkeeper.user_grades_i18n.map{|k,v|
@@ -57,7 +57,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.children_rank(
         records: @permit_shopkeepers,
         dates: dates,
@@ -93,7 +93,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.order_amount_rank(
         records: @permit_shopkeepers,
         dates: dates,
@@ -128,7 +128,7 @@ class Api::OpenMobile::DashboardController < Api::OpenMobile::BaseController
       from_time: Time.now.end_of_day
     )
 
-    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 30.minutes) {
+    _raw_result = Rails.cache.fetch(get_cache_key(_time_range, _limit), raw: true, expires_in: 5.minutes) {
       _counts = Shopkeeper.city_rank(
         records: @permit_shopkeepers,
         dates: dates,
