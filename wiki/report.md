@@ -78,7 +78,7 @@ channel_shop_newer_report:
   args:
     type: "whole"
 channel_shop_newer_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新渠道新增报表"
   class: "ChannelShopNewerReportWorker"
   queue: :report
@@ -165,7 +165,7 @@ shop_activity_report:
   args:
     type: "whole"
 shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新店主行为数据"
   class: "ShopActivityReportWorker"
   queue: :report
@@ -251,7 +251,7 @@ city_shop_activity_report:
   args:
     type: "whole"
 city_shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
   class: "CityShopActivityReportWorker"
   queue: :report
@@ -335,7 +335,7 @@ channel_shop_activity_report:
   args:
     type: "whole"
 channel_shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
   class: "ChannelShopActivityReportWorker"
   queue: :report
@@ -419,7 +419,7 @@ cumulative_shop_activity_report_update_inactive:
   args:
     type: "update_old"
 cumulative_shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新累计店主行为数据"
   class: "CumulativeShopActivityReportWorker"
   queue: :report

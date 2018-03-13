@@ -1,89 +1,89 @@
 shop_seek_job:
-  cron: "*/5 * * * *"
+  cron: "*/2 * * * *"
   name: "同步店铺"
   class: "ShopSeekWorker"
   queue: :seek
   args:
-    duration: 8
+    duration: 3
 # # NOTICE 已经在同步店铺的时候处理
 # shopkeeper_seek_job:
-#   cron: "*/15 * * * *"
+#   cron: "*/2 * * * *"
 #   name: "同步店主"
 #   class: "ShopkeeperSeekWorker"
 #   queue: :seek
 #   args:
-#     duration: 900
+#     duration: 3
 
 order_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步订单"
   class: "OrderSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 order_detail_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步订单"
   class: "OrderDetailSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 order_sub_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步子订单"
   class: "OrderSubSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 order_express_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步物流订单"
   class: "OrderExpressSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 product_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步商品"
   class: "ProductSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 product_shop_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步店铺代理销售商品"
   class: "ProductShopSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 income_record_seek_job:
-  cron: "*/5 * * * *"
+  cron: "*/3 * * * *"
   name: "同步收入记录"
   class: "IncomeRecordSeekWorker"
   queue: :seek
   args:
-    duration: 8
+    duration: 4
 invite_pay_record_seek_job:
-  cron: "*/5 * * * *"
+  cron: "*/3 * * * *"
   name: "同步邀请支付记录"
   class: "InvitePayRecordSeekWorker"
   queue: :seek
   args:
-    duration: 8
+    duration: 4
 shop_user_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步用户信息"
   class: "ShopUserSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 shop_wechat_user_seek_job:
-  cron: "*/15 * * * *"
+  cron: "*/3 * * * *"
   name: "同步微信用户信息"
   class: "ShopWechatUserSeekWorker"
   queue: :seek
   args:
-    duration: 18
+    duration: 4
 supplier_seek_job:
   cron: "*/30 * * * *"
   name: "同步供应商"
@@ -93,20 +93,20 @@ supplier_seek_job:
     duration: 35
 
 view_journal_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/3 * * * *"
   name: "同步店铺浏览日志"
   class: "ViewJournalSeekWorker"
   queue: :seek
   args:
-    duration: 35
+    duration: 4
 
 share_journal_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/3 * * * *"
   name: "同步店铺分享日志"
   class: "ShareJournalSeekWorker"
   queue: :seek
   args:
-    duration: 35
+    duration: 4
 
 category_seek_job:
   cron: "1 */2 * * *"
@@ -117,36 +117,36 @@ category_seek_job:
     duration: 125
 
 product_sku_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/3 * * * *"
   name: "同步产品库存"
   class: "ProductSkuSeekWorker"
   queue: :seek
   args:
-    duration: 35
+    duration: 4
 
 act_ticket_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/3 * * * *"
   name: "同步券"
   class: "ActTicketSeekWorker"
   queue: :seek
   args:
-    duration: 35
+    duration: 4
 
 act_ticket_activity_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/3 * * * *"
   name: "同步券活动"
   class: "ActTicketActivitySeekWorker"
   queue: :seek
   args:
-    duration: 35
+    duration: 4
 
 act_user_ticket_seek_job:
-  cron: "*/30 * * * *"
+  cron: "*/3 * * * *"
   name: "同步券"
   class: "ActUserTicketSeekWorker"
   queue: :seek
   args:
-    duration: 35
+    duration: 4
 
 deleted_record_seek_job:
   cron: "3 * * * *"
@@ -179,7 +179,7 @@ shop_activity_report:
   args:
     type: "whole"
 shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新店主行为数据"
   class: "ShopActivityReportWorker"
   queue: :report
@@ -209,7 +209,7 @@ city_shop_activity_report:
   args:
     type: "whole"
 city_shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
   class: "CityShopActivityReportWorker"
   queue: :report
@@ -224,7 +224,7 @@ channel_shop_activity_report:
   args:
     type: "whole"
 channel_shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
   class: "ChannelShopActivityReportWorker"
   queue: :report
@@ -239,7 +239,7 @@ cumulative_shop_activity_report_update_inactive:
   args:
     type: "update_old"
 cumulative_shop_activity_report_partial:
-  cron: "*/15 * * * *"
+  cron: "*/8 * * * *"
   name: "实时更新累计店主行为数据"
   class: "CumulativeShopActivityReportWorker"
   queue: :report
@@ -247,7 +247,7 @@ cumulative_shop_activity_report_partial:
     type: "partial"
 
 daily_operational_report:
-  cron: "58 * * * *"
+  cron: "*/20 * * * *"
   name: "更新当天每日运营报表数据"
   class: "DailyOperationalReportWorker"
   queue: :report

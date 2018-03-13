@@ -85,10 +85,12 @@ class OrderSeekWorker
 ```yaml
 # head -n 5 config/schedule.yml
 shop_seek_job:
-  cron: "*/5 * * * *"
+  cron: "*/2 * * * *"
   name: "同步店铺"
   class: "ShopSeekWorker"
   queue: :seek
+  args:
+    duration: 3
 ```
 
 清除芝蚂城已经移除的记录
