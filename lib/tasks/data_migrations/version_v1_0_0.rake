@@ -147,6 +147,10 @@ namespace :data_migrations do
           ).first.try(:created_at)
         ) if record.order_create_at.blank?
       }
+
+      SesameMall::Source::Shopkeeper.where(status: 3).in_batches{|records|
+        ::Shopkeeper.where(id: records.pluck(:id)).update_all(status: 3)
+      }
     end
   end
 end

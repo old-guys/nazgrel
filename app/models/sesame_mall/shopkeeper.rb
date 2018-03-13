@@ -32,7 +32,8 @@ class Shopkeeper < ApplicationRecord
   enum status: {
     normal: 0,
     locked: 1,
-    was_invalid: 2
+    was_invalid: 2,
+    init: 3
   }
   enum ticket_send_flag: {
     yes: 1,

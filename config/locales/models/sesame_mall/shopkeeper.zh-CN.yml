@@ -22,6 +22,7 @@ zh-CN:
         :yes: "是"
         :no: "否"
       status:
+        init: "初始化（待激活）"
         normal: "正常"
         locked: "冻结"
         was_invalid: "失效"
