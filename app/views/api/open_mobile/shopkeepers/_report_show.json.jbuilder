@@ -55,4 +55,11 @@ json.parent_names record.parents.map(&:to_s)
 json.parent_shop_ids record.parents.map(&:shop_id)
 json.parent_ids record.parents.map(&:id)
 
+json.org_grade record.org_grade
+json.org_grade_text record.org_grade_i18n
+
+json.order_create_at record.order_create_at
+json.upgrade_grade_gold_at record.upgrade_grade_gold_at
+json.upgrade_grade_platinum_at record.upgrade_grade_platinum_at
+
 json.created_at record.shop.try(:created_at)
