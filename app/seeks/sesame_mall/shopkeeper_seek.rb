@@ -90,6 +90,12 @@ class SesameMall::ShopkeeperSeek
         sum(:pay_price).to_f
 
       record.assign_attributes(
+        order_create_at: record.orders.where(
+          order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
+        ).first.try(:created_at)
+      ) if record.order_create_at.blank?
+
+      record.assign_attributes(
         commission_income_amount: _commission_income_amount,
         # invite_amount: _invite_amount,
         team_income_amount: _team_income_amount,

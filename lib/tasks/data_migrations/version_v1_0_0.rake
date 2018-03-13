@@ -135,5 +135,18 @@ namespace :data_migrations do
     task :v1_1_3_9_migrate_income_record_coin => :environment do
       SesameMall::IncomeRecordSeek.partial_sync(duration: 8.days)
     end
+
+    desc 'migrate shopkeeper upgrade_grade at'
+    task :v1_1_3_10_migrate_shopkeeper_upgrade_grade_at => :environment do
+      SesameMall::InvitePayRecordSeek.whole_sync
+
+      Shopkeeper.where(order_create_at: nil).find_each {|record|
+        record.assign_attributes(
+          order_create_at: record.orders.where(
+            order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
+          ).first.try(:created_at)
+        ) if record.order_create_at.blank?
+      }
+    end
   end
 end

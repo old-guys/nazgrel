@@ -44,6 +44,15 @@ class SesameMall::InvitePayRecordSeek
           create_shop_amount: record.pay_amount
         ) if record.user_id.to_i > 0
       }
+
+      records.select(&:success_payment?).select(&:upgrade_shopkeeper_grade?).each {|record|
+        _shopkeeper = ::Shopkeeper.find_by(user_id: record.user_id)
+        _source_shopkeeper = SesameMall::Source::Shopkeeper.find_by(user_id: record.user_id)
+        next if _shopkeeper.blank? or _source_shopkeeper.blank?
+
+        _shopkeeper.update(upgrade_grade_platinum_at: record.created_at) if _source_shopkeeper.user_grade == 0
+        _shopkeeper.update(upgrade_grade_gold_at: record.created_at) if _source_shopkeeper.user_grade == 1
+      }
     end
   end
   class << self
