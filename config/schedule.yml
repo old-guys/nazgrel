@@ -84,6 +84,13 @@ shop_user_seek_job:
   queue: :seek
   args:
     duration: 4
+bank_card_seek_job:
+  cron: "*/3 * * * *"
+  name: "同步银行卡"
+  class: "BankCardSeekWorker"
+  queue: :seek
+  args:
+    duration: 4
 shop_wechat_user_seek_job:
   cron: "*/3 * * * *"
   name: "同步微信用户信息"
