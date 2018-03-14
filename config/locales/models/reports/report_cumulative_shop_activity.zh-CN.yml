@@ -127,6 +127,14 @@ zh-CN:
         day_60_descendant_count: "60天下级店主数"
         total_descendant_count: "累计下级店主数"
 
+        day_0_descendant_activation_count: "当天下级激活数"
+        day_3_descendant_activation_count: "3天下级激活数"
+        day_7_descendant_activation_count: "7天下级激活数"
+        day_15_descendant_activation_count: "15天下级激活数"
+        day_30_descendant_activation_count: "30天下级激活数"
+        day_60_descendant_activation_count: "60天下级激活数"
+        total_descendant_activation_count: "累计下级激活数"
+
         day_0_descendant_order_number: "当天下级订单数"
         day_3_descendant_order_number: "3天下级订单数"
         day_7_descendant_order_number: "7天下级订单数"

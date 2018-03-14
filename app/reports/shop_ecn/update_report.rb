@@ -35,7 +35,6 @@ class ShopEcn::UpdateReport
           record: _record
         )
 
-        _record.shopkeeper.delete_cache_data
         _report.perform
       }
     end

@@ -142,6 +142,15 @@ zh-CN:
         year_descendant_count: "本年累计下级店主数"
         total_descendant_count: "累计下级店主数"
 
+        descendant_activation_count: "下级激活数"
+        stage_1_descendant_activation_count: "00:00-9:00 下级激活数"
+        stage_2_descendant_activation_count: "09:00-18:00 下级激活数"
+        stage_3_descendant_activation_count: "18:00-24:00 下级激活数"
+        week_descendant_activation_count: "本周累计下级激活数"
+        month_descendant_activation_count: "本月累计下级激活数"
+        year_descendant_activation_count: "本年累计下级激活数"
+        total_descendant_activation_count: "累计下级激活数"
+
         descendant_order_number: "下级订单数"
         stage_1_descendant_order_number: "00:00-9:00 下级订单数"
         stage_2_descendant_order_number: "09:00-18:00 下级订单数"

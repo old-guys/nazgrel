@@ -1,3 +1,10 @@
+## 店主行为报表增加下级激活数(2018-03-14)
+
+- #feature# 店主行为报表增加下级激活数
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_11_migrate_descendant_activation_count
+```
 ## 店主拓扑表增加等级变更时间(2018-03-13)
 
 - #feature# 店主拓扑表增加等级变更时间

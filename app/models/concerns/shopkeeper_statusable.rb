@@ -3,28 +3,6 @@ module ShopkeeperStatusable
 
   included do
     has_one :report_cumulative_shop_activity, through: :shop
-
-    before_save do
-      if path_changed? and parents
-        _keys = parents.compact.flat_map(&:cache_status_keys)
-
-        Rails.cache.with {|c|
-          c.del(_keys)
-        }
-      end
-    end
-
-    def delete_cache_data
-      Rails.cache.with {|c|
-        c.del(cache_status_keys)
-      }
-    end
-
-    def cache_status_keys
-      [
-        "#{cache_key}:descendant_activation_size",
-      ].freeze
-    end
   end
 
   def share_journal_count
@@ -40,9 +18,7 @@ module ShopkeeperStatusable
   end
 
   def descendant_activation_size
-    @descendant_activation_size ||= Rails.cache.fetch("#{cache_key}:descendant_activation_size", raw: true) {
-      descendant_entities.where.not(order_number: nil).size
-    }.to_i
+    report_cumulative_shop_activity.try(:total_descendant_activation_count) || 0
   end
 
   def descendant_activation_rate

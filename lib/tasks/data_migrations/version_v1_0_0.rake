@@ -152,5 +152,20 @@ namespace :data_migrations do
         ::Shopkeeper.where(id: records.pluck(:id)).update_all(status: 3)
       }
     end
+
+    desc 'migrate shop_acitvity descendant_activation_count'
+    task :v1_1_3_11_migrate_descendant_activation_count => :environment do
+      shops = Shop.where(id: ReportShopActivity.where(report_date: Date.today).select("distinct(shop_id)"))
+      ShopActivity::UpdateReport.update_report(
+        shops: shops,
+        force_update: true
+      )
+
+      CumulativeShopActivity::UpdateReport.update_report(
+        shops: shops,
+        interval_time: 8.hours,
+        force_update: true
+      )
+    end
   end
 end

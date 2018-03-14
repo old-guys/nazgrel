@@ -14,7 +14,7 @@ module ReportShopActivityable
         sale_order_amount children_grade_platinum_count
         children_grade_gold_count ecn_grade_platinum_count
         children_count children_commission_income_amount
-        descendant_count descendant_order_number
+        descendant_count descendant_activation_count descendant_order_number
         descendant_order_amount descendant_commission_income_amount
         ecn_grade_gold_count
       ).freeze
