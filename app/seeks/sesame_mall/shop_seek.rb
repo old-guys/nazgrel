@@ -35,10 +35,8 @@ class SesameMall::ShopSeek
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:UPDATE_TIME])
     )
 
-    if record.shopkeeper.present?
-      record.set_path
-      record.set_channel_path
-    end
+    record.set_channel_path if record.channel_id.blank? and record.shopkeeper.present?
+    record.set_path if record.path.blank?
 
     record
   end
