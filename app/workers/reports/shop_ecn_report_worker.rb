@@ -11,7 +11,12 @@ class ShopEcnReportWorker
     case _type
       when "whole"
         ShopEcn::UpdateReport.update_report(
-          shops: Shop.preload(:channel, shopkeeper: :parent).where(
+          shops: Shop.preload(
+            :channel,
+            shopkeeper: [
+              :parent, :report_cumulative_shop_activity
+            ]
+          ).where(
             user_id: Shopkeeper.where(
               updated_at: Time.now.all_day,
             ).select(:user_id)
@@ -28,7 +33,12 @@ class ShopEcnReportWorker
 
         _ids.each_slice(500) {|ids|
           ShopEcn::UpdateReport.update_report(
-            shops: Shop.preload(:channel, shopkeeper: :parent).where(id: _ids)
+            shops: Shop.preload(
+              :channel,
+              shopkeeper: [
+                :parent, :report_cumulative_shop_activity
+              ]
+            ).where(id: _ids)
           )
         }
     end
