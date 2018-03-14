@@ -1,0 +1,21 @@
+zh-CN:
+  activerecord:
+    models:
+      bank_card: "银行卡"
+    attributes:
+      bank_card:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    bank_card:
+      card_type:
+        credit_card: "信用卡"
+        debit_card: "储蓄卡"
+      delete_status:
+        :yes: "已删除"
+        :no: "未删除"
+      status:
+        binded: "已绑定"
+        unbind: "已解绑"
