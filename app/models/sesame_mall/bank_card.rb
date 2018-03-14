@@ -8,9 +8,9 @@ class BankCard < ApplicationRecord
   }
 
   enum delete_status: {
-    yes: 0,
-    no: 1
-  }
+    no: 0,
+    yes: 1
+  }, _prefix: true
 
   enum status: {
     binded: 0,

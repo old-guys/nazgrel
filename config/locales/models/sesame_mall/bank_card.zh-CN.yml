@@ -14,8 +14,8 @@ zh-CN:
         credit_card: "信用卡"
         debit_card: "储蓄卡"
       delete_status:
-        :yes: "是"
-        :no: "否"
+        :yes: "已删除"
+        :no: "未删除"
       status:
         binded: "已绑定"
         unbind: "已解绑"
