@@ -1,9 +1,12 @@
 ## 店主行为报表增加下级激活数(2018-03-14)
 
 - #feature# 店主行为报表增加下级激活数
+- #feature# 同步提现记录
+- #feature# 同步银行卡信息
 
 ```shell
 cap production deploy:runrake task=data_migrations:version:v1_1_3_11_migrate_descendant_activation_count
+cap production deploy:runrake task=data_migrations:version:v1_1_3_12_init_withdraw_record_trigger
 ```
 ## 店主拓扑表增加等级变更时间(2018-03-13)
 
