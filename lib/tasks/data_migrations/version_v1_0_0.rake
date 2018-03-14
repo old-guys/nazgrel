@@ -167,5 +167,18 @@ namespace :data_migrations do
         force_update: true
       )
     end
+
+    desc 'init seek trigger for withdraw_record bank_card'
+    task :v1_1_3_12_init_withdraw_record_trigger => :environment do
+      SesameMall::WithdrawRecordSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::WithdrawRecord,
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

@@ -63,6 +63,13 @@ income_record_seek_job:
   queue: :seek
   args:
     duration: 4
+withdraw_record_seek_job:
+  cron: "*/3 * * * *"
+  name: "同步提现记录"
+  class: "WithdrawRecordSeekWorker"
+  queue: :seek
+  args:
+    duration: 4
 invite_pay_record_seek_job:
   cron: "*/3 * * * *"
   name: "同步邀请支付记录"
