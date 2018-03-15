@@ -1,6 +1,7 @@
 ## 店主行为报表增加提现金额(2018-03-14)
 
 - #feature# 店主行为报表增加提现金额
+- #feature# 每日运营报表增加提现金额
 
 ```shell
 cap production deploy:runrake task=data_migrations:version:v1_1_3_12_migrate_shop_activity_withdraw_amount

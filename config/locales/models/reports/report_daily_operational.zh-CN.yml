@@ -37,6 +37,8 @@ zh-CN:
         activity_ticket_amount: "现金券"
         product_cost: "成本"
 
+        withdraw_amount: "提现金额"
+
         created_at: "创建时间"
         updated_at: "更新于"
         deleted_at: "删除于"
