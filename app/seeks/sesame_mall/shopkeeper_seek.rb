@@ -71,33 +71,10 @@ class SesameMall::ShopkeeperSeek
 
     # REVIEW shopkeeper#order_number
     set_shopkeeper_order_content(record: record) if record.persisted?
+    set_shopkeeper_income_content(record: record) if record.persisted?
 
     if record.province.blank? and record.user_phone.present?
       record.set_phone_belong_to
-    end
-
-    if record.persisted?
-      _commission_income_amount = record.income_records.commission_income.confirmed.
-        sum(:income_amount)
-      # _invite_amount = record.income_records.invite_income.confirmed.
-      #   sum(:income_amount)
-      _team_income_amount = record.income_records.team_income.confirmed.
-        sum(:income_amount)
-      _shop_sales_amount = record.orders.sales_order.valided_order.
-        sum(:pay_price)
-
-      record.assign_attributes(
-        order_create_at: record.orders.where(
-          order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
-        ).first.try(:created_at)
-      ) if record.order_create_at.blank?
-
-      record.assign_attributes(
-        commission_income_amount: _commission_income_amount,
-        # invite_amount: _invite_amount,
-        team_income_amount: _team_income_amount,
-        shop_sales_amount: _shop_sales_amount,
-      )
     end
 
     record
@@ -105,7 +82,12 @@ class SesameMall::ShopkeeperSeek
 
   private
   def set_shopkeeper_order_content(record: )
-    return if not record.try(:persisted?)
+    record.assign_attributes(
+      order_create_at: record.orders.where(
+        order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
+      ).first.try(:created_at)
+    ) if record.order_create_at.blank?
+
     _order_number = record.orders.valided_order.sales_order.size
     return if record.order_number == _order_number
 
@@ -124,6 +106,25 @@ class SesameMall::ShopkeeperSeek
       shopkeeper_order_amount: _shopkeeper_order_amount,
       sale_order_number: _order_number - _shopkeeper_order_number,
       sale_order_amount: _order_amount - _shopkeeper_order_amount,
+    )
+  end
+  def set_shopkeeper_income_content(record: )
+    return if record.changes[:total_income_amount].blank?
+
+    _commission_income_amount = record.income_records.commission_income.confirmed.
+      sum(:income_amount)
+    # _invite_amount = record.income_records.invite_income.confirmed.
+    #   sum(:income_amount)
+    _team_income_amount = record.income_records.team_income.confirmed.
+      sum(:income_amount)
+    _shop_sales_amount = record.orders.sales_order.valided_order.
+      sum(:pay_price)
+
+    record.assign_attributes(
+      commission_income_amount: _commission_income_amount,
+      # invite_amount: _invite_amount,
+      team_income_amount: _team_income_amount,
+      shop_sales_amount: _shop_sales_amount,
     )
   end
   class << self
