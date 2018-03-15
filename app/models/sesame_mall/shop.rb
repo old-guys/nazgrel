@@ -28,7 +28,7 @@ class Shop < ApplicationRecord
   end
 
   def shop_img_url
-    "http://zmcimg.ishanggang.com/static/img/#{shop_img}"
+    "http://zmcimg.99zmall.com/static/img/#{shop_img}"
   end
 
   def ancestor_shopkeepers

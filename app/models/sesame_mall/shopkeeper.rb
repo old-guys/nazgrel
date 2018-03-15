@@ -73,7 +73,7 @@ class Shopkeeper < ApplicationRecord
 
   def invite_qrcode_url
     if invite_qrcode_path
-      "http://inte.ishanggang.com/#{invite_qrcode_path}"
+      "http://inte.99zmall.com/#{invite_qrcode_path}"
     else
       nil
     end
