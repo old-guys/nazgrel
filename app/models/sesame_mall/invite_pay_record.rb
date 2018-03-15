@@ -1,4 +1,8 @@
 class InvitePayRecord < ApplicationRecord
+  belongs_to :shopkeeper, primary_key: :user_id,
+    foreign_key: :user_id,
+    class_name: :Shopkeeper, required: false
+
   enum pay_way: {
     alipay: 2,
     wechat: 1

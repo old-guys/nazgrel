@@ -117,5 +117,22 @@ module ShopkeeperStatable
         "count(`city`) as count"
       )
     end
+
+    def insert_to_report_activity_partial_shops(records: )
+      _records = Array.wrap(records).uniq
+
+      ShopActivity::UpdateReport.insert_to_partial_shops(
+        id: _records.map(&:shop_id)
+      )
+      CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
+        id: _records.map(&:shop_id)
+      )
+
+      CityShopActivity::UpdateReport.insert_to_partial_city(
+        city: records.map{|record|
+          _records.try(:city)
+        }.uniq
+      )
+    end
   end
 end

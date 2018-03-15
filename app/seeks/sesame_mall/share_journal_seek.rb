@@ -1,5 +1,6 @@
 class SesameMall::ShareJournalSeek
   include SesameMall::Seekable
+  after_process :after_process_record
 
   def initialize(opts = {})
     self.primary_key = :id
@@ -29,6 +30,15 @@ class SesameMall::ShareJournalSeek
     record
   end
 
+  private
+  def after_process_record(records: )
+    ActiveRecord::Associations::Preloader.new.preload(
+      records, [:shopkeeper]
+    )
+    ::Shopkeeper.insert_to_report_activity_partial_shops(
+      records: records.map(&:shopkeeper)
+    )
+  end
   class << self
     def whole_sync
       seek = self.new

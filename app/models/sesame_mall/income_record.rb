@@ -2,6 +2,10 @@ class IncomeRecord < ApplicationRecord
   belongs_to :order, required: false,
     foreign_key: :order_id, primary_key: :order_no
 
+  belongs_to :shopkeeper, primary_key: :user_id,
+    foreign_key: :user_id,
+    class_name: :Shopkeeper, required: false
+
   enum source_user_level: {
     level_blank: 0,
     level_1th: 1,

@@ -1,4 +1,7 @@
 class WithdrawRecord < ApplicationRecord
+  belongs_to :shopkeeper, primary_key: :user_id,
+    foreign_key: :user_id,
+    class_name: :Shopkeeper, required: false
 
   enum source: {
     ishangang: 0,
