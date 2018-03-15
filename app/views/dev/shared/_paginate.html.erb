@@ -1,8 +1,5 @@
-<% cached = records.group_values.present? ? false : true %>
-<% cache_if cached, ["dev/shared/paginate", records] do %>
-  <div class="text-left">
-    <small class="text-muted">共 <%= records.total_count %> 条</small>
+<div class="text-left">
+  <small class="text-muted">共 <%= records.total_count %> 条</small>
 
-    <%= paginate records, params: params.as_json  %>
-  </div>
-<% end %>
+  <%= paginate records, params: params.as_json  %>
+</div>
