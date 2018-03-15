@@ -79,6 +79,15 @@ zh-CN:
         year_commission_income_amount: "本年累计店铺佣金"
         total_commission_income_amount: "累计店铺佣金"
 
+        withdraw_amount: "已提现金额"
+        stage_1_withdraw_amount: "00:00-9:00 已提现金额"
+        stage_2_withdraw_amount: "09:00-18:00 已提现金额"
+        stage_3_withdraw_amount: "18:00-24:00 已提现金额"
+        week_commission_income_amount: "本周累计已提现金额"
+        month_commission_income_amount: "本月累计已提现金额"
+        year_commission_income_amount: "本年累计已提现金额"
+        total_commission_income_amount: "累计已提现金额"
+
         shopkeeper_order_amount: "自购订单金额"
         stage_1_shopkeeper_order_amount: "00:00-9:00 自购订单金额"
         stage_2_shopkeeper_order_amount: "09:00-18:00 自购订单金额"

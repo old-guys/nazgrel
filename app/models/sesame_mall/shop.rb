@@ -7,6 +7,8 @@ class Shop < ApplicationRecord
   has_many :orders
   has_many :income_records, through: :shopkeeper
 
+  has_many :withdraw_records, through: :shopkeeper
+
   has_many :product_shops
   has_many :products, through: :product_shops
 
