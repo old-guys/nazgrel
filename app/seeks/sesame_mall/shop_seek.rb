@@ -3,7 +3,7 @@ class SesameMall::ShopSeek
   attr_accessor :shopkeeper_seek
 
   before_process :process_shopkeeper
-  after_process :after_process_shopkeeper
+  after_process :after_process_shop
 
   def initialize(opts = {})
     self.primary_key = :id
@@ -50,26 +50,14 @@ class SesameMall::ShopSeek
     shopkeeper_seek.do_partial_sync(relation: _shopkeepers)
   end
 
-  def after_process_shopkeeper(records: )
+  def after_process_shop(records: )
     _channel_ids = records.map(&:channel_id).compact.uniq
 
     ChannelShopNewer::UpdateReport.insert_to_partial_channels(
       id: _channel_ids
     )
-    ShopActivity::UpdateReport.insert_to_partial_shops(
-      id: records.map(&:id)
-    )
-    CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
-      id: records.map(&:id)
-    )
     ShopEcn::UpdateReport.insert_to_partial_shops(
       id: records.map(&:ancestor_entity_ids).flatten.uniq
-    )
-
-    CityShopActivity::UpdateReport.insert_to_partial_city(
-      city: records.map{|record|
-        record.shopkeeper.try(:city)
-      }.uniq
     )
 
     ChannelShopActivity::UpdateReport.insert_to_partial_channel(

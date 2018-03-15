@@ -1,6 +1,8 @@
 class SesameMall::ShopkeeperSeek
   include SesameMall::Seekable
 
+  after_process :after_process_shopkeeper
+
   def initialize(opts = {})
     self.primary_key = :id
     self.source_primary_key = :id
@@ -125,6 +127,20 @@ class SesameMall::ShopkeeperSeek
       # invite_amount: _invite_amount,
       team_income_amount: _team_income_amount,
       shop_sales_amount: _shop_sales_amount,
+    )
+  end
+  def after_process_shopkeeper(records: )
+    ShopActivity::UpdateReport.insert_to_partial_shops(
+      id: records.map(&:shop_id)
+    )
+    CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
+      id: records.map(&:shop_id)
+    )
+
+    CityShopActivity::UpdateReport.insert_to_partial_city(
+      city: records.map{|record|
+        record.try(:city)
+      }.uniq
     )
   end
   class << self
