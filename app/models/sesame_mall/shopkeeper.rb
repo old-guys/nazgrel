@@ -17,6 +17,8 @@ class Shopkeeper < ApplicationRecord
 
   has_many :income_records, foreign_key: :user_id, primary_key: :user_id
 
+  has_many :withdraw_records, foreign_key: :user_id, primary_key: :user_id
+
   attr_accessor :parents
 
   enum user_grade: {

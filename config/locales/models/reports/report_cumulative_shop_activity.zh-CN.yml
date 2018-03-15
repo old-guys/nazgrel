@@ -71,6 +71,14 @@ zh-CN:
         day_60_commission_income_amount: "60天店铺佣金"
         total_commission_income_amount: "累计店铺佣金"
 
+        day_0_withdraw_amount: "当天已提现金额"
+        day_3_withdraw_amount: "3天已提现金额"
+        day_7_withdraw_amount: "7天已提现金额"
+        day_15_withdraw_amount: "15天已提现金额"
+        day_30_withdraw_amount: "30天已提现金额"
+        day_60_withdraw_amount: "60天已提现金额"
+        total_withdraw_amount: "累计已提现金额"
+
         day_0_shopkeeper_order_amount: "当天自购订单金额"
         day_3_shopkeeper_order_amount: "3天自购订单金额"
         day_7_shopkeeper_order_amount: "7天自购订单金额"

@@ -12,7 +12,8 @@ class IncomeRecord < ApplicationRecord
     invite_income: 1,
     team_income: 2,
     commission_income: 3,
-    chargeback_income: 4
+    withdraw_income: 4,
+    chargeback_income: 5
   }
 
   enum record_type: {

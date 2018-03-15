@@ -182,5 +182,27 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'migrate shop_activity withdraw_amount'
+    task :v1_1_3_12_migrate_shop_activity_withdraw_amount => :environment do
+      1.months.ago.to_date.upto(Date.today) {|date|
+        DailyOperational::UpdateReport.update_report(
+          report_date: date,
+          force_update: true
+        )
+      }
+
+      shops = Shop.where(id: ReportShopActivity.where(report_date: Date.today).select("distinct(shop_id)"))
+      ShopActivity::UpdateReport.update_report(
+        shops: shops,
+        force_update: true
+      )
+
+      CumulativeShopActivity::UpdateReport.update_report(
+        shops: shops,
+        interval_time: 8.hours,
+        force_update: true
+      )
+    end
   end
 end

@@ -18,6 +18,7 @@ zh-CN:
         invite_income: "邀请收入"
         team_income: "团队收入"
         commission_income: "佣金收入（店铺佣金）"
+        withdraw_income: "提现"
         chargeback_income: "消费退单"
       record_type:
         income: "收入"
