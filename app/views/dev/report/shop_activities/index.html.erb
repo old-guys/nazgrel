@@ -15,7 +15,7 @@
 
       <button type="submit" class="btn btn-primary mb-2">查询</button>
     </form>
-    <div class="table-responsive">
+    <div class="table-responsive" >
       <table class="table table-smtable-hover">
         <caption class="p-0">
           店主行为报表
@@ -27,14 +27,14 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">店铺名称</th>
-            <th scope="col">店主姓名</th>
-            <th scope="col">省份</th>
-            <th scope="col">城市</th>
-            <th scope="col">创建时间</th>
-            <th scope="col">店铺等级</th>
+            <th scope="col"><div class="wi4">店铺名称</div></th>
+            <th scope="col"><div class="wi3">店主姓名</div></th>
+            <th scope="col"><div class="wi3">省份</div></th>
+            <th scope="col"><div class="wi3">城市</div></th>
+            <th scope="col"><div class="wi4">创建时间</div></th>
+            <th scope="col"><div class="wi3">店铺等级</div></th>
             <% _stat_fields.each {|field| %>
-              <th scope="col"><%= ReportShopActivity.human_attribute_name(field) %></th>
+              <th scope="col" class="col-2"><div class="wi3"><%= ReportShopActivity.human_attribute_name(field) %></div></th>
             <% } %>
           </tr>
         </thead>

@@ -30,9 +30,9 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">日期</th>
+            <th scope="col"><div class="wi3">日期</div></th>
             <% _stat_fields.each {|field| %>
-              <th scope="col" class="col-xs-1"><%= ReportDailyOperational.human_attribute_name(field) %></th>
+              <th scope="col"><div class="wi3"><%= ReportDailyOperational.human_attribute_name(field) %></div></th>
             <% } %>
           </tr>
         </thead>

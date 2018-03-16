@@ -23,9 +23,9 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">城市</th>
+            <th scope="col"><div class="wi3">城市</div></th>
             <% _stat_fields.each {|field| %>
-              <th scope="col"><%= ReportCityShopActivity.human_attribute_name(field) %></th>
+              <th scope="col"><div class="wi3"><%= ReportCityShopActivity.human_attribute_name(field) %></div></th>
             <% } %>
           </tr>
         </thead>
