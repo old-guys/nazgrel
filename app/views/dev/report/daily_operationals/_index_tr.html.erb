@@ -2,6 +2,6 @@
   <th scope="row"><%= record.id %></th>
   <td><%= time_tag record.report_date %></td>
   <% stat_fields.each {|field| %>
-    <td><%= record.send(field) %></td>
+    <td><%= format_numberlize value: record.send(field) %></td>
   <% } %>
 </tr>

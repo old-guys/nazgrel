@@ -7,8 +7,12 @@ class Dev::Report::ShopActivitiesController < Dev::Report::BaseController
 
     @report_shop_activities = ReportShopActivity.preload(shop: :shopkeeper).where(report_date: params[:report_date])
 
+    if params[:shop_id].present?
+      @report_shop_activities = @report_shop_activities.unscope(where: :report_date).where(shop_id: params[:shop_id])
+    end
+
     preload_export(service: 'Dev::ShopActivity', action: 'report', relation: @report_shop_activities)
 
-    @report_shop_activities = filter_by_pagination(relation: @report_shop_activities, default_per_page: 50)
+    @report_shop_activities = filter_by_pagination(relation: @report_shop_activities)
   end
 end

@@ -23,7 +23,7 @@ class Dev::Report::CumulativeShopActivitiesController < Dev::Report::BaseControl
 
     preload_export(service: 'Dev::CumulativeShopActivity', action: 'report', relation: @report_cumulative_shop_activities)
 
-    @report_cumulative_shop_activities = filter_by_pagination(relation: @report_cumulative_shop_activities, default_per_page: 50)
+    @report_cumulative_shop_activities = filter_by_pagination(relation: @report_cumulative_shop_activities)
   end
 
   private

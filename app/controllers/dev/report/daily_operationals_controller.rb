@@ -9,6 +9,6 @@ class Dev::Report::DailyOperationalsController < Dev::Report::BaseController
     @report_daily_operationals = ReportDailyOperational.where(report_date: _dates)
     preload_export(service: 'Dev::DailyOperational', action: 'report', relation: @report_daily_operationals)
 
-    @report_daily_operationals = filter_by_pagination(relation: @report_daily_operationals, default_per_page: 50)
+    @report_daily_operationals = filter_by_pagination(relation: @report_daily_operationals)
   end
 end

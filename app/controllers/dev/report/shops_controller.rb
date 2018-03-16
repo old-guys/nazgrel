@@ -9,6 +9,6 @@ class Dev::Report::ShopsController < Dev::Report::BaseController
 
     preload_export(service: 'Dev::Shop', action: 'report', relation: @shops)
 
-    @shops = filter_by_pagination(relation: @shops, default_per_page: 50)
+    @shops = filter_by_pagination(relation: @shops)
   end
 end

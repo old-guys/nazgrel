@@ -11,6 +11,6 @@
   <td><%= time_tag _shopkeeper.try :created_at if _shopkeeper %></td>
   <td><%= _shopkeeper.try :user_grade_i18n %></td>
   <% stat_fields.each {|field| %>
-    <td><%= record.send(field) %></td>
+    <td><%= format_numberlize value: record.send(field) %></td>
   <% } %>
 </tr>

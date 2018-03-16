@@ -16,7 +16,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     end
     preload_export(service: 'Dev::Order', action: 'index', relation: @orders)
 
-    @orders = filter_by_pagination(relation: @orders, default_per_page: 50)
+    @orders = filter_by_pagination(relation: @orders)
   end
 
   def sales
@@ -30,7 +30,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     ).sales_order.valided_order.where(created_at: _dates)
     preload_export(service: 'Dev::Order', action: 'sales', relation: @orders)
 
-    @orders = filter_by_pagination(relation: @orders, default_per_page: 50)
+    @orders = filter_by_pagination(relation: @orders)
   end
 
   private

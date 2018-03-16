@@ -19,7 +19,7 @@ class Dev::Report::ShopEcnsController < Dev::Report::BaseController
 
     preload_export(service: 'Dev::ShopEcn', action: 'report', relation: @report_shop_ecns)
 
-    @report_shop_ecns = filter_by_pagination(relation: @report_shop_ecns, default_per_page: 50)
+    @report_shop_ecns = filter_by_pagination(relation: @report_shop_ecns)
   end
 
   private

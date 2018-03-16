@@ -1,6 +1,5 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">城市店主行为报表</h4>
     <ul>
       <li>
          <%= link_to "今日", url_for(report_date: Date.today)%>
@@ -10,11 +9,12 @@
          <% end %>
       </li>
     </ul>
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <%= button_tag "导出", class: "btn btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
-    </div>
     <div class="table-responsive">
-      <table class="table table-hover">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          城市店主行为报表
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
         <%
            _stat_fields = ReportCityShopActivity.stat_fields.reject{|field|
             field.start_with?("day_3_", "day_60_", "stage_")

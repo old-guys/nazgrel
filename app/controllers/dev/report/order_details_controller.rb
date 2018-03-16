@@ -14,7 +14,7 @@ class Dev::Report::OrderDetailsController < Dev::Report::BaseController
 
     preload_export(service: 'Dev::OrderDetail', action: 'sales', relation: @order_details)
 
-    @order_details = filter_by_pagination(relation: @order_details, default_per_page: 50)
+    @order_details = filter_by_pagination(relation: @order_details)
   end
 
   private
