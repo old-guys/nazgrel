@@ -25,12 +25,23 @@ class ShopActivityReportWorker
         # _ids = $redis.SPOP(_key, 100)
         _ids = $redis.SMEMBERS(_key)
         $redis.DEL(_key) if _ids.present?
+        _shops = Shop.preload(:shopkeeper).where(id: _ids)
 
         _ids.each_slice(500) {|ids|
           ShopActivity::UpdateReport.update_report(
-            shops: Shop.preload(:shopkeeper).where(id: _ids)
+            shops: _shops
           )
         }
+
+        CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
+          id: _shops.map(&:id)
+        )
+
+        CityShopActivity::UpdateReport.insert_to_partial_city(
+          city: _shops.map{|record|
+            record.shopkeeper.try(:city)
+          }.compact.uniq
+        )
     end
 
     logger.info "finished"

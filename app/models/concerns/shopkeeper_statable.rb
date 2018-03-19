@@ -124,15 +124,6 @@ module ShopkeeperStatable
       ShopActivity::UpdateReport.insert_to_partial_shops(
         id: _records.map(&:shop_id)
       )
-      CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
-        id: _records.map(&:shop_id)
-      )
-
-      CityShopActivity::UpdateReport.insert_to_partial_city(
-        city: records.map{|record|
-          _records.try(:city)
-        }.uniq
-      )
     end
   end
 end
