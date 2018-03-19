@@ -70,7 +70,7 @@ gem 'qiniu', '~> 6.9'
 
 #### authorization  #####
 # Flexible authentication solution for Rails with Warden
-gem 'devise', '~> 4.4', '>= 4.4.2'
+gem 'devise', '~> 4.4', '>= 4.4.3'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
