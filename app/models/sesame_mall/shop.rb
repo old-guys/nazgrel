@@ -38,6 +38,7 @@ class Shop < ApplicationRecord
   end
 
   def set_path
+    return if shopkeeper.nil?
     self.path = shopkeeper.parents.compact.map(&:shop_id).unshift(0).join("/")
   end
 
