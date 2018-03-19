@@ -1,4 +1,4 @@
-class CreateActUserTickets < ActiveRecord::Migration[5.1]
+class CreateActUserTickets < ActiveRecord::Migration[5.2]
   def change
     create_table :act_user_tickets, comment: "用户领券" do |t|
       t.string :ticket_no, comment: "券的唯一标示ID"

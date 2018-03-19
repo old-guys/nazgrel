@@ -1,4 +1,4 @@
-class AddChildrenCountToReportShopActivity < ActiveRecord::Migration[5.1]
+class AddChildrenCountToReportShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_shop_activities, :children_count, :integer, default: 0, after: :total_children_grade_gold_count, comment: "邀请店主数"
     add_column :report_shop_activities, :stage_1_children_count, :integer, default: 0, after: :children_count, comment: "00:00-9:00 邀请店主数"

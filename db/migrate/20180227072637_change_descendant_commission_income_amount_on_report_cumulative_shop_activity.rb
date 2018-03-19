@@ -1,4 +1,4 @@
-class ChangeDescendantCommissionIncomeAmountOnReportCumulativeShopActivity < ActiveRecord::Migration[5.1]
+class ChangeDescendantCommissionIncomeAmountOnReportCumulativeShopActivity < ActiveRecord::Migration[5.2]
   def change
     change_column :report_cumulative_shop_activities, :day_0_descendant_commission_income_amount, :decimal, precision: 11, scale: 3, default: 0, after: :day_60_order_amount, comment: "当天下级店铺佣金"
     change_column :report_cumulative_shop_activities, :day_3_descendant_commission_income_amount, :decimal, precision: 11, scale: 3, default: 0, after: :day_0_descendant_commission_income_amount, comment: "3天下级店铺佣金"

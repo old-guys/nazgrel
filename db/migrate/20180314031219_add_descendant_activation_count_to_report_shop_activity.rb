@@ -1,4 +1,4 @@
-class AddDescendantActivationCountToReportShopActivity < ActiveRecord::Migration[5.1]
+class AddDescendantActivationCountToReportShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_shop_activities, :descendant_activation_count, :integer, default: 0, after: :total_descendant_count, comment: "下级激活数"
     add_column :report_shop_activities, :stage_1_descendant_activation_count, :integer, default: 0, after: :descendant_activation_count, comment: "00:00-9:00 下级激活数"

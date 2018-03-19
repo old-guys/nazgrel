@@ -1,4 +1,4 @@
-class AddWeekStatFieldToReportChannelShopActivity < ActiveRecord::Migration[5.1]
+class AddWeekStatFieldToReportChannelShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_channel_shop_activities, :week_shared_count, :integer, default: 0, before: :month_shared_count, comment: "本周分享次数"
     add_column :report_channel_shop_activities, :week_view_count, :integer, default: 0, before: :month_view_count, comment: "本周浏览次数"

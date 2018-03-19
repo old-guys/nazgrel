@@ -1,4 +1,4 @@
-class CreateReportShopActivities < ActiveRecord::Migration[5.1]
+class CreateReportShopActivities < ActiveRecord::Migration[5.2]
   def change
     create_table :report_shop_activities, comment: "店主行为数据" do |t|
       t.date :report_date, comment: "报表日期"

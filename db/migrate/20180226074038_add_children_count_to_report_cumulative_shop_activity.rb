@@ -1,4 +1,4 @@
-class AddChildrenCountToReportCumulativeShopActivity < ActiveRecord::Migration[5.1]
+class AddChildrenCountToReportCumulativeShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_cumulative_shop_activities, :day_0_children_count, :integer, default: 0, after: :total_children_grade_gold_count, comment: "当天邀请店主数"
     add_column :report_cumulative_shop_activities, :day_3_children_count, :integer, default: 0, after: :day_0_children_count, comment: "3天邀请店主数"

@@ -1,4 +1,4 @@
-class AddViewerDescToReportChannelShopActivity < ActiveRecord::Migration[5.1]
+class AddViewerDescToReportChannelShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_channel_shop_activities, :viewer_count, :integer, default: 0, comment: "访客数"
     add_column :report_channel_shop_activities, :stage_1_viewer_count, :integer, default: 0, comment: "00:00-9:00 访客数"

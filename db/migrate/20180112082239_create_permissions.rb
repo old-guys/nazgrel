@@ -1,4 +1,4 @@
-class CreatePermissions < ActiveRecord::Migration[5.1]
+class CreatePermissions < ActiveRecord::Migration[5.2]
   def change
     create_table :permissions, comment: "权限"  do |t|
       t.string :name, comment: "名称"

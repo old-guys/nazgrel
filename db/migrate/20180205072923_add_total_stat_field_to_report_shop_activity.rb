@@ -1,4 +1,4 @@
-class AddTotalStatFieldToReportShopActivity < ActiveRecord::Migration[5.1]
+class AddTotalStatFieldToReportShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_shop_activities, :total_shared_count, :integer, default: 0, after: :year_shared_count, comment: "总分享次数"
     add_column :report_shop_activities, :total_view_count, :integer, default: 0, after: :year_view_count, comment: "总浏览次数"

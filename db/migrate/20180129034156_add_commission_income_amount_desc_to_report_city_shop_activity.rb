@@ -1,4 +1,4 @@
-class AddCommissionIncomeAmountDescToReportCityShopActivity < ActiveRecord::Migration[5.1]
+class AddCommissionIncomeAmountDescToReportCityShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_city_shop_activities, :commission_income_amount, :decimal, precision: 11, scale: 3, default: 0, after: :year_order_amount, comment: "店铺佣金"
     add_column :report_city_shop_activities, :stage_1_commission_income_amount, :decimal, precision: 11, scale: 3, default: 0, after: :commission_income_amount, comment: "00:00-9:00 店铺佣金"

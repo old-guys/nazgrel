@@ -272,7 +272,7 @@ DEPENDENCIES
   capistrano-rvm (~> 0.1, >= 0.1.2)
   capistrano-sidekiq (~> 1.0)
   capistrano3-unicorn (~> 0.2, >= 0.2.1)
-  devise (~> 4.4, >= 4.4.2)
+  devise (~> 4.4, >= 4.4.3)
   devise-i18n (~> 1.6, >= 1.6.1)
   enum_help (~> 0.0.17)
   httparty (~> 0.16, >= 0.16.1)

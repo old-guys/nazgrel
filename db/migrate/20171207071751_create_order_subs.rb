@@ -1,4 +1,4 @@
-class CreateOrderSubs < ActiveRecord::Migration[5.1]
+class CreateOrderSubs < ActiveRecord::Migration[5.2]
   def change
     create_table :order_subs, comment: "子订单" do |t|
       t.bigint :sub_order_no, comment: "订单编号"

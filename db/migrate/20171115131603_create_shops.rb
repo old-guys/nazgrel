@@ -1,4 +1,4 @@
-class CreateShops < ActiveRecord::Migration[5.1]
+class CreateShops < ActiveRecord::Migration[5.2]
   def change
     create_table :shops, comment: "店铺" do |t|
       t.string :name, comment: "店名"

@@ -1,4 +1,4 @@
-class CreateCategories < ActiveRecord::Migration[5.1]
+class CreateCategories < ActiveRecord::Migration[5.2]
   def change
     create_table :categories, comment: "类别"  do |t|
       t.string :name, comment: "类别名称"

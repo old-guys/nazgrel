@@ -1,4 +1,4 @@
-class CreateSuppliers < ActiveRecord::Migration[5.1]
+class CreateSuppliers < ActiveRecord::Migration[5.2]
   def change
     create_table :suppliers, comment: "供应商" do |t|
       t.string :industry_id, comment: "行业ID"

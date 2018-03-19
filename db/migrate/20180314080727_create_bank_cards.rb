@@ -1,4 +1,4 @@
-class CreateBankCards < ActiveRecord::Migration[5.1]
+class CreateBankCards < ActiveRecord::Migration[5.2]
   def change
     create_table :bank_cards, comment: "银行卡" do |t|
       t.bigint :user_id, comment: "用户ID"

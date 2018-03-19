@@ -1,4 +1,4 @@
-class RemoveChildrenGradePlatinumCountFromReportCityShopActivity < ActiveRecord::Migration[5.1]
+class RemoveChildrenGradePlatinumCountFromReportCityShopActivity < ActiveRecord::Migration[5.2]
   def change
     remove_column :report_city_shop_activities, :children_grade_platinum_count, :integer, default: 0, comment: "邀请白金店主数"
     remove_column :report_city_shop_activities, :stage_1_children_grade_platinum_count, :integer, default: 0, comment: "00:00-9:00 邀请白金店主数"

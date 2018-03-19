@@ -1,4 +1,4 @@
-class AddDescendantActivationCountToReportCumulativeShopActivity < ActiveRecord::Migration[5.1]
+class AddDescendantActivationCountToReportCumulativeShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_cumulative_shop_activities, :day_0_descendant_activation_count, :integer, default: 0, after: :day_60_descendant_count, comment: "当天下级激活数"
     add_column :report_cumulative_shop_activities, :day_3_descendant_activation_count, :integer, default: 0, after: :day_0_descendant_activation_count, comment: "3天下级激活数"

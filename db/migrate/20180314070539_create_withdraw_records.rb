@@ -1,4 +1,4 @@
-class CreateWithdrawRecords < ActiveRecord::Migration[5.1]
+class CreateWithdrawRecords < ActiveRecord::Migration[5.2]
   def change
     create_table :withdraw_records, comment: "提现记录" do |t|
       t.bigint :user_id, comment: "用户ID"

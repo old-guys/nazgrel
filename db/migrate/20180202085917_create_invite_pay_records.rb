@@ -1,4 +1,4 @@
-class CreateInvitePayRecords < ActiveRecord::Migration[5.1]
+class CreateInvitePayRecords < ActiveRecord::Migration[5.2]
   def change
     create_table :invite_pay_records, comment: "邀请支付记录" do |t|
       t.bigint :order_no, comment: "订单编号"

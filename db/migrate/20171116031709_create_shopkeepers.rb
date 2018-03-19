@@ -1,4 +1,4 @@
-class CreateShopkeepers < ActiveRecord::Migration[5.1]
+class CreateShopkeepers < ActiveRecord::Migration[5.2]
   def change
     create_table :shopkeepers, comment: "店主" do |t|
       t.integer :user_id, comment: "爱上岗用户ID"

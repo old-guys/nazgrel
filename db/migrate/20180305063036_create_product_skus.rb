@@ -1,4 +1,4 @@
-class CreateProductSkus < ActiveRecord::Migration[5.1]
+class CreateProductSkus < ActiveRecord::Migration[5.2]
   def change
     create_table :product_skus, comment: "产品库存" do |t|
       t.bigint :product_id, comment: "产品ID"

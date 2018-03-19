@@ -1,4 +1,4 @@
-class AddDescendantOrderNumberToReportCumulativeShopActivity < ActiveRecord::Migration[5.1]
+class AddDescendantOrderNumberToReportCumulativeShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_cumulative_shop_activities, :day_0_descendant_order_number, :integer, default: 0, after: :day_60_order_number, comment: "当天下级店主数"
     add_column :report_cumulative_shop_activities, :day_3_descendant_order_number, :integer, default: 0, after: :day_0_descendant_order_number, comment: "3天下级店主数"

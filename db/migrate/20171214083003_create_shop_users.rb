@@ -1,4 +1,4 @@
-class CreateShopUsers < ActiveRecord::Migration[5.1]
+class CreateShopUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :shop_users, comment: "用户" do |t|
       t.bigint :user_id, comment: "用户id，爱上岗用户沿用以前ID，芝蚂城根据规则新生成"

@@ -1,4 +1,4 @@
-class ChangeCommentOnApiKey < ActiveRecord::Migration[5.1]
+class ChangeCommentOnApiKey < ActiveRecord::Migration[5.2]
   def change
     set_table_comment :api_keys, "用户api key"
     set_column_comment :api_keys, :user_id, "用户id"

@@ -1,4 +1,4 @@
-class CreateReportChannelShopNewers < ActiveRecord::Migration[5.1]
+class CreateReportChannelShopNewers < ActiveRecord::Migration[5.2]
   def change
     create_table :report_channel_shop_newers, comment: "渠道新增店主数据" do |t|
       t.date :report_date, comment: "报表日期"
