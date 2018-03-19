@@ -1,4 +1,4 @@
-class AddChildrenCommissionIncomeAmountToReportCumulativeShopActivity < ActiveRecord::Migration[5.1]
+class AddChildrenCommissionIncomeAmountToReportCumulativeShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_cumulative_shop_activities, :day_0_children_commission_income_amount, :integer, default: 0, after: :total_children_count, comment: "当天邀请店铺佣金"
     add_column :report_cumulative_shop_activities, :day_3_children_commission_income_amount, :integer, default: 0, after: :day_0_children_commission_income_amount, comment: "3天邀请店铺佣金"

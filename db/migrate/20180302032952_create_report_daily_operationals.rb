@@ -1,4 +1,4 @@
-class CreateReportDailyOperationals < ActiveRecord::Migration[5.1]
+class CreateReportDailyOperationals < ActiveRecord::Migration[5.2]
   def change
     create_table :report_daily_operationals, comment: "每日运营报表" do |t|
       t.date :report_date, comment: "报表日期"

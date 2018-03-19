@@ -55,7 +55,7 @@ class ChannelShopNewer::ResetReport
   end
   def write
     self.records.each_slice(100) {|_records|
-      _records.select(&:changed?).map(&:save)
+      _records.select(&:has_changes_to_save?).map(&:save)
     }
   end
 end

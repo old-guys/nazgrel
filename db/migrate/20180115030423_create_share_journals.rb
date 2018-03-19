@@ -1,4 +1,4 @@
-class CreateShareJournals < ActiveRecord::Migration[5.1]
+class CreateShareJournals < ActiveRecord::Migration[5.2]
   def change
     create_table :share_journals, comment: "店铺分享日志" do |t|
       t.bigint :shop_id, comment: "店铺ID"

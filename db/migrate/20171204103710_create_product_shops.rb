@@ -1,4 +1,4 @@
-class CreateProductShops < ActiveRecord::Migration[5.1]
+class CreateProductShops < ActiveRecord::Migration[5.2]
   def change
     create_table :product_shops, comment: "店铺代理销售商品" do |t|
       t.bigint :product_id, comment: "商品ID"

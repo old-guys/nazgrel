@@ -1,4 +1,4 @@
-class CreateBanks < ActiveRecord::Migration[5.1]
+class CreateBanks < ActiveRecord::Migration[5.2]
   def change
     create_table :banks, comment: "银行" do |t|
       t.string :bank_name, comment: "银行名称"

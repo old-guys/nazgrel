@@ -1,4 +1,4 @@
-class CreateViewJournals < ActiveRecord::Migration[5.1]
+class CreateViewJournals < ActiveRecord::Migration[5.2]
   def change
     create_table :view_journals, comment: "店铺浏览日志" do |t|
       t.bigint :shop_id, comment: "店铺ID"

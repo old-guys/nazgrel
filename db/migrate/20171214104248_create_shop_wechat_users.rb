@@ -1,4 +1,4 @@
-class CreateShopWechatUsers < ActiveRecord::Migration[5.1]
+class CreateShopWechatUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :shop_wechat_users, comment: "微信用户" do |t|
       t.bigint :user_id, comment: "用户id"

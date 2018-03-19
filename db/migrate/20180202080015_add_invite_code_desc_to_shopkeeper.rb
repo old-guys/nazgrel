@@ -1,4 +1,4 @@
-class AddInviteCodeDescToShopkeeper < ActiveRecord::Migration[5.1]
+class AddInviteCodeDescToShopkeeper < ActiveRecord::Migration[5.2]
   def change
     add_column :shopkeepers, :invite_code, :string, after: :status, comment: "邀请码"
     add_column :shopkeepers, :invite_qrcode_path, :string, after: :invite_code, comment: "邀请二维码图片路径"

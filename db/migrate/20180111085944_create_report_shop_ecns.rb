@@ -1,4 +1,4 @@
-class CreateReportShopEcns < ActiveRecord::Migration[5.1]
+class CreateReportShopEcns < ActiveRecord::Migration[5.2]
   def change
     create_table :report_shop_ecns, comment: "店主ECN数据" do |t|
       t.bigint :shop_id, comment: "店铺ID"

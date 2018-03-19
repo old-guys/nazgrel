@@ -1,4 +1,4 @@
-class CreateOrders < ActiveRecord::Migration[5.1]
+class CreateOrders < ActiveRecord::Migration[5.2]
   def change
     create_table :orders, comment: "订单" do |t|
       t.string :order_no, comment: "订单编号"

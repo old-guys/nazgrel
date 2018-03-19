@@ -1,4 +1,4 @@
-class AddWithdrawAmountToReportCityShopActivity < ActiveRecord::Migration[5.1]
+class AddWithdrawAmountToReportCityShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_city_shop_activities, :withdraw_amount, :decimal, precision: 11, scale: 3, default: 0, after: :total_commission_income_amount, comment: "已提现金额"
     add_column :report_city_shop_activities, :stage_1_withdraw_amount, :decimal, precision: 11, scale: 3, default: 0, after: :withdraw_amount, comment: "00:00-9:00 已提现金额"

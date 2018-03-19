@@ -1,4 +1,4 @@
-class ChangeCommentOnUser < ActiveRecord::Migration[5.1]
+class ChangeCommentOnUser < ActiveRecord::Migration[5.2]
   def change
     set_table_comment :users, "用户"
     set_column_comment :users, :email, "邮箱"

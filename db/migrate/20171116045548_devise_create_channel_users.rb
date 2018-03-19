@@ -1,4 +1,4 @@
-class DeviseCreateChannelUsers < ActiveRecord::Migration[5.1]
+class DeviseCreateChannelUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :channel_users, comment: "渠道用户" do |t|
       ## Database authenticatable

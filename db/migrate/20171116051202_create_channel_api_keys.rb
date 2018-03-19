@@ -1,4 +1,4 @@
-class CreateChannelApiKeys < ActiveRecord::Migration[5.1]
+class CreateChannelApiKeys < ActiveRecord::Migration[5.2]
   def change
     create_table :channel_api_keys, comment: "渠道用户api key" do |t|
       t.references :channel_user, foreign_key: true, comment: "渠道用户"

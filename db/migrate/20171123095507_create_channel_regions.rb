@@ -1,4 +1,4 @@
-class CreateChannelRegions < ActiveRecord::Migration[5.1]
+class CreateChannelRegions < ActiveRecord::Migration[5.2]
   def change
     create_table :channel_regions, comment: "渠道大区" do |t|
       t.string :name, comment: "名称"

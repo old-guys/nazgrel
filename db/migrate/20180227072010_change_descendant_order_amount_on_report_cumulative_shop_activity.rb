@@ -1,4 +1,4 @@
-class ChangeDescendantOrderAmountOnReportCumulativeShopActivity < ActiveRecord::Migration[5.1]
+class ChangeDescendantOrderAmountOnReportCumulativeShopActivity < ActiveRecord::Migration[5.2]
   def change
     change_column :report_cumulative_shop_activities, :day_0_descendant_order_amount, :decimal, precision: 11, scale: 3, default: 0, after: :day_60_order_amount, comment: "当天下级订单金额"
     change_column :report_cumulative_shop_activities, :day_3_descendant_order_amount, :decimal, precision: 11, scale: 3, default: 0, after: :day_0_descendant_order_amount, comment: "3天下级订单金额"

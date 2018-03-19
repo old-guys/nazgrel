@@ -1,4 +1,4 @@
-class CreateReportCumulativeShopActivities < ActiveRecord::Migration[5.1]
+class CreateReportCumulativeShopActivities < ActiveRecord::Migration[5.2]
   def change
     create_table :report_cumulative_shop_activities, comment: "累计店主行为数据" do |t|
       t.bigint :shop_id

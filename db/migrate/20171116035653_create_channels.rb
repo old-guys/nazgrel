@@ -1,4 +1,4 @@
-class CreateChannels < ActiveRecord::Migration[5.1]
+class CreateChannels < ActiveRecord::Migration[5.2]
   def change
     create_table :channels, comment: "渠道" do |t|
       t.string :name, null: false, default: "", comment: "渠道名称"

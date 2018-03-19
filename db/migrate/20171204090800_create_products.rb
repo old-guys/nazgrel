@@ -1,4 +1,4 @@
-class CreateProducts < ActiveRecord::Migration[5.1]
+class CreateProducts < ActiveRecord::Migration[5.2]
   def change
     create_table :products, comment: "商品" do |t|
       t.integer :category_id, comment: "分类ID"

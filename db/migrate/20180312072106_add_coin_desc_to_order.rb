@@ -1,4 +1,4 @@
-class AddCoinDescToOrder < ActiveRecord::Migration[5.1]
+class AddCoinDescToOrder < ActiveRecord::Migration[5.2]
   def change
     add_column :orders, :virt_coin_reduce_price, :decimal, default: 0, precision: 11, scale: 3, comment: "当前使用芝蚂币金额"
     add_column :orders, :refund_time, :datetime, comment: "最新退款日期"

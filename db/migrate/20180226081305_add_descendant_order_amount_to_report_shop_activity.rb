@@ -1,4 +1,4 @@
-class AddDescendantOrderAmountToReportShopActivity < ActiveRecord::Migration[5.1]
+class AddDescendantOrderAmountToReportShopActivity < ActiveRecord::Migration[5.2]
   def change
     add_column :report_shop_activities, :descendant_order_amount, :decimal, precision: 11, scale: 3, default: 0, after: :total_sale_order_amount, comment: "下级订单金额"
     add_column :report_shop_activities, :stage_1_descendant_order_amount, :decimal, precision: 11, scale: 3, default: 0, after: :descendant_order_amount, comment: "00:00-9:00 下级订单金额"
