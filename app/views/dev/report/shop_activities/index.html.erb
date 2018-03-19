@@ -16,7 +16,7 @@
       <button type="submit" class="btn btn-primary mb-2">查询</button>
     </form>
     <div class="table-responsive" >
-      <table class="table table-smtable-hover">
+      <table class="table table-sm fixed-header table-hover">
         <caption class="p-0">
           店主行为报表
           <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
@@ -35,7 +35,7 @@
             <th scope="col"><div class="wi4">创建时间</div></th>
             <th scope="col"><div class="wi3">店铺等级</div></th>
             <% _stat_fields.each {|field| %>
-              <th scope="col" class="col-2"><div class="wi3"><%= ReportShopActivity.human_attribute_name(field) %></div></th>
+              <th scope="col"><div class="wi3"><%= ReportShopActivity.human_attribute_name(field) %></div></th>
             <% } %>
           </tr>
         </thead>
