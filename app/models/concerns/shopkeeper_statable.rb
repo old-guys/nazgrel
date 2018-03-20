@@ -119,7 +119,7 @@ module ShopkeeperStatable
     end
 
     def insert_to_report_activity_partial_shops(records: )
-      _records = Array.wrap(records).uniq
+      _records = Array.wrap(records).uniq.compact
 
       ShopActivity::UpdateReport.insert_to_partial_shops(
         id: _records.map(&:shop_id)
