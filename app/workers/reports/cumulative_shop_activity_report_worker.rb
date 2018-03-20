@@ -30,6 +30,7 @@ class CumulativeShopActivityReportWorker
         _ids.each_slice(500) {|ids|
           CumulativeShopActivity::UpdateReport.update_report(
             shops: Shop.where(id: _ids),
+            interval_time: 5.minutes,
             touch_report_date: true
           )
         }

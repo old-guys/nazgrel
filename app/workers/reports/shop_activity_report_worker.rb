@@ -29,7 +29,8 @@ class ShopActivityReportWorker
 
         _ids.each_slice(500) {|ids|
           ShopActivity::UpdateReport.update_report(
-            shops: _shops
+            shops: _shops,
+            interval_time: 5.minutes
           )
         }
 

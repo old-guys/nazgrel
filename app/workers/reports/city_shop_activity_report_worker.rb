@@ -28,7 +28,8 @@ class CityShopActivityReportWorker
 
         _cities.each {|city|
           CityShopActivity::UpdateReport.update_report(
-            city: city
+            city: city,
+            interval_time: 5.minutes
           )
         }
     end
