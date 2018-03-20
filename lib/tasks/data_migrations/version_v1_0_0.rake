@@ -204,5 +204,20 @@ namespace :data_migrations do
         force_update: true
       )
     end
+
+    desc 'migrate shop_activity coin data'
+    task :v1_1_3_15_migrate_shop_activity_coin_data => :environment do
+      shops = Shop.where(id: ReportShopActivity.where(report_date: Date.today).select("distinct(shop_id)"))
+      ShopActivity::UpdateReport.update_report(
+        shops: shops,
+        force_update: true
+      )
+
+      CumulativeShopActivity::UpdateReport.update_report(
+        shops: shops,
+        interval_time: 5.minutes,
+        force_update: true
+      )
+    end
   end
 end

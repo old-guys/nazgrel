@@ -79,6 +79,22 @@ zh-CN:
         day_60_withdraw_amount: "60天已提现金额"
         total_withdraw_amount: "累计已提现金额"
 
+        day_0_income_coin: "当天收入芝蚂币"
+        day_3_income_coin: "3天收入芝蚂币"
+        day_7_income_coin: "7天收入芝蚂币"
+        day_15_income_coin: "15天收入芝蚂币"
+        day_30_income_coin: "30天收入芝蚂币"
+        day_60_income_coin: "60天收入芝蚂币"
+        total_income_coin: "累计收入芝蚂币"
+
+        day_0_use_coin: "当天使用芝蚂币"
+        day_3_use_coin: "3天使用芝蚂币"
+        day_7_use_coin: "7天使用芝蚂币"
+        day_15_use_coin: "15天使用芝蚂币"
+        day_30_use_coin: "30天使用芝蚂币"
+        day_60_use_coin: "60天使用芝蚂币"
+        total_use_coin: "累计使用芝蚂币"
+
         day_0_shopkeeper_order_amount: "当天自购订单金额"
         day_3_shopkeeper_order_amount: "3天自购订单金额"
         day_7_shopkeeper_order_amount: "7天自购订单金额"
