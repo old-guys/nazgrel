@@ -1,10 +1,10 @@
 json.partial! 'api/shared/paginator', records: @shopkeepers
 
-json.cache! ['api/open_mobile/shopkeepers/report', @shopkeepers], expires_in: 15.minutes do
+json.cache_if! !params[:updated_at_range].presence, ['api/open_mobile/shopkeepers/report', @shopkeepers] do
   json.models do
     Shopkeeper.with_preload_parents(records: @shopkeepers)
 
-    json.cache_collection! @shopkeepers.to_a, key: 'api/open/mobile/shopkeepers/report', expires_in: 2.days do |record|
+    json.cache_collection! @shopkeepers.to_a, key: 'api/open/mobile/shopkeepers/report' do |record|
       json.partial! 'api/open_mobile/shopkeepers/report_show',
         locals: {record: record}
     end
