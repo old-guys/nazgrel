@@ -1,6 +1,6 @@
 json.partial! 'api/shared/paginator', records: @shopkeepers
 
-json.cache! ['api/open_mobile/shopkeepers/report', @shopkeepers], expires_in: 1.hours do
+json.cache! ['api/open_mobile/shopkeepers/report', @shopkeepers], expires_in: 15.minutes do
   json.models do
     Shopkeeper.with_preload_parents(records: @shopkeepers)
 
