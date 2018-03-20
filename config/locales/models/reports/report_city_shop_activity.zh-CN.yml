@@ -88,6 +88,15 @@ zh-CN:
         year_withdraw_amount: "年已提现金额"
         total_withdraw_amount: "已提现金额"
 
+        income_coin: "收入芝蚂币"
+        stage_1_income_coin: "00:00-9:00 收入芝蚂币"
+        stage_2_income_coin: "09:00-18:00 收入芝蚂币"
+        stage_3_income_coin: "18:00-24:00 收入芝蚂币"
+        week_income_coin: "周已收入芝蚂币"
+        month_income_coin: "月已收入芝蚂币"
+        year_income_coin: "年已收入芝蚂币"
+        total_income_coin: "已收入芝蚂币"
+
         shopkeeper_order_amount: "自购订单金额"
         stage_1_shopkeeper_order_amount: "00:00-9:00 自购订单金额"
         stage_2_shopkeeper_order_amount: "09:00-18:00 自购订单金额"
