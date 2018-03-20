@@ -90,7 +90,7 @@ class ShopActivity::UpdateReport
 
       %w(week month year).each {|dimension|
         _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
-          hash[:"#{dimension}_#{category}"] = increase_field_by(field: category, unit: dimension)
+          hash[:"#{dimension}_#{category}"] = increase_field_by(field: :"#{category}", unit: dimension)
         }
 
         @result.merge!(_result)
