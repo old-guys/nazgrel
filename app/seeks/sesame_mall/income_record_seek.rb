@@ -48,6 +48,35 @@ class SesameMall::IncomeRecordSeek
     ::Shopkeeper.insert_to_report_activity_partial_shops(
       records: records.map(&:shopkeeper)
     )
+
+    process_shopkeeper_commission_amount(records: records)
+  end
+
+  def process_shopkeeper_commission_amount(records: )
+    _shopkeepers = []
+    records.select(&:commission_income?).select(&:confirmed?).each {|record|
+      next if record.shopkeeper.nil?
+
+      record.shopkeeper.assign_attributes(
+        commission_income_amount: record.shopkeeper.income_records.commission_income.confirmed.
+          sum(:income_amount)
+      )
+      _shopkeepers << record.shopkeeper
+    }
+
+    records.select(&:team_income?).select(&:confirmed?).each {|record|
+      next if record.shopkeeper.nil?
+
+      record.shopkeeper.assign_attributes(
+        team_income_amount: record.shopkeeper.income_records.team_income.confirmed.
+          sum(:income_amount)
+      )
+      _shopkeepers << record.shopkeeper
+    }
+
+    ActiveRecord::Base.transaction do
+      _shopkeepers.select(&:changed?).map(&:save)
+    end
   end
   class << self
     def whole_sync
