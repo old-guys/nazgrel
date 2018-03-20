@@ -4,7 +4,7 @@ module ActionSearchable
   included do
   end
   def distance_of_time_range(str: , from_time: nil)
-    from_time ||= Time.now
+    from_time ||= Time.now.end_of_minute
 
     case str.to_s
     when /\d+_minute_ago/, /\d+_hour_ago/, /\d+_day_ago/, /\d+_month_ago/, /\d+_year_ago/
@@ -16,7 +16,7 @@ module ActionSearchable
   def distance_time_range_from_now(str: )
     distance_of_time_range(
       str: str,
-      from_time: Time.now
+      from_time: Time.now.end_of_minute
     )
   end
 
