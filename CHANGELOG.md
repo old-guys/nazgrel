@@ -1,3 +1,11 @@
+## 店主行为报表增加芝蚂币(2018-03-20)
+
+- #feature# 店主行为报表增加芝蚂币
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_15_migrate_shop_activity_coin_data
+```
+
 ## 升级 Rails 到 5.2(2018-03-19)
 
 - #support# 升级 Rails 到 5.2.0

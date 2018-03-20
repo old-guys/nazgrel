@@ -11,7 +11,7 @@ module ReportShopActivityable
       @stat_categories ||= %w(
         shared_count view_count viewer_count order_number shopkeeper_order_number
         sale_order_number order_amount commission_income_amount
-        income_coin
+        income_coin use_coin
         withdraw_amount shopkeeper_order_amount
         sale_order_amount children_grade_platinum_count
         children_grade_gold_count ecn_grade_platinum_count
