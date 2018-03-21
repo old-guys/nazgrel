@@ -15,7 +15,7 @@ module CumulativeShopActivity::Calculations
   private
   def calculate_by_stage(stage: , shop_id: , date:)
     _sum_fields = ReportCumulativeShopActivity.stat_categories.map {|field|
-      "sum(`report_shop_activities`.`#{field}`) as #{stage}_#{field}"
+      Arel.sql("sum(`report_shop_activities`.`#{field}`) as #{stage}_#{field}")
     }
     dates = (stage.split("_").last.to_i).days.ago(date)..date
 
@@ -29,7 +29,7 @@ module CumulativeShopActivity::Calculations
 
   def calculate_by_total(shop_id: , date:)
     _sum_fields = ReportCumulativeShopActivity.stat_categories.map {|field|
-      "(`report_shop_activities`.`total_#{field}`) as total_#{field}"
+      Arel.sql("(`report_shop_activities`.`total_#{field}`) as total_#{field}")
     }
 
     format_calculate_hash(

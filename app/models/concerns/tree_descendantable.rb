@@ -36,8 +36,9 @@ module TreeDescendantable
 
     scope :order_by_tree_depth, -> (sort = "asc", column: nil) do
       column ||= path_column
+      _sql = tree_depth_calcul_sql(column: column)
 
-      order(%Q{tree_depth_calcul_sql(column: column) #{sort}})
+      order(Arel.sql(%Q{#{_sql} #{sort}}))
     end
 
     before_update :clean_descendant_cache, if: :will_save_change_to_path?

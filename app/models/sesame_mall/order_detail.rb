@@ -21,15 +21,15 @@ class OrderDetail < ApplicationRecord
 
   scope :hot_sales_product, ->(limit: 5, times: Time.now.all_day, fields: []) {
     fields = fields | [
-      "sum(`order_details`.`product_num`) as total_product_num",
+      Arel.sql("sum(`order_details`.`product_num`) as total_product_num"),
       :product_id
     ]
 
     joins(:order)
       .merge(Order.valided_order)
       .where(orders: {created_at: times})
-      .order("sum(`order_details`.`product_num`) desc")
-      .group("`order_details`.`product_id`")
+      .order(Arel.sql("sum(`order_details`.`product_num`) desc"))
+      .group(:product_id)
       .limit(limit)
       .pluck_h(*fields)
   }
