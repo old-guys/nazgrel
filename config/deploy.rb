@@ -27,7 +27,7 @@ set :deploy_to, "/ishanggang/apps/#{fetch(:application)}_#{fetch(:stage)}"
 set :linked_files, %W{
   config/database.yml config/nginx.conf config/secrets.yml
   config/unicorn/production.rb config/app.god config/services.yml
-  config/newrelic.yml
+  config/newrelic.yml config/storage.yml
 }
 
 # Default value for linked_dirs is []

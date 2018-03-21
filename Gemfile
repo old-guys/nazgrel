@@ -5,7 +5,7 @@ ruby "2.5.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '~> 5.2', '>= 5.2.0'
-gem 'rails', '>= 5.2.0.rc1', "< 6.0"
+gem 'rails', '>= 5.2.0.rc2', "< 6.0"
 
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.4.10'
@@ -97,6 +97,16 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   # gem 'web-console', '~> 3.5', '>= 3.5.1'
   # gem 'listen', '~> 3.1', '>= 3.1.5'
+
+  # Pronto runs analysis quickly by checking only the relevant changes.
+  # Created to be used on GitHub pull requests, but also works locally
+  # and integrates with GitLab and Bitbucket.
+  # [requirement] OS X `brew install cmake`
+  gem 'pronto', '~> 0.9.5'
+  # Pronto runner for Rubocop, ruby code analyzer
+  gem 'pronto-rubocop', require: false
+  # Pronto runner for Flay, structural similarities analyzer
+  gem 'pronto-flay', require: false
 
   # bundler-audit provides patch-level verification for Bundled apps.
   # gem 'bundler-audit', '~> 0.6', '>= 0.6'

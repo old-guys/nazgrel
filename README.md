@@ -16,7 +16,7 @@ Nazgrel is based on Rails + MySQL + Redis,
 安装依赖
 
         Mac OS X
-                brew install git mysql redis
+                brew install git mysql redis cmake
 
         Ubuntu
                 sudo apt-get install libmysqlclient-dev redis-server
@@ -71,7 +71,7 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
 
       bundle exec rails s -p 3000 -b 0.0.0.0
 
-### Debugging Rails
+### Development
 
 在开发环境的时候可以启用一些开关，来方便开发
 
@@ -84,6 +84,12 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
   log_active_record_slow: 1000
   # 开启开发环境缓存
   touch tmp/caching-dev.txt
+```
+
+[code review](https://medium.com/nimbl3/code-reviews-a-tale-of-two-developers-ab1b2a887394) within locale environment
+
+```shell
+pronto run
 ```
 
 ## ishanggang server stack
