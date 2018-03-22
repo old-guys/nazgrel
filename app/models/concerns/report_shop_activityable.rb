@@ -7,6 +7,24 @@ module ReportShopActivityable
 
   private
   module ClassMethods
+    def daily_special_stat_fields
+      @daily_special_stat_fields ||= proc {
+        _dimensions = [
+          nil, "stage_1", "stage_2", "stage_3",
+          "week", "month", "year", "total"
+        ]
+
+        %w(
+          income_amount
+          balance_amount balance_coin
+        ).map {|category|
+          _dimensions.map{|dimension|
+            dimension ? "#{dimension}_#{category}" : category
+          }
+        }.flatten
+      }.call
+    end
+
     def stat_categories
       @stat_categories ||= %w(
         shared_count view_count viewer_count order_number shopkeeper_order_number
@@ -38,7 +56,9 @@ module ReportShopActivityable
           _dimensions.map{|dimension|
             dimension ? "#{dimension}_#{category}" : category
           }
-        }.flatten.freeze
+        }.flatten.concat(
+          daily_special_stat_fields
+        ).freeze
       }.call
     end
   end

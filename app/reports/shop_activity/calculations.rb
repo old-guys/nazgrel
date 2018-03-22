@@ -68,6 +68,25 @@ module ShopActivity::Calculations
       sum_block: proc{|sql| sql.sum(:income_amount) }
     ))
 
+    result.merge!(
+      aggregation_recording_field_by_day(
+        field: :balance_coin, date: date, records: shop,
+        sum_block: proc{|arg| arg.shopkeeper.try(:balance_coin) }
+      )
+    )
+    result.merge!(
+      aggregation_recording_field_by_day(
+        field: :income_amount, date: date, records: shop,
+        sum_block: proc{|arg| arg.shopkeeper.try(:total_income_amount) }
+      )
+    )
+    result.merge!(
+      aggregation_recording_field_by_day(
+        field: :balance_amount, date: date, records: shop,
+        sum_block: proc{|arg| arg.shopkeeper.try(:balance_amount) }
+      )
+    )
+
     _records = shop.orders.valided_order.sales_order
     result.merge!(aggregation_field_by_day(
       field: :use_coin, date: date, records: _records,
@@ -229,6 +248,39 @@ module ShopActivity::Calculations
         "total_#{field}": sum_block.call(records)
       })
     end
+
+    result
+  end
+
+  def aggregation_recording_field_by_day(field: , date: , records: , sum_block: nil)
+    result = {}
+    _time = Time.now
+    _value = sum_block.call(records)
+
+    result.merge!(
+      "#{field}": _value
+    )
+    result.merge!(
+      "stage_1_#{field}": _value
+    ) if _time.hour.between?(0, 8)
+    result.merge!(
+      "stage_2_#{field}": _value
+    ) if _time.hour.between?(9, 17)
+    result.merge!(
+      "stage_2_#{field}": _value
+    ) if _time.hour.between?(18, 23)
+    result.merge!(
+      "week_#{field}": _value
+    ) if date == _time.to_date
+    result.merge!(
+      "month_#{field}": _value
+    ) if date == _time.to_date
+    result.merge!(
+      "year_#{field}": _value
+    ) if date == _time.to_date
+    result.merge!(
+      "total_#{field}": _value
+    ) if date == _time.to_date
 
     result
   end
