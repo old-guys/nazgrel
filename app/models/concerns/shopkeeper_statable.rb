@@ -13,8 +13,8 @@ module ShopkeeperStatable
       _records.group(:invite_user_id).order(
         "count(`invite_user_id`) desc"
         ).limit(limit).pluck_s(
-          "`invite_user_id` as user_id",
-          "count(`invite_user_id`) as count"
+          Arel.sql("`invite_user_id` as user_id"),
+          Arel.sql("count(`invite_user_id`) as count")
         )
     end
 
@@ -29,8 +29,8 @@ module ShopkeeperStatable
       _records.group(:shop_id).order(
         "sum(`order_amount`) desc"
         ).limit(limit).pluck_s(
-          "`shop_id` as shop_id",
-          "sum(`order_amount`) as amount"
+          Arel.sql("`shop_id` as shop_id"),
+          Arel.sql("sum(`order_amount`) as amount")
         )
     end
 
@@ -67,8 +67,8 @@ module ShopkeeperStatable
       _records.group(:shop_id).order(
         "sum(`view_count`) desc"
         ).limit(limit).pluck_s(
-          "`shop_id` as shop_id",
-          "sum(`view_count`) as count"
+          Arel.sql("`shop_id` as shop_id"),
+          Arel.sql("sum(`view_count`) as count")
         )
     end
 
@@ -86,8 +86,8 @@ module ShopkeeperStatable
       _records.group(:shop_id).order(
         "sum(`viewer_count`) desc"
         ).limit(limit).pluck_s(
-          "`shop_id` as shop_id",
-          "sum(`viewer_count`) as count"
+          Arel.sql("`shop_id` as shop_id"),
+          Arel.sql("sum(`viewer_count`) as count")
         )
     end
 
@@ -102,8 +102,8 @@ module ShopkeeperStatable
       _records.group(:shop_id).order(
         "sum(`shared_count`) desc"
         ).limit(limit).pluck_s(
-          "`shop_id` as shop_id",
-          "sum(`shared_count`) as count"
+          Arel.sql("`shop_id` as shop_id"),
+          Arel.sql("sum(`shared_count`) as count")
         )
     end
 
@@ -113,8 +113,8 @@ module ShopkeeperStatable
       ).where.not(city: "").
       group(:city).order("count(city) desc").
       limit(limit).pluck_s(
-        "`city` as city",
-        "count(`city`) as count"
+        Arel.sql("`city` as city"),
+        Arel.sql("count(`city`) as count")
       )
     end
 
