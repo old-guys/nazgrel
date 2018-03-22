@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   draw :api_channel
   draw :api_dev
   draw :api_open_mobile
+  draw :api_zmall_mobile
   draw :dev
 
   require 'sidekiq/web'

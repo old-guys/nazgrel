@@ -131,7 +131,7 @@ module ShopActivity::Calculations
       partial_update: partial_update
     ))
 
-    _records = shop.shopkeeper.descendant_entities.where.not(order_number: nil)
+    _records = shop.shopkeeper.descendant_entities.activation
     result.merge!(aggregation_field_by_day(
       field: :descendant_activation_count, date: date, records: _records,
       partial_update: partial_update

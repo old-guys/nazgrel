@@ -1,0 +1,29 @@
+class Api::ZmallMobile::ShopsController < Api::ZmallMobile::BaseController
+  include ActionSearchable
+  include ActionUtilable
+
+  before_action :set_shop
+
+  def summary
+  end
+
+  def stat
+    @report_shop_activities = 0.upto(5).map{|i|
+      date = i.send(:month).ago.end_of_month
+
+      ReportShopActivity.where(
+        shop_id: @shop.id,
+        report_date: date.all_month
+      ).last || ReportShopActivity.new(
+        shop_id: @shop.id,
+        report_date: date,
+        updated_at: date.to_time
+      )
+    }
+  end
+
+  private
+  def set_shop
+    @shop = Shop.find(params[:id])
+  end
+end

@@ -42,6 +42,10 @@ class Shopkeeper < ApplicationRecord
     no: 0
   }, _prefix: true
 
+  scope :activation, ->{
+    where("order_number > ?", 0)
+  }
+
   include ShopkeeperStatusable
   include ShopkeeperStatable
   include Searchable

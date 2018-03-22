@@ -29,6 +29,30 @@ module ShopkeeperStatusable
     end
   end
 
+  def children_grade_trainee_size
+    @dchildren_grade_trainee_size ||= children.grade_trainee.size
+  end
+
+  def children_activation_grade_trainee_size
+    @children_activation_grade_trainee_size ||= children.grade_trainee.activation.size
+  end
+
+  def children_inactivated_grade_trainee_size
+    children_grade_trainee_size - children_activation_grade_trainee_size
+  end
+
+  def descendant_grade_trainee_size
+    @descendant_grade_trainee_size ||= descendant_entities.grade_trainee.size
+  end
+
+  def descendant_activation_grade_trainee_size
+    @descendant_activation_grade_trainee_size ||= descendant_entities.grade_trainee.activation.size
+  end
+
+  def descendant_inactivated_grade_trainee_size
+    descendant_grade_trainee_size - descendant_activation_grade_trainee_size
+  end
+
   def descendant_grade_platinum_size
     report_cumulative_shop_activity.try(:total_ecn_grade_platinum_count) || 0
   end
