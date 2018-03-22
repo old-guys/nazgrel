@@ -57,7 +57,7 @@ GEM
     bootsnap (1.2.0)
       msgpack (~> 1.0)
     builder (3.2.3)
-    byebug (10.0.0)
+    byebug (10.0.1)
     capistrano (3.10.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -251,7 +251,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rubocop (0.53.0)
+    rubocop (0.54.0)
       parallel (~> 1.10)
       parser (>= 2.5)
       powerpack (~> 0.1)
