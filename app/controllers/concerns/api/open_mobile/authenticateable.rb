@@ -1,9 +1,9 @@
 module Api::OpenMobile::Authenticateable
   # controller and view
   extend ActiveSupport::Concern
+  DEVICES = %w(ios android h5)
 
   included do
-    DEVICES = %w(ios android h5)
   end
 
   private

@@ -1,9 +1,9 @@
 module Api::Web::Authenticateable
   # controller and view
   extend ActiveSupport::Concern
+  DEVICES = %w(pc web)
 
   included do
-    DEVICES = %w(pc web)
   end
 
   private
