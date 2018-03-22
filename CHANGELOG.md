@@ -1,3 +1,12 @@
+## 店主行为报表增加账户余额(2018-03-22)
+
+- #feature# 店主行为报表增加账户余额, 账户总收入，芝蚂币余额
+- #feature# 店主行为报表支持记录流水类型数据(如账户余额),但是不计入累计和汇总报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_15_migrate_shop_activity_coin_data
+```
+
 ## 店主行为报表增加芝蚂币(2018-03-20)
 
 - #feature# 店主行为报表增加芝蚂币

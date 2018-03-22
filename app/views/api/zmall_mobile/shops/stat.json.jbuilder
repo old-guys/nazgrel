@@ -9,9 +9,10 @@ json.models do
       :month_sale_order_number,
       :month_sale_order_amount,
       :month_commission_income_amount,
+      :month_balance_amount,
       :month_income_coin,
       :month_use_coin,
-
+      :month_balance_coin
     )
   end
 end
