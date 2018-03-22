@@ -14,12 +14,8 @@ class Api::ZmallMobile::ShopsController < Api::ZmallMobile::BaseController
       ReportShopActivity.where(
         shop_id: @shop.id,
         report_date: date.all_month
-      ).last || ReportShopActivity.new(
-        shop_id: @shop.id,
-        report_date: date,
-        updated_at: date.to_time
-      )
-    }
+      ).last
+    }.compact
   end
 
   private
