@@ -31,6 +31,7 @@ every 2.months do
   runner "ReportCityShopActivity.prune_old_records"
   runner "ReportChannelShopActivity.prune_old_records"
   runner "ReportDailyOperational.prune_old_records"
+  runner "ReportDailyShopGradeOperational.prune_old_records"
 end
 
 every 1.months do

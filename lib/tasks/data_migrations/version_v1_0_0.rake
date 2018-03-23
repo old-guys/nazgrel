@@ -219,5 +219,15 @@ namespace :data_migrations do
         force_update: true
       )
     end
+
+    desc 'migrate daily_shop_grade_operational data'
+    task :v1_1_3_15_migrate_daily_shop_grade_operational => :environment do
+      1.months.ago.to_date.upto(Date.today) {|date|
+        DailyShopGradeOperational::UpdateReport.update_report(
+          report_date: date,
+          force_update: true
+        )
+      }
+    end
   end
 end

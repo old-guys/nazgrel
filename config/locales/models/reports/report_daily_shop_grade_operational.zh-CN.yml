@@ -1,0 +1,24 @@
+zh-CN:
+  activerecord:
+    models:
+      report_daily_shop_grade_operational: "每日店主等级运营报表"
+    attributes:
+      report_daily_shop_grade_operational:
+        id: "ID"
+        report_date: "报表日期"
+
+        grade_trainee_count: "体验店主数"
+        activation_grade_trainee_count: "转化有效店体验主数"
+
+        trainee_upgrade_gold_count: "体验升黄金"
+        trainee_upgrade_platinum_count: "体验升白金"
+        gold_upgrade_platinum_count: "黄金升白金"
+
+        grade_gold_count: "黄金店主"
+        grade_platinum_count: "白金店主"
+
+        shopkeeper_count: "新增店主数"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
