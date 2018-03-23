@@ -518,3 +518,81 @@ end
 ### 更新机制
 
 - 每隔一个小时定时更新每日运营报表数据更新机制
+
+## 每日店主等级运营报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_daily_shop_grade_operational.rb
+class ReportDailyShopGradeOperational < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/daily_shop_grade_operational/
+app/reports/daily_shop_grade_operational/
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+cat app/reports/daily_shop_grade_operational/calculations.rb
+module DailyShopGradeOperational::Calculations
+  class << self
+    delegate :update_report, to: "DailyShopGradeOperational::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module DailyShopGradeOperational::Calculations
+```
+
+更新报表
+
+```ruby
+class DailyShopGradeOperational::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/daily_shop_grade_operational_report_worker.rb
+class DailyShopGradeOperationalReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```yaml
+daily_shop_grade_operational_report:
+  cron: "1 */2 * * *"
+  name: "更新当天每日店主等级运营报表数据"
+  class: "DailyShopGradeOperationalReportWorker"
+  queue: :report
+  args:
+    type: "partial"
+```
+
+定时清理
+
+```ruby
+# config/schedule.rb
+every 2.weeks do
+  runner "ReportDailyShopGradeOperational.prune_old_records"
+end
+```
+
+### 更新机制
+
+- 每隔一个小时定时更新每日店主等级运营报表数据更新机制

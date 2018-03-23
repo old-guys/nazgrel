@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-body">
+    <ul>
+      <li>
+         <%= link_to "本周", url_for(report_date: DateTime.now.all_week)%>
+         <%= link_to "上周", url_for(report_date: DateTime.now.last_week.all_week)%>
+         <%= link_to "本月", url_for(report_date: DateTime.now.all_month)%>
+         <%= link_to "上月", url_for(report_date: DateTime.now.last_month.all_month)%>
+      </li>
+    </ul>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          每日店主等级运营报表
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
+        <%
+           _stat_fields = %w(
+            grade_trainee_count activation_grade_trainee_count
+            trainee_upgrade_gold_count trainee_upgrade_platinum_count
+            gold_upgrade_platinum_count
+            grade_gold_count grade_platinum_count
+            shopkeeper_count
+           )
+        %>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"><div class="wi3">日期</div></th>
+            <% _stat_fields.each {|field| %>
+              <th scope="col"><div class="wi3"><%= ReportDailyShopGradeOperational.human_attribute_name(field) %></div></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/daily_shop_grade_operationals/index", @report_daily_shop_grade_operationals] do %>
+            <%= render partial: "dev/report/daily_shop_grade_operationals/index_tr",
+              collection: @report_daily_shop_grade_operationals,
+              as: :record, cached: true, locals: {
+                stat_fields: _stat_fields
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_daily_shop_grade_operationals
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>

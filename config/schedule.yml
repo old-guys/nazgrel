@@ -280,3 +280,18 @@ daily_operational_report_yesterday:
   queue: :report
   args:
     type: "yesterday"
+
+daily_shop_grade_operational_report:
+  cron: "*/20 * * * *"
+  name: "更新当天每日店主等级运营报表数据"
+  class: "DailyShopGradeOperationalReportWorker"
+  queue: :report
+  args:
+    type: "today"
+daily_shop_grade_operational_report_yesterday:
+  cron: "3 0 * * *"
+  name: "更新昨天每日店主等级运营报表数据"
+  class: "DailyShopGradeOperationalReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"
