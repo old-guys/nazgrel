@@ -91,6 +91,7 @@ module Export
           'Dev::Shopkeeper#tree' => '店主组织架构树报表',
           'Dev::DailyOperational#report' => '每日运营报表',
           'Dev::DailyShopGradeOperational#report' => '每日店主等级运营报表',
+          'Dev::ShopRetention#report' => '店主留存率报表',
         }.freeze
       end
     end

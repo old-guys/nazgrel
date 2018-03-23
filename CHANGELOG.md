@@ -1,9 +1,11 @@
 ## 每日店主等级运营报表(2018-03-23)
 
 - #feature# 新增每日店主等级运营报表
+- #feature# 新增店主留存率报表
 
 ```shell
 cap production deploy:runrake task=data_migrations:version:v1_1_3_15_migrate_daily_shop_grade_operational
+cap production deploy:runrake task=data_migrations:version:v1_1_3_15_migrate_shop_retention
 ```
 
 ## 店主行为报表增加账户余额(2018-03-22)

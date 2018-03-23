@@ -1,0 +1,19 @@
+zh-CN:
+  activerecord:
+    models:
+      report_shop_retention: "店主留存率报表"
+    attributes:
+      report_shop_retention:
+        id: "ID"
+        report_date: "报表日期"
+
+        shopkeeper_count: "店主数"
+        activation_shopkeeper_count: "下单1次以上"
+        retention_shopkeeper_count: "下单2次以上"
+
+        activation_shopkeeper_rate: "店主活跃率"
+        retention_shopkeeper_rate: "店主留存率"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

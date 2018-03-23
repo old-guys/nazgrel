@@ -25,6 +25,10 @@ every 2.weeks do
   runner "SesameMall::Source::SeekRecord.prune_old_records"
 end
 
+every "01 0 1 * *" do
+  runner "ShopRetention::Reporting.update_report"
+end
+
 every 2.months do
   runner "ReportChannelShopNewer.prune_old_records"
   runner "ReportShopActivity.prune_old_records"

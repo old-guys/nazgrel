@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          店主留存率报表
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
+        <%
+           _stat_fields = %w(
+            shopkeeper_count
+            activation_shopkeeper_count retention_shopkeeper_count
+
+            activation_shopkeeper_rate retention_shopkeeper_rate
+           )
+        %>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">日期</th>
+            <th scope="col"><div class="wi4">取值范围</div></th>
+            <% _stat_fields.each {|field| %>
+              <th scope="col"><div class="wi4"><%= ReportShopRetention.human_attribute_name(field) %></div></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/shop_retentions/index", @report_shop_retentions] do %>
+            <%= render partial: "dev/report/shop_retentions/index_tr",
+              collection: @report_shop_retentions,
+              as: :record, cached: true, locals: {
+                stat_fields: _stat_fields
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_shop_retentions
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>

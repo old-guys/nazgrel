@@ -1,0 +1,2 @@
+class ReportShopRetention < ApplicationRecord
+end
