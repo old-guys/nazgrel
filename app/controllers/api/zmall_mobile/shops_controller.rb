@@ -8,7 +8,7 @@ class Api::ZmallMobile::ShopsController < Api::ZmallMobile::BaseController
   end
 
   def stat
-    @report_shop_activities = 0.upto(5).map{|i|
+    @report_shop_activities = 0.upto(11).map{|i|
       date = i.send(:month).ago.end_of_month
 
       ReportShopActivity.where(
