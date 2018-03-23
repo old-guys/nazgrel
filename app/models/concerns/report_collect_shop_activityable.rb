@@ -10,6 +10,16 @@ module ReportCollectShopActivityable
           category =~ /children|descendant/
         }.freeze
       end
+
+      def stat_fields
+        @stat_fields ||= proc {
+          stat_categories.map {|category|
+            stat_stages.dup.push("total").map{|stage|
+              stage ? "#{stage}_#{category}" : category
+            }
+          }.flatten.freeze
+        }.call
+      end
     end
   end
 

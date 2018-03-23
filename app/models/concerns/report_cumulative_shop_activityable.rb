@@ -9,7 +9,7 @@ module ReportCumulativeShopActivityable
         @stat_fields ||= proc {
           stat_categories.map {|category|
             stat_cumulative_stages.dup.push("total").map{|stage|
-              "#{stage}_#{category}"
+              stage ? "#{stage}_#{category}" : category
             }
           }.flatten.freeze
         }.call

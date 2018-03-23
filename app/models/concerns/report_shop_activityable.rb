@@ -7,18 +7,20 @@ module ReportShopActivityable
 
   private
   module ClassMethods
+    def stat_stages
+      @stat_cumulative_stages ||= [
+        nil, "stage_1", "stage_2", "stage_3",
+        "week", "month", "year", "total"
+      ].freeze
+    end
+
     def daily_special_stat_fields
       @daily_special_stat_fields ||= proc {
-        _dimensions = [
-          nil, "stage_1", "stage_2", "stage_3",
-          "week", "month", "year", "total"
-        ]
-
         %w(
           income_amount
           balance_amount balance_coin
         ).map {|category|
-          _dimensions.map{|dimension|
+          stat_stages.map{|dimension|
             dimension ? "#{dimension}_#{category}" : category
           }
         }.flatten
@@ -48,12 +50,8 @@ module ReportShopActivityable
 
     def stat_fields
       @stat_fields ||= proc {
-        _dimensions = [
-          nil, "stage_1", "stage_2", "stage_3",
-          "week", "month", "year", "total"
-        ]
         stat_categories.map {|category|
-          _dimensions.map{|dimension|
+          stat_stages.map{|dimension|
             dimension ? "#{dimension}_#{category}" : category
           }
         }.flatten.concat(
