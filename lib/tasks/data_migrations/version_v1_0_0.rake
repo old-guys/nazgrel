@@ -229,5 +229,15 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate shop_retention data'
+    task :v1_1_3_15_migrate_shop_retention => :environment do
+      0.upto(6).to_a.reverse.each {|i|
+        ShopRetention::Reporting.update_report(
+          report_date: (Date.today - i.send(:month)),
+          force_update: true
+        )
+      }
+    end
   end
 end

@@ -596,3 +596,64 @@ end
 ### 更新机制
 
 - 每隔一个小时定时更新每日店主等级运营报表数据更新机制
+
+## 店主留存率报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_shop_retention.rb
+class ReportShopRetention < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/shop_retention/
+app/reports/shop_retention/
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+cat app/reports/shop_retention/calculations.rb
+module ShopRetention::Calculations
+  class << self
+    delegate :update_report, to: "ShopRetention::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module ShopRetention::Calculations
+```
+
+更新报表
+
+```ruby
+class ShopRetention::UpdateReport
+```
+
+定时队列
+
+```ruby
+every "01 0 1 * *" do
+  runner "ShopRetention::Reporting.update_report"
+end
+```
+
+定时清理
+
+```ruby
+```
+
+### 更新机制
+
+- 每隔一个月定时更新店主留存率报表数据更新机制
