@@ -203,31 +203,22 @@ module ShopActivity::Calculations
     }
     _time = force_utc ? date.to_time.utc : date.to_time
 
+    _time_sql = "CONVERT_TZ(`#{records.table_name}`.`#{date_column}`,'#{records.default_timezone}','#{Time.zone.formatted_offset}')"
+    _stage_sql = Arel.sql(%Q{
+      CASE
+        when hour(#{_time_sql}) BETWEEN 0 and 8 then "stage_1"
+        when hour(#{_time_sql}) BETWEEN 9 and 17 then "stage_2"
+        when hour(#{_time_sql}) BETWEEN 18 and 23 then "stage_3"
+      end
+    })
+    _value = sum_block.call(
+      records.where(created_at: _time.all_day).group(_stage_sql)
+    )
+
     result = {
-      "stage_1_#{field}": cached_daily_result(
-        field: field,
-        datetimes: _time.change(hour: 0).._time.change(hour: 8).end_of_hour,
-        relation: records.where(
-          "#{date_column}": _time.change(hour: 0).._time.change(hour: 8).end_of_hour
-        ),
-        sum_block: sum_block
-      ),
-      "stage_2_#{field}": cached_daily_result(
-        field: field,
-        datetimes: _time.change(hour: 9).._time.change(hour: 17).end_of_hour,
-        relation: records.where(
-          "#{date_column}": _time.change(hour: 9).._time.change(hour: 17).end_of_hour
-        ),
-        sum_block: sum_block
-      ),
-      "stage_3_#{field}": cached_daily_result(
-        field: field,
-        datetimes: _time.change(hour: 18).._time.change(hour: 23).end_of_hour,
-        relation: records.where(
-          "#{date_column}": _time.change(hour: 18).._time.change(hour: 23).end_of_hour
-        ),
-        sum_block: sum_block
-      )
+      "stage_1_#{field}": _value["stage_1"],
+      "stage_2_#{field}": _value["stage_2"],
+      "stage_3_#{field}": _value["stage_3"]
     }
 
     result.merge!(
@@ -283,26 +274,5 @@ module ShopActivity::Calculations
     ) if date == _time.to_date
 
     result
-  end
-
-  def cached_daily_result(field: , datetimes: , relation: , sum_block: )
-    return sum_block.call(relation) if not datetimes.first.to_date == Date.today
-    _time = Time.now
-    _expires_in = 1.days
-    _cache_key = "cached_daily_result:raw:#{field}:" << Digest::SHA1.hexdigest(relation.to_sql)
-    if _time < datetimes.first
-      return 0
-    end
-    if _time.between?(datetimes.first, datetimes.last)
-      _value = sum_block.call(relation)
-      Rails.cache.write(_cache_key, _value, expires_in: _expires_in, raw: true)
-
-      return _value
-    end
-    if _time > datetimes.last
-      return BigDecimal.new(Rails.cache.fetch(_cache_key, expires_in: _expires_in, raw: true) {
-        sum_block.call(relation)
-      })
-    end
   end
 end
