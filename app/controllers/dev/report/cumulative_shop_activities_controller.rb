@@ -15,11 +15,9 @@ class Dev::Report::CumulativeShopActivitiesController < Dev::Report::BaseControl
         shop_id: _shopkeeper.try(:shop_id)
       )
     else
-      @report_cumulative_shop_activities = @report_cumulative_shop_activities.joins(:shopkeeper).
-        where(shopkeepers: {created_at: _dates})
+      @report_cumulative_shop_activities = @report_cumulative_shop_activities.joins(:shop).
+        where(shops: {created_at: _dates})
     end
-
-    @report_cumulative_shop_activities = sort_records(relation: @report_cumulative_shop_activities, default_order: {report_date: :desc})
 
     preload_export(service: 'Dev::CumulativeShopActivity', action: 'report', relation: @report_cumulative_shop_activities)
 
