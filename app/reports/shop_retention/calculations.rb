@@ -8,7 +8,7 @@ module ShopRetention::Calculations
     _result = {
       start_at: _start_at,
       end_at: _end_at,
-      shopkeeper_count: _shopkeepers.count,
+      shopkeeper_count: Shopkeeper.where("created_at <= ?", _end_at).count,
       activation_shopkeeper_count: _shopkeepers.activation.count,
       retention_shopkeeper_count: _shopkeepers.where("order_number > ?", 1).count
     }
