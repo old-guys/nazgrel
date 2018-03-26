@@ -1,0 +1,16 @@
+zh-CN:
+  activerecord:
+    models:
+      category: "产品分类"
+    attributes:
+      category:
+        id: "ID"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    category:
+      level:
+        level_1: "一级"
+        level_2: "二级"
