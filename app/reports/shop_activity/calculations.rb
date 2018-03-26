@@ -216,9 +216,9 @@ module ShopActivity::Calculations
     )
 
     result = {
-      "stage_1_#{field}": _value["stage_1"],
-      "stage_2_#{field}": _value["stage_2"],
-      "stage_3_#{field}": _value["stage_3"]
+      "stage_1_#{field}": _value["stage_1"] || 0,
+      "stage_2_#{field}": _value["stage_2"] || 0,
+      "stage_3_#{field}": _value["stage_3"] || 0
     }
 
     result.merge!(
