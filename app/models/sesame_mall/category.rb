@@ -6,6 +6,11 @@ class Category < ApplicationRecord
     foreign_key: :parent_id,
     class_name: :Category, required: false
 
+  enum level: {
+    level_1: "1",
+    level_2: "2"
+  }
+
   include Searchable
 
   simple_search_on fields: [

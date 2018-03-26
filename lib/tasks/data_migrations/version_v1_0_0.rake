@@ -239,5 +239,22 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate product_repurchase data'
+    task :v1_1_3_16_migrate_product_repurchase => :environment do
+      0.upto(6).to_a.reverse.each {|i|
+        ProductRepurchase::Reporting.update_month_report(
+          report_date: (Date.today - i.send(:month)),
+          force_update: true
+        )
+      }
+
+      0.upto(26).to_a.reverse.each {|i|
+        ProductRepurchase::Reporting.update_week_report(
+          report_date: (Date.today - i.send(:month)),
+          force_update: true
+        )
+      }
+    end
   end
 end
