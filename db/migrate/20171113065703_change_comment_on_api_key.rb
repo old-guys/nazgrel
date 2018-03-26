@@ -1,10 +1,11 @@
 class ChangeCommentOnApiKey < ActiveRecord::Migration[5.2]
   def change
-    set_table_comment :api_keys, "用户api key"
-    set_column_comment :api_keys, :user_id, "用户id"
-    set_column_comment :api_keys, :access_token, "access token"
+    change_table_comment :api_keys, "用户api key"
 
-    set_column_comment :api_keys, :created_at, "创建时间"
-    set_column_comment :api_keys, :updated_at, "更新时间"
+    change_column :api_keys, :user_id, :bigint, comment: "用户id"
+    change_column :api_keys, :access_token, :string, comment: "access token"
+
+    change_column :api_keys, :created_at, :datetime, comment: "创建时间"
+    change_column :api_keys, :updated_at, :datetime, comment: "更新时间"
   end
 end

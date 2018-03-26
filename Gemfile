@@ -45,7 +45,8 @@ gem 'rails-i18n', '~> 5.1', '>= 5.1.1'
 
 # Add schema comments in your migrations,
 # see them in model annotations and db/schema.rb dump
-gem 'migration_comments', '~> 0.4', '>= 0.4.1'
+# use `change_table_comment`, and `change_column` instead
+# gem 'migration_comments', '~> 0.4', '>= 0.4.1'
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.16', '>= 0.16.1'
