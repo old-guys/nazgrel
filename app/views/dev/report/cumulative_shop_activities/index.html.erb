@@ -8,6 +8,7 @@
          <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month)%>
          <%= link_to "本周", url_for(created_at: DateTime.now.all_week)%>
          <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
+         <%= link_to "半年", url_for(created_at: 6.months.ago.beginning_of_month..Time.now)%>
       </li>
     </ul>
     <form class="form-inline">
