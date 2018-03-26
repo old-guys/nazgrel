@@ -132,7 +132,7 @@ class SesameMall::ShopkeeperSeek
   def after_process_record(records: )
     _records = records.select{|record|
       record.previous_changes.any?{|k, _|
-        k.in?([
+        k.to_sym.in?([
           :order_number, :balance_amount,
           :balance_coin
         ])
@@ -141,6 +141,18 @@ class SesameMall::ShopkeeperSeek
 
     ::Shopkeeper.insert_to_report_activity_partial_shops(
       records: _records
+    )
+
+    _records = records.select{|record|
+      record.previous_changes.any?{|k, _|
+        k.to_sym.in?([
+          :id, :created_at
+        ])
+      }
+    }
+
+    ::Shopkeeper.insert_to_report_activity_partial_shops(
+      records: _records.map(&:parents).flatten
     )
   end
   class << self
