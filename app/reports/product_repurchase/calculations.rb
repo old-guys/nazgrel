@@ -2,9 +2,8 @@ module ProductRepurchase::Calculations
 
   def calculate(start_at: , end_at: , category: )
     _products = Product.online.where(
-      category: category.self_and_descendant_entities,
-      created_at: start_at..end_at
-    )
+      category: category.self_and_descendant_entities
+    ).where("created_at <= ?", end_at)
     # FIXME zmall product_sku missing `created_at`, use `product#created_at` instead
     _product_skus = ProductSku.where(
       product: _products
