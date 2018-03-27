@@ -5,7 +5,7 @@ class CreateShopkeepers < ActiveRecord::Migration[5.2]
       t.string :user_name, comment: "用户姓名"
       t.string :user_phone, comment: "用户手机号"
       t.string :user_photo, comment: "用户头像"
-      t.integer :user_grade, comment: "店主等级：0-白金店主，1-黄金店主，2-见习店主"
+      t.integer :user_grade, comment: "店主等级：0-白金店主，1-黄金店主，2-体验店主"
       t.integer :shop_id, comment: "店铺ID"
       t.decimal :total_income_amount, precision: 11, scale: 3, comment: "账户总收入"
       t.decimal :balance_amount, precision: 11, scale: 3, comment: "账户余额"

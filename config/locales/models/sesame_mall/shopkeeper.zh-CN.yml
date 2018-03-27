@@ -13,11 +13,11 @@ zh-CN:
       user_grade:
         grade_platinum: "白金店主"
         grade_gold: "黄金店主"
-        grade_trainee: "见习店主"
+        grade_trainee: "体验店主"
       org_grade:
         grade_platinum: "白金店主"
         grade_gold: "黄金店主"
-        grade_trainee: "见习店主"
+        grade_trainee: "体验店主"
       ticket_send_flag:
         :yes: "是"
         :no: "否"
