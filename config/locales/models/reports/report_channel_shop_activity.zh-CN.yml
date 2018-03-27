@@ -7,7 +7,7 @@ zh-CN:
         id: "ID"
         channel: "渠道"
 
-        shared_count: "分享次数"
+        shared_count: "天分享次数"
         stage_1_shared_count: "00:00-9:00 分享次数"
         stage_2_shared_count: "09:00-18:00 分享次数"
         stage_3_shared_count: "18:00-24:00 分享次数"
@@ -16,7 +16,7 @@ zh-CN:
         year_shared_count: "年分享次数"
         total_shared_count: "分享次数"
 
-        view_count: "浏览次数"
+        view_count: "天浏览次数"
         stage_1_view_count: "00:00-9:00 浏览次数"
         stage_2_view_count: "09:00-18:00 浏览次数"
         stage_3_view_count: "18:00-24:00 浏览次数"
@@ -25,7 +25,7 @@ zh-CN:
         year_view_count: "年浏览次数"
         total_view_count: "浏览次数"
 
-        viewer_count: "访客数"
+        viewer_count: "天访客数"
         stage_1_viewer_count: "00:00-9:00 访客数"
         stage_2_viewer_count: "09:00-18:00 访客数"
         stage_3_viewer_count: "18:00-24:00 访客数"
@@ -34,7 +34,7 @@ zh-CN:
         year_viewer_count: "年访客数"
         total_viewer_count: "访客数"
 
-        order_number: "订单数"
+        order_number: "天订单数"
         stage_1_order_number: "00:00-9:00 订单数"
         stage_2_order_number: "09:00-18:00 订单数"
         stage_3_order_number: "18:00-24:00 订单数"
@@ -43,7 +43,7 @@ zh-CN:
         year_order_number: "年订单数"
         total_order_number: "订单数"
 
-        shopkeeper_order_number: "自购订单数"
+        shopkeeper_order_number: "天自购订单数"
         stage_1_shopkeeper_order_number: "00:00-9:00 自购订单数"
         stage_2_shopkeeper_order_number: "09:00-18:00 自购订单数"
         stage_3_shopkeeper_order_number: "18:00-24:00 自购订单数"
@@ -52,7 +52,7 @@ zh-CN:
         year_shopkeeper_order_number: "年自购订单数"
         total_shopkeeper_order_number: "自购订单数"
 
-        sale_order_number: "销售订单数"
+        sale_order_number: "天销售订单数"
         stage_1_sale_order_number: "00:00-9:00 销售订单数"
         stage_2_sale_order_number: "09:00-18:00 销售订单数"
         stage_3_sale_order_number: "18:00-24:00 销售订单数"
@@ -61,7 +61,7 @@ zh-CN:
         year_sale_order_number: "年销售订单数"
         total_sale_order_number: "销售订单数"
 
-        order_amount: "订单金额"
+        order_amount: "天订单金额"
         stage_1_order_amount: "00:00-9:00 订单金额"
         stage_2_order_amount: "09:00-18:00 订单金额"
         stage_3_order_amount: "18:00-24:00 订单金额"
@@ -70,7 +70,7 @@ zh-CN:
         year_order_amount: "年订单金额"
         total_order_amount: "订单金额"
 
-        commission_income_amount: "店铺佣金"
+        commission_income_amount: "天店铺佣金"
         stage_1_commission_income_amount: "00:00-9:00 店铺佣金"
         stage_2_commission_income_amount: "09:00-18:00 店铺佣金"
         stage_3_commission_income_amount: "18:00-24:00 店铺佣金"
@@ -79,7 +79,7 @@ zh-CN:
         year_commission_income_amount: "年店铺佣金"
         total_commission_income_amount: "店铺佣金"
 
-        withdraw_amount: "已提现金额"
+        withdraw_amount: "天已提现金额"
         stage_1_withdraw_amount: "00:00-9:00 已提现金额"
         stage_2_withdraw_amount: "09:00-18:00 已提现金额"
         stage_3_withdraw_amount: "18:00-24:00 已提现金额"
@@ -88,7 +88,7 @@ zh-CN:
         year_withdraw_amount: "年已提现金额"
         total_withdraw_amount: "已提现金额"
 
-        income_coin: "收入芝蚂币"
+        income_coin: "天收入芝蚂币"
         stage_1_income_coin: "00:00-9:00 收入芝蚂币"
         stage_2_income_coin: "09:00-18:00 收入芝蚂币"
         stage_3_income_coin: "18:00-24:00 收入芝蚂币"
@@ -97,7 +97,7 @@ zh-CN:
         year_income_coin: "年已收入芝蚂币"
         total_income_coin: "已收入芝蚂币"
 
-        use_coin: "使用芝蚂币"
+        use_coin: "天使用芝蚂币"
         stage_1_use_coin: "00:00-9:00 使用芝蚂币"
         stage_2_use_coin: "09:00-18:00 使用芝蚂币"
         stage_3_use_coin: "18:00-24:00 使用芝蚂币"
@@ -106,7 +106,7 @@ zh-CN:
         year_use_coin: "年已使用芝蚂币"
         total_use_coin: "已使用芝蚂币"
 
-        shopkeeper_order_amount: "自购订单金额"
+        shopkeeper_order_amount: "天自购订单金额"
         stage_1_shopkeeper_order_amount: "00:00-9:00 自购订单金额"
         stage_2_shopkeeper_order_amount: "09:00-18:00 自购订单金额"
         stage_3_shopkeeper_order_amount: "18:00-24:00 自购订单金额"
@@ -115,7 +115,7 @@ zh-CN:
         year_shopkeeper_order_amount: "年自购订单金额"
         total_shopkeeper_order_amount: "自购订单金额"
 
-        sale_order_amount: "销售订单金额"
+        sale_order_amount: "天销售订单金额"
         stage_1_sale_order_amount: "00:00-9:00 销售订单金额"
         stage_2_sale_order_amount: "09:00-18:00 销售订单金额"
         stage_3_sale_order_amount: "18:00-24:00 销售订单金额"
@@ -124,7 +124,7 @@ zh-CN:
         year_sale_order_amount: "年销售订单金额"
         total_sale_order_amount: "销售订单金额"
 
-        ecn_grade_platinum_count: "ECN白金店主数"
+        ecn_grade_platinum_count: "天ECN白金店主数"
         stage_1_ecn_grade_platinum_count: "00:00-9:00 ECN白金店主数"
         stage_2_ecn_grade_platinum_count: "09:00-18:00 ECN白金店主数"
         stage_3_ecn_grade_platinum_count: "18:00-24:00 ECN白金店主数"
@@ -133,7 +133,7 @@ zh-CN:
         year_ecn_grade_platinum_count: "年ECN白金店主数"
         total_ecn_grade_platinum_count: "ECN白金店主数"
 
-        ecn_grade_gold_count: "ECN黄金店主数"
+        ecn_grade_gold_count: "天ECN黄金店主数"
         stage_1_ecn_grade_gold_count: "00:00-9:00 ECN黄金店主数"
         stage_2_ecn_grade_gold_count: "09:00-18:00 ECN黄金店主数"
         stage_3_ecn_grade_gold_count: "18:00-24:00 ECN黄金店主数"
