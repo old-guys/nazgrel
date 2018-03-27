@@ -70,13 +70,6 @@ class ChannelShopNewerReportWorker
 ```
 
 ```yaml
-channel_shop_newer_report:
-  cron: "51 11,23 * * *"
-  name: "全量当天更新渠道新增报表"
-  class: "ChannelShopNewerReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 channel_shop_newer_report_partial:
   cron: "*/8 * * * *"
   name: "实时更新渠道新增报表"
@@ -243,13 +236,6 @@ class CityShopActivityReportWorker
 ```
 
 ```yaml
-city_shop_activity_report:
-  cron: "41 11,23 * * *"
-  name: "全量当天更新城市店主行为报表"
-  class: "CityShopActivityReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 city_shop_activity_report_partial:
   cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
@@ -327,13 +313,6 @@ class ChannelShopActivityReportWorker
 ```
 
 ```yaml
-channel_shop_activity_report:
-  cron: "43 11,23 * * *"
-  name: "全量当天更新城市店主行为报表"
-  class: "ChannelShopActivityReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 channel_shop_activity_report_partial:
   cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"

@@ -176,13 +176,6 @@ deleted_record_seek_job:
   args:
     duration: 125
 
-channel_shop_newer_report:
-  cron: "51 23 * * *"
-  name: "全量当天更新渠道新增报表"
-  class: "ChannelShopNewerReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 channel_shop_newer_report_partial:
   cron: "*/15 * * * *"
   name: "实时更新渠道新增报表"
@@ -206,13 +199,6 @@ shop_activity_report_partial:
   args:
     type: "partial"
 
-shop_ecn_report:
-  cron: "31 23 * * *"
-  name: "全量当天更新店主ECN报表"
-  class: "ShopEcnReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 shop_ecn_report_partial:
   cron: "*/15 * * * *"
   name: "实时更新店主ECN数据"
@@ -221,13 +207,6 @@ shop_ecn_report_partial:
   args:
     type: "partial"
 
-city_shop_activity_report:
-  cron: "41 23 * * *"
-  name: "全量当天更新城市店主行为报表"
-  class: "CityShopActivityReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 city_shop_activity_report_partial:
   cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
@@ -236,13 +215,6 @@ city_shop_activity_report_partial:
   args:
     type: "partial"
 
-channel_shop_activity_report:
-  cron: "43 23 * * *"
-  name: "全量当天更新城市店主行为报表"
-  class: "ChannelShopActivityReportWorker"
-  queue: :report
-  args:
-    type: "whole"
 channel_shop_activity_report_partial:
   cron: "*/8 * * * *"
   name: "实时更新城市店主行为数据"
