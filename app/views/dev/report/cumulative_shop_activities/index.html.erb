@@ -1,14 +1,26 @@
 <div class="card">
   <div class="card-body">
-    <ul>
-      <li>
-         <%= link_to "今日", url_for(created_at: Date.today)%>
-         <%= link_to "昨日", url_for(created_at: Date.yesterday)%>
-         <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week)%>
-         <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month)%>
-         <%= link_to "本周", url_for(created_at: DateTime.now.all_week)%>
-         <%= link_to "本月", url_for(created_at: DateTime.now.all_month)%>
-         <%= link_to "半年", url_for(created_at: 6.months.ago.beginning_of_month..Time.now)%>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <%= link_to "今日", url_for(created_at: Date.today), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "昨日", url_for(created_at: Date.yesterday), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "本周", url_for(created_at: DateTime.now.all_week), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "本月", url_for(created_at: DateTime.now.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "半年", url_for(created_at: 6.months.ago.beginning_of_month..Time.now), class: "nav-link" %>
       </li>
     </ul>
     <form class="form-inline">
