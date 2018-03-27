@@ -26,7 +26,7 @@ class ChannelShopActivityReportWorker
         _channel_ids = $redis.SMEMBERS(_key)
         $redis.DEL(_key) if _channel_ids.present?
 
-        Channel.where(id: _channel_ids).each {|channel|
+        Channel.normal.where(id: _channel_ids).each {|channel|
           ChannelShopActivity::UpdateReport.update_report(
             channel: channel
           )

@@ -24,7 +24,7 @@ class ChannelShopNewerReportWorker
 
         _ids.each_slice(500) {|ids|
           ChannelShopNewer::UpdateReport.update_report(
-            channels: Channel.where(id: ids)
+            channels: Channel.normal.where(id: ids)
           )
         }
     end
