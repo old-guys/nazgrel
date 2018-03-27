@@ -1,10 +1,13 @@
 module ProductRepurchase::Calculations
 
   def calculate(start_at: , end_at: , category: )
-    _products = Product.online.where(category: category.self_and_descendant_entities)
-    _product_skus = ProductSku.where(
-      product: _products,
+    _products = Product.online.where(
+      category: category.self_and_descendant_entities,
       created_at: start_at..end_at
+    )
+    # FIXME zmall product_sku missing `created_at`, use `product#created_at` instead
+    _product_skus = ProductSku.where(
+      product: _products
     )
     _order_details = OrderDetail.joins(:order).merge(
       Order.valided_order.sales_order.where(
