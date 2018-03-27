@@ -12,9 +12,9 @@ class CityShopActivityReportWorker
       when "whole"
         _cities = Shopkeeper.where.not(city: nil).pluck("distinct(city)")
 
-        _cities.each {|city|
+        _cities.each_slice(500) {|cities|
           CityShopActivity::UpdateReport.update_report(
-            city: city,
+            city: cities,
             interval_time: 8.hours
           )
         }
@@ -26,9 +26,9 @@ class CityShopActivityReportWorker
         _cities = $redis.SMEMBERS(_key)
         $redis.DEL(_key) if _cities.present?
 
-        _cities.each {|city|
+        _cities.each_slice(500) {|cities|
           CityShopActivity::UpdateReport.update_report(
-            city: city,
+            city: cities,
             interval_time: 5.minutes
           )
         }

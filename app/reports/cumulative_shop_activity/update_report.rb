@@ -4,7 +4,6 @@ class CumulativeShopActivity::UpdateReport
       _records = ReportCumulativeShopActivity.where(
         shop: shops
       ).find_each.to_a
-
       _time = Time.now
 
       shops.each {|shop|
@@ -77,6 +76,4 @@ class CumulativeShopActivity::UpdateReport
   def write
     record.has_changes_to_save? ? record.save : record.touch
   end
-
-  private
 end

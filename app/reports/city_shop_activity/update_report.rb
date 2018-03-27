@@ -1,26 +1,36 @@
 class CityShopActivity::UpdateReport
   class << self
     def update_report(city: , report_date: Date.today, force_update: false, interval_time: 30.minutes)
-      report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
-        shopkeepers: {city: city},
+      _cities = Array.wrap(city)
+      _records = ReportCityShopActivity.where(
+        city: _cities,
         report_date: report_date
-      )
-      _record = ReportCityShopActivity.where(
-        city: city,
-        report_date: report_date
-      ).first_or_initialize
+      ).find_each.to_a
       _time = Time.now
 
-      return if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
+      _cities.each {|_city|
+        report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
+          shopkeepers: {city: _city},
+          report_date: report_date
+        )
+        _record = _records.find{|record|
+          record.city == _city
+        } || ReportCityShopActivity.new(
+          city: _city,
+          report_date: report_date
+        )
 
-      _report = CityShopActivity::UpdateReport.new(
-        report_date: report_date,
-        record: _record,
-        city: city,
-        report_shop_activities: report_shop_activities
-      )
+        return if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
 
-      _report.perform
+        _report = CityShopActivity::UpdateReport.new(
+          report_date: report_date,
+          record: _record,
+          city: _city,
+          report_shop_activities: report_shop_activities
+        )
+
+        _report.perform
+      }
     end
 
     def insert_to_partial_city(city: )
