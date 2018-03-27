@@ -251,7 +251,7 @@ namespace :data_migrations do
 
       0.upto(26).to_a.reverse.each {|i|
         ProductRepurchase::Reporting.update_week_report(
-          report_date: (Date.today - i.send(:month)),
+          report_date: (Date.today - i.send(:week)),
           force_update: true
         )
       }

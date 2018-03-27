@@ -11,6 +11,7 @@ namespace :dev do
     resources :daily_shop_grade_operationals, only: [:index]
 
     resources :shop_retentions, only: [:index]
+    resources :product_repurchases, only: [:index]
 
     resources :shop_ecns
 
