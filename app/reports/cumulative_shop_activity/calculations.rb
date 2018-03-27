@@ -29,7 +29,7 @@ module CumulativeShopActivity::Calculations
 
   def calculate_by_total(shop_id: , date:)
     _sum_fields = ReportCumulativeShopActivity.stat_categories.map {|field|
-      Arel.sql("(`report_shop_activities`.`total_#{field}`) as total_#{field}")
+      :"total_#{field}"
     }
 
     format_calculate_hash(
