@@ -1,3 +1,11 @@
+## 商品复购率报表(2018-03-27)
+
+- #feature# 新增商品复购率报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_16_migrate_product_repurchase
+```
+
 ## 每日店主等级运营报表(2018-03-23)
 
 - #feature# 新增每日店主等级运营报表
