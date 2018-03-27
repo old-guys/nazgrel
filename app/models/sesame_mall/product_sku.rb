@@ -1,4 +1,5 @@
 class ProductSku < ApplicationRecord
+  belongs_to :product, required: false
 
   enum status: {
     init: 10,

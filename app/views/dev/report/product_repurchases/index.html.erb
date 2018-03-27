@@ -1,0 +1,108 @@
+<div class="card">
+  <div class="card-body">
+    <ul class="nav nav-tabs" role="tablist" id="list-filter-tab">
+      <li class="nav-item">
+        <a class="nav-link" id="list-week-tab" data-toggle="pill" href="#list-week" role="tab" aria-controls="list-week" aria-selected="true">周</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="list-month-tab" data-toggle="pill" href="#list-month" role="tab" aria-controls="list-month" aria-selected="false">月</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="list-filter-tabContent">
+      <div class="tab-pane fade show active" id="list-week" role="tabpanel" aria-labelledby="list-week-tab">
+        <ul class="nav nav-pills">
+          <% 1.upto(4).each {|i| %>
+            <% dates = i.send(:week).ago.all_week %>
+            <li class="nav-item">
+              <%= link_to "#{dates.first.to_date}~#{dates.last.to_date}", url_for(start_at: dates.first, end_at: dates.last, dismiss: "week"), class: "nav-link" %>
+            </li>
+          <% } %>
+          <li class="nav-item">
+            <select class="custom-select extras-nav-select">
+              <option selected>请选择更多的周</option>
+              <% 5.upto(56).each {|i| %>
+                <% dates = i.send(:week).ago.all_week %>
+                <option value="<%= url_for(start_at: dates.first, end_at: dates.last, dismiss: "week") %>">
+                  <%= link_to "#{dates.first.to_date}~#{dates.last.to_date}", url_for(start_at: dates.first, end_at: dates.last, dismiss: "week"), class: "nav-link" %>
+                </option>
+              <% } %>
+            </select>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-pane fade" id="list-month" role="tabpanel" aria-labelledby="list-month-tab">
+        <ul class="nav nav-pills">
+          <% 1.upto(4).each {|i| %>
+            <% dates = i.send(:month).ago.all_month %>
+            <li class="nav-item">
+              <%= link_to dates.first.strftime("%y年%m月"), url_for(start_at: dates.first, end_at: dates.last, dismiss: "month"), class: "nav-link"%>
+            </li>
+          <% } %>
+          <li class="nav-item">
+            <select class="custom-select extras-nav-select">
+              <option selected>请选择更多的月</option>
+              <% 5.upto(12).each {|i| %>
+                <% dates = i.send(:month).ago.all_month %>
+                <option value="<%= url_for(start_at: dates.first, end_at: dates.last, dismiss: "month") %>">
+                  <%= link_to dates.first.strftime("%y年%m月"), url_for(start_at: dates.first, end_at: dates.last, dismiss: "month"), class: "nav-link" %>
+                </option>
+              <% } %>
+            </select>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          商品复购率报表
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
+        <%
+           _stat_fields = %w(
+            online_product_sku_count
+            purchase_product_sku_count repurchase_product_sku_count
+
+            activation_product_rate repurchase_product_rate
+           )
+        %>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">产品分类</th>
+            <th scope="col"><div class="wi4">取值范围</div></th>
+            <% _stat_fields.each {|field| %>
+              <th scope="col"><div class="wi4"><%= ReportProductRepurchase.human_attribute_name(field) %></div></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/product_repurchases/index", @report_product_repurchases] do %>
+            <%= render partial: "dev/report/product_repurchases/index_tr",
+              collection: @report_product_repurchases,
+              as: :record, cached: true, locals: {
+                stat_fields: _stat_fields
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_product_repurchases
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>
+<script>
+  $(function () {
+    $('#list-filter-tab #list-<%= params[:dismiss]%>-tab').tab('show');
+    $(".extras-nav-select").change(function(e) {
+      var $ele = $(e.target);
+
+      window.location.assign($ele.val());
+    });
+  })
+</script>
