@@ -61,7 +61,7 @@ module ShopActivity::Calculations
       sum_block: proc{|sql| sql.sum(:income_amount) }
     ))
 
-    _records = shop.income_records.confirmed.income.sesame_coin
+    _records = shop.income_records.confirmed.invite_income.income.sesame_coin
     result.merge!(aggregation_field_by_day(
       field: :income_coin, date: date, records: _records,
       partial_update: partial_update,
