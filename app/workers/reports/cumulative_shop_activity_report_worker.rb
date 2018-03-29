@@ -15,7 +15,7 @@ class CumulativeShopActivityReportWorker
         ).in_batches do |records|
           CumulativeShopActivity::UpdateReport.update_report(
             shops: Shop.where(id: records.select(:shop_id)),
-            interval_time: 8.hours,
+            interval_time: 3.minutes,
             touch_report_date: false
           )
         end
