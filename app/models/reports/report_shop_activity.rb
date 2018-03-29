@@ -2,6 +2,7 @@ class ReportShopActivity < ApplicationRecord
   belongs_to :shop, required: false
   has_one :shopkeeper, through: :shop
 
+  include Queryable
   include ReportShopActivityable
 
   class << self

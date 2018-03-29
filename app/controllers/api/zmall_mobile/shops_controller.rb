@@ -8,14 +8,15 @@ class Api::ZmallMobile::ShopsController < Api::ZmallMobile::BaseController
   end
 
   def stat
-    @report_shop_activities = 0.upto(11).map{|i|
-      date = i.send(:month).ago.end_of_month
-
-      ReportShopActivity.where(
-        shop_id: @shop.id,
-        report_date: date.all_month
-      ).last
-    }.compact
+    @report_shop_activities = ReportShopActivity.limit_within_group(
+      records: ReportShopActivity.where(
+        report_date: 1.years.ago(Date.today)..Date.today,
+        shop_id: @shop.id
+      ),
+      rating_name: 'DATE_FORMAT(report_date, "%Y-%M")',
+      sort: "report_date desc",
+      limit: 1
+    )
   end
 
   private
