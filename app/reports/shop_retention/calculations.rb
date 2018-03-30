@@ -3,14 +3,21 @@ module ShopRetention::Calculations
   def calculate(date: )
     _end_at = (date.beginning_of_month - 1).to_time.end_of_month
     _start_at = 3.months.ago(_end_at).beginning_of_month
-    _shopkeepers = Shopkeeper.where(created_at: _start_at.._end_at)
+    _shopkeepers = Shopkeeper.where("shopkeepers.created_at <= ?", _end_at)
+    _orders = Order.joins(:shopkeeper).where(
+      order_status: Order.order_statuses.slice(:awaiting_delivery, :deliveried, :finished).values
+    ).sales_order.where(
+      created_at: _start_at.._end_at
+    ).merge(_shopkeepers)
 
     _result = {
       start_at: _start_at,
       end_at: _end_at,
-      shopkeeper_count: Shopkeeper.where("created_at <= ?", _end_at).count,
-      activation_shopkeeper_count: _shopkeepers.activation.count,
-      retention_shopkeeper_count: _shopkeepers.where("order_number > ?", 1).count
+      shopkeeper_count: _shopkeepers.count,
+      activation_shopkeeper_count: _orders.count("distinct(`orders`.`shop_id`)"),
+      retention_shopkeeper_count: _orders.group(:shop_id).having("count(`orders`.`shop_id`) > 1").pluck_s(
+        Arel.sql("distinct(`orders`.`shop_id`) AS shop_id")
+      ).count
     }
     if _result[:shopkeeper_count] > 0
       _result.merge!(
