@@ -1,72 +1,91 @@
 module ShopActivity::Calculations
-  def aggregation_by_day(shop:, date: , partial_update: false)
+  def aggregation_by_day(shop: , date: , partial_update: false, updated_at: Time.now)
     _date = date.dup
+    _updated_at = updated_at || Time.now
     result = {}
 
-    _records = ViewJournal.where(shop_id: shop.id)
-    result.merge!(aggregation_field_by_day(
-      field: :view_count, date: date, records: _records,
-      date_column: :created_at,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: ViewJournal, updated_at: _updated_at)
+      _records = ViewJournal.where(shop_id: shop.id)
+      result.merge!(aggregation_field_by_day(
+        field: :view_count, date: date, records: _records,
+        date_column: :created_at,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = ViewJournal.where(shop_id: shop.id)
-    result.merge!(aggregation_field_by_day(
-      field: :viewer_count, date: date, records: _records,
-      date_column: :created_at,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.count("distinct(viewer_id)") }
-    ))
+    if should_aggregation?(shop: shop, klass: ViewJournal, updated_at: _updated_at)
+      _records = ViewJournal.where(shop_id: shop.id)
+      result.merge!(aggregation_field_by_day(
+        field: :viewer_count, date: date, records: _records,
+        date_column: :created_at,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.count("distinct(viewer_id)") }
+      ))
+    end
 
-    _records = ::ShareJournal.where(shop_id: shop.id)
-    result.merge!(aggregation_field_by_day(
-      field: :shared_count, date: date, records: _records,
-      date_column: :created_at,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: ShareJournal, updated_at: _updated_at)
+      _records = ::ShareJournal.where(shop_id: shop.id)
+      result.merge!(aggregation_field_by_day(
+        field: :shared_count, date: date, records: _records,
+        date_column: :created_at,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order
-    result.merge!(aggregation_field_by_day(
-      field: :order_number, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order
+      result.merge!(aggregation_field_by_day(
+        field: :order_number, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order.where(
-      user_id: shop.shopkeeper.user_id
-    )
-    result.merge!(aggregation_field_by_day(
-      field: :shopkeeper_order_number, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order.where(
+        user_id: shop.shopkeeper.user_id
+      )
+      result.merge!(aggregation_field_by_day(
+        field: :shopkeeper_order_number, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order.where.not(
-      user_id: shop.shopkeeper.user_id
-    )
-    result.merge!(aggregation_field_by_day(
-      field: :sale_order_number, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order.where.not(
+        user_id: shop.shopkeeper.user_id
+      )
+      result.merge!(aggregation_field_by_day(
+        field: :sale_order_number, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order
-    result.merge!(aggregation_field_by_day(
-      field: :commission_income_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:comm) }
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order
+      result.merge!(aggregation_field_by_day(
+        field: :commission_income_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:comm) }
+      ))
+    end
 
-    _records = shop.income_records.withdraw_income.confirmed
-    result.merge!(aggregation_field_by_day(
-      field: :withdraw_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:income_amount) }
-    ))
+    if should_aggregation?(shop: shop, klass: IncomeRecord, updated_at: _updated_at)
+      _records = shop.income_records.withdraw_income.confirmed
+      result.merge!(aggregation_field_by_day(
+        field: :withdraw_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:income_amount) }
+      ))
+    end
 
-    _records = shop.income_records.confirmed.invite_income.income.sesame_coin
-    result.merge!(aggregation_field_by_day(
-      field: :income_coin, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:income_amount) }
-    ))
+    if should_aggregation?(shop: shop, klass: IncomeRecord, updated_at: _updated_at)
+      _records = shop.income_records.confirmed.invite_income.income.sesame_coin
+      result.merge!(aggregation_field_by_day(
+        field: :income_coin, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:income_amount) }
+      ))
+    end
 
     result.merge!(
       aggregation_recording_field_by_day(
@@ -87,112 +106,143 @@ module ShopActivity::Calculations
       )
     )
 
-    _records = shop.orders.valided_order.sales_order
-    result.merge!(aggregation_field_by_day(
-      field: :use_coin, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:virt_coin_reduce_price) }
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order
+      result.merge!(aggregation_field_by_day(
+        field: :use_coin, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:virt_coin_reduce_price) }
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order
-    result.merge!(aggregation_field_by_day(
-      field: :order_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:total_price) }
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order
+      result.merge!(aggregation_field_by_day(
+        field: :order_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:total_price) }
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order.where(
-      user_id: shop.shopkeeper.user_id
-    )
-    result.merge!(aggregation_field_by_day(
-      field: :shopkeeper_order_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:total_price) }
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order.where(
+        user_id: shop.shopkeeper.user_id
+      )
+      result.merge!(aggregation_field_by_day(
+        field: :shopkeeper_order_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:total_price) }
+      ))
+    end
 
-    _records = shop.orders.valided_order.sales_order.where.not(
-      user_id: shop.shopkeeper.user_id
-    )
-    result.merge!(aggregation_field_by_day(
-      field: :sale_order_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:total_price) }
-    ))
+    if should_aggregation?(shop: shop, klass: Order, updated_at: _updated_at)
+      _records = shop.orders.valided_order.sales_order.where.not(
+        user_id: shop.shopkeeper.user_id
+      )
+      result.merge!(aggregation_field_by_day(
+        field: :sale_order_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:total_price) }
+      ))
+    end
 
-    _records = shop.shopkeeper.children.grade_platinum
-    result.merge!(aggregation_field_by_day(
-      field: :children_grade_platinum_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.children.grade_platinum
+      result.merge!(aggregation_field_by_day(
+        field: :children_grade_platinum_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.shopkeeper.children.grade_gold
-    result.merge!(aggregation_field_by_day(
-      field: :children_grade_gold_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.children.grade_gold
+      result.merge!(aggregation_field_by_day(
+        field: :children_grade_gold_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.shopkeeper.children
-    result.merge!(aggregation_field_by_day(
-      field: :children_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.children
+      result.merge!(aggregation_field_by_day(
+        field: :children_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.shopkeeper.children
-    result.merge!(aggregation_field_by_day(
-      field: :children_commission_income_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:commission_income_amount) }
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.children
+      result.merge!(aggregation_field_by_day(
+        field: :children_commission_income_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:commission_income_amount) }
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities
-    result.merge!(aggregation_field_by_day(
-      field: :descendant_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities
+      result.merge!(aggregation_field_by_day(
+        field: :descendant_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities.activation
-    result.merge!(aggregation_field_by_day(
-      field: :descendant_activation_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities.activation
+      result.merge!(aggregation_field_by_day(
+        field: :descendant_activation_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities
-    result.merge!(aggregation_field_by_day(
-      field: :descendant_order_number, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:order_number) }
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities
+      result.merge!(aggregation_field_by_day(
+        field: :descendant_order_number, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:order_number) }
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities
-    result.merge!(aggregation_field_by_day(
-      field: :descendant_order_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:order_amount) }
-    ))
+   if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities
+      result.merge!(aggregation_field_by_day(
+        field: :descendant_order_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:order_amount) }
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities
-    result.merge!(aggregation_field_by_day(
-      field: :descendant_commission_income_amount, date: date, records: _records,
-      partial_update: partial_update,
-      sum_block: proc{|sql| sql.sum(:commission_income_amount) }
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities
+      result.merge!(aggregation_field_by_day(
+        field: :descendant_commission_income_amount, date: date, records: _records,
+        partial_update: partial_update,
+        sum_block: proc{|sql| sql.sum(:commission_income_amount) }
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities.grade_platinum
-    result.merge!(aggregation_field_by_day(
-      field: :ecn_grade_platinum_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities.grade_platinum
+      result.merge!(aggregation_field_by_day(
+        field: :ecn_grade_platinum_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
 
-    _records = shop.shopkeeper.descendant_entities.grade_gold
-    result.merge!(aggregation_field_by_day(
-      field: :ecn_grade_gold_count, date: date, records: _records,
-      partial_update: partial_update
-    ))
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+      _records = shop.shopkeeper.descendant_entities.grade_gold
+      result.merge!(aggregation_field_by_day(
+        field: :ecn_grade_gold_count, date: date, records: _records,
+        partial_update: partial_update
+      ))
+    end
   end
 
-  def calculate(shop: , date: ,partial_update: )
+  def calculate(shop: , date: , partial_update: , updated_at: )
     aggregation_by_day(
-      shop: shop, date: date, partial_update: partial_update
+      shop: shop, date: date, partial_update: partial_update,
+      updated_at: updated_at
     )
   end
 
@@ -241,6 +291,15 @@ module ShopActivity::Calculations
     end
 
     result
+  end
+
+  # whether shopkeeper seek timestmap present and newer than report#updated_at
+  # while true should exec aggregation
+  def should_aggregation?(shop: , klass: , updated_at: )
+    _shopkeeper = shop.shopkeeper
+    _value = _shopkeeper.seek_timestmap_service.value(target: klass)
+
+    _value.present? ? (updated_at < _value) : true
   end
 
   def aggregation_recording_field_by_day(field: , date: , records: , sum_block: nil)
