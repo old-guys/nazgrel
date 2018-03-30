@@ -1,5 +1,7 @@
 class SesameMall::ShareJournalSeek
   include SesameMall::Seekable
+  include SesameMall::ShopKeeperTimestampable
+
   after_process :after_process_record
 
   def initialize(opts = {})
@@ -35,8 +37,14 @@ class SesameMall::ShareJournalSeek
     ActiveRecord::Associations::Preloader.new.preload(
       records, [:shopkeeper]
     )
+    _shopkeepers = records.map(&:shopkeeper).compact.uniq
+    touch_shopkeeper_timestamp(
+      shopkeepers: _shopkeepers,
+      target: ::ShareJournal
+    )
+
     ::Shopkeeper.insert_to_report_activity_partial_shops(
-      records: records.map(&:shopkeeper)
+      records: _shopkeepers
     )
   end
   class << self

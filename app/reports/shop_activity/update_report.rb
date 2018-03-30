@@ -86,7 +86,7 @@ class ShopActivity::UpdateReport
   private
   def process
     if recent_record.present?
-      @result = calculate(shop: shop, date: date, partial_update: true)
+      @result = calculate(shop: shop, date: date, partial_update: true, updated_at: record.updated_at)
 
       %w(week month year).each {|dimension|
         _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
@@ -107,7 +107,7 @@ class ShopActivity::UpdateReport
         @result.merge!(_result)
       }
     else
-      @result = calculate(shop: shop, date: date, partial_update: false)
+      @result = calculate(shop: shop, date: date, partial_update: false, updated_at: record.updated_at)
     end
 
     record.assign_attributes(

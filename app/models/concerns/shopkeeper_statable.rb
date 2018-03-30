@@ -4,6 +4,12 @@ module ShopkeeperStatable
   included do
   end
 
+  def seek_timestmap_service
+    @seek_timestmap_service ||= SesameMall::ShopkeeperSeekTimestampService.new(
+      shopkeeper: self
+    )
+  end
+
   module ClassMethods
     def children_rank(records: , dates: , limit: 10)
       _records = records.where(

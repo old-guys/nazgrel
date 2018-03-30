@@ -4,6 +4,7 @@
 
 - 源数据模型(app/seeks/sesame_mall/source)
 - seek (app/seeks/sesame_mall/)
+- concerns (app/seeks/concerns/)
 - trigger_service(app/seeks/trigger_service.rb)
 - seek worker (app/workers/seeks/)
 - seek_record(app/seeks/sesame_mall/source/seek_record.rb)
@@ -49,7 +50,7 @@ class SesameMall::OrderSeek
   end
 ```
 
-seeker hook
+seeker 触发器
 
 ```shell
 class SesameMall::ShopSeek
@@ -69,6 +70,49 @@ end
 
 ```ruby
 TriggerService.setup_trigger klass: klass
+```
+
+shopkeeper seek timestamp
+
+```ruby
+module SesameMall::ShopKeeperTimestampable
+  extend ActiveSupport::Concern
+
+  included do
+  end
+
+  def touch_shopkeeper_timestamp(shopkeepers: , target: )
+    shopkeepers.each {|shopkeeper|
+      SesameMall::ShopkeeperSeekTimestampService.touch_timestamp(
+        shopkeeper: shopkeeper,
+        target: target
+      )
+    }
+  end
+
+  module ClassMethods
+  end
+end
+```
+
+更新 shopkeeper seek 时间戳
+
+```ruby
+class SesameMall::ShareJournalSeek
+  include SesameMall::ShopKeeperTimestampable
+
+  private
+  def after_process_record(records: )
+    ActiveRecord::Associations::Preloader.new.preload(
+      records, [:shopkeeper]
+    )
+    _shopkeepers = records.map(&:shopkeeper).compact.uniq
+    touch_shopkeeper_timestamp(
+      shopkeepers: _shopkeepers,
+      target: ::ShareJournal
+    )
+  end
+end
 ```
 
 定时队列

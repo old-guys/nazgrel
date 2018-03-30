@@ -1,5 +1,6 @@
 class SesameMall::ShopkeeperSeek
   include SesameMall::Seekable
+  include SesameMall::ShopKeeperTimestampable
 
   after_process :after_process_record
 
@@ -151,8 +152,13 @@ class SesameMall::ShopkeeperSeek
       }
     }
 
+    _shopkeepers = _records.map(&:self_and_ancestor_entities).flatten.compact.uniq
+    touch_shopkeeper_timestamp(
+      shopkeepers: _shopkeepers,
+      target: ::Shopkeeper
+    )
     ::Shopkeeper.insert_to_report_activity_partial_shops(
-      records: _records.map(&:parents).flatten
+      records: _shopkeepers
     )
   end
   class << self

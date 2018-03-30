@@ -132,6 +132,13 @@ end
 module ShopActivity::Calculations
 ```
 
+根据 `shopkeeper#seek_timestmap_service#timestmap` 跳过当前店主上次
+更新期间没有更新的统计项
+
+```ruby
+def should_aggregation?(shop: , klass: , updated_at: )
+```
+
 更新报表
 
 ```ruby
