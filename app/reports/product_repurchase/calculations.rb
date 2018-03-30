@@ -9,7 +9,9 @@ module ProductRepurchase::Calculations
       product: _products
     )
     _order_details = OrderDetail.joins(:order).merge(
-      Order.valided_order.sales_order.where(
+      Order.where(
+        order_status: Order.order_statuses.slice(:awaiting_delivery, :deliveried, :finished).values
+      ).sales_order.where(
         created_at: start_at..end_at
       )
     ).where(
