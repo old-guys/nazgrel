@@ -19,7 +19,7 @@ class SesameMall::ShopkeeperSeekTimestampService
        timestamp[_name] = Time.now
     }
 
-    Rails.cache.write(cache_key, timestamp)
+    Rails.cache.write(cache_key, timestamp, expire_time: 7.days)
   end
 
   def value(target: )
