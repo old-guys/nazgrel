@@ -204,7 +204,7 @@ module ShopActivity::Calculations
       ))
     end
 
-   if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
       _records = shop.shopkeeper.descendant_entities
       result.merge!(aggregation_field_by_day(
         field: :descendant_order_amount, date: date, records: _records,
@@ -237,6 +237,8 @@ module ShopActivity::Calculations
         partial_update: partial_update
       ))
     end
+
+    result
   end
 
   def calculate(shop: , date: , partial_update: , updated_at: )
