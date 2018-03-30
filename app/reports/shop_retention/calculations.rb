@@ -14,8 +14,12 @@ module ShopRetention::Calculations
     }
     if _result[:shopkeeper_count] > 0
       _result.merge!(
-        activation_shopkeeper_rate: (_result[:activation_shopkeeper_count] / _result[:shopkeeper_count].to_f).round(3),
-        retention_shopkeeper_rate: (_result[:retention_shopkeeper_count] / _result[:shopkeeper_count].to_f).round(3),
+        activation_shopkeeper_rate: (_result[:activation_shopkeeper_count] / _result[:shopkeeper_count].to_f).round(3)
+      )
+    end
+    if _result[:activation_shopkeeper_count] > 0
+      _result.merge!(
+        retention_shopkeeper_rate: (_result[:retention_shopkeeper_count] / _result[:activation_shopkeeper_count].to_f).round(3),
       )
     end
 

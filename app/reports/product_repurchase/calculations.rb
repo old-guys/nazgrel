@@ -32,8 +32,12 @@ module ProductRepurchase::Calculations
     }
     if _result[:online_product_sku_count] > 0
       _result.merge!(
-        activation_product_rate: (_result[:purchase_product_sku_count] / _result[:online_product_sku_count].to_f).round(3),
-        repurchase_product_rate: (_result[:repurchase_product_sku_count] / _result[:online_product_sku_count].to_f).round(3),
+        activation_product_rate: (_result[:purchase_product_sku_count] / _result[:online_product_sku_count].to_f).round(3)
+      )
+    end
+    if _result[:purchase_product_sku_count] > 0
+      _result.merge!(
+        repurchase_product_rate: (_result[:repurchase_product_sku_count] / _result[:purchase_product_sku_count].to_f).round(3),
       )
     end
 
