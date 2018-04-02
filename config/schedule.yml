@@ -23,7 +23,7 @@ order_seek_job:
     duration: 4
 order_detail_seek_job:
   cron: "*/3 * * * *"
-  name: "同步订单"
+  name: "同步订单详情"
   class: "OrderDetailSeekWorker"
   queue: :seek
   args:
@@ -39,6 +39,13 @@ order_express_seek_job:
   cron: "*/3 * * * *"
   name: "同步物流订单"
   class: "OrderExpressSeekWorker"
+  queue: :seek
+  args:
+    duration: 4
+order_pay_seek_job:
+  cron: "*/3 * * * *"
+  name: "同步订单支付记录"
+  class: "OrderPaySeekWorker"
   queue: :seek
   args:
     duration: 4

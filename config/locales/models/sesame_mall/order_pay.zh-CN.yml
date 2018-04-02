@@ -1,0 +1,16 @@
+zh-CN:
+  activerecord:
+    models:
+      order_pay: "订单支付记录"
+    attributes:
+      order_pay:
+        id: "ID"
+        order_no: "订单编号"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    order_pay:
+      pay_status:
+        awaiting_payment: "付款完成"
+        payment_finished: "付款完成"

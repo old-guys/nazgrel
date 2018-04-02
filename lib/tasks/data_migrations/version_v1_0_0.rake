@@ -256,5 +256,18 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate order pay data'
+    task :v1_1_3_17_migrate_product_repurchase => :environment do
+      SesameMall::OrderPaySeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::OrderPay,
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end
