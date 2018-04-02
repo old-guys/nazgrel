@@ -153,9 +153,14 @@ class SesameMall::ShopkeeperSeek
     }
 
     _shopkeepers = _records.map(&:self_and_ancestor_entities).flatten.compact.uniq
+    # set init value for shopkeeper seek timestamp value
     touch_shopkeeper_timestamp(
       shopkeepers: _shopkeepers,
-      target: ::Shopkeeper
+      target: [
+        ::Shopkeeper, ::Order, ::ViewJournal,
+        ::WithdrawRecord, ::IncomeRecord,
+        ::ShareJournal
+      ]
     )
     ::Shopkeeper.insert_to_report_activity_partial_shops(
       records: _shopkeepers
