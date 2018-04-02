@@ -31,8 +31,8 @@ class SesameMall::UserAddressSeek
       is_deleted: ::UserAddress.is_deleteds.invert[data[:is_deleted]],
 
 
-      created_at: parse_no_timezone(datetime: data[:createDate]),
-      updated_at: record.updated_at || parse_no_timezone(datetime: data[:updateDate])
+      created_at: parse_no_timezone(datetime: data[:create_time]),
+      updated_at: record.updated_at || parse_no_timezone(datetime: data[:modify_time])
     )
 
     record

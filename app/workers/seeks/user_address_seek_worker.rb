@@ -1,4 +1,4 @@
-class UseraddressSeekWorker
+class UserAddressSeekWorker
   include Sidekiq::Worker
   include SeekWorkable
 
@@ -9,7 +9,7 @@ class UseraddressSeekWorker
     options = args.extract_options!
     _seek_options = extract_seek_options(options: options)
 
-    SesameMall::UseraddressSeek.partial_sync(_seek_options)
+    SesameMall::UserAddressSeek.partial_sync(_seek_options)
     logger.info "finished"
   end
 
