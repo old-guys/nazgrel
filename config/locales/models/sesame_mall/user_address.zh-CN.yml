@@ -1,0 +1,26 @@
+zh-CN:
+  activerecord:
+    models:
+      user_address: "用户"
+    attributes:
+      user_address:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    user_address:
+      ref:
+        wechat_friend: "微信好友"
+        app: "app"
+        wechat_moment: "微信朋友圈"
+        qq: "qq"
+        qq_zone: "qq空间"
+        sms: "短信"
+        qrcord: "二维码"
+      is_default:
+        :yes: "是"
+        :no: "否"
+      is_deleted:
+        :yes: "是"
+        :no: "否"
