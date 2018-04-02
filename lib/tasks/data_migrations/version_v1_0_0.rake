@@ -258,11 +258,13 @@ namespace :data_migrations do
     end
 
     desc 'migrate order pay data'
-    task :v1_1_3_17_migrate_product_repurchase => :environment do
+    task :v1_1_3_17_migrate_order_pay => :environment do
       SesameMall::OrderPaySeek.whole_sync
+      SesameMall::UserAddressSeek.whole_sync
 
       _klasses = [
         SesameMall::Source::OrderPay,
+        SesameMall::Source::UserAddress
       ]
 
       _klasses.each {|klass|

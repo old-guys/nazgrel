@@ -1,3 +1,12 @@
+## 同步店主开店信息 (2018-04-02)
+
+- #seek# 同步订单支付记录
+- #seek# 同步用户收货地址
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_17_migrate_order_pay
+```
+
 ## 优化店主行为报表计算逻辑(2018-03-30)
 
 - #enhance# 缓存店主行为数据刷新的的时间戳，解决每次计算店主行为数据都需要统计所有项的问题
