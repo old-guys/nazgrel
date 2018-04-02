@@ -11,7 +11,7 @@ class ChannelShopNewer::UpdateReport
         _record = _records.find{|record|
           record.channel_id == channel.id
         }
-        if _record.blank?
+        if _record.nil?
           _report = ChannelShopNewer::ResetReport.new(channel: channel, dates: report_date.all_year)
           _report.perform
         end

@@ -2,21 +2,24 @@ class CityShopActivity::UpdateReport
   class << self
     def update_report(city: , report_date: Date.today, force_update: false, interval_time: 30.minutes)
       _cities = Array.wrap(city)
-      _records = ReportCityShopActivity.where(
+      _exist_records = ReportCityShopActivity.where(
         city: _cities,
         report_date: report_date
       ).find_each.to_a
       _time = Time.now
 
-      _cities.each {|_city|
-        report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
-          shopkeepers: {city: _city},
-          report_date: report_date
-        )
-        _record = _records.find{|record|
+      _records = _cities.map {|_city|
+        _record = _exist_records.find{|record|
           record.city == _city
         } || ReportCityShopActivity.new(
           city: _city,
+          report_date: report_date
+        )
+      }
+
+      _records.each {|_record|
+        report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
+          shopkeepers: {city: _record.city},
           report_date: report_date
         )
 
@@ -25,7 +28,7 @@ class CityShopActivity::UpdateReport
         _report = CityShopActivity::UpdateReport.new(
           report_date: report_date,
           record: _record,
-          city: _city,
+          city: _record.city,
           report_shop_activities: report_shop_activities
         )
 

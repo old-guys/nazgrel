@@ -1,22 +1,18 @@
 class CumulativeShopActivity::UpdateReport
   class << self
     def update_report(shops: , report_date: Date.today, touch_report_date: false, force_update: false, interval_time: 30.minutes)
-      _records = ReportCumulativeShopActivity.where(
+      _exist_records = ReportCumulativeShopActivity.where(
         shop: shops
       ).find_each.to_a
       _time = Time.now
 
-      shops.each {|shop|
-        _record = _records.find{|record|
+      _records = shops.map {|shop|
+        _record = _exist_records.find{|record|
           record.shop_id == shop.id
-        }
-
-        if _record.blank?
-          _records << ReportCumulativeShopActivity.new(
-            shop: shop,
-            report_date: report_date
-          )
-        end
+        } || ReportCumulativeShopActivity.new(
+          shop: shop,
+          report_date: report_date
+        )
       }
 
       _records.each {|_record|
