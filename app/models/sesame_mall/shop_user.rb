@@ -1,4 +1,9 @@
 class ShopUser < ApplicationRecord
+  alias_attribute :idcard, :id_card
+
+  has_one :user_card, primary_key: :user_id,
+    foreign_key: :user_id,
+    class_name: :ShopUserCard, required: false
 
   enum sex: {
     female: 0,

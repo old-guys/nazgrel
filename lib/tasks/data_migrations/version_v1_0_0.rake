@@ -271,5 +271,18 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'migrate order pay data'
+    task :v1_1_3_18_migrate_shop_user_card => :environment do
+      SesameMall::ShopUserCardSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::ShopUserCard
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

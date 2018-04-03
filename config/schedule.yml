@@ -91,6 +91,13 @@ shop_user_seek_job:
   queue: :seek
   args:
     duration: 4
+shop_user_card_seek_job:
+  cron: "*/3 * * * *"
+  name: "同步用户身份证信息"
+  class: "ShopUserCardSeekWorker"
+  queue: :seek
+  args:
+    duration: 4
 user_address_seek_job:
   cron: "*/3 * * * *"
   name: "同步用户收货地址"
