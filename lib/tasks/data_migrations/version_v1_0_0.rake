@@ -242,14 +242,14 @@ namespace :data_migrations do
 
     desc 'migrate product_repurchase data'
     task :v1_1_3_16_migrate_product_repurchase => :environment do
-      0.upto(6).to_a.reverse.each {|i|
+      0.upto(7).to_a.reverse.each {|i|
         ProductRepurchase::Reporting.update_month_report(
           report_date: (Date.today - i.send(:month)),
           force_update: true
         )
       }
 
-      0.upto(26).to_a.reverse.each {|i|
+      0.upto(28).to_a.reverse.each {|i|
         ProductRepurchase::Reporting.update_week_report(
           report_date: (Date.today - i.send(:week)),
           force_update: true
@@ -317,6 +317,12 @@ namespace :data_migrations do
       _klasses.each {|klass|
         TriggerService.setup_trigger klass: klass
       }
+    end
+
+    desc 'migrate order pay data'
+    task :v1_1_3_18_migrate_product_repurchase_shop_retention => :environment do
+      ReportProductRepurchase.delete_all
+      Rake::Task["data_migrations:version:v1_1_3_16_migrate_product_repurchase"].invoke
     end
   end
 end
