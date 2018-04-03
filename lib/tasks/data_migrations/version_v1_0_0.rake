@@ -284,5 +284,17 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'migrate shop_user birthday'
+    task :v1_1_3_18_migrate_shop_user_birthday => :environment do
+      ShopUser.where(birthday: nil).where.not(idcard: nil).in_batches(of: 100) {|records|
+        records.each &:set_idcard_belong_to
+
+        ShopUser.transaction do
+          records.select(&:changed?).map(&:save)
+        end
+      }
+    end
+
   end
 end

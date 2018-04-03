@@ -5,6 +5,19 @@ module OpenQueryable
     delegate :open_query_logger, to: "self.class"
   end
 
+  def idcard_belong_to_juhe(idcard: )
+    url = "http://apis.juhe.cn/idcard/index?cardno=#{idcard}&dtype=json&key=a05c0b95720329f6d47d549684b40116"
+    result = HashWithIndifferentAccess.new(open_query_get(url))
+
+    if result[:error_code].eql?(0)
+      result["result"]
+    end
+  rescue => e
+    open_query_logger.error "exception: #{e.message}"
+
+    nil
+  end
+
   def phone_belong_to_juhe(phone: )
     phone_belong_to_juhe_hash(phone: phone).slice("province", "city").compact.values.uniq.join(' ') rescue nil
   end

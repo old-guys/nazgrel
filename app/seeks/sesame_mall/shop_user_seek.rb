@@ -43,6 +43,10 @@ class SesameMall::ShopUserSeek
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
     )
 
+    if record.age.blank?
+      record.set_idcard_belong_to
+    end
+
     record
   end
 

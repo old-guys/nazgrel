@@ -1,4 +1,6 @@
 class ShopUser < ApplicationRecord
+  include OpenQueryable
+
   has_one :user_card, primary_key: :user_id,
     foreign_key: :user_id,
     class_name: :ShopUserCard, required: false
@@ -30,4 +32,16 @@ class ShopUser < ApplicationRecord
     yes: 1,
     no: 0
   }, _prefix: true
+
+  def set_idcard_belong_to
+    if idcard.present?
+      _hash = idcard_belong_to_juhe idcard: idcard
+      return if _hash.blank?
+
+      self.birthday ||= Date.strptime(
+        _hash["birthday"], "%Y年%m月%d日"
+      )
+      self.age = (Time.now.to_s(:number).to_i - birthday.to_time.to_s(:number).to_i)/10e9.to_i
+    end
+  end
 end
