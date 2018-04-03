@@ -49,7 +49,7 @@ gem 'rails-i18n', '~> 5.1', '>= 5.1.1'
 # gem 'migration_comments', '~> 0.4', '>= 0.4.1'
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
-gem 'httparty', '~> 0.16', '>= 0.16.1'
+gem 'httparty', '~> 0.16', '>= 0.16.2'
 
 # Axlsx_Rails provides an Axlsx renderer
 # so you can move all your spreadsheet code from your controller into view files.
@@ -81,7 +81,7 @@ gem 'pundit', '~> 1.1', '>= 1.1.0'
 
 ########  framework  base support ########
 # Simple, efficient background processing for Ruby.
-gem 'sidekiq', '~> 5.1', '>= 5.1.1'
+gem 'sidekiq', '~> 5.1', '>= 5.1.3'
 
 # Enables to set jobs to be run in specified time (using CRON notation)
 gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
@@ -129,7 +129,7 @@ group :production do
   gem 'unicorn-worker-killer', '~> 0.4', '>= 0.4.4'
   # New Relic is a performance management system,
   # developed by New Relic, Inc (http://www.newrelic.com)
-  gem 'newrelic_rpm', '~> 4.8', '>= 4.8.0.341'
+  gem 'newrelic_rpm', '~> 5.0', '>= 5.0.0.342'
 end
 
 # Use Capistrano for deployment
