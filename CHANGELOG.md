@@ -1,4 +1,12 @@
-## 升级 ruby 2.5.1 (2018-03-03)
+## 同步用户身份证信息 (2018-04-03)
+
+- #seek# 同步用户身份证信息
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_18_migrate_shop_user_card
+```
+
+## 升级 ruby 2.5.1 (2018-04-03)
 
 - #support# 升级 Ruby 版本到 `2.5.1`
 - [gem] gem 'newrelic_rpm' update to version '5.0.0.342'

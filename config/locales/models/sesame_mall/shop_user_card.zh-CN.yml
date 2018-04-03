@@ -1,0 +1,10 @@
+zh-CN:
+  activerecord:
+    models:
+      shop_user_card: "用户身份证"
+    attributes:
+      shop_user_card:
+        id: "ID"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

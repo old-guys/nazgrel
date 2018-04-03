@@ -15,6 +15,8 @@ class Shopkeeper < ApplicationRecord
     foreign_key: :user_id,
     class_name: :ShopUser, required: false
 
+  has_one :user_card, through: :shop_user
+
   has_many :income_records, foreign_key: :user_id, primary_key: :user_id
 
   has_many :withdraw_records, foreign_key: :user_id, primary_key: :user_id
