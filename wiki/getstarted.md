@@ -33,7 +33,7 @@ cd nazgrel
 # sudo -i
 # rvm use 2.5.0@nazgrel --create
 # https://rvm.io/workflow/projects/
-rvm --create --ruby-version use 2.5.0@nazgrel
+rvm --create --ruby-version use 2.5.1@nazgrel
 ```
 
 ### choose and add gems

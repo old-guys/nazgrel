@@ -1,3 +1,8 @@
+## 升级 ruby 2.5.1 (2018-03-03)
+
+- #support# 升级 Ruby 版本到 `2.5.1`
+- [gem] gem 'newrelic_rpm' update to version '5.0.0.342'
+
 ## 同步店主开店信息 (2018-04-02)
 
 - #seek# 同步订单支付记录

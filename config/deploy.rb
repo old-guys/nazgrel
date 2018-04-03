@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.10.0"
+lock "~> 3.10.1"
 
 set :application, "nazgrel"
 set :repo_url, "git@gitlab.ishanggang.com:bi/nazgrel.git"
@@ -7,7 +7,7 @@ set :repo_url, "git@gitlab.ishanggang.com:bi/nazgrel.git"
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
-set :rvm_ruby_version, '2.5.0'
+set :rvm_ruby_version, '2.5.1'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/ishanggang/apps/#{fetch(:application)}_#{fetch(:stage)}"
