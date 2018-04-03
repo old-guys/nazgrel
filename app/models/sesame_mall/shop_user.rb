@@ -42,6 +42,16 @@ class ShopUser < ApplicationRecord
         _hash["birthday"], "%Y年%m月%d日"
       )
       self.age = (Time.now.to_s(:number).to_i - birthday.to_time.to_s(:number).to_i)/10e9.to_i
+
+      if city.blank?
+        _regex = /^(\p{Han}+省)?(\p{Han}+市)(\p{Han}+[区县])$/u
+        _region = _hash["area"].match(_regex)
+        return if _region.nil?
+
+        self.province = _region[1] || _region[2]
+        self.city = _region[2]
+        self.area = _region[3]
+      end
     end
   end
 end
