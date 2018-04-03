@@ -1,8 +1,6 @@
 class ShopRetention::UpdateReport
   class << self
     def update_report(report_date: Date.today.beginning_of_month, force_update: false, interval_time: 30.minutes)
-      report_date = report_date.beginning_of_month
-
       _record = ReportShopRetention.where(
         report_date: report_date
       ).first_or_initialize
