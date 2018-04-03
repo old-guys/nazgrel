@@ -13,7 +13,7 @@ module ProductRepurchase::Calculations
         order_status: Order.order_statuses.slice(:awaiting_delivery, :deliveried, :finished).values
       ).sales_order.where("`orders`.`created_at` <= ?", end_at)
     ).where(
-      product_sku_id: _product_skus.select(:id)
+      product_id: _products.pluck(:id)
     )
 
     _result = {
