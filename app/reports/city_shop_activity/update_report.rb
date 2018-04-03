@@ -17,22 +17,29 @@ class CityShopActivity::UpdateReport
         )
       }
 
-      _records.each {|_record|
-        report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
-          shopkeepers: {city: _record.city},
-          report_date: report_date
-        )
+      _records.each_slice(50).map {|records|
+        _reports = records.map {|_record|
+          report_shop_activities = ReportShopActivity.joins(:shopkeeper).where(
+            shopkeepers: {city: _record.city},
+            report_date: report_date
+          )
 
-        return if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
+          return if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
 
-        _report = CityShopActivity::UpdateReport.new(
-          report_date: report_date,
-          record: _record,
-          city: _record.city,
-          report_shop_activities: report_shop_activities
-        )
+          _report = CityShopActivity::UpdateReport.new(
+            report_date: report_date,
+            record: _record,
+            city: _record.city,
+            report_shop_activities: report_shop_activities
+          )
 
-        _report.perform
+          _report.perform(skip_save: true)
+          _report
+        }.compact
+
+        ReportCityShopActivity.transaction do
+          _reports.compact.each(&:write)
+        end
       }
     end
 
@@ -44,8 +51,10 @@ class CityShopActivity::UpdateReport
       }
     end
   end
-  include CityShopActivity::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include CityShopActivity::Calculations
   include ReportCalculationable
 
   CITY_CACHE_KEY = "city_shop_activity_report_cities"
@@ -60,17 +69,6 @@ class CityShopActivity::UpdateReport
     self.date = record.report_date
   end
 
-  def perform
-    begin
-      process
-
-      write if @result.present?
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
-  end
-
   private
   def process
     @result = calculate(report_shop_activities: report_shop_activities)
@@ -79,9 +77,5 @@ class CityShopActivity::UpdateReport
       @result
     )
   end
-  def write
-    record.has_changes_to_save? ? record.save : record.touch
-  end
-
   private
 end

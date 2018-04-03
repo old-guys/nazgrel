@@ -47,8 +47,10 @@ class ShopEcn::UpdateReport
       $redis.SADD(_key, _ids)
     end
   end
-  include ShopEcn::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include ShopEcn::Calculations
 
   SHOP_IDS_CACHE_KEY = "shop_ecn_report_shop_ids"
 
@@ -60,17 +62,6 @@ class ShopEcn::UpdateReport
     self.shop = record.shop
   end
 
-  def perform
-    begin
-      process
-
-      write
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
-  end
-
   private
   def process
     @result = calculate(shop: shop)
@@ -79,9 +70,4 @@ class ShopEcn::UpdateReport
       @result
     )
   end
-  def write
-    record.has_changes_to_save? ? record.save : record.touch
-  end
-
-  private
 end

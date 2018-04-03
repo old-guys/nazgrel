@@ -20,8 +20,10 @@ class ShopRetention::UpdateReport
       _report.perform
     end
   end
-  include ShopRetention::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include ShopRetention::Calculations
   include ReportCalculationable
 
   attr_accessor :record, :date, :result
@@ -29,17 +31,6 @@ class ShopRetention::UpdateReport
   def initialize(record: , date: )
     self.record = record
     self.date = date
-  end
-
-  def perform
-    begin
-      process
-
-      write
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
   end
 
   private
@@ -50,9 +41,4 @@ class ShopRetention::UpdateReport
       @result
     )
   end
-  def write
-    record.changed? ? record.save : record.touch
-  end
-
-  private
 end

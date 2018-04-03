@@ -31,8 +31,10 @@ class ChannelShopActivity::UpdateReport
       }
     end
   end
-  include ChannelShopActivity::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include ChannelShopActivity::Calculations
   include ReportCalculationable
 
   CHANNEL_IDS_CACHE_KEY = "channel_shop_activity_report_channel_ids"
@@ -47,17 +49,6 @@ class ChannelShopActivity::UpdateReport
     self.date = record.report_date
   end
 
-  def perform
-    begin
-      process
-
-      write if @result.present?
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
-  end
-
   private
   def process
     @result = calculate(report_shop_activities: report_shop_activities)
@@ -66,9 +57,4 @@ class ChannelShopActivity::UpdateReport
       @result
     )
   end
-  def write
-    record.has_changes_to_save? ? record.save : record.touch
-  end
-
-  private
 end

@@ -59,8 +59,10 @@ class ProductRepurchase::UpdateReport
       }
     end
   end
-  include ProductRepurchase::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include ProductRepurchase::Calculations
   include ReportCalculationable
 
   attr_accessor :record, :start_at, :end_at, :category
@@ -72,17 +74,6 @@ class ProductRepurchase::UpdateReport
     self.category = category
   end
 
-  def perform
-    begin
-      process
-
-      write
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
-  end
-
   private
   def process
     @result = calculate(start_at: start_at, end_at: end_at, category: category)
@@ -91,9 +82,4 @@ class ProductRepurchase::UpdateReport
       @result
     )
   end
-  def write
-    record.changed? ? record.save : record.touch
-  end
-
-  private
 end

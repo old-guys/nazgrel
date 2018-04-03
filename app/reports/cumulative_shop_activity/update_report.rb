@@ -15,17 +15,23 @@ class CumulativeShopActivity::UpdateReport
         )
       }
 
-      _records.each {|_record|
-        next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
-        logger.info "update report for shop_id: #{_record.shop_id}"
+      _records.each_slice(50).map {|records|
+        _reports = records.map {|_record|
+          next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
+          logger.info "update report for shop_id: #{_record.shop_id}"
 
-        _record.report_date = Date.today if touch_report_date
-        _report = CumulativeShopActivity::UpdateReport.new(
-          record: _record,
-          date: report_date
-        )
+          _record.report_date = Date.today if touch_report_date
+          _report = CumulativeShopActivity::UpdateReport.new(
+            record: _record,
+            date: report_date
+          )
 
-        _report.perform
+          _report.perform(skip_save: true)
+          _report
+        }
+        ReportCumulativeShopActivity.transaction do
+          _reports.compact.each(&:write)
+        end
       }
     end
 
@@ -37,8 +43,10 @@ class CumulativeShopActivity::UpdateReport
       $redis.SADD(_key, _ids)
     end
   end
-  include CumulativeShopActivity::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include CumulativeShopActivity::Calculations
   include ReportCalculationable
 
   SHOP_IDS_CACHE_KEY = "shop_cumulative_report_shop_ids"
@@ -50,17 +58,6 @@ class CumulativeShopActivity::UpdateReport
     self.date = date
   end
 
-  def perform
-    begin
-      process
-
-      write
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
-  end
-
   private
   def process
     @result = calculate(shop_id: record.shop_id, date: date)
@@ -68,8 +65,5 @@ class CumulativeShopActivity::UpdateReport
     record.assign_attributes(
       @result
     )
-  end
-  def write
-    record.has_changes_to_save? ? record.save : record.touch
   end
 end

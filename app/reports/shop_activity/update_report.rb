@@ -25,26 +25,32 @@ class ShopActivity::UpdateReport
         report_date: report_date.yesterday
       ).find_each.to_a
 
-      _records.each {|_record|
-        _recent_record = _recent_records.find{|_recent_record|
-          _recent_record.shop_id == _record.shop_id
-        }
-        _record.shop = shops.find{|s|
-          s.id == _record.shop_id
-        }
+      _records.each_slice(50).map {|records|
+        _reports = records.map {|_record|
+          _recent_record = _recent_records.find{|_recent_record|
+            _recent_record.shop_id == _record.shop_id
+          }
+          _record.shop = shops.find{|s|
+            s.id == _record.shop_id
+          }
 
-        next if _record.shop.blank?
-        next if _record.shop.shopkeeper.blank?
+          next if _record.shop.try(:shopkeeper).blank?
 
-        next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
-        logger.info "update report for shop_id: #{_record.shop_id}"
+          next if not force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
+          logger.info "update report for shop_id: #{_record.shop_id}"
 
-        _report = ShopActivity::UpdateReport.new(
-          recent_record: _recent_record,
-          record: _record
-        )
+          _report = ShopActivity::UpdateReport.new(
+            recent_record: _recent_record,
+            record: _record
+          )
 
-        _report.perform
+          _report.perform(skip_save: true)
+          _report
+        }.compact
+
+        ReportShopActivity.transaction do
+          _reports.compact.each(&:write)
+        end
       }
     end
 
@@ -56,8 +62,10 @@ class ShopActivity::UpdateReport
       $redis.SADD(_key, _ids)
     end
   end
-  include ShopActivity::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include ShopActivity::Calculations
   include ReportCalculationable
 
   SHOP_IDS_CACHE_KEY = "shop_activity_report_shop_ids"
@@ -70,17 +78,6 @@ class ShopActivity::UpdateReport
 
     self.shop = record.shop
     self.date = record.report_date
-  end
-
-  def perform
-    begin
-      process
-
-      write
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
   end
 
   private
@@ -114,11 +111,7 @@ class ShopActivity::UpdateReport
       @result
     )
   end
-  def write
-    record.has_changes_to_save? ? record.save : record.touch
-  end
 
-  private
   def increase_field_by(field: , unit: )
     if record.report_date.in?(recent_record.report_date.send("all_#{unit}"))
       recent_record.send("#{unit}_#{field}").to_f + result[field].to_f

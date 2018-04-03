@@ -47,8 +47,10 @@ class ChannelShopNewer::UpdateReport
       $redis.SADD(_key, _ids)
     end
   end
-  include ChannelShopNewer::Calculations
+  include ReportUpdateable
   include ReportLoggerable
+
+  include ChannelShopNewer::Calculations
   include ReportCalculationable
 
   CHANNEL_IDS_CACHE_KEY = "channel_shop_newer_report_channel_ids"
@@ -63,21 +65,10 @@ class ChannelShopNewer::UpdateReport
     self.dates = record.report_date.all_day
   end
 
-  def perform
-    begin
-      @result = calculate_by_day(channel: channel, dates: dates).shift
-
-      process
-
-      write
-    rescue => e
-      logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
-      log_error(e)
-    end
-  end
-
   private
   def process
+    @result = calculate_by_day(channel: channel, dates: dates).shift
+
     record.assign_attributes(
       @result[:result]
     )
@@ -98,8 +89,5 @@ class ChannelShopNewer::UpdateReport
       year_grade_platinum: recent_record.year_grade_platinum + record.day_grade_platinum,
       year_grade_gold: recent_record.year_grade_gold + record.day_grade_gold
     )
-  end
-  def write
-    record.has_changes_to_save? ? record.save : record.touch
   end
 end
