@@ -18,7 +18,7 @@ class SesameMall::ShopUserCardSeek
 
       user_id: data[:user_id],
       real_name: data[:real_name],
-      idcard: data[:id_card],
+      idcard: data[:idcard],
       card_front: data[:card_front],
       card_back: data[:card_back],
 

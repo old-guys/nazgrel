@@ -17,7 +17,7 @@ class SesameMall::ShopUserSeek
       id: data[:id],
 
       user_id: data[:user_id],
-      id_card: data[:idcard],
+      idcard: data[:idcard],
       phone: data[:user_phone],
       nickname: data[:nick_name],
       real_name: data[:real_name],
