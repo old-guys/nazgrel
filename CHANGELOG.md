@@ -1,3 +1,16 @@
+## 同步退款数据 (2018-04-04)
+
+- #seek# 订单详情更新芝蚂城新增字段
+- #seek# 芝蚂城同步退款订单
+- #seek# 芝蚂城同步退款子订单
+- #seek# 芝蚂城同步退款支付记录
+- #seek# 芝蚂城同步退款物流订单
+- #seek# 芝蚂城同步退款订单图片
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_18_migrate_order_refund
+```
+
 ## 同步用户身份证信息 (2018-04-03)
 
 - #seek# 同步用户身份证信息

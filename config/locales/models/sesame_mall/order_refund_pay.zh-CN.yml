@@ -1,0 +1,19 @@
+zh-CN:
+  activerecord:
+    models:
+      order_refund_pay: "退款订单"
+    attributes:
+      order_refund_pay:
+        id: "ID"
+        order_no: "主订单编号"
+        refund_order_no: "退款订单编号"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    order_refund_pay:
+      refund_status:
+        awaiting_refund: "待退款"
+        refund_success: "退款成功"
+        refund_failure: "退款失败"
+        refund_cancel: "取消退款"

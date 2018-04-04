@@ -19,6 +19,10 @@ zh-CN:
         finished: "已完成"
         canceled: "已取消"
         finished_trouble: "已完成(异常)"
+      order_sub_status:
+        normal: "正常订单"
+        partial_refund: "部分退款"
+        all_refund: "全部退款"
       shop_user_deliveried_push:
         :yes: "是"
         :no: "否"
@@ -29,5 +33,11 @@ zh-CN:
         :yes: "是"
         :no: "否"
       is_zone_freight:
+        :yes: "是"
+        :no: "否"
+      sync_price:
+        :yes: "是"
+        :no: "否"
+      delivered_flag:
         :yes: "是"
         :no: "否"

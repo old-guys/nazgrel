@@ -17,6 +17,11 @@ class OrderSub < ApplicationRecord
     canceled: 4,
     finished_trouble: 5
   }
+  enum order_sub_status: {
+    normal: 0,
+    partial_refund: 1,
+    all_refund: 2
+  }
   enum shop_user_deliveried_push: {
     yes: 1,
     no: 0
@@ -30,6 +35,14 @@ class OrderSub < ApplicationRecord
     no: 0
   }, _prefix: true
   enum is_zone_freight: {
+    yes: 1,
+    no: 0
+  }, _prefix: true
+  enum sync_price: {
+    yes: 1,
+    no: 0
+  }, _prefix: true
+  enum delivered_flag: {
     yes: 1,
     no: 0
   }, _prefix: true
