@@ -21,7 +21,7 @@ module SesameMall::Seekable
   def do_whole_sync(relation: , key: nil)
     key ||= primary_key
     self.batch_size ||= 1000
-    logger.info "start sync: batch_size: #{batch_size}"
+    logger.info "start sync:"
     _synced_count = 0
 
     relation.in_batches(of: batch_size) {|records|
@@ -36,7 +36,7 @@ module SesameMall::Seekable
 
   def do_partial_sync(relation: )
     self.batch_size ||= 1000
-    logger.info "start sync: batch_size: #{batch_size}"
+    logger.info "start sync:"
     _synced_count = 0
 
     relation.in_batches(of: batch_size){|records|
