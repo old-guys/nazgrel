@@ -25,10 +25,11 @@ module SesameMall::Seekable
     _synced_count = 0
 
     relation.in_batches(of: batch_size) {|records|
-      self.source_data = records
-      _synced_count += records.size
+      self.source_data = records.pluck_h
 
       process
+
+      _synced_count += source_data.size
     }
     logger.info "sync finished: #{_synced_count} synced"
   end
@@ -39,22 +40,23 @@ module SesameMall::Seekable
     _synced_count = 0
 
     relation.in_batches(of: batch_size){|records|
-      self.source_data = records
-      _synced_count += records.size
+      self.source_data = records.pluck_h
 
       process
+
+      _synced_count += source_data.size
     }
     logger.info "sync finished: #{_synced_count} synced"
   end
 
   def process
-    self.batch_size ||= 50
+    self.batch_size ||= 100
 
     before_process_hooks.map{|name|
       send(name)
     } if before_process_hooks.present?
 
-    source_data.pluck_h.each_slice(batch_size) {|hashes|
+    source_data.each_slice(batch_size) {|hashes|
       record_ids = hashes.pluck(source_primary_key)
       _exists_records = fetch_records(ids: record_ids)
 
@@ -92,7 +94,7 @@ module SesameMall::Seekable
       _records = seek_records(duration: duration, table_name: klass.table_name)
 
       klass.where(
-        klass.primary_key => _records.select(:primary_key_value)
+        :"#{klass.primary_key}" => _records.pluck(:primary_key_value)
       )
     end
     def seek_records(duration: , table_name: )
