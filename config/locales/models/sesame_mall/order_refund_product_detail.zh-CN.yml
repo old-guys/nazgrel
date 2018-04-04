@@ -6,7 +6,7 @@ zh-CN:
       order_refund_product_detail:
         id: "ID"
         order_no: "主订单编号"
-        refund_order_no: "订单编号"
+        refund_order_no: "退款订单编号"
         sub_order_no: "子订单编号"
         created_at: "创建时间"
         updated_at: "更新于"

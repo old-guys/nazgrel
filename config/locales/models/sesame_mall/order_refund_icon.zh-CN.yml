@@ -1,11 +1,10 @@
 zh-CN:
   activerecord:
     models:
-      order_refund_express: "退款物流订单"
+      order_refund_icon: "退款订单图片"
     attributes:
-      order_refund_express:
+      order_refund_icon:
         id: "ID"
-        order_no: "订单编号"
         refund_order_no: "退款订单编号"
         created_at: "创建时间"
         updated_at: "更新于"
