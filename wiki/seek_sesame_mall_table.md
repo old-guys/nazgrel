@@ -75,7 +75,7 @@ TriggerService.setup_trigger klass: klass
 shopkeeper seek timestamp
 
 ```ruby
-module SesameMall::ShopKeeperTimestampable
+module SesameMall::ShopkeeperTimestampable
   extend ActiveSupport::Concern
 
   included do
@@ -99,7 +99,7 @@ end
 
 ```ruby
 class SesameMall::ShareJournalSeek
-  include SesameMall::ShopKeeperTimestampable
+  include SesameMall::ShopkeeperTimestampable
 
   private
   def after_process_record(records: )

@@ -1,4 +1,4 @@
-module SesameMall::ShopKeeperTimestampable
+module SesameMall::ShopkeeperTimestampable
   extend ActiveSupport::Concern
 
   included do

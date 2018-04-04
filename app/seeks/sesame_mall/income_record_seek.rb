@@ -1,6 +1,6 @@
 class SesameMall::IncomeRecordSeek
   include SesameMall::Seekable
-  include SesameMall::ShopKeeperTimestampable
+  include SesameMall::ShopkeeperTimestampable
 
   after_process :after_process_record
 
