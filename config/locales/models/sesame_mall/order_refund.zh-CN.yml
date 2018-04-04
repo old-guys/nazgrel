@@ -1,0 +1,30 @@
+zh-CN:
+  activerecord:
+    models:
+      order_refund: "退款订单"
+    attributes:
+      order_refund:
+        id: "ID"
+        order_no: "主订单编号"
+        refund_order_no: "订单编号"
+        refund_type: "订单类型"
+        ref_type: "订单渠道"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+  enums:
+    order_refund:
+      refund_type:
+        good_refund: "退货退款"
+        refund: "退款"
+      refund_status:
+        awaiting_approve: "待审核"
+        awaiting_sendback: "待寄回"
+        awaiting_refund: "待退款"
+        refund_failure: "退款失败"
+        refund_success: "退款成功"
+        apply_cancel: "取消申请"
+        approve_rejected: "驳回申请"
+      refund_flag:
+        :yes: "是"
+        :no: "否"

@@ -299,6 +299,16 @@ namespace :data_migrations do
     desc 'migrate order_refund'
     task :v1_1_3_18_migrate_order_refund => :environment do
       SesameMall::OrderSubSeek.whole_sync
+
+      SesameMall::OrderRefundSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::OrderRefund
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
     end
   end
 end

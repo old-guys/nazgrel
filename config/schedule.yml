@@ -49,6 +49,13 @@ order_pay_seek_job:
   queue: :seek
   args:
     duration: 4
+order_refund_seek_job:
+  cron: "*/3 * * * *"
+  name: "同步退款订单"
+  class: "OrderRefundSeekWorker"
+  queue: :seek
+  args:
+    duration: 4
 product_seek_job:
   cron: "*/3 * * * *"
   name: "同步商品"
