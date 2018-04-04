@@ -77,14 +77,8 @@ class SesameMall::ShopSeek
         klass: SesameMall::Source::Shop,
         duration: duration
       )
-      _shop_from_shopkeeper_relation = SesameMall::Source::Shop.where(
-        USER_ID: source_records_from_seek_record(
-          klass: SesameMall::Source::Shopkeeper,
-          duration: duration
-        ).select(:user_id)
-      )
 
-      seek.do_partial_sync(relation: _relation.or(_shop_from_shopkeeper_relation))
+      seek.do_partial_sync(relation: _relation)
     end
   end
 end
