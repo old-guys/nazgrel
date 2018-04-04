@@ -5,7 +5,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   def index
     params[:created_at] ||= Date.today
     _dates = range_within_datetime(str: params[:created_at]) rescue Date.today
-    @orders = Order.preload(:order_details).sales_order.valided_order
+    @orders = Order.preload(:order_details, :shopkeeper).sales_order.valided_order
 
     search_product_related_orders
     search_supplier_related_orders
@@ -23,6 +23,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
     _dates = range_within_datetime(str: params[:created_at]) rescue Date.today
 
     @orders = Order.preload(
+      :shopkeeper,
       order_subs: [
         :supplier,
         {order_details: [:product, :category]}

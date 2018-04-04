@@ -16,6 +16,8 @@
       <th scope="row"><%= record.order_no %></th>
       <td><%= record.shop_name %></td>
       <td><%= record.shop_username %></td>
+      <td><%= record.shopkeeper.try :user_grade_i18n %></td>
+
       <td><%= record.shop_phone %></td>
       <td><%= report.try :shared_count %></td>
       <td><%= report.try :view_count %></td>

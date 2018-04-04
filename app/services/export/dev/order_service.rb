@@ -3,7 +3,7 @@ class Export::Dev::OrderService
 
   def index_fields
     %w(
-      order_no shop_name shop_username recv_user_name
+      order_no shop_name shop_username shopkeeper.user_grade_i18n recv_user_name
       recv_phone_no order_details_context total_price created_at
       province city full_address
     )
@@ -11,14 +11,14 @@ class Export::Dev::OrderService
 
   def index_head_names
     %w(
-      订单编号 店铺名称 店主姓名 收件人姓名 收件人手机号
+      订单编号 店铺名称 店主姓名 店铺等级 收件人姓名 收件人手机号
       商品信息 订单金额 时间 省份 城市 收货地址
     )
   end
 
   def sales_fields
     %w(
-      order_no shop_name shop_username shop_phone
+      order_no shop_name shop_username shopkeeper_user_grade_i18n shop_phone
       shared_count view_count
       product.no product_name supplier
       category product_num product_market_price
@@ -29,7 +29,7 @@ class Export::Dev::OrderService
 
   def sales_head_names
     %w(
-      # 店铺名称 店主姓名 店主手机号
+      # 店铺名称 店主姓名 店主手机号 店铺等级
       分享数 浏览量 商品编号 商品名称
       商品分类 品牌 商品数量(件) 市场价格(元) 商品单价(元)
       支付金额 下单时间 省份 城市
@@ -56,6 +56,7 @@ class Export::Dev::OrderService
             order_no: order.order_no,
             shop_name: order.shop_name,
             shop_username: order.shop_username,
+            shopkeeper_user_grade_i18n: order.shopkeeper.try(:user_grade_i18n),
             shop_phone: order.shop_phone,
             shared_count: report.try(:shared_count),
             view_count: report.try(:view_count),
