@@ -296,5 +296,9 @@ namespace :data_migrations do
       }
     end
 
+    desc 'migrate order_refund'
+    task :v1_1_3_18_migrate_order_refund => :environment do
+      SesameMall::OrderSubSeek.whole_sync
+    end
   end
 end

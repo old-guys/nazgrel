@@ -41,6 +41,22 @@ class SesameMall::OrderSubSeek
       version: data[:version],
       is_zone_freight: ::OrderSub.is_zone_freights.invert[data[:is_zone_freight].to_i],
 
+      sync_price: ::OrderSub.sync_prices.invert[data[:sync_price].to_i],
+      refund_time: parse_no_timezone(datetime: data[:refund_time]),
+      refund_apply_time: parse_no_timezone(datetime: data[:refund_apply_time]),
+
+      refunded_amount: data[:refunded_amount],
+      refunding_amount: data[:refunding_amount],
+      refunded_product_num: data[:refunded_product_num],
+      refunding_product_num: data[:refunding_product_num],
+      refunded_comm: data[:refunded_comm],
+      refunding_comm: data[:refunding_comm],
+
+      order_sub_status: ::OrderSub.order_sub_statuses.invert[data[:order_sub_status].to_i],
+      old_order_status: data[:old_order_status],
+      delivered_flag:  ::OrderSub.delivered_flags.invert[data[:delivered_flag].to_i],
+      sub_product_num: data[:sub_product_num],
+
       supplier_id: data[:supplier_id],
       activity_id: data[:activity_id],
 
