@@ -302,11 +302,13 @@ namespace :data_migrations do
 
       SesameMall::OrderRefundSeek.whole_sync
       SesameMall::OrderRefundExpressSeek.whole_sync
+      SesameMall::OrderRefundPaySeek.whole_sync
 
 
       _klasses = [
         SesameMall::Source::OrderRefund,
-        SesameMall::Source::OrderRefundExpress
+        SesameMall::Source::OrderRefundExpress,
+        SesameMall::Source::OrderRefundPay
       ]
 
       _klasses.each {|klass|
