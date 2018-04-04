@@ -92,10 +92,15 @@ module SesameMall::Seekable
   module ClassMethods
     def source_records_from_seek_record(klass: , duration: )
       _records = seek_records(duration: duration, table_name: klass.table_name)
+      _primary_keys = _records.pluck(:primary_key_value)
 
-      klass.where(
-        :"#{klass.primary_key}" => _records.pluck(:primary_key_value)
-      )
+      if _primary_keys.present?
+        klass.where(
+          :"#{klass.primary_key}" => _records.pluck(:primary_key_value)
+        )
+      else
+        klass.none
+      end
     end
     def seek_records(duration: , table_name: )
       _time = Time.now
