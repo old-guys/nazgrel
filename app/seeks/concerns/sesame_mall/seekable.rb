@@ -96,7 +96,7 @@ module SesameMall::Seekable
 
       if _primary_keys.present?
         klass.where(
-          :"#{klass.primary_key}" => _records.pluck(:primary_key_value)
+          :"#{klass.primary_key}" => _primary_keys
         )
       else
         klass.none
