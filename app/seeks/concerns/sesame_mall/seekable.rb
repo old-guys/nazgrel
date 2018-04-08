@@ -89,10 +89,10 @@ module SesameMall::Seekable
   def parse_no_timezone(datetime: )
     datetime.is_a?(ActiveSupport::TimeWithZone) ? (datetime - datetime.utc_offset).utc : datetime
   end
+
   module ClassMethods
     def source_records_from_seek_record(klass: , duration: )
-      _records = seek_records(duration: duration, table_name: klass.table_name)
-      _primary_keys = _records.pluck(:primary_key_value)
+      _primary_keys = source_record_ids(duration: duration, table_name: klass.table_name)
 
       if _primary_keys.present?
         klass.where(
@@ -102,13 +102,44 @@ module SesameMall::Seekable
         klass.none
       end
     end
-    def seek_records(duration: , table_name: )
-      _time = Time.now
+
+    private
+    def source_record_ids(duration: , table_name: )
+      if duration <= 5.minutes
+        seek_record_ids_pool(duration: duration, table_name: table_name)
+      else
+        seek_record_ids(duration: duration, table_name: table_name)
+      end
+    end
+
+    def seek_record_ids(duration: , table_name: )
+      _datetimes = duration.ago.beginning_of_minute..Time.now.end_of_minute
 
       SesameMall::Source::SeekRecord.where(
         table_name: table_name,
-        created_at: duration.ago(_time).._time
-      )
+        created_at: _datetimes
+      ).pluck(:primary_key_value)
+    end
+
+    # NOTICE use cached value (all seek record group by table_name) duration every minute
+    def seek_record_ids_pool(duration: , table_name: )
+      _datetimes = duration.ago.beginning_of_minute..Time.now.end_of_minute
+      _cache_key = "seek_records_pool:#{duration}" << Digest::MD5.hexdigest(_datetimes.to_s)
+
+      _seek_records_pool = Rails.cache.fetch(_cache_key, expires_in: 5.minutes) do
+        _records = SesameMall::Source::SeekRecord.where(
+          created_at: _datetimes
+        )
+
+        _records.pluck_s(:table_name, :primary_key_value).inject({}) {|memo, values|
+          memo[values.table_name] ||= []
+          memo[values.table_name] << values.primary_key_value
+
+          memo
+        }
+      end
+
+      _seek_records_pool[table_name]
     end
   end
 end
