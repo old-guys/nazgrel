@@ -7,7 +7,7 @@ module ShopRetention::Calculations
     end
     if date.day == 16
       _end_at = date.change(day: 15)
-      _start_at = 2.months.ago(_end_at).change(day: 16)
+      _start_at = 3.months.ago(_end_at).change(day: 16)
     end
 
     _shopkeepers = Shopkeeper.where("shopkeepers.created_at <= ?", _end_at)
