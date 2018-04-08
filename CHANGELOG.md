@@ -1,3 +1,11 @@
+## 商品复购率/用户留存率-优化 (2018-04-09)
+
+- #feature# 商品复购率/用户留存率-优化
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_18_migrate_product_repurchase_shop_retention
+```
+
 ## 同步退款数据 (2018-04-04)
 
 - #seek# 订单详情更新芝蚂城新增字段
@@ -20,7 +28,6 @@ cap production deploy:runrake task=data_migrations:version:v1_1_3_18_migrate_sho
 ```
 
 ## 升级 ruby 2.5.1 (2018-04-03)
-
 - #support# 升级 Ruby 版本到 `2.5.1`
 - [gem] gem 'newrelic_rpm' update to version '5.0.0.342'
 

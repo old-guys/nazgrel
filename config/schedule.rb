@@ -31,6 +31,10 @@ every "01 0 1 * *" do
   runner "ProductRepurchase::Reporting.update_month_report"
 end
 
+every "01 0 16 * *" do
+  runner "ShopRetention::Reporting.update_report"
+end
+
 every :monday, at: '12:02 am' do
   runner "ProductRepurchase::Reporting.update_week_report"
 end

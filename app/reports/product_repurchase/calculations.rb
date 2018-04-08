@@ -1,9 +1,9 @@
 module ProductRepurchase::Calculations
 
   def calculate(start_at: , end_at: , category: )
-    _products = Product.online.where(
+    _products = Product.where(
       category: category.self_and_descendant_entities
-    ).where("created_at <= ?", end_at)
+    ).where("`products`.`created_at` <= ?", end_at)
     # FIXME zmall product_sku missing `created_at`, use `product#created_at` instead
     _product_skus = ProductSku.where(
       product: _products
@@ -11,11 +11,9 @@ module ProductRepurchase::Calculations
     _order_details = OrderDetail.joins(:order).merge(
       Order.where(
         order_status: Order.order_statuses.slice(:awaiting_delivery, :deliveried, :finished).values
-      ).sales_order.where(
-        created_at: start_at..end_at
-      )
+      ).sales_order.where("`orders`.`created_at` <= ?", end_at)
     ).where(
-      product_sku_id: _product_skus.select(:id)
+      product_id: _products.pluck(:id)
     )
 
     _result = {

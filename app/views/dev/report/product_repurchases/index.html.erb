@@ -29,6 +29,13 @@
             </select>
           </li>
         </ul>
+        <ul class="nav nav-pills">
+          <% @categories.each {|category| %>
+            <li class="nav-item">
+              <%= link_to category, url_for(category_id: category.id, dismiss: "week"), class: "nav-link" %>
+            </li>
+          <% } %>
+        </ul>
       </div>
       <div class="tab-pane fade" id="list-month" role="tabpanel" aria-labelledby="list-month-tab">
         <ul class="nav nav-pills">
@@ -49,6 +56,13 @@
               <% } %>
             </select>
           </li>
+        </ul>
+        <ul class="nav nav-pills">
+          <% @categories.each {|category| %>
+            <li class="nav-item">
+              <%= link_to category, url_for(category_id: category.id, dismiss: "month"), class: "nav-link" %>
+            </li>
+          <% } %>
         </ul>
       </div>
     </div>

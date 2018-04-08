@@ -1,8 +1,15 @@
 module ShopRetention::Calculations
 
   def calculate(date: )
-    _end_at = (date.beginning_of_month - 1).to_time.end_of_month
-    _start_at = 2.months.ago(_end_at).beginning_of_month
+    if date.day == 1
+      _end_at = (date.beginning_of_month - 1).to_time.end_of_month
+      _start_at = 2.months.ago(_end_at).beginning_of_month
+    end
+    if date.day == 16
+      _end_at = date.change(day: 15)
+      _start_at = 2.months.ago(_end_at).change(day: 16)
+    end
+
     _shopkeepers = Shopkeeper.where("shopkeepers.created_at <= ?", _end_at)
     _orders = Order.joins(:shopkeeper).where(
       order_status: Order.order_statuses.slice(:awaiting_delivery, :deliveried, :finished).values
