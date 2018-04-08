@@ -9,7 +9,7 @@ class Dev::Report::ProductRepurchasesController < Dev::Report::BaseController
     @report_product_repurchases = ReportProductRepurchase.preload(:category).all
 
     if params[:category_id].present?
-      @report_product_repurchases = @report_product_repurchases.where(category_id: params[:category_id])
+      @report_product_repurchases = @report_product_repurchases.send(params[:dismiss]).where(category_id: params[:category_id])
     else
       @report_product_repurchases = @report_product_repurchases.where(
         start_at: params[:start_at], end_at: params[:end_at]
