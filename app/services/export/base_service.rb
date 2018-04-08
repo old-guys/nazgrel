@@ -92,7 +92,8 @@ module Export
           'Dev::DailyOperational#report' => '每日运营报表',
           'Dev::DailyShopGradeOperational#report' => '每日店主等级运营报表',
           'Dev::ShopRetention#report' => '店主留存率报表',
-          'Dev::ProductRepurchase#report' => '商品复购率'
+          'Dev::ProductRepurchase#report' => '商品复购率',
+          'Dev::DailyOperationalShopGradeSummary#report' => '每日运营店主等级汇总报表'
         }.freeze
       end
     end
