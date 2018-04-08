@@ -1,0 +1,42 @@
+zh-CN:
+  activerecord:
+    models:
+      report_daily_operational_shop_grade_summary: "每日运营店主等级汇总报表"
+    attributes:
+      report_daily_operational_shop_grade_summary:
+        id: "ID"
+        report_date: "报表日期"
+
+        total_grade_gold_count: "累计黄金店主数"
+        grade_gold_count: "黄金店主数"
+        activation_grade_gold_count: "活跃黄金店主"
+        grade_gold_order_number: "黄金店主订单数"
+        grade_gold_order_amount: "黄金店主订单金额"
+        grade_gold_sale_order_amount: "黄金店主销售订单金额"
+        grade_gold_shopkeeper_order_amount: "黄金店主自购订单金额"
+        grade_gold_sale_order_amount_rate: "黄金店主销售订单占比"
+        grade_gold_shopkeeper_order_amount_rate: "黄金店主自购订单占比"
+
+        total_grade_platinum_count: "累计白金店主数"
+        grade_platinum_count: "白金店主数"
+        activation_grade_platinum_count: "活跃白金店主"
+        grade_platinum_order_number: "白金店主订单数"
+        grade_platinum_order_amount: "白金店主订单金额"
+        grade_platinum_sale_order_amount: "白金店主销售订单金额"
+        grade_platinum_shopkeeper_order_amount: "白金店主自购订单金额"
+        grade_platinum_sale_order_amount_rate: "白金店主销售订单占比"
+        grade_platinum_shopkeeper_order_amount_rate: "白金店主自购订单占比"
+
+        total_grade_trainee_count: "累计体验店主数"
+        grade_trainee_count: "体验店主数"
+        activation_grade_trainee_count: "活跃体验店主"
+        grade_trainee_order_number: "体验店主订单数"
+        grade_trainee_order_amount: "体验店主订单金额"
+        grade_trainee_sale_order_amount: "体验店主销售订单金额"
+        grade_trainee_shopkeeper_order_amount: "体验店主自购订单金额"
+        grade_trainee_sale_order_amount_rate: "体验店主销售订单占比"
+        grade_trainee_shopkeeper_order_amount_rate: "体验店主自购订单占比"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
