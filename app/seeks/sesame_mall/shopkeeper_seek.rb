@@ -144,15 +144,14 @@ class SesameMall::ShopkeeperSeek
       records: _records
     )
 
-    _records = records.select{|record|
-      record.previous_changes.any?{|k, _|
-        k.to_sym.in?([
-          :id, :created_at
-        ])
-      }
-    }
+    _shopkeepers = records.collect{|record|
+      if record.saved_change_to_created_at?
+        record.self_and_ancestor_entities
+      else
+        record
+      end
+    }.flatten.uniq
 
-    _shopkeepers = _records.map(&:self_and_ancestor_entities).flatten.compact.uniq
     # set init value for shopkeeper seek timestamp value
     touch_shopkeeper_timestamp(
       shopkeepers: _shopkeepers,

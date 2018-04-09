@@ -82,7 +82,7 @@ module SesameMall::Seekable
       end if _save_records.present?
 
       after_process_hooks.map{|name|
-        send(name, records: _records.select(&:saved_changes?))
+        send(name, records: _save_records.select(&:saved_changes?))
       } if after_process_hooks.present?
     }
   end
