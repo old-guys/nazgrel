@@ -6,5 +6,5 @@ json.next_page records.try(:next_page)
 json.prev_page records.try(:prev_page)
 json.first_page? records.try(:first_page?)
 json.last_page? records.try(:last_page?)
-json.per_page (params[:per_page]).to_i
-json.page (params[:page]).to_i
+json.per_page records.current_per_page
+json.page records.try(:current_page)
