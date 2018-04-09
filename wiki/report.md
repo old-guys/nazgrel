@@ -157,13 +157,13 @@ class ShopActivityReportWorker
 ```
 
 ```yaml
-shop_activity_report:
-  cron: "31 10,23 * * *"
-  name: "全量当天更新店主行为报表"
-  class: "ShopActivityReportWorker"
-  queue: :report
-  args:
-    type: "whole"
+# shop_activity_report:
+#   cron: "31 10,23 * * *"
+#   name: "全量当天更新店主行为报表"
+#   class: "ShopActivityReportWorker"
+#   queue: :report
+#   args:
+#     type: "whole"
 shop_activity_report_partial:
   cron: "*/8 * * * *"
   name: "实时更新店主行为数据"
