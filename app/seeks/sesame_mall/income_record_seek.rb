@@ -69,7 +69,7 @@ class SesameMall::IncomeRecordSeek
         commission_income_amount: record.shopkeeper.income_records.commission_income.confirmed.
           sum(:income_amount)
       )
-      _shopkeepers << record.shopkeeper
+      _shopkeepers << record.shopkeeper if record.shopkeeper.changed?
     }
 
     records.select(&:team_income?).select(&:confirmed?).each {|record|
@@ -79,12 +79,12 @@ class SesameMall::IncomeRecordSeek
         team_income_amount: record.shopkeeper.income_records.team_income.confirmed.
           sum(:income_amount)
       )
-      _shopkeepers << record.shopkeeper
+      _shopkeepers << record.shopkeeper if record.shopkeeper.changed?
     }
 
     ActiveRecord::Base.transaction do
-      _shopkeepers.select(&:changed?).map(&:save)
-    end
+      _shopkeepers.map(&:save)
+    end if _shopkeepers.present?
   end
   class << self
     def whole_sync

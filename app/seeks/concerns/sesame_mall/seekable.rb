@@ -66,10 +66,12 @@ module SesameMall::Seekable
         to_model(data, record: _record)
       }
 
-      ActiveRecord::Base.transaction do
-        _records.each {|record|
-          next if record.changes.except(:updated_at, :created_at).blank?
+      _save_records = _records.reject{|record|
+        record.changes.except(:updated_at, :created_at).blank?
+      }
 
+      ActiveRecord::Base.transaction do
+        _save_records.each {|record|
           begin
             record.save!
           rescue => e
@@ -77,7 +79,7 @@ module SesameMall::Seekable
             log_error(e)
           end
         }
-      end
+      end if _save_records.present?
 
       after_process_hooks.map{|name|
         send(name, records: _records.select(&:saved_changes?))
