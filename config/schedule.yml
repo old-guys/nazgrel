@@ -323,3 +323,18 @@ daily_shop_grade_operational_report_yesterday:
   queue: :report
   args:
     type: "yesterday"
+
+daily_operational_shop_grade_summary_report:
+  cron: "*/10 * * * *"
+  name: "更新当天每日运营店主等级汇总报表数据"
+  class: "DailyOperationalShopGradeSummaryReportWorker"
+  queue: :report
+  args:
+    type: "today"
+daily_operational_shop_grade_summary_report_yesterday:
+  cron: "3 0 * * *"
+  name: "更新昨天每日运营店主等级汇总报表数据"
+  class: "DailyOperationalShopGradeSummaryReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"

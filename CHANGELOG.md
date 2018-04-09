@@ -1,3 +1,11 @@
+## 每日运营店主等级汇总报表 (2018-04-09)
+
+- #feature# 每日运营店主等级汇总报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_19_migrate_daily_operational_shop_grade_summary
+```
+
 ## 商品复购率/用户留存率-优化 (2018-04-09)
 
 - #feature# 商品复购率/用户留存率-优化
