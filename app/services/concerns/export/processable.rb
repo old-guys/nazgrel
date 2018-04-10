@@ -22,7 +22,7 @@ module Export::Processable
   def write_body
     return send("write_#{action}_body") if respond_to?("write_#{action}_body")
 
-    _per_page = 100
+    _per_page = Kaminari.config.max_per_page
     _total_pages = (total_count / _per_page.to_f).ceil
     _fields = send("#{action}_fields")
 
@@ -45,14 +45,12 @@ module Export::Processable
               send(_method, record)
             else
               field.split('.').inject(record) {|obj, name|
-                obj.send(name) rescue nil
+                obj.send(name)
               }
             end
           rescue => e
             logger.error "export record #{record}, failure #{e.message}"
             log_error(e)
-
-            ErrorLogger.log_error(e)
           end
         }
 

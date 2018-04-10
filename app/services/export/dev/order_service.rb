@@ -11,14 +11,14 @@ class Export::Dev::OrderService
 
   def index_head_names
     %w(
-      订单编号 店铺名称 店主姓名 店铺等级 收件人姓名 收件人手机号
+      订单编号 店铺名称 订单类型 店主姓名 店铺等级 收件人姓名 收件人手机号
       商品信息 订单金额 时间 省份 城市 收货地址
     )
   end
 
   def sales_fields
     %w(
-      order_no shop_name shop_username shopkeeper_user_grade_i18n shop_phone
+      order_no shop_name order_type_i18n shop_username shopkeeper_user_grade_i18n shop_phone
       shared_count view_count
       product.no product_name supplier
       category product_num product_market_price
