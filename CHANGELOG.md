@@ -1,3 +1,7 @@
+## 升级 Rails 5.2.0 (2018-04-10)
+- #support# 升级 Rails 版本到 `5.2.0`
+- [gem] gem 'mysql' update to version '0.5.0'
+
 ## 每日运营店主等级汇总报表 (2018-04-09)
 
 - #feature# 每日运营店主等级汇总报表
