@@ -1,0 +1,52 @@
+defaults: &defaults
+  log_cache: true
+  perform_caching_in_development: true
+  log_active_record: true
+  log_active_record_slow: 1000
+  gc_profiler: true
+  # redis config
+  redis: &redis
+    host: redis
+    port: 6379
+    data_db: 0
+    job_db: 1
+    cache_db: 2
+    timeout: 5000
+    expires_in: <%= 2.days %>
+
+  sesame_mall_db:
+    adapter: mysql2
+    encoding: utf8
+    pool: 20
+    host: xxxxxxxx
+    port: 33306
+    database: mstar_integration
+    username: root
+    password: isginte123
+
+  faye_push:
+    host: "http://localhost:3007"
+
+  qiniu:
+    bucket: "nazgrel"
+    access_key: "xxxxxxxxxxx"
+    secret_key: "xxxxxxxxxx"
+    host: "http://p2doicsyn.bkt.clouddn.com"
+
+  log:
+    level: :info
+    tags:
+      - :subdomain
+      - :uuid
+
+  rack_cors:
+    origins: '*'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
