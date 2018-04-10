@@ -19,6 +19,12 @@
       <li class="nav-item">
         <%= link_to "本月", url_for(created_at: DateTime.now.all_month), class: "nav-link" %>
       </li>
+      <li class="nav-item">
+        <%= link_to "7天", url_for(created_at: 7.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "30天", url_for(created_at: 30.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
     </ul>
     <form class="form-inline">
       <label class="sr-only" for="shopkeeper_user_id">店主用户ID</label>

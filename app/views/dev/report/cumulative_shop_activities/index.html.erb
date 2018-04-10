@@ -20,6 +20,12 @@
         <%= link_to "本月", url_for(created_at: DateTime.now.all_month), class: "nav-link" %>
       </li>
       <li class="nav-item">
+        <%= link_to "7天", url_for(created_at: 7.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "30天", url_for(created_at: 30.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
         <%= link_to "半年", url_for(created_at: 6.months.ago.beginning_of_month..Time.now), class: "nav-link" %>
       </li>
     </ul>

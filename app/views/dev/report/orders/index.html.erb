@@ -18,6 +18,8 @@
           ["上月", DateTime.now.last_month.all_month],
           ["本周", DateTime.now.all_week],
           ["本月", DateTime.now.all_month],
+          ["7天", 7.days.ago..DateTime.now],
+          ["30天", 30.days.ago..DateTime.now],
           ["本季度", DateTime.now.all_quarter]
         ], params[:created_at]), class: "form-control mb-2 mr-sm-2", prompt: "请选择分类" %>
 

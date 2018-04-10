@@ -19,6 +19,12 @@
       <li class="nav-item">
         <%= link_to "本月", url_for(created_at: DateTime.now.all_month), class: "nav-link" %>
       </li>
+      <li class="nav-item">
+        <%= link_to "7天", url_for(created_at: 7.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "30天", url_for(created_at: 30.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
     </ul>
     <div class="table-responsive">
       <table class="table table-sm table-hover">
