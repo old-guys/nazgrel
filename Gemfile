@@ -8,7 +8,7 @@ ruby "2.5.1"
 gem 'rails', '>= 5.2.0', "< 6.0"
 
 # Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.4.10'
+gem 'mysql2', '~> 0.5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Adds cache_collection! to jbuilder. Uses memcache fetch_multi/read_multi
