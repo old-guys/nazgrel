@@ -55,6 +55,10 @@ set :unicorn_restart_sleep_time, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_roles, %w(web app db whenever)
 
+set :sidekiq_env, :production
+set :sidekiq_monit_conf_dir, '/etc/monit.d'
+set :sidekiq_service_name, "sidekiq_#{fetch(:application)}_#{fetch(:stage)}"
+
 namespace :deploy do
 
   after 'deploy:publishing', 'deploy:restart'

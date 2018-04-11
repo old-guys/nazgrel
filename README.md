@@ -20,9 +20,13 @@ Nazgrel is based on Rails + MySQL + Redis,
 
         Ubuntu
                 sudo apt-get install libmysqlclient-dev redis-server
+                # Manages and monitors processes, files, directories and devices
+                sudo apt-get install monit
 
         Cent OS
-                sudo yum install mysql-devel redis-server git
+                sudo yum install monit mysql-devel redis-server git
+                # Manages and monitors processes, files, directories and devices
+                sudo yum install monit
 
 设置数据库
 
@@ -90,6 +94,25 @@ Mac OS [Lost connection to MySQL server](wiki/mac_mysql.md) 解决办法
 
 ```shell
 pronto run
+```
+
+### monit service
+
+setup monit on services
+
+```shell
+sudo apt-get install monit
+sudo yum install monit # centos
+
+# enable monit service
+sudo systemctl enable monit
+````
+
+```shell
+cap production sidekiq:monit:config
+cap production sidekiq:monit:monitor
+
+sudo monit status
 ```
 
 ## ishanggang server stack
