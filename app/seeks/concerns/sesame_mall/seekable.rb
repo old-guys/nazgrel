@@ -115,7 +115,7 @@ module SesameMall::Seekable
     end
 
     def seek_record_ids(duration: , table_name: )
-      _datetimes = duration.ago.beginning_of_minute..Time.now.end_of_minute
+      _datetimes = duration.ago.beginning_of_minute..Time.now.beginning_of_minute
 
       SesameMall::Source::SeekRecord.where(
         table_name: table_name,
@@ -125,7 +125,7 @@ module SesameMall::Seekable
 
     # NOTICE use cached value (all seek record group by table_name) duration every minute
     def seek_record_ids_pool(duration: , table_name: )
-      _datetimes = duration.ago.beginning_of_minute..Time.now.end_of_minute
+      _datetimes = duration.ago.beginning_of_minute..Time.now.beginning_of_minute
       _cache_key = "seek_records_pool:#{duration}" << Digest::MD5.hexdigest(_datetimes.to_s)
 
       _seek_records_pool = Rails.cache.fetch(_cache_key, expires_in: 5.minutes) do
