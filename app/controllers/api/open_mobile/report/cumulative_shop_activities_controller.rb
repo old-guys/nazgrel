@@ -14,7 +14,9 @@ class Api::OpenMobile::Report::CumulativeShopActivitiesController < Api::OpenMob
       @report_cumulative_shop_activities = @report_cumulative_shop_activities.where(updated_at: dates)
     end
 
-    @report_cumulative_shop_activities = sort_records(relation: @report_cumulative_shop_activities)
+    @report_cumulative_shop_activities = sort_records(relation: @report_cumulative_shop_activities, default_order:
+      {updated_at: :desc, id: :desc}
+    )
     @report_cumulative_shop_activities = filter_by_pagination(relation: @report_cumulative_shop_activities)
   end
 end

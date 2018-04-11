@@ -15,7 +15,12 @@ class Api::OpenMobile::Report::ShopActivitiesController < Api::OpenMobile::BaseC
       @report_shop_activities = @report_shop_activities.where(updated_at: dates)
     end
 
-    @report_shop_activities = sort_records(relation: @report_shop_activities)
+    @report_shop_activities = sort_records(relation: @report_shop_activities,
+      default_order: {
+        report_date: :desc,
+        id: :desc
+      }
+    )
     @report_shop_activities = filter_by_pagination(relation: @report_shop_activities)
   end
 
@@ -33,7 +38,12 @@ class Api::OpenMobile::Report::ShopActivitiesController < Api::OpenMobile::BaseC
       @report_shop_activities = @report_shop_activities.where(updated_at: dates)
     end
 
-    @report_shop_activities = sort_records(relation: @report_shop_activities)
+    @report_shop_activities = sort_records(relation: @report_shop_activities,
+      default_order: {
+        report_date: :desc,
+        id: :desc
+      }
+    )
     @report_shop_activities = filter_by_pagination(relation: @report_shop_activities)
   end
 end
