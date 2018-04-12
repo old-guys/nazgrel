@@ -31,7 +31,7 @@ class ShopActivityReportWorker
 
           ShopActivity::UpdateReport.update_report(
             shops: _shops,
-            interval_time: 5.minutes
+            interval_time: 2.minutes
           )
 
           CumulativeShopActivity::UpdateReport.insert_to_partial_shops(
