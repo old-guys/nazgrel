@@ -20,7 +20,7 @@ class Export::Dev::OrderService
     %w(
       order_no shop_name order_type_i18n shop_username shopkeeper_user_grade_i18n shop_phone
       shared_count view_count
-      product.no product_name supplier
+      product_no product_name supplier
       category product_num product_market_price
       product_sale_price pay_price created_at
       province city
