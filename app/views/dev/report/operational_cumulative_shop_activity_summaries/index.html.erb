@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-body">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <%= link_to "本周", url_for(report_date: DateTime.now.all_week), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上周", url_for(report_date: DateTime.now.last_week.all_week), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "本月", url_for(report_date: DateTime.now.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上月", url_for(report_date: DateTime.now.last_month.all_month), class: "nav-link" %>
+      </li>
+    </ul>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          每日运营店主等级汇总报表
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
+        <%
+           _stat_fields = %w(
+              week_1_total_count month_1_total_count
+              month_3_total_count month_6_total_count
+              year_1_total_count
+              week_1_grade_gold_count month_1_grade_gold_count
+              month_3_grade_gold_count month_6_grade_gold_count
+              year_1_grade_gold_count
+              week_1_grade_platinum_count month_1_grade_platinum_count
+              month_3_grade_platinum_count month_6_grade_platinum_count
+              year_1_grade_platinum_count
+              week_1_grade_trainee_count month_1_grade_trainee_count
+              month_3_grade_trainee_count month_6_grade_trainee_count
+              year_1_grade_trainee_count
+           )
+        %>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"><div class="wi3">日期</div></th>
+            <% _stat_fields.each {|field| %>
+              <th scope="col"><div class="wi3"><%= ReportOperationalCumulativeShopActivitySummary.human_attribute_name(field) %></div></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/operational_cumulative_shop_activity_summaries/index", @report_operational_cumulative_shop_activity_summaries] do %>
+            <%= render partial: "dev/report/operational_cumulative_shop_activity_summaries/index_tr",
+              collection: @report_operational_cumulative_shop_activity_summaries,
+              as: :record, cached: true, locals: {
+                stat_fields: _stat_fields
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_operational_cumulative_shop_activity_summaries
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>
