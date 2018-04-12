@@ -726,3 +726,85 @@ daily_operational_shop_grade_summary_report_yesterday:
 ### 更新机制
 
 - 每隔一个小时定时更新每日运营店主等级汇总报表数据更新机制
+
+## 运营店主活跃汇总报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_operational_cumulative_shop_activity_summary.rb
+class ReportOperationalCumulativeShopActivitySummary < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/operational_cumulative_shop_activity_summary/
+app/reports/operational_cumulative_shop_activity_summary/
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+cat app/reports/operational_cumulative_shop_activity_summary/calculations.rb
+module OperationalCumulativeShopActivitySummary::Calculations
+  class << self
+    delegate :update_report, to: "OperationalCumulativeShopActivitySummary::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module OperationalCumulativeShopActivitySummary::Calculations
+```
+
+更新报表
+
+```ruby
+class OperationalCumulativeShopActivitySummary::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/operational_cumulative_shop_activity_summary_report_worker.rb
+class OperationalCumulativeShopActivitySummaryReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```ruby
+operational_cumulative_shop_activity_summary_report:
+  cron: "*/10 * * * *"
+  name: "更新当天运营店主活跃汇总报表数据"
+  class: "OperationalCumulativeShopActivitySummaryReportWorker"
+  queue: :report
+  args:
+    type: "today"
+operational_cumulative_shop_activity_summary_report_yesterday:
+  cron: "3 0 * * *"
+  name: "更新昨天运营店主活跃汇总报表数据"
+  class: "OperationalCumulativeShopActivitySummaryReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"
+```
+
+定时清理
+
+```ruby
+  runner "ReportOperationalCumulativeShopActivitySummary.prune_old_records"
+```
+
+### 更新机制
+
+- 每隔一个小时定时更新运营店主活跃汇总报表数据更新机制
