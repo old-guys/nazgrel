@@ -1,3 +1,11 @@
+## 运营店主活跃汇总报表 (2018-04-12)
+
+- #feature# 运营店主活跃汇总报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_19_migrate_operational_cumulative_shop_activity_summary
+```
+
 ## 升级 Rails 5.2.0 (2018-04-10)
 - #support# 升级 Rails 版本到 `5.2.0`
 - [gem] gem 'mysql' update to version '0.5.0'
