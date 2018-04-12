@@ -338,3 +338,18 @@ daily_operational_shop_grade_summary_report_yesterday:
   queue: :report
   args:
     type: "yesterday"
+
+operational_cumulative_shop_activity_summary_report:
+  cron: "*/10 * * * *"
+  name: "更新当天运营店主活跃汇总报表数据"
+  class: "OperationalCumulativeShopActivitySummaryReportWorker"
+  queue: :report
+  args:
+    type: "today"
+operational_cumulative_shop_activity_summary_report_yesterday:
+  cron: "3 0 * * *"
+  name: "更新昨天运营店主活跃汇总报表数据"
+  class: "OperationalCumulativeShopActivitySummaryReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"

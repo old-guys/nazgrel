@@ -348,5 +348,15 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate operational_cumulative_shop_activity_summary data'
+    task :v1_1_3_19_migrate_operational_cumulative_shop_activity_summary => :environment do
+      1.months.ago.to_date.upto(Date.today) {|date|
+        OperationalCumulativeShopActivitySummary::UpdateReport.update_report(
+          report_date: date,
+          force_update: true
+        )
+      }
+    end
   end
 end

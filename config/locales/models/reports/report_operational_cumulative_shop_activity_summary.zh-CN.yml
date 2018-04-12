@@ -1,0 +1,36 @@
+zh-CN:
+  activerecord:
+    models:
+      report_operational_cumulative_shop_activity_summary: "运营店主活跃汇总报表"
+    attributes:
+      report_operational_cumulative_shop_activity_summary:
+        id: "ID"
+        report_date: "报表日期"
+
+        week_1_total_count: "1周总店主"
+        month_1_total_count: "1月总店主"
+        month_3_total_count: "3月总店主"
+        month_6_total_count: "6月总店主"
+        year_1_total_count: "1年总店主"
+
+        week_1_grade_gold_count: "1周黄金店主"
+        month_1_grade_gold_count: "1月黄金店主"
+        month_3_grade_gold_count: "3月黄金店主"
+        month_6_grade_gold_count: "6月黄金店主"
+        year_1_grade_gold_count: "1年黄金店主"
+
+        week_1_grade_platinum_count: "1周白金店主"
+        month_1_grade_platinum_count: "1月白金店主"
+        month_3_grade_platinum_count: "3月白金店主"
+        month_6_grade_platinum_count: "6月白金店主"
+        year_1_grade_platinum_count: "1年白金店主"
+
+        week_1_grade_trainee_count: "1周体验店主"
+        month_1_grade_trainee_count: "1月体验店主"
+        month_3_grade_trainee_count: "3月体验店主"
+        month_6_grade_trainee_count: "6月体验店主"
+        year_1_grade_trainee_count: "1年体验店主"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

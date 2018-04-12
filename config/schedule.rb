@@ -47,6 +47,7 @@ every 2.months do
   runner "ReportDailyOperational.prune_old_records"
   runner "ReportDailyShopGradeOperational.prune_old_records"
   runner "ReportDailyOperationalShopGradeSummary.prune_old_records"
+  runner "ReportOperationalCumulativeShopActivitySummary.prune_old_records"
 end
 
 every 1.months do
