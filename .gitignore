@@ -65,6 +65,21 @@ bower.json
 /storage/*
 !/storage/.keep
 
+# Ignore all swap files
+*.DS_Store
+*.sql
+.*.swp
+.*.swo
+*~
+*.bak
+*_bak
+*.log
+*.tar.bz2
+*.gz
+*.zip
+*.gem
+nohup.out
+*#
 .byebug_history
 
 .idea/
