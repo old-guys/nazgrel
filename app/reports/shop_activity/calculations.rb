@@ -170,7 +170,7 @@ module ShopActivity::Calculations
       ))
     end
 
-    if should_aggregation?(shop: shop, klass: Shopkeeper, updated_at: _updated_at)
+    if should_aggregation?(shop: shop, klass: IncomeRecord, updated_at: _updated_at)
       _records = shop.shopkeeper.children
       result.merge!(aggregation_field_by_day(
         field: :children_commission_income_amount, date: date, records: _records,

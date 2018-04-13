@@ -131,38 +131,37 @@ class SesameMall::ShopkeeperSeek
     )
   end
   def after_process_record(records: )
-    _records = records.select{|record|
+    _activity_records = records.select{|record|
       record.previous_changes.any?{|k, _|
         k.to_sym.in?([
           :order_number, :balance_amount,
-          :balance_coin
+          :balance_coin, :commission_income_amount
         ])
       }
     }
+    _new_records = records.select(&:saved_change_to_created_at?)
 
     ::Shopkeeper.insert_to_report_activity_partial_shops(
-      records: _records
+      records: (_activity_records + _new_records).map(&:self_and_ancestor_entities).flatten.uniq
     )
-
-    _shopkeepers = records.collect{|record|
-      if record.saved_change_to_created_at?
-        record.self_and_ancestor_entities
-      else
-        record
-      end
-    }.flatten.uniq
 
     # set init value for shopkeeper seek timestamp value
     touch_shopkeeper_timestamp(
-      shopkeepers: _shopkeepers,
+      shopkeepers: _new_records,
       target: [
         ::Shopkeeper, ::Order, ::ViewJournal,
         ::WithdrawRecord, ::IncomeRecord,
         ::ShareJournal
       ]
     )
-    ::Shopkeeper.insert_to_report_activity_partial_shops(
-      records: _shopkeepers
+
+    # set init value for shopkeeper seek timestamp value
+    touch_shopkeeper_timestamp(
+      shopkeepers: _activity_records.map(&:self_and_ancestor_entities).flatten.uniq,
+      target: [
+        ::Order, ::IncomeRecord,
+        ::WithdrawRecord
+      ]
     )
   end
   class << self
