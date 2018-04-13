@@ -1,0 +1,15 @@
+<%
+  _shopkeeper = record.shopkeeper
+%>
+<tr>
+  <th scope="row"><%= _shopkeeper.id %></th>
+  <td><%= record.shop.to_s %></td>
+  <td><%= _shopkeeper.to_s %></td>
+  <td><%= _shopkeeper.province %></td>
+  <td><%= _shopkeeper.city %></td>
+  <td><%= time_tag _shopkeeper.created_at %></td>
+  <td><%= _shopkeeper.try :user_grade_i18n %></td>
+  <% stat_fields.each {|field| %>
+    <td><%= format_numberlize value: record.send(field), field: field %></td>
+  <% } %>
+</tr>
