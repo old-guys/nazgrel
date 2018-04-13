@@ -1,28 +1,52 @@
-<div class="jumbotron">
+<div class="jumbotron" id="accordion">
   <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">运营报表</h4>
-      <div class="list-group">
-        <%= link_to "新增店主报表", dev_report_shops_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "店主ECN报表", dev_report_shop_ecns_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "店主行为报表", dev_report_shop_activities_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "累计店主行为报表", dev_report_cumulative_shop_activities_path, class: "list-group-item list-group-item-action"%>
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOperationalReportContent" aria-expanded="true" aria-controls="collapseOne">
+          运营报表
+        </button>
+      </h5>
+    </div>
 
-        <%= link_to "订单销售报表", sales_dev_report_orders_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "订单信息", dev_report_orders_path, class: "list-group-item list-group-item-action"%>
+    <div id="collapseOperationalReportContent" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <div class="list-group">
+          <%= link_to "每日运营报表", dev_report_daily_operationals_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "每日店主等级运营报表", dev_report_daily_shop_grade_operationals_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "每日运营店主等级汇总报表", dev_report_daily_operational_shop_grade_summaries_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "运营店主活跃汇总报表", dev_report_operational_cumulative_shop_activity_summaries_path, class: "list-group-item list-group-item-action"%>
 
-        <%= link_to "产品销量报表", sales_dev_report_order_details_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "店主留存率报表", dev_report_shop_retentions_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "商品复购率报表", dev_report_product_repurchases_path, class: "list-group-item list-group-item-action"%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseDetailReportContent">
+          明细报表
+        </button>
+      </h5>
+    </div>
 
-        <%= link_to "店主组织架构树", tree_dev_report_shopkeepers_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "城市店主行为报表", dev_report_city_shop_activities_path, class: "list-group-item list-group-item-action"%>
+    <div id="collapseDetailReportContent" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <div class="list-group">
+          <%= link_to "新增店主报表", dev_report_shops_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "店主ECN报表", dev_report_shop_ecns_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "店主行为报表", dev_report_shop_activities_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "累计店主行为报表", dev_report_cumulative_shop_activities_path, class: "list-group-item list-group-item-action"%>
 
-        <%= link_to "每日运营报表", dev_report_daily_operationals_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "每日店主等级运营报表", dev_report_daily_shop_grade_operationals_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "每日运营店主等级汇总报表", dev_report_daily_operational_shop_grade_summaries_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "运营店主活跃汇总报表", dev_report_operational_cumulative_shop_activity_summaries_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "订单销售报表", sales_dev_report_orders_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "订单信息", dev_report_orders_path, class: "list-group-item list-group-item-action"%>
 
-        <%= link_to "店主留存率报表", dev_report_shop_retentions_path, class: "list-group-item list-group-item-action"%>
-        <%= link_to "商品复购率报表", dev_report_product_repurchases_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "产品销量报表", sales_dev_report_order_details_path, class: "list-group-item list-group-item-action"%>
+
+          <%= link_to "店主组织架构树", tree_dev_report_shopkeepers_path, class: "list-group-item list-group-item-action"%>
+          <%= link_to "城市店主行为报表", dev_report_city_shop_activities_path, class: "list-group-item list-group-item-action"%>
+        </div>
       </div>
     </div>
   </div>
