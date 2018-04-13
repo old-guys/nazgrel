@@ -6,9 +6,8 @@ class Dev::Report::OperationalCumulativeShopActivitiesController < Dev::Report::
     params[:stat_field] ||= "day_30_order_number"
     params[:stat_category] ||= "order_number"
 
-
-    params[:created_at] ||= 1.months.ago..Time.now
-    _datetimes = range_within_datetime(str: params[:created_at]) rescue Date.today.all_week
+    params[:created_at] ||= (1.months.ago..Time.now).to_s
+    _datetimes = range_within_datetime(str: params[:created_at]) rescue (1.months.ago..Time.now).to_s
 
     @report_cumulative_shop_activities = ReportCumulativeShopActivity.joins(:shopkeeper).
       preload(:shopkeeper, :shop)

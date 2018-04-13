@@ -3,7 +3,7 @@ class Dev::Report::OrdersController < Dev::Report::BaseController
   include ActionExportable
 
   def index
-    params[:created_at] ||= Date.today
+    params[:created_at] ||= Date.today.to_s
     _dates = range_within_datetime(str: params[:created_at]) rescue Date.today
     @orders = Order.preload(:order_details, :shopkeeper).sales_order.valided_order
 
