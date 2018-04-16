@@ -27,6 +27,9 @@ zh-CN:
         shopkeeper_order_total_price: "自购订单总额"
         shopkeeper_order_total_price_rate: "自购订单总额占比"
 
+        create_shop_order_total_price: "开店订单总额"
+        create_shop_order_total_price_rate: "开店订单总额占比"
+
         order_conversion_rate: "订单转化率"
         order_total_price_avg: "平均每单金额"
 

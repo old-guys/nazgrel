@@ -13,8 +13,9 @@ module DailyOperational::Calculations
     _order_total_price = _orders.sum(:total_price)
     _order_count = _orders.size
 
-    _sale_order_total_price = _orders.where.not(user_id: _orders.joins(:shopkeeper).select("`shopkeepers`.`user_id`")).sum(:total_price)
-    _shopkeeper_order_total_price = _orders.where(user_id: _orders.joins(:shopkeeper).select("`shopkeepers`.`user_id`")).sum(:total_price)
+    _sale_order_total_price = _orders.third_order.sum(:total_price)
+    _shopkeeper_order_total_price = _orders.shopkeeper_order.sum(:total_price)
+    _create_shop_order_total_price = _orders.create_shop.sum(:total_price)
 
     {
       total_shopkeeper_count: Shopkeeper.where("created_at <= ?", date.end_of_day).count,
@@ -36,6 +37,9 @@ module DailyOperational::Calculations
       shopkeeper_order_total_price: _shopkeeper_order_total_price,
       shopkeeper_order_total_price_rate:
         _order_total_price > 0 ? (_shopkeeper_order_total_price / _order_total_price.to_f) : nil,
+      create_shop_order_total_price: _create_shop_order_total_price,
+      create_shop_order_total_price_rate:
+        _order_total_price > 0 ? (_create_shop_order_total_price / _order_total_price.to_f) : nil,
       order_conversion_rate:
         _view_count > 0 ? (_order_count / _view_count.to_f) : nil,
       order_total_price_avg:
