@@ -20,16 +20,9 @@ class ShopActivity::UpdateReport
         end
       }
 
-      _recent_records = ReportShopActivity.where(
-        shop: shops,
-        report_date: report_date.yesterday
-      ).find_each.to_a
 
       _records.each_slice(50).map {|records|
         _reports = records.map {|_record|
-          _recent_record = _recent_records.find{|_recent_record|
-            _recent_record.shop_id == _record.shop_id
-          }
           _record.shop = shops.find{|s|
             s.id == _record.shop_id
           }
@@ -40,7 +33,6 @@ class ShopActivity::UpdateReport
           logger.info "update report for shop_id: #{_record.shop_id}"
 
           _report = ShopActivity::UpdateReport.new(
-            recent_record: _recent_record,
             record: _record
           )
 
@@ -70,10 +62,9 @@ class ShopActivity::UpdateReport
 
   SHOP_IDS_CACHE_KEY = "shop_activity_report_shop_ids"
 
-  attr_accessor :shop, :date, :recent_record, :record, :result
+  attr_accessor :shop, :date, :record, :result
 
-  def initialize(recent_record: , record: )
-    self.recent_record = recent_record
+  def initialize(record: )
     self.record = record
 
     self.shop = record.shop
@@ -82,32 +73,10 @@ class ShopActivity::UpdateReport
 
   private
   def process
-    if recent_record.present?
-      @result = calculate(shop: shop, date: date, partial_update: true, updated_at: record.updated_at)
-
-      %w(week month year total).each {|dimension|
-        _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
-          hash[:"#{dimension}_#{category}"] = increase_field_by(field: :"#{category}", unit: dimension)
-        }
-
-        @result.merge!(_result)
-      }
-    else
-      @result = calculate(shop: shop, date: date, partial_update: false, updated_at: record.updated_at)
-    end
+    @result = calculate(shop: shop, date: date, partial_update: false, updated_at: record.updated_at)
 
     record.assign_attributes(
       @result
     )
-  end
-
-  def increase_field_by(field: , unit: )
-    return recent_record.send("#{unit}_#{field}").to_f + result[field].to_f if unit == "total"
-
-    if record.report_date.in?(recent_record.report_date.send("all_#{unit}"))
-      recent_record.send("#{unit}_#{field}").to_f + result[field].to_f
-    else
-      result[field]
-    end
   end
 end
