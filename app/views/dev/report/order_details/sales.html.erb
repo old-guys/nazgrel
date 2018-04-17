@@ -11,7 +11,13 @@
         <%= link_to "上周", url_for(created_at: DateTime.now.last_week.all_week), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "上月", url_for(created_at: DateTime.now.last_month.all_month), class: "nav-link" %>
+        <%= link_to "上1月", url_for(created_at: 1.months.ago.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上2月", url_for(created_at: 2.months.ago.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上3月", url_for(created_at: 3.months.ago.all_month), class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "本周", url_for(created_at: DateTime.now.all_week), class: "nav-link" %>
