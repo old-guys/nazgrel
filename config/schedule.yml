@@ -5,14 +5,13 @@ shop_seek_job:
   queue: :seek
   args:
     duration: 3
-# # NOTICE 已经在同步店铺的时候处理
-# shopkeeper_seek_job:
-#   cron: "*/1 * * * *"
-#   name: "同步店主"
-#   class: "ShopkeeperSeekWorker"
-#   queue: :seek
-#   args:
-#     duration: 3
+shopkeeper_seek_job:
+  cron: "*/1 * * * *"
+  name: "同步店主"
+  class: "ShopkeeperSeekWorker"
+  queue: :seek
+  args:
+    duration: 3
 
 order_seek_job:
   cron: "*/1 * * * *"
