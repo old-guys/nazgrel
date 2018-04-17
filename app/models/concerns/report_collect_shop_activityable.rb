@@ -14,7 +14,7 @@ module ReportCollectShopActivityable
       def stat_fields
         @stat_fields ||= proc {
           stat_categories.map {|category|
-            stat_stages.dup.push("total").map{|stage|
+            stat_stages.map{|stage|
               stage ? "#{stage}_#{category}" : category
             }
           }.flatten.freeze
