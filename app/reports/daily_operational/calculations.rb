@@ -5,7 +5,7 @@ module DailyOperational::Calculations
 
     _total_shopkeeper_count = Shopkeeper.where("created_at <= ?", date.end_of_day).count
     _shopkeeper_count = Shopkeeper.where(created_at: _datetimes).count
-    _orders = Order.valided_order.sales_order.where(created_at: _datetimes)
+    _orders = Order.valided_order.sales_order.rewhere(order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values).where(created_at: _datetimes)
 
     _activation_shopkeeper_count = _orders.count("distinct(shop_id)")
     _view_count = ViewJournal.where(created_at: _datetimes).count
@@ -14,8 +14,8 @@ module DailyOperational::Calculations
     _order_count = _orders.size
 
     _sale_order_total_price = _orders.third_order.sum(:total_price)
-    _shopkeeper_order_total_price = _orders.shopkeeper_order.sum(:total_price)
-    _create_shop_order_total_price = _orders.create_shop.sum(:total_price)
+    _shopkeeper_order_total_price = _orders.rewhere(order_type: Order.order_types[:shopkeeper_order]).sum(:total_price)
+    _create_shop_order_total_price = _orders.rewhere(order_type: Order.order_types[:create_shop]).sum(:total_price)
 
     {
       total_shopkeeper_count: Shopkeeper.where("created_at <= ?", date.end_of_day).count,
@@ -38,8 +38,6 @@ module DailyOperational::Calculations
       shopkeeper_order_total_price_rate:
         _order_total_price > 0 ? (_shopkeeper_order_total_price / _order_total_price.to_f) : nil,
       create_shop_order_total_price: _create_shop_order_total_price,
-      create_shop_order_total_price_rate:
-        _order_total_price > 0 ? (_create_shop_order_total_price / _order_total_price.to_f) : nil,
       order_conversion_rate:
         _view_count > 0 ? (_order_count / _view_count.to_f) : nil,
       order_total_price_avg:
