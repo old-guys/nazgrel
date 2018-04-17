@@ -85,20 +85,9 @@ class ShopActivity::UpdateReport
     if recent_record.present?
       @result = calculate(shop: shop, date: date, partial_update: true, updated_at: record.updated_at)
 
-      %w(week month year).each {|dimension|
+      %w(week month year total).each {|dimension|
         _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
           hash[:"#{dimension}_#{category}"] = increase_field_by(field: :"#{category}", unit: dimension)
-        }
-
-        @result.merge!(_result)
-      }
-      %w(total).each {|dimension|
-        _result = ReportShopActivity.stat_categories.each_with_object({}) {|category, hash|
-          _field = :"#{dimension}_#{category}"
-
-          hash.merge!(
-            _field => recent_record.send(_field).to_f + result[category].to_f
-          )
         }
 
         @result.merge!(_result)
@@ -113,6 +102,8 @@ class ShopActivity::UpdateReport
   end
 
   def increase_field_by(field: , unit: )
+    return recent_record.send("#{unit}_#{field}").to_f + result[field].to_f if unit == "total"
+
     if record.report_date.in?(recent_record.report_date.send("all_#{unit}"))
       recent_record.send("#{unit}_#{field}").to_f + result[field].to_f
     else
