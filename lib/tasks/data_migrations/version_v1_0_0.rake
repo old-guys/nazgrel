@@ -358,5 +358,15 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate product data'
+    task :v1_1_3_19_migrate_product_data => :environment do
+      seek = SesameMall::ProductSkuSeek.new
+      seek.do_whole_sync(
+          relation: SesameMall::Source::ProductSku.where.not(
+            proDate: nil
+          )
+      )
+    end
   end
 end
