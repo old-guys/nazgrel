@@ -375,5 +375,18 @@ namespace :data_migrations do
           )
       )
     end
+
+    desc 'seek brand data'
+    task :v1_1_3_19_seek_brand => :environment do
+      SesameMall::BrandSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::Brand,
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end
