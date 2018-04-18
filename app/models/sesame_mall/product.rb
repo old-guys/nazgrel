@@ -4,6 +4,10 @@ class Product < ApplicationRecord
     foreign_key: :category_id,
     class_name: :Category, required: false
 
+  has_one :product_brand_supplier, primary_key: :id,
+    foreign_key: :product_id,
+    class_name: :ProductBrandSupplier, required: false
+
   has_many :product_skus
 
   enum status: {

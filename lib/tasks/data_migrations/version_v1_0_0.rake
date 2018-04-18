@@ -379,9 +379,12 @@ namespace :data_migrations do
     desc 'seek brand data'
     task :v1_1_3_19_seek_brand => :environment do
       SesameMall::BrandSeek.whole_sync
+      SesameMall::ProductBrandSupplierSeek.whole_sync
 
       _klasses = [
         SesameMall::Source::Brand,
+        SesameMall::Source::ProductBrandSupplier,
+
       ]
 
       _klasses.each {|klass|
