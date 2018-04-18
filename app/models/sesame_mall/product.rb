@@ -10,6 +10,8 @@ class Product < ApplicationRecord
 
   has_many :product_skus
 
+  delegate :brand, :supplier, to: :product_brand_supplier, allow_nil: true
+
   enum status: {
     init: 10,
     online: 20,
