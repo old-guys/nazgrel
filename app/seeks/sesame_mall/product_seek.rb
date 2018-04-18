@@ -25,6 +25,7 @@ class SesameMall::ProductSeek
       status: Product.statuses.invert[data[:STATUS].to_i],
 
       price: data[:PRICE],
+      max_market_price: data[:MAX_MARKET_PRICE],
       max_price: data[:MAX_PRICE],
       min_price: data[:MIN_PRICE],
 
@@ -41,6 +42,10 @@ class SesameMall::ProductSeek
       label_type: Product.label_types.invert[data[:LABEL_TYPE].to_i],
       top_sort: data[:TOP_SORT],
       sper_product_no: data[:SPER_PRODUCT_NO],
+
+      released_at: parse_no_timezone(datetime: data[:release_date]),
+      product_supply: data[:product_supply],
+      purchase_manager: data[:purchase_manager],
 
       created_at: parse_no_timezone(datetime: data[:CREATE_DATE]),
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:UPDATE_DATE])

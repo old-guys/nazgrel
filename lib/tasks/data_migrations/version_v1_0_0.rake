@@ -358,5 +358,38 @@ namespace :data_migrations do
         )
       }
     end
+
+    desc 'migrate product data'
+    task :v1_1_3_19_migrate_product_data => :environment do
+      seek = SesameMall::ProductSkuSeek.new
+      seek.do_whole_sync(
+          relation: SesameMall::Source::ProductSku.where.not(
+            proDate: nil
+          )
+      )
+
+      seek = SesameMall::ProductSeek.new
+      seek.do_whole_sync(
+          relation: SesameMall::Source::Product.where.not(
+            release_date: nil
+          )
+      )
+    end
+
+    desc 'seek brand data'
+    task :v1_1_3_19_seek_brand => :environment do
+      SesameMall::BrandSeek.whole_sync
+      SesameMall::ProductBrandSupplierSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::Brand,
+        SesameMall::Source::ProductBrandSupplier,
+
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

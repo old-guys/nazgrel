@@ -10,7 +10,7 @@ class Dev::Report::OrderDetailsController < Dev::Report::BaseController
     )
 
     @order_details = @all_order_details.group(:product_id).
-      order("sum(`order_details`.`product_num` * `order_details`.`product_sale_price`) DESC")
+      order(Arel.sql("sum(`order_details`.`product_num` * `order_details`.`product_sale_price`) DESC"))
 
     preload_export(service: 'Dev::OrderDetail', action: 'sales', relation: @order_details)
 

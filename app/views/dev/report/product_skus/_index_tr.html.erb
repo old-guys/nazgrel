@@ -1,0 +1,16 @@
+<%
+  _product = record.product
+%>
+
+<tr>
+  <td><%= _product.no %></td>
+  <td><%= _product %></td>
+  <td><%= _product.category.try(:parent) %></td>
+  <td><%= _product.category %></td>
+  <td><%= record.supplier %></td>
+  <td><%= record.brand %></td>
+  <td><%= _product.product_shops.online.count %></td>
+  <td><%= record.sales_n %> </td>
+  <td><%= record.sock_n %> </td>
+  <td><%= time_tag record.created_at %></td>
+</tr>

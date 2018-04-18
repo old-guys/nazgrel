@@ -1,3 +1,14 @@
+## 库存预警报表 (2018-04-18)
+
+- #seek# 同步品牌
+- #seek# 同步产品品牌供应商关联表
+- #feature# 库存预警报表
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_19_migrate_product_data
+cap production deploy:runrake task=data_migrations:version:v1_1_3_19_seek_brand
+```
+
 ## 运营店主活跃汇总报表 (2018-04-12)
 
 - #feature# 运营店主活跃汇总报表

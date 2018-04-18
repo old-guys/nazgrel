@@ -161,6 +161,14 @@ supplier_seek_job:
   args:
     duration: 15
 
+brand_seek_job:
+  cron: "*/1 * * * *"
+  name: "同步品牌"
+  class: "BrandSeekWorker"
+  queue: :seek
+  args:
+    duration: 3
+
 view_journal_seek_job:
   cron: "*/1 * * * *"
   name: "同步店铺浏览日志"
@@ -195,6 +203,14 @@ product_sku_seek_job:
   cron: "*/1 * * * *"
   name: "同步产品库存"
   class: "ProductSkuSeekWorker"
+  queue: :seek
+  args:
+    duration: 3
+
+product_brand_supplier_seek_job:
+  cron: "*/1 * * * *"
+  name: "同步产品品牌供应商关联表"
+  class: "ProductBrandSupplierSeekWorker"
   queue: :seek
   args:
     duration: 3

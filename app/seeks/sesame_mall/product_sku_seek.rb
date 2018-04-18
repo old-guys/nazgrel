@@ -40,6 +40,9 @@ class SesameMall::ProductSkuSeek
       stock_random_n: data[:STOCK_RANDOM_N],
       stock_n_ch: data[:STOCK_N_CH],
 
+      product_date: data[:proDate],
+      expire_date: data[:expireDate],
+
       # created_at: parse_no_timezone(datetime: data[:DATE]),
       # updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
     )

@@ -41,9 +41,9 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">分类</th>
-            <th scope="col">产品名称</th>
             <th scope="col">供应商</th>
-            <th scope="col">库存</th>
+            <th scope="col">产品编号</th>
+            <th scope="col">产品名称</th>
             <th scope="col">数量</th>
             <th scope="col">销售额</th>
           </tr>
@@ -52,10 +52,10 @@
           <%
             _order_details = @order_details.pluck_s(
               :product_id,
-              "max(`order_details`.`supplier_id`) AS supplier_id",
-              "max(`order_details`.`updated_at`) AS updated_at",
-              "sum(`order_details`.`product_num`) AS number",
-              "sum(`order_details`.`product_num` * `order_details`.`product_sale_price`) AS amount"
+              Arel.sql("max(`order_details`.`supplier_id`) AS supplier_id"),
+              Arel.sql("max(`order_details`.`updated_at`) AS updated_at"),
+              Arel.sql("sum(`order_details`.`product_num`) AS number"),
+              Arel.sql("sum(`order_details`.`product_num` * `order_details`.`product_sale_price`) AS amount")
             )
           %>
           <%= render partial: "dev/report/order_details/sales_tr",

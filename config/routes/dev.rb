@@ -30,6 +30,8 @@ namespace :dev do
       end
     end
 
+    resources :product_skus
+
     resources :shopkeepers, only: [:index] do
       collection do
         get :tree

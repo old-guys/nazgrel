@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          产品库存预警
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">产品编号</th>
+            <th scope="col">产品名称</th>
+            <th scope="col">产品分类(一级)</th>
+            <th scope="col">产品分类(二级)</th>
+            <th scope="col">供应商</th>
+            <th scope="col">品牌</th>
+            <th scope="col">上架数</th>
+            <th scope="col">已售数</th>
+            <th scope="col">库存</th>
+            <th scope="col">创建时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render partial: "dev/report/product_skus/index_tr",
+            collection: @product_skus,
+            as: :record, cached: true
+          %>
+        </tbody>
+      </table>
+    </div>
+
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @product_skus
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>
