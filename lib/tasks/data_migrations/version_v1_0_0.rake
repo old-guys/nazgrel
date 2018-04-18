@@ -367,6 +367,13 @@ namespace :data_migrations do
             proDate: nil
           )
       )
+
+      seek = SesameMall::ProductSeek.new
+      seek.do_whole_sync(
+          relation: SesameMall::Source::Product.where.not(
+            release_date: nil
+          )
+      )
     end
   end
 end
