@@ -1,0 +1,17 @@
+<%
+  _product = record.product
+%>
+
+<tr>
+  <td><%= time_tag _product.created_at %></td>
+  <td><%= time_tag _product.released_at if _product.released_at %></td>
+  <td><%= _product.supplier %></td>
+  <td><%= _product.brand %></td>
+  <td><%= _product.category.try(:parent) %></td>
+  <td><%= _product.category %></td>
+  <td><%= _product.try(:no) %></td>
+  <td><%= _product %></td>
+  <% stat_fields.each {|field| %>
+    <td><%= format_numberlize value: record.send(field), field: field %></td>
+  <% } %>
+</tr>

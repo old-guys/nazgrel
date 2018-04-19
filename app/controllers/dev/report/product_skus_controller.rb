@@ -3,8 +3,6 @@ class Dev::Report::ProductSkusController < Dev::Report::BaseController
   include ActionExportable
 
   def index
-    _dates = range_within_datetime(str: params[:created_at]) rescue Date.today
-
     @product_skus = ProductSku.joins(:product).preload(product: {
         category: :parent,
         product_brand_supplier: [:brand, :supplier]

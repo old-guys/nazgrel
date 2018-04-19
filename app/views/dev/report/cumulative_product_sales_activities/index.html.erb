@@ -1,0 +1,93 @@
+<div class="card">
+  <div class="card-body">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <%= link_to "今日", url_for(released_at: Date.today), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "昨日", url_for(released_at: Date.yesterday), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上周", url_for(released_at: DateTime.now.last_week.all_week), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上1月", url_for(released_at: 1.months.ago.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上2月", url_for(released_at: 2.months.ago.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上3月", url_for(released_at: 3.months.ago.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "本周", url_for(released_at: DateTime.now.all_week), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "本月", url_for(released_at: DateTime.now.all_month), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "7天", url_for(released_at: 7.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "30天", url_for(released_at: 30.days.ago..DateTime.now), class: "nav-link" %>
+      </li>
+    </ul>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover">
+        <caption class="p-0">
+          累计产品销售报表
+          <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
+        </caption>
+        <%
+           _stat_fields = %w(
+            day_7_sales_amount
+            day_30_sales_amount
+            day_60_sales_amount
+            quarter_1_sales_amount
+            quarter_2_sales_amount
+            quarter_3_sales_amount
+            quarter_4_sales_amount
+            day_7_sales_count
+            day_30_sales_count
+            day_60_sales_count
+            quarter_1_sales_count
+            quarter_2_sales_count
+            quarter_3_sales_count
+            quarter_4_sales_count
+           )
+        %>
+        <thead class="thead-light">
+          <tr>
+            <th scope="col"><div class="wi3">创建时间</div></th>
+            <th scope="col"><div class="wi3">上架时间</div></th>
+            <th scope="col"><div class="wi3">供应商</div></th>
+            <th scope="col"><div class="wi3">品牌</div></th>
+            <th scope="col"><div class="wi3">商品分类(一级)</div></th>
+            <th scope="col"><div class="wi3">商品分类(二级)</div></th>
+            <th scope="col"><div class="wi3">商品编码</div></th>
+            <th scope="col"><div class="wi3">商品名称</div></th>
+            <% _stat_fields.each {|field| %>
+              <th scope="col"><div class="wi3"><%= ReportCumulativeProductSalesActivity.human_attribute_name(field) %></div></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% cache ["dev/report/cumulative_product_sales_activities/index", @report_cumulative_product_sales_activities] do %>
+            <%= render partial: "dev/report/cumulative_product_sales_activities/index_tr",
+              collection: @report_cumulative_product_sales_activities,
+              as: :record, cached: true, locals: {
+                stat_fields: _stat_fields
+              }
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render partial: "dev/shared/paginate", locals: {
+        records: @report_cumulative_product_sales_activities
+      }
+    %>
+  </div>
+</div>
+
+<%= render "dev/shared/export_script"%>
