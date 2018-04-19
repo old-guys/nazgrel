@@ -1,0 +1,29 @@
+zh-CN:
+  activerecord:
+    models:
+      report_cumulative_product_sales_activity: "累计产品销售报表"
+    attributes:
+      report_cumulative_product_sales_activity:
+        id: "ID"
+        product_id: "产品ID"
+
+        day_7_sales_amount: "7天销售额"
+        day_30_sales_amount: "30天销售额"
+        day_60_sales_amount: "60天销售额"
+        quarter_1_sales_amount: "第1季度销售额"
+        quarter_2_sales_amount: "第2季度销售额"
+        quarter_3_sales_amount: "第3季度销售额"
+        quarter_4_sales_amount: "第4季度销售额"
+
+        day_7_sales_count: "7天销量"
+        day_30_sales_count: "30天销量"
+        day_60_sales_count: "60天销量"
+        quarter_1_sales_count: "第1季度销量"
+        quarter_2_sales_count: "第2季度销量"
+        quarter_3_sales_count: "第3季度销量"
+        quarter_4_sales_count: "第4季度销量"
+
+        report_date: "报表日期"
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

@@ -96,7 +96,8 @@ module Export
           'Dev::ProductRepurchase#report' => '商品复购率',
           'Dev::DailyOperationalShopGradeSummary#report' => '每日运营店主等级汇总报表',
           'Dev::OperationalCumulativeShopActivitySummary#report' => '运营店主活跃汇总报表',
-          'Dev::OperationalCumulativeShopActivity#report' => '运营店主活跃明细报表'
+          'Dev::OperationalCumulativeShopActivity#report' => '运营店主活跃明细报表',
+          'Dev::CumulativeProductSalesActivity#report' => '累计产品销售报表',
         }.freeze
       end
     end
