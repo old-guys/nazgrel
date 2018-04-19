@@ -354,6 +354,21 @@ daily_operational_shop_grade_summary_report_yesterday:
   args:
     type: "yesterday"
 
+cumulative_product_sales_activity_report:
+  cron: "*/56 * * * *"
+  name: "更新当天累计产品销售报表数据"
+  class: "CumulativeProductSalesActivityReportWorker"
+  queue: :report
+  args:
+    type: "today"
+cumulative_product_sales_activity_report_report_yesterday:
+  cron: "3 1 * * *"
+  name: "更新昨天累计产品销售报表数据"
+  class: "CumulativeProductSalesActivityReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"
+
 operational_cumulative_shop_activity_summary_report:
   cron: "*/10 * * * *"
   name: "更新当天运营店主活跃汇总报表数据"

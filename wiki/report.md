@@ -808,3 +808,85 @@ operational_cumulative_shop_activity_summary_report_yesterday:
 ### 更新机制
 
 - 每隔一个小时定时更新运营店主活跃汇总报表数据更新机制
+
+## 累计产品销售报表
+
+### 处理过程
+
+定义源数据模型
+
+```ruby
+# head -n 3 app/models/reports/report_cumulative_product_sales_activity.rb
+class ReportCumulativeProductSalesActivity < ApplicationRecord
+```
+
+定义计算报表服务
+
+```shell
+tree app/reports/cumulative_product_sales_activity/
+app/reports/cumulative_product_sales_activity/
+├── calculations.rb
+├── reporting.rb
+└── update_report.rb
+```
+
+报表服务
+
+```ruby
+cat app/reports/cumulative_product_sales_activity/calculations.rb
+module CumulativeProductSalesActivity::Calculations
+  class << self
+    delegate :update_report, to: "CumulativeProductSalesActivity::UpdateReport"
+  end
+end
+```
+
+计算模块
+
+```ruby
+module CumulativeProductSalesActivity::Calculations
+```
+
+更新报表
+
+```ruby
+class CumulativeProductSalesActivity::UpdateReport
+```
+
+定时队列
+
+```ruby
+# head -n 5 app/workers/reports/cumulative_product_sales_activity_report_worker.rb
+class CumulativeProductSalesActivityReportWorker
+  include Sidekiq::Worker
+  include ReportWorkable
+
+  sidekiq_options queue: :report, retry: false, backtrace: true
+```
+
+```ruby
+cumulative_product_sales_activity_report:
+  cron: "*/56 * * * *"
+  name: "更新当天累计产品销售报表数据"
+  class: "CumulativeProductSalesActivityReportWorker"
+  queue: :report
+  args:
+    type: "today"
+cumulative_product_sales_activity_report_yesterday:
+  cron: "3 1 * * *"
+  name: "更新昨天累计产品销售报表数据"
+  class: "CumulativeProductSalesActivityReportWorker"
+  queue: :report
+  args:
+    type: "yesterday"
+```
+
+定时清理
+
+```ruby
+  runner "ReportCumulativeProductSalesActivity.prune_old_records"
+```
+
+### 更新机制
+
+- 每隔一个小时定时更新累计产品销售报表数据更新机制
