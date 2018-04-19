@@ -17,6 +17,16 @@ class CumulativeProductSalesActivity::UpdateReport
           product: product
         )
 
+        _new_order_details = OrderDetail.joins(
+          :order
+        ).where(order_no: Order.valided_order.sales_order.where(
+          created_at: _record.updated_at..report_date.end_of_day
+        ).pluck(:order_no)).where(
+          product_id: product.id
+        )
+
+        next if _record.persisted? and not _new_order_details.exists?
+
         return if !force_update and _record.persisted? and (_record.updated_at + interval_time) >= _time
         logger.info "update cumulative_product_sales_activity report for: #{report_date} category: #{product}(#{product.id})"
 

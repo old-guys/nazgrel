@@ -88,16 +88,24 @@ module CumulativeProductSalesActivity::Calculations
   end
 
   def cal_product_sales_count(product: , datetimes: )
-    OrderDetail.where(
-      product_id: product.id,
-      created_at: datetimes
+    _orders = Order.valided_order.sales_order.
+      where(created_at: datetimes)
+
+    OrderDetail.joins(
+      :order
+    ).merge(_orders).where(
+      product_id: product.id
     ).sum(:product_num)
   end
 
   def cal_product_sales_amount(product: , datetimes: )
-    OrderDetail.where(
-      product_id: product.id,
-      created_at: datetimes
+    _orders = Order.valided_order.sales_order.
+      where(created_at: datetimes)
+
+    OrderDetail.joins(
+      :order
+    ).merge(_orders).where(
+      product_id: product.id
     ).sum(Arel.sql("`order_details`.`product_num` * `order_details`.`product_sale_price`"))
   end
 end
