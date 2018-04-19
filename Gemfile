@@ -8,7 +8,7 @@ ruby "2.5.1"
 gem 'rails', '>= 5.2.0', "< 6.0"
 
 # Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.5.0'
+gem 'mysql2', '~> 0.5.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Adds cache_collection! to jbuilder. Uses memcache fetch_multi/read_multi
@@ -17,7 +17,7 @@ gem 'jbuilder_cache_multi', '~> 0.1.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # The fastest JSON parser and object serializer.
-gem 'oj', '~> 3.5'
+gem 'oj', '~> 3.5', '>= 3.5.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -61,7 +61,7 @@ gem 'axlsx', '~> 3.0.0.pre'
 
 ######## foreign service  ########
 # RequestStore gives you per-request global storage.
-gem 'request_store', '~> 1.4'
+gem 'request_store', '~> 1.4', '>= 1.4.1'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', '~> 0.10', '>= 0.10.0', require: false
 
@@ -75,7 +75,7 @@ gem 'devise', '~> 4.4', '>= 4.4.3'
 # Time Based OTP/rfc6238 compatible authentication for Devise
 # gem 'devise-otp', '~> 0.1.1'
 # Translations for the devise gem
-gem 'devise-i18n', '~> 1.6', '>= 1.6.1'
+gem 'devise-i18n', '~> 1.6', '>= 1.6.2'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1', '>= 1.1.0'
 
