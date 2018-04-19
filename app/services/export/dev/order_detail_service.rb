@@ -4,7 +4,7 @@ class Export::Dev::OrderDetailService
   def sales_fields
     %w(
       product_category suppliers_context
-      product.no product
+      product_no product
       number amount
     )
   end
@@ -34,6 +34,7 @@ class Export::Dev::OrderDetailService
       OpenStruct.new(
         product_category: _product.try(:category).to_s,
         product: _product.to_s,
+        product_no: _product.no,
         suppliers_context: _suppliers.find {|supplier| supplier.id == record.supplier_id }.to_s,
         number: record.number,
         amount: record.amount,
