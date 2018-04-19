@@ -3,7 +3,8 @@ class Export::Dev::ProductSkuService
 
   def index_fields
     %w(
-      product.no product
+      product.no sku_n
+      product
       product.category.parent product.category
       supplier brand
       shop_online_count
@@ -14,7 +15,8 @@ class Export::Dev::ProductSkuService
 
   def index_head_names
     %w(
-      产品编号 产品名称
+      产品编号 sku识别码
+      产品名称
       产品分类(一级) 产品分类(二级)
       供应商 品牌
       上架数
