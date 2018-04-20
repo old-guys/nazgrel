@@ -1,6 +1,6 @@
 module CumulativeProductSalesActivity::Calculations
 
-  def calculate(date: , product: )
+  def calculate(date: , product: , only_due_quarter: true)
     _datetime = date.to_datetime.end_of_day
     _result = {}
 
@@ -31,41 +31,53 @@ module CumulativeProductSalesActivity::Calculations
       day_60_sales_amount: _stage_result[:amount],
     )
 
-    _stage_result = cal_product_sales(
-      product: product,
-      datetimes: _datetime.change(month: 1 * 3).all_quarter
-    )
-    _result.merge!(
-      quarter_1_sales_count: _stage_result[:count],
-      quarter_1_sales_amount: _stage_result[:amount],
-    )
+    datetimes =  _datetime.change(month: 1 * 3).all_quarter
+    if ! only_due_quarter || _datetime.in?(datetimes)
+      _stage_result = cal_product_sales(
+        product: product,
+        datetimes: datetimes
+      )
+      _result.merge!(
+        quarter_1_sales_count: _stage_result[:count],
+        quarter_1_sales_amount: _stage_result[:amount],
+      )
+    end
 
-    _stage_result = cal_product_sales(
-      product: product,
-      datetimes: _datetime.change(month: 2 * 3).all_quarter
-    )
-    _result.merge!(
-      quarter_2_sales_count: _stage_result[:count],
-      quarter_2_sales_amount: _stage_result[:amount],
-    )
+    datetimes =  _datetime.change(month: 2 * 3).all_quarter
+    if ! only_due_quarter || _datetime.in?(datetimes)
+      _stage_result = cal_product_sales(
+        product: product,
+        datetimes: datetimes
+      )
+      _result.merge!(
+        quarter_2_sales_count: _stage_result[:count],
+        quarter_2_sales_amount: _stage_result[:amount],
+      )
+    end
 
-    _stage_result = cal_product_sales(
-      product: product,
-      datetimes: _datetime.change(month: 3 * 3).all_quarter
-    )
-    _result.merge!(
-      quarter_3_sales_count: _stage_result[:count],
-      quarter_3_sales_amount: _stage_result[:amount],
-    )
+    datetimes =  _datetime.change(month: 3 * 3).all_quarter
+    if ! only_due_quarter || _datetime.in?(datetimes)
+      _stage_result = cal_product_sales(
+        product: product,
+        datetimes: datetimes
+      )
+      _result.merge!(
+        quarter_3_sales_count: _stage_result[:count],
+        quarter_3_sales_amount: _stage_result[:amount],
+      )
+    end
 
-    _stage_result = cal_product_sales(
-      product: product,
-      datetimes: _datetime.change(month: 4 * 3).all_quarter
-    )
-    _result.merge!(
-      quarter_4_sales_count: _stage_result[:count],
-      quarter_4_sales_amount: _stage_result[:amount],
-    )
+    datetimes =  _datetime.change(month: 4 * 3).all_quarter
+    if ! only_due_quarter || _datetime.in?(datetimes)
+      _stage_result = cal_product_sales(
+        product: product,
+        datetimes: datetimes
+      )
+      _result.merge!(
+        quarter_4_sales_count: _stage_result[:count],
+        quarter_4_sales_amount: _stage_result[:amount],
+      )
+    end
 
     _result
   end

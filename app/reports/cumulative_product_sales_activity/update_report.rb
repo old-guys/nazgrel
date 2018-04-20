@@ -47,7 +47,7 @@ class CumulativeProductSalesActivity::UpdateReport
 
   private
   def process
-    @result = calculate(date: date, product: product)
+    @result = calculate(date: date, product: product, only_due_quarter: true)
 
     record.assign_attributes(
       @result
