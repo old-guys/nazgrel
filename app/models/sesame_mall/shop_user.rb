@@ -22,7 +22,8 @@ class ShopUser < ApplicationRecord
   }
   enum source: {
     ishanggang: 0,
-    sesamemall: 1
+    sesamemall: 1,
+    zmgj: 2
   }
   enum shopkeeper_flag: {
     yes: 1,
