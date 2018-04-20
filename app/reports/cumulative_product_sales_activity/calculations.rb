@@ -72,40 +72,47 @@ module CumulativeProductSalesActivity::Calculations
 
   private
   def cal_product_sales(product: , datetimes: )
-    return {} if product.created_at > datetimes.last
     _result = {
-      count: cal_product_sales_count(product: product, datetimes: datetimes),
+      count: 0,
       amount: 0
     }
 
-    if _result[:count].to_i > 0
-      _result[:amount] = cal_product_sales_amount(
+    _result = {
+      count: cal_product_sales_count(
+        product: product, datetimes: datetimes
+      ),
+      amount: cal_product_sales_amount(
         product: product, datetimes: datetimes
       )
-    end
+    } if OrderDetail.where(
+        product_id: product.id, created_at: datetimes
+      ).exists?
 
     _result
   end
 
   def cal_product_sales_count(product: , datetimes: )
-    _orders = Order.valided_order.sales_order.
-      where(created_at: datetimes)
-
-    OrderDetail.joins(
-      :order
-    ).merge(_orders).where(
-      product_id: product.id
+    order_details_by_product(
+      product: product,
+      datetimes: datetimes
     ).sum(:product_num)
   end
 
   def cal_product_sales_amount(product: , datetimes: )
-    _orders = Order.valided_order.sales_order.
+    order_details_by_product(
+      product: product,
+      datetimes: datetimes
+    ).sum(
+      Arel.sql("`order_details`.`product_num` * `order_details`.`product_sale_price`")
+    )
+  end
+
+  def order_details_by_product(product: , datetimes: )
+    _orders = Order.valided_order.
       where(created_at: datetimes)
 
-    OrderDetail.joins(
-      :order
-    ).merge(_orders).where(
+    OrderDetail.joins(:order).merge(_orders).where(
       product_id: product.id
-    ).sum(Arel.sql("`order_details`.`product_num` * `order_details`.`product_sale_price`"))
+    )
   end
 end
