@@ -73,7 +73,7 @@ class ShopActivity::UpdateReport
 
   private
   def process
-    @result = calculate(shop: shop, date: date, partial_update: false, updated_at: record.updated_at)
+    @result = calculate(shop: shop, date: date, updated_at: record.updated_at)
 
     record.assign_attributes(
       @result
