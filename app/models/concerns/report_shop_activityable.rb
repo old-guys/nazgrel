@@ -8,7 +8,7 @@ module ReportShopActivityable
   private
   module ClassMethods
     def stat_stages
-      @stat_cumulative_stages ||= [
+      @stat_stages ||= [
         nil, "stage_1", "stage_2", "stage_3",
         "week", "month", "year", "total"
       ].freeze

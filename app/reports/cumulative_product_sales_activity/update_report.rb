@@ -3,7 +3,7 @@ class CumulativeProductSalesActivity::UpdateReport
     def update_report(report_date: Date.today, force_update: false, touch_report_date: true, interval_time: 30.minutes)
       _products = Product.online.where(
         "created_at <= ?", report_date.to_datetime.end_of_day
-      )
+      ).where(updated_at: 2.month.ago(report_date.to_datetime)..report_date.to_datetime)
       _records = ReportCumulativeProductSalesActivity.where(
         product_id: _products.map(&:id)
       )
