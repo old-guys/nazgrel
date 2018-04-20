@@ -32,7 +32,9 @@ module DailyOperationalShopGradeSummary::Calculations
       ).count,
       "#{user_grade}_order_number": _orders.joins(:shopkeeper).merge(_shopkeepers).count,
       "#{user_grade}_order_amount": _orders.joins(:shopkeeper).merge(_shopkeepers).sum(:pay_price),
+      "#{user_grade}_sale_order_number": _orders.joins(:shopkeeper).third_order.merge(_shopkeepers).count,
       "#{user_grade}_sale_order_amount": _orders.joins(:shopkeeper).third_order.merge(_shopkeepers).sum(:pay_price),
+      "#{user_grade}_shopkeeper_order_number": _orders.joins(:shopkeeper).shopkeeper_order.merge(_shopkeepers).count,
       "#{user_grade}_shopkeeper_order_amount": _orders.joins(:shopkeeper).shopkeeper_order.merge(_shopkeepers).sum(:pay_price)
     }
 

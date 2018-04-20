@@ -2,16 +2,27 @@
   <div class="card-body">
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <%= link_to "本周", url_for(report_date: DateTime.now.all_week), class: "nav-link" %>
+        <%= link_to "黄金", url_for(user_grade: "grade_gold"), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "上周", url_for(report_date: DateTime.now.last_week.all_week), class: "nav-link" %>
+        <%= link_to "白金", url_for(user_grade: "grade_platinum"), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "本月", url_for(report_date: DateTime.now.all_month), class: "nav-link" %>
+        <%= link_to "体验", url_for(user_grade: "grade_trainee"), class: "nav-link" %>
+      </li>
+    </ul>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <%= link_to "本周", url_for(report_date: DateTime.now.all_week, user_grade: params[:user_grade]), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "上月", url_for(report_date: DateTime.now.last_month.all_month), class: "nav-link" %>
+        <%= link_to "上周", url_for(report_date: DateTime.now.last_week.all_week, user_grade: params[:user_grade]), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "本月", url_for(report_date: DateTime.now.all_month, user_grade: params[:user_grade]), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "上月", url_for(report_date: DateTime.now.last_month.all_month, user_grade: params[:user_grade]), class: "nav-link" %>
       </li>
     </ul>
     <div class="table-responsive">
@@ -21,35 +32,21 @@
           <%= button_tag "导出", class: "btn btn-sm ml-2 btn-primary export-btn", data: {href: url_for(params.as_json.merge(action_type: "export"))}%>
         </caption>
         <%
-           _stat_fields = %w(
-            total_grade_gold_count
-            grade_gold_count
-            activation_grade_gold_count
-            grade_gold_order_number
-            grade_gold_order_amount
-            grade_gold_sale_order_amount
-            grade_gold_shopkeeper_order_amount
-            grade_gold_sale_order_amount_rate
-            grade_gold_shopkeeper_order_amount_rate
-            total_grade_platinum_count
-            grade_platinum_count
-            activation_grade_platinum_count
-            grade_platinum_order_number
-            grade_platinum_order_amount
-            grade_platinum_sale_order_amount
-            grade_platinum_shopkeeper_order_amount
-            grade_platinum_sale_order_amount_rate
-            grade_platinum_shopkeeper_order_amount_rate
-            total_grade_trainee_count
-            grade_trainee_count
-            activation_grade_trainee_count
-            grade_trainee_order_number
-            grade_trainee_order_amount
-            grade_trainee_sale_order_amount
-            grade_trainee_shopkeeper_order_amount
-            grade_trainee_sale_order_amount_rate
-            grade_trainee_shopkeeper_order_amount_rate
-           )
+          _stat_fields = Array.wrap(params[:user_grade]).map {|user_grade|
+            %W(
+              total_#{user_grade}_count
+              #{user_grade}_count
+              activation_#{user_grade}_count
+              #{user_grade}_order_number
+              #{user_grade}_order_amount
+              #{user_grade}_sale_order_number
+              #{user_grade}_sale_order_amount
+              #{user_grade}_shopkeeper_order_number
+              #{user_grade}_shopkeeper_order_amount
+              #{user_grade}_sale_order_amount_rate
+              #{user_grade}_shopkeeper_order_amount_rate
+            )
+          }.flatten
         %>
         <thead class="thead-light">
           <tr>
@@ -61,10 +58,10 @@
           </tr>
         </thead>
         <tbody>
-          <% cache ["dev/report/daily_operational_shop_grade_summaries/index", @report_daily_operational_shop_grade_summaries] do %>
+          <% cache ["dev/report/daily_operational_shop_grade_summaries/index", @report_daily_operational_shop_grade_summaries, params[:user_grade]] do %>
             <%= render partial: "dev/report/daily_operational_shop_grade_summaries/index_tr",
               collection: @report_daily_operational_shop_grade_summaries,
-              as: :record, cached: true, locals: {
+              as: :record, cached: -> (record) {[record, params[:user_grade]]}, locals: {
                 stat_fields: _stat_fields
               }
             %>
