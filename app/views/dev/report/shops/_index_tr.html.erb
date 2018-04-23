@@ -10,7 +10,12 @@
   <td><%= _shopkeeper.city %></td>
   <td><%= time_tag _shopkeeper.created_at %></td>
   <td><%= _shopkeeper.try :user_grade_i18n %></td>
+  <td><%= _shopkeeper.order_number %></td>
   <td><%= number_to_currency _shopkeeper.order_amount.to_f, unit: "¥"%></td>
+  <td><%= _shopkeeper.shopkeeper_order_number %></td>
+  <td><%= number_to_currency _shopkeeper.shopkeeper_order_amount.to_f, unit: "¥"%></td>
+  <td><%= _shopkeeper.sale_order_number %></td>
+  <td><%= number_to_currency _shopkeeper.sale_order_amount.to_f, unit: "¥"%></td>
   <td><%= number_to_currency _shopkeeper.commission_income_amount.to_f, unit: "¥" %></td>
   <td>
     白金(<%= _shopkeeper.children_grade_platinum_size %>)
