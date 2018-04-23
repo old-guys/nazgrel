@@ -63,10 +63,10 @@ module ShopActivity::Calculations
     end
 
     if should_aggregation?(shop: shop, klass: IncomeRecord, updated_at: _updated_at)
-      _records = shop.income_records.withdraw_income.confirmed
+      _records = shop.withdraw_records.valided_record.zmall.where(created_at: _datetimes)
       result.merge!(aggregation_field_by_day(
         field: :withdraw_amount, date: date, records: _records,
-        sum_block: proc{|sql| sql.sum(:income_amount) }
+        sum_block: proc{|sql| sql.sum(:amount) }
       ))
     end
 

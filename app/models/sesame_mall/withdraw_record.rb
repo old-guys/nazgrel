@@ -21,4 +21,10 @@ class WithdrawRecord < ApplicationRecord
     transfer_success: 3,
     transfer_failure: 4
   }
+
+  scope :valided_record, ->{
+    where(
+      status: statuses.slice(:approved, :finished).values
+    )
+  }
 end

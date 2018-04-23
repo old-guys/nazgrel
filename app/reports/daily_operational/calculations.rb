@@ -51,7 +51,7 @@ module DailyOperational::Calculations
       ).merge(_orders).sum(
         "`order_details`.`product_num`*`product_skus`.`cost_price`"
       ),
-      withdraw_amount: IncomeRecord.confirmed.withdraw_income.where(created_at: _datetimes).sum(:income_amount),
+      withdraw_amount: WithdrawRecord.valided_record.zmall.where(created_at: _datetimes).sum(:amount),
     }
   end
 
