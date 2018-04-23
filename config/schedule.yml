@@ -355,7 +355,7 @@ daily_operational_shop_grade_summary_report_yesterday:
     type: "yesterday"
 
 cumulative_product_sales_activity_report:
-  cron: "*/56 * * * *"
+  cron: "9 */2 * * *"
   name: "更新当天累计产品销售报表数据"
   class: "CumulativeProductSalesActivityReportWorker"
   queue: :report
