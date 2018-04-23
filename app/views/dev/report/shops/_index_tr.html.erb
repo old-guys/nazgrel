@@ -5,7 +5,8 @@
 <tr>
   <th scope="row"><%= record.id %></th>
   <td><%= record.to_s %></td>
-  <td><%= record.shopkeeper.to_s %></td>
+  <td><%= _shopkeeper.to_s %></td>
+  <td><%= _shopkeeper.user_phone %></td>
   <td><%= _shopkeeper.province %></td>
   <td><%= _shopkeeper.city %></td>
   <td><%= time_tag _shopkeeper.created_at %></td>
