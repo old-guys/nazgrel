@@ -5,7 +5,7 @@ class Shopkeeper < ApplicationRecord
   self.tree_depth = 100
   self.tree_primary_key = :user_id
   belongs_to :shop, required: false
-  has_many :orders, through: :shop
+  has_many :orders, foreign_key: :shop_id, primary_key: :shop_id
 
   belongs_to :parent, primary_key: :user_id,
     foreign_key: :invite_user_id,
