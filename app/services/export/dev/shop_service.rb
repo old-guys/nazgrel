@@ -16,6 +16,13 @@ class Export::Dev::ShopService
     )
   end
 
+
+  def report_records_convert
+    Shopkeeper.with_preload_parents(records: records.map(&:shopkeeper))
+
+    records
+  end
+
   def report_record_shopkeeper_parents(record)
     return if record.shopkeeper.blank?
 
