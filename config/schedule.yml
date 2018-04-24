@@ -4,14 +4,14 @@ shop_seek_job:
   class: "ShopSeekWorker"
   queue: :seek
   args:
-    duration: 3
-shopkeeper_seek_job:
-  cron: "*/1 * * * *"
-  name: "同步店主"
-  class: "ShopkeeperSeekWorker"
-  queue: :seek
-  args:
-    duration: 3
+    duration: 2
+# shopkeeper_seek_job:
+#   cron: "*/1 * * * *"
+#   name: "同步店主"
+#   class: "ShopkeeperSeekWorker"
+#   queue: :seek
+#   args:
+#     duration: 2
 
 order_seek_job:
   cron: "*/1 * * * *"
@@ -19,140 +19,140 @@ order_seek_job:
   class: "OrderSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_detail_seek_job:
   cron: "*/1 * * * *"
   name: "同步订单详情"
   class: "OrderDetailSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_sub_seek_job:
   cron: "*/1 * * * *"
   name: "同步子订单"
   class: "OrderSubSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_express_seek_job:
   cron: "*/1 * * * *"
   name: "同步物流订单"
   class: "OrderExpressSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_pay_seek_job:
   cron: "*/1 * * * *"
   name: "同步订单支付记录"
   class: "OrderPaySeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_refund_seek_job:
   cron: "*/1 * * * *"
   name: "同步退款订单"
   class: "OrderRefundSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_refund_express_seek_job:
   cron: "*/1 * * * *"
   name: "同步退款物流订单"
   class: "OrderRefundExpressSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_refund_pay_seek_job:
   cron: "*/1 * * * *"
   name: "同步退款订单支付记录"
   class: "OrderRefundPaySeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_refund_product_detail_seek_job:
   cron: "*/1 * * * *"
   name: "同步退款订单商品详情"
   class: "OrderRefundProductDetailSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 order_refund_icon_seek_job:
   cron: "*/1 * * * *"
   name: "同步退款订单图片"
   class: "OrderRefundIconSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 product_seek_job:
   cron: "*/1 * * * *"
   name: "同步商品"
   class: "ProductSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 product_shop_seek_job:
   cron: "*/1 * * * *"
   name: "同步店铺代理销售商品"
   class: "ProductShopSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 income_record_seek_job:
   cron: "*/1 * * * *"
   name: "同步收入记录"
   class: "IncomeRecordSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 withdraw_record_seek_job:
   cron: "*/1 * * * *"
   name: "同步提现记录"
   class: "WithdrawRecordSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 invite_pay_record_seek_job:
   cron: "*/1 * * * *"
   name: "同步邀请支付记录"
   class: "InvitePayRecordSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 shop_user_seek_job:
   cron: "*/1 * * * *"
   name: "同步用户信息"
   class: "ShopUserSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 shop_user_card_seek_job:
   cron: "*/1 * * * *"
   name: "同步用户身份证信息"
   class: "ShopUserCardSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 user_address_seek_job:
   cron: "*/1 * * * *"
   name: "同步用户收货地址"
   class: "UserAddressSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 bank_card_seek_job:
   cron: "*/1 * * * *"
   name: "同步银行卡"
   class: "BankCardSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 shop_wechat_user_seek_job:
   cron: "*/1 * * * *"
   name: "同步微信用户信息"
   class: "ShopWechatUserSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 supplier_seek_job:
   cron: "*/10 * * * *"
   name: "同步供应商"
@@ -167,7 +167,7 @@ brand_seek_job:
   class: "BrandSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 view_journal_seek_job:
   cron: "*/1 * * * *"
@@ -175,7 +175,7 @@ view_journal_seek_job:
   class: "ViewJournalSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 share_journal_seek_job:
   cron: "*/1 * * * *"
@@ -183,7 +183,7 @@ share_journal_seek_job:
   class: "ShareJournalSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 category_seek_job:
   cron: "1 */2 * * *"
@@ -205,7 +205,7 @@ product_sku_seek_job:
   class: "ProductSkuSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 product_brand_supplier_seek_job:
   cron: "*/1 * * * *"
@@ -213,7 +213,7 @@ product_brand_supplier_seek_job:
   class: "ProductBrandSupplierSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 act_ticket_seek_job:
   cron: "*/1 * * * *"
@@ -221,7 +221,7 @@ act_ticket_seek_job:
   class: "ActTicketSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 act_ticket_activity_seek_job:
   cron: "*/1 * * * *"
@@ -229,7 +229,7 @@ act_ticket_activity_seek_job:
   class: "ActTicketActivitySeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 act_user_ticket_seek_job:
   cron: "*/1 * * * *"
@@ -237,7 +237,7 @@ act_user_ticket_seek_job:
   class: "ActUserTicketSeekWorker"
   queue: :seek
   args:
-    duration: 3
+    duration: 2
 
 deleted_record_seek_job:
   cron: "3 * * * *"
