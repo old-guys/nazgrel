@@ -1,0 +1,9 @@
+common: &default_settings
+  # Required license key associated with your New Relic account.
+  license_key: xxxxxxxxxxxxxxx
+  app_name: xxxxxxxxxxx
+
+  log_level: info
+
+production:
+  <<: *default_settings

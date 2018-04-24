@@ -1,0 +1,30 @@
+# MySQL. Versions 5.1.10 and up are supported.
+#
+# Install the MySQL driver
+#   gem install mysql2
+#
+# Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql2'
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.7/en/old-client.html
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  host: mysql
+  pool: <%= ENV['SIDEKIQ_THREADS'] || ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+  username: root
+  password: nazgrelmysql
+
+development:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+
+test:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
