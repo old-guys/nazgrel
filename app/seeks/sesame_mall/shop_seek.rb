@@ -1,6 +1,6 @@
 class SesameMall::ShopSeek
   include SesameMall::Seekable
-  attr_accessor :shopkeeper_seek
+  attr_accessor :shopkeeper_seek, :skip_process_shopkeeper
 
   before_process :process_shopkeeper
   after_process :after_process_record
@@ -43,6 +43,8 @@ class SesameMall::ShopSeek
 
   private
   def process_shopkeeper
+    return if skip_process_shopkeeper
+
     _shopkeepers = SesameMall::Source::Shopkeeper.where(
       shop_id: source_data.pluck(source_primary_key)
     )
@@ -72,7 +74,11 @@ class SesameMall::ShopSeek
     end
 
     def partial_sync(duration: 30.minutes)
+      SesameMall::ShopkeeperSeek.partial_sync(duration: duration)
+
       seek = self.new
+      seek.skip_process_shopkeeper = true
+
       _relation = source_records_from_seek_record(
         klass: SesameMall::Source::Shop,
         duration: duration

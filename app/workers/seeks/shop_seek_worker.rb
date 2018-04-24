@@ -9,8 +9,6 @@ class ShopSeekWorker
     options = args.extract_options!
     _seek_options = extract_seek_options(options: options)
 
-    SesameMall::ShopkeeperSeek.partial_sync(_seek_options)
-
     SesameMall::ShopSeek.partial_sync(_seek_options)
     logger.info "finished"
   end
