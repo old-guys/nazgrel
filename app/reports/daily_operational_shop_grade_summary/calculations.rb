@@ -28,7 +28,7 @@ module DailyOperationalShopGradeSummary::Calculations
       "total_#{user_grade}_count": _shopkeepers.where("created_at <= ?", date.end_of_day).count,
       "#{user_grade}_count": _shopkeepers.where(created_at: date.all_day).count,
       "activation_#{user_grade}_count": _shopkeepers.where(
-        user_id: _orders.select(:user_id)
+        shop_id: _orders.select(:shop_id)
       ).count,
       "#{user_grade}_order_number": _orders.joins(:shopkeeper).merge(_shopkeepers).count,
       "#{user_grade}_order_amount": _orders.joins(:shopkeeper).merge(_shopkeepers).sum(:pay_price),
