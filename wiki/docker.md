@@ -31,3 +31,7 @@ docker-compose up
 
 docker-compose exec cron bash -it
 ```
+
+### Deploy via puppet ?
+
+https://puppet.com/docs/pipelines-for-apps/enterprise/docker-rails-postgres.html
