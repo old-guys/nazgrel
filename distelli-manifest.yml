@@ -1,0 +1,14 @@
+jhjguxin/nazgrel:
+  PkgInclude:
+    - '*'
+  PreInstall:
+    - echo "Starting PreInstall"
+    # Uncomment this section after the first deployment
+    # - cd /distelli/envs/$DISTELLI_ENV
+    # - cd $DISTELLI_INSTALLHOME
+    # - sudo /usr/local/bin/docker-compose down
+  Start:
+    - cd $DISTELLI_INSTALLHOME
+    - echo "Start Application"
+    - sudo /usr/local/bin/docker-compose build
+    - sudo /usr/local/bin/docker-compose up -d
