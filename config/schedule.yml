@@ -317,7 +317,7 @@ daily_operational_report:
   args:
     type: "today"
 daily_operational_report_yesterday:
-  cron: "3 0 * * *"
+  cron: "3 0,6,12,23 * * *"
   name: "更新昨天每日运营报表数据"
   class: "DailyOperationalReportWorker"
   queue: :report
@@ -332,7 +332,7 @@ daily_shop_grade_operational_report:
   args:
     type: "today"
 daily_shop_grade_operational_report_yesterday:
-  cron: "3 0 * * *"
+  cron: "13 0,6,12,23 * * *"
   name: "更新昨天每日店主等级运营报表数据"
   class: "DailyShopGradeOperationalReportWorker"
   queue: :report
@@ -347,7 +347,7 @@ daily_operational_shop_grade_summary_report:
   args:
     type: "today"
 daily_operational_shop_grade_summary_report_yesterday:
-  cron: "3 0 * * *"
+  cron: "5 0,6,12,23 * * *"
   name: "更新昨天每日运营店主等级汇总报表数据"
   class: "DailyOperationalShopGradeSummaryReportWorker"
   queue: :report
@@ -362,7 +362,7 @@ cumulative_product_sales_activity_report:
   args:
     type: "today"
 cumulative_product_sales_activity_report_report_yesterday:
-  cron: "3 1 * * *"
+  cron: "8 0,6,12,23 * * *"
   name: "更新昨天累计产品销售报表数据"
   class: "CumulativeProductSalesActivityReportWorker"
   queue: :report
@@ -377,7 +377,7 @@ operational_cumulative_shop_activity_summary_report:
   args:
     type: "today"
 operational_cumulative_shop_activity_summary_report_yesterday:
-  cron: "3 0 * * *"
+  cron: "15 0,6,12,23 * * *"
   name: "更新昨天运营店主活跃汇总报表数据"
   class: "OperationalCumulativeShopActivitySummaryReportWorker"
   queue: :report
