@@ -18,7 +18,7 @@ module ReportUpdateable
 
   def write
     begin
-      record.has_changes_to_save? ? record.save : record.touch
+      record.save!
     rescue => e
       logger.warn "update report failure #{e}, record: #{record.try(:attributes)}"
       log_error(e)
