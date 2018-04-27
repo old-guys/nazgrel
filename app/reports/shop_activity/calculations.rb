@@ -271,13 +271,17 @@ module ShopActivity::Calculations
 
   # whether shopkeeper seek timestmap present and newer than report#updated_at
   # while true should exec aggregation
+  # should check Only when updated_at and timestmap in same day
   # NOTICE timestamp check should add interval_time
   def should_aggregation?(shop: , klass: , updated_at: )
     _shopkeeper = shop.shopkeeper
     _value = _shopkeeper.seek_timestmap_service.value(target: klass)
-    _interval_time = 3.minutes
 
-    _value.present? ? updated_at < (_value + _interval_time) : true
+    if _value and updated_at.in?(_value.all_day)
+      updated_at < (_value + 3.minutes)
+    else
+      true
+    end
   end
 
   def aggregation_recording_field_by_day(field: , date: , records: , sum_block: nil)
