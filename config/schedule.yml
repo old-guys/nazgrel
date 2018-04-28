@@ -192,6 +192,15 @@ category_seek_job:
   queue: :seek
   args:
     duration: 125
+
+activity_seek_job:
+  cron: "1 */2 * * *"
+  name: "同步活动"
+  class: "ActivitySeekWorker"
+  queue: :seek
+  args:
+    duration: 125
+
 bank_seek_job:
   cron: "1 */2 * * *"
   name: "同步银行"

@@ -1,0 +1,17 @@
+zh-CN:
+  activerecord:
+    models:
+      activity: "活动"
+    attributes:
+      activity:
+        id: "ID"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"
+
+  enums:
+    activity:
+      activity_type:
+        reach_amount: "满金额减"
+        reach_number: "满件数减"
