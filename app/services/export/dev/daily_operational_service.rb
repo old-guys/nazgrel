@@ -20,8 +20,8 @@ class Export::Dev::DailyOperationalService
   def report_head_names
     %w(
       # 报表日期
-      累计店主数 店主数 活跃店主数
-      活跃店主比例 浏览量 访客数 分享数
+      累计店主数 店主数 有订单店主数
+      有订单店主比例 浏览量 访客数 分享数
       订单总额 订单数
       芝蚂币收入 芝蚂币使用
       支付金额 订单转化率

@@ -10,8 +10,8 @@ zh-CN:
         total_shopkeeper_count: "累计店主数"
         shopkeeper_count: "店主数"
 
-        activation_shopkeeper_count: "活跃店主数"
-        activation_shopkeeper_rate: "活跃店主比例"
+        activation_shopkeeper_count: "有订单店主数"
+        activation_shopkeeper_rate: "有订单店主比例"
 
         view_count: "浏览量"
         viewer_count: "访客数"
