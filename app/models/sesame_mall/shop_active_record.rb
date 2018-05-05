@@ -1,0 +1,2 @@
+class ShopActiveRecord < ApplicationRecord
+end

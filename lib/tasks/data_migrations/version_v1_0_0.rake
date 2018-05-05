@@ -391,5 +391,19 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'seek shop_active_record data'
+    task :v1_1_3_20_seek_shop_active_record => :environment do
+      SesameMall::ShopActiveRecordSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::ShopActiveRecord,
+
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+    end
   end
 end

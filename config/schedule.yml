@@ -118,6 +118,13 @@ invite_pay_record_seek_job:
   queue: :seek
   args:
     duration: 2
+shop_active_record_seek_job:
+  cron: "*/1 * * * *"
+  name: "同步活跃店主记录"
+  class: "ShopActiveRecordSeekWorker"
+  queue: :seek
+  args:
+    duration: 2
 shop_user_seek_job:
   cron: "*/1 * * * *"
   name: "同步用户信息"
