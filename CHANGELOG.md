@@ -1,3 +1,11 @@
+## 库存预警报表 (2018-05-05)
+
+- #seek# 同步活跃店主记录
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_20_seek_shop_active_record
+```
+
 ## 库存预警报表 (2018-04-19)
 
 - #feature# 累计产品销售报表
@@ -266,7 +274,7 @@ cap production deploy:runrake task=data_migrations:version:v1_0_13_migrate_shop_
 
 - #feature# 同步店铺分享日志
 - #feature# 同步店铺浏览日志
- 
+
 ```shell
 cap production deploy:runrake task=data_migrations:version:v1_0_11_init_seek_trigger
 ```
