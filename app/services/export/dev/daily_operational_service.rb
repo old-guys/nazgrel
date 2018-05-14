@@ -5,7 +5,7 @@ class Export::Dev::DailyOperationalService
     %w(
       id report_date
          total_shopkeeper_count shopkeeper_count activation_shopkeeper_count
-         activation_shopkeeper_rate view_count shared_count
+         activation_shopkeeper_rate shared_count
          order_total_price order_count
          income_coin use_coin
          order_pay_price
