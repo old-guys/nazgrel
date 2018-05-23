@@ -17,7 +17,7 @@ gem 'jbuilder_cache_multi', '~> 0.1.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # The fastest JSON parser and object serializer.
-gem 'oj', '~> 3.5', '>= 3.5.1'
+gem 'oj', '~> 3.6', '>= 3.6.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -129,7 +129,7 @@ group :production do
   gem 'unicorn-worker-killer', '~> 0.4', '>= 0.4.4'
   # New Relic is a performance management system,
   # developed by New Relic, Inc (http://www.newrelic.com)
-  gem 'newrelic_rpm', '~> 5.0', '>= 5.0.0.342'
+  gem 'newrelic_rpm', '~> 5.0', '>= 5.1.0.344'
 end
 
 # Use Capistrano for deployment
@@ -140,7 +140,7 @@ group :development do
   gem 'capistrano3-unicorn', '~> 0.2', '>= 0.2.1'
   # RVM integration for Capistrano
   gem 'capistrano-rvm', '~> 0.1', '>= 0.1.2'
-  gem 'capistrano-sidekiq', '~> 1.0.1'
+  gem 'capistrano-sidekiq', '~> 1.0.2'
 end
 
 # group :test do
