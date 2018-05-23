@@ -13,6 +13,22 @@ shop_seek_job:
 #   args:
 #     duration: 2
 
+project_product_seek_job:
+  cron: "*/1 * * * *"
+  name: "同步项目产品"
+  class: "ProjectProductSeekWorker"
+  queue: :seek
+  args:
+    duration: 2
+
+project_channel_seek_job:
+  cron: "*/1 * * * *"
+  name: "同步项目渠道"
+  class: "ProjectChannelSeekWorker"
+  queue: :seek
+  args:
+    duration: 2
+
 order_seek_job:
   cron: "*/1 * * * *"
   name: "同步订单"

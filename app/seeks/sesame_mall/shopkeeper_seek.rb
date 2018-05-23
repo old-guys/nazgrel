@@ -60,6 +60,10 @@ class SesameMall::ShopkeeperSeek
       use_invite_number: data[:use_invite_number],
       org_grade: ::Shopkeeper.org_grades.invert[data[:org_grade]],
 
+      project_id: data[:project_id],
+      project_operation_user: data[:project_operation_user],
+      show_shop_id: data[:show_shop_id],
+
       created_at: parse_no_timezone(datetime: data[:create_time]),
       updated_at: record.updated_at || parse_no_timezone(datetime: data[:update_time])
     )

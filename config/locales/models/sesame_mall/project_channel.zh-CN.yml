@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      project_channel: "项目产品"
+    attributes:
+      project_channel:
+        id: "ID"
+
+        created_at: "创建时间"
+        updated_at: "更新于"
+        deleted_at: "删除于"

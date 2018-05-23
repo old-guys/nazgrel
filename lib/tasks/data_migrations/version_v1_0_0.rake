@@ -405,5 +405,39 @@ namespace :data_migrations do
         TriggerService.setup_trigger klass: klass
       }
     end
+
+    desc 'seek shopkeeper project data'
+    task :v1_1_3_21_seek_shopkeeper_project => :environment do
+      SesameMall::ProjectProductSeek.whole_sync
+      SesameMall::ProjectChannelSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::ProjectProduct,
+        SesameMall::Source::ProjectChannel,
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+
+      Shopkeeper.in_batches(of: 500) {|records|
+        _source_records = SesameMall::Source::Shopkeeper.where(id: records.map(&:id))
+
+        records.each {|record|
+          _source_record = _source_records.find{|source_record|
+            source_record.id == record.id
+          }
+          record.assign_attributes(
+            project_id: _source_record.project_id,
+            project_operation_user: _source_record.project_operation_user,
+            show_shop_id: _source_record.show_shop_id
+          ) if _source_record
+        }
+
+        Shopkeeper.transaction do
+          records.select(&:changed?).map(&:save)
+        end
+      }
+    end
   end
 end

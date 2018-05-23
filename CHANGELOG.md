@@ -1,3 +1,11 @@
+## 库存预警报表 (2018-05-23)
+
+- #seek# 同步千店千面（project_product, project_channels）数据
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_21_seek_shopkeeper_project
+```
+
 ## 库存预警报表 (2018-05-05)
 
 - #seek# 同步活跃店主记录
