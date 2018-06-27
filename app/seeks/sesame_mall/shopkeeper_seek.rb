@@ -91,7 +91,7 @@ class SesameMall::ShopkeeperSeek
   def set_shopkeeper_order_content(record: )
     record.assign_attributes(
       order_create_at: record.orders.where(
-        order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
+        order_type: Order.order_types.slice(:shopkeeper_order, :third_order, :group_purchase).values
       ).first.try(:created_at)
     ) if record.order_create_at.blank?
 

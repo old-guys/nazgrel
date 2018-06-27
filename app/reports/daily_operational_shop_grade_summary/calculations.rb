@@ -21,7 +21,7 @@ module DailyOperationalShopGradeSummary::Calculations
     _shopkeepers = Shopkeeper.send(user_grade)
     _orders = Order.valided_order.where(
       created_at: date.all_day,
-      order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
+      order_type: Order.order_types.slice(:shopkeeper_order, :third_order, :group_purchase).values
     )
 
     result = {

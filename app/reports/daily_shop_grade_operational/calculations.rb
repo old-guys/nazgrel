@@ -26,13 +26,13 @@ module DailyShopGradeOperational::Calculations
     _shopkeepers = Shopkeeper.org_grade_grade_trainee.where(
       user_id: Order.valided_order.where(
         created_at: datetimes,
-        order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values
+        order_type: Order.order_types.slice(:shopkeeper_order, :third_order, :group_purchase).values
       ).select(:user_id)
     )
     _exclude_shopkeepers = Shopkeeper.joins(:orders).where(
       id: _shopkeepers.select(:id),
       orders: {
-        order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values,
+        order_type: Order.order_types.slice(:shopkeeper_order, :third_order, :group_purchase).values,
       }
     ).merge(Order.where("orders.created_at < ?", datetimes.first));
 

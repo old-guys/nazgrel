@@ -5,7 +5,7 @@ module DailyOperational::Calculations
 
     _total_shopkeeper_count = Shopkeeper.where("created_at <= ?", date.end_of_day).count
     _shopkeeper_count = Shopkeeper.where(created_at: _datetimes).count
-    _orders = Order.valided_order.sales_order.rewhere(order_type: Order.order_types.slice(:shopkeeper_order, :third_order).values).where(created_at: _datetimes)
+    _orders = Order.valided_order.sales_order.rewhere(order_type: Order.order_types.slice(:shopkeeper_order, :third_order, :group_purchase).values).where(created_at: _datetimes)
 
     _activation_shopkeeper_count = _orders.count("distinct(shop_id)")
     _view_count = ViewJournal.where(created_at: _datetimes).count

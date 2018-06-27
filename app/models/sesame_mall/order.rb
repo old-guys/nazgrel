@@ -71,9 +71,7 @@ class Order < ApplicationRecord
   }
 
   scope :sales_order, ->{
-    where(
-      order_type: order_types.slice(:shopkeeper_order, :third_order, :create_shop).values
-    )
+   all
   }
   scope :valided_order, ->{
     where.not(
