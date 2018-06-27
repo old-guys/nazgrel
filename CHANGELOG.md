@@ -1,3 +1,11 @@
+## 拼团订单 (2018-06-28)
+
+- #seek# 同步拼团数据
+
+```shell
+cap production deploy:runrake task=data_migrations:version:v1_1_3_22_seek_order_collage
+```
+
 ## 库存预警报表 (2018-05-23)
 
 - #seek# 同步千店千面（project_product, project_channels）数据

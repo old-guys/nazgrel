@@ -38,6 +38,7 @@ zh-CN:
         create_shop: "开店订单"
         shopkeeper_order: "店主订单"
         third_order: "三方订单"
+        group_purchase: "拼团订单"
       ref_type:
         wechat_friend: "微信好友"
         app: "app"

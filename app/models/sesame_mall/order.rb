@@ -37,7 +37,8 @@ class Order < ApplicationRecord
   enum order_type: {
     create_shop: 0,
     shopkeeper_order: 1,
-    third_order: 2
+    third_order: 2,
+    group_purchase: 3
   }
   enum ref_type: {
     wechat_friend: 0,

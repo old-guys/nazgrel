@@ -439,5 +439,20 @@ namespace :data_migrations do
         end
       }
     end
+
+    desc 'seek order collage data'
+    task :v1_1_3_22_seek_order_collage => :environment do
+      SesameMall::OrderCollageRelSeek.whole_sync
+
+      _klasses = [
+        SesameMall::Source::OrderCollageRel,
+      ]
+
+      _klasses.each {|klass|
+        TriggerService.setup_trigger klass: klass
+      }
+
+      SesameMall::OrderSeek.partial_sync(duration: 7.days)
+    end
   end
 end

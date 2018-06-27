@@ -1,0 +1,2 @@
+class OrderCollageRel < ApplicationRecord
+end
